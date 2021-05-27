@@ -4,15 +4,22 @@
       <template #left>
         <div class="index-theme header-left index-middle index-hidden-newline">
           <div>表单样式设计</div>
-          <div class="index-center-middle header-input">
-            <input
-              ref="inputRef"
-              v-model="dataItem.name"
-              class="name-input mr-2"
-              :class="inputState && 'name-input-edit'"
-              @focus="onInputFocus"
-              @blur="onInputBlur"
-            >
+          <div class="button index-center-middle ml-10 mr-4">
+            <Icon icon="ion:arrow-undo-sharp" class="mr-4" color="#DADDE6" size="20" />
+            <Icon icon="ion:arrow-redo-sharp" color="#DADDE6" size="20" />
+          </div>
+        </div>
+      </template>
+      <template #center>
+        <div class="header-input index-theme index-center-middle">
+          <input
+            ref="inputRef"
+            v-model="dataItem.name"
+            class="name-input mr-2"
+            @focus="onInputFocus"
+            @blur="onInputBlur"
+          >
+          <div class="edit-icon-wrap">
             <Icon v-show="!inputState" icon="entypo:edit" class="pointer" @click="onClickEdit" />
           </div>
         </div>
@@ -123,15 +130,23 @@ export default defineComponent({
 
 .header {
   &-left {
+    height: 100%;
     font-size: 18px;
     font-weight: bold;
     color: @primary-color;
   }
 
   &-input {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     margin: 0 0 0 20px;
+    font-size: 18px;
+    color: @primary-color;
+    transform: translate(-50%, -50%);
 
     .name-input {
+      position: relative;
       width: 120px;
       margin: 0 10px 0 0;
       overflow: hidden;
@@ -146,35 +161,13 @@ export default defineComponent({
 
       &:focus {
         cursor: text;
-      }
-
-      &-edit {
-        border-bottom-color: @primary-color;
+        // border-bottom-color: @primary-color;
       }
     }
   }
 
   &-right {
     .button {
-      height: 32px;
-      padding: 0 16px;
-      color: #5c5f66;
-      cursor: pointer;
-      border-radius: 16px;
-      box-shadow: 0 2px 8px 0 #e6e9f2;
-
-      &:hover {
-        color: #292b33;
-      }
-
-      &:active {
-        color: #2c63ff;
-      }
-
-      &:not(:last-of-type) {
-        margin: 0 24px 0 0;
-      }
-
       &-primary {
         height: 32px;
         padding: 0 16px;
@@ -182,6 +175,7 @@ export default defineComponent({
         cursor: pointer;
         background: linear-gradient(0deg, #2c63ff, #2c83ff);
         border-radius: 16px;
+        user-select: none;
 
         &:active {
           background: linear-gradient(0deg, #2758e5, #2775e5);
@@ -192,6 +186,34 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.button {
+  height: 32px;
+  padding: 0 16px;
+  color: #5c5f66;
+  cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px 0 #e6e9f2;
+  user-select: none;
+
+  &:hover {
+    color: #292b33;
+  }
+
+  &:active {
+    color: #2c63ff;
+  }
+
+  &:not(:last-of-type) {
+    margin: 0 24px 0 0;
+  }
+}
+
+.edit-icon {
+  &-wrap {
+    width: 14px;
   }
 }
 </style>
