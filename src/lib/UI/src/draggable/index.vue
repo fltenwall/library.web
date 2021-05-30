@@ -1,9 +1,9 @@
 <template>
   <div class="draggable" @mousedown.stop.prevent="startMove($event, 'mouse')">
     <slot />
-    <div class="ew absolute size" @mousedown.stop.prevent="startMove($event, 'ew')" />
-    <div class="ns absolute size" @mousedown.stop.prevent="startMove($event, 'ns')" />
-    <div class="se absolute size" @mousedown.stop.prevent="startMove($event, 'se')" />
+    <div v-if="isSize" class="ew absolute size" @mousedown.stop.prevent="startMove($event, 'ew')" />
+    <div v-if="isSize" class="ns absolute size" @mousedown.stop.prevent="startMove($event, 'ns')" />
+    <div v-if="isSize" class="se absolute size" @mousedown.stop.prevent="startMove($event, 'se')" />
   </div>
 </template>
 
@@ -17,12 +17,20 @@ export default defineComponent({
     uuid: {
       type: String,
       default: ''
+    },
+    isSize: {
+      // 是否可以改变大小
+      type: Boolean,
+      default: true
     }
   },
   emits: ['on-move', 'on-end', 'on-start', 'on-resize'],
   setup(props, { emit }) {
     // 开始位置
-    let startX: number, startY: number, distanceX: number, distanceY: number
+    let startX: number, startY: number
+    // 位移数据
+    let distanceX = 0
+    let distanceY = 0
     // 事件名称
 
     let eventType: Type
@@ -60,7 +68,10 @@ export default defineComponent({
 
     // 拖拽结束事件
     function endMove() {
-      emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType })
+      // 没有移动不更新
+      if (distanceX !== 0 || distanceX !== 0) {
+        emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType })
+      }
 
       // 清空数据
       distanceX = distanceY = 0

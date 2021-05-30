@@ -45,7 +45,6 @@ export default defineComponent({
       emit('update:value', visible.value)
     }
 
-
     watch(
       () => props.value,
       (val) => {
@@ -69,7 +68,8 @@ export default defineComponent({
 <style lang="less" scoped>
 .global-drawer {
   &-wrap {
-    position: relative;
+    position: absolute;
+    width: 100%;
     min-height: 100%;
     background: #fff;
     box-shadow: 0 2px 8px 0 #dbdbdb99;

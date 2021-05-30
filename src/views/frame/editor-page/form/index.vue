@@ -5,8 +5,18 @@
         <div class="index-theme header-left index-middle index-hidden-newline">
           <div>表单样式设计</div>
           <div class="button index-center-middle ml-10 mr-4">
-            <Icon icon="ion:arrow-undo-sharp" class="mr-4" color="#DADDE6" size="20" />
-            <Icon icon="ion:arrow-redo-sharp" color="#DADDE6" size="20" />
+            <Icon
+              icon="ion:arrow-undo-sharp"
+              class="point-history mr-4"
+              :disable="!linkedState.undo"
+              @click="handleUndo"
+            />
+            <Icon
+              icon="ion:arrow-redo-sharp"
+              class="point-history"
+              :disable="!linkedState.redo"
+              @click="handleRedo"
+            />
           </div>
         </div>
       </template>
@@ -26,10 +36,10 @@
       </template>
       <template #right>
         <div class="header-right flex">
-          <div class="button index-center-middle">
+          <div class="button pointer index-center-middle">
             保存
           </div>
-          <div class="button index-center-middle">
+          <div class="button pointer index-center-middle">
             预览
           </div>
           <div class="button-primary index-center-middle" @click="onGoBack">
@@ -40,7 +50,7 @@
     </PublicHeader>
     <div class="flex flex-item hidden editor-form-main relative">
       <tool-area />
-      <view-area class="flex-item" @on-click-point="handleClickPoint" />
+      <view-area ref="viewAreaRef" class="flex-item" @on-click-point="handleClickPoint" />
       <action-area v-model:value="action.visible" :uuid="action.uuid" />
     </div>
   </div>
@@ -55,6 +65,7 @@ import toolArea from './src/toolArea/index.vue'
 import viewArea from './src/viewArea/index.vue'
 import service, { FormManage } from '/@/api/page-manage/form-page'
 import { pointStore } from '/@/store/modules/point'
+import pointLinked from './utils/pointLinked'
 
 export default defineComponent({
   components: { actionArea, toolArea, viewArea },
@@ -81,6 +92,9 @@ export default defineComponent({
     // 处理输入框失去焦点
     const onInputBlur = () => (inputState.value = false)
 
+    // 使用链表
+    const linked = pointLinked()
+
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
       const { data } = await service.getItemById(id)
@@ -106,6 +120,7 @@ export default defineComponent({
       onInputFocus,
       onInputBlur,
       onGoBack,
+      ...linked,
       handleClickPoint
     }
   }
@@ -193,7 +208,6 @@ export default defineComponent({
   height: 32px;
   padding: 0 16px;
   color: #5c5f66;
-  cursor: pointer;
   border-radius: 16px;
   box-shadow: 0 2px 8px 0 #e6e9f2;
   user-select: none;
@@ -208,6 +222,23 @@ export default defineComponent({
 
   &:not(:last-of-type) {
     margin: 0 24px 0 0;
+  }
+}
+
+.point-history {
+  cursor: pointer;
+
+  &[disable='true'] {
+    color: #dadde6;
+    cursor: default;
+  }
+
+  &[disable='false'] {
+    color: #5c5f66;
+
+    &:hover {
+      color: #292b33;
+    }
   }
 }
 

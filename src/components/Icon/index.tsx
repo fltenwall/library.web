@@ -1,7 +1,7 @@
-import type { PropType } from "vue"
-import { defineComponent, ref, unref, computed, watch, onMounted, nextTick } from "vue"
-import Iconify from "@purge-icons/generated"
-import "./index.less"
+import type { PropType } from 'vue'
+import { defineComponent, ref, unref, computed, watch, onMounted, nextTick } from 'vue'
+import Iconify from '@purge-icons/generated'
+import './index.less'
 
 export default defineComponent({
   props: {
@@ -11,7 +11,7 @@ export default defineComponent({
     },
     color: {
       type: String as PropType<string>,
-      default: 'inherit'
+      default: ''
     },
     size: {
       type: [String, Number] as PropType<string | number>,
@@ -28,13 +28,13 @@ export default defineComponent({
         const { icon } = props
         const svg = Iconify.renderSVG(icon, {})
         if (svg) {
-          el.textContent = ""
+          el.textContent = ''
           el.appendChild(svg)
         } else {
-          const span = document.createElement("span")
-          span.className = "iconify"
+          const span = document.createElement('span')
+          span.className = 'iconify'
           span.dataset.icon = icon
-          el.textContent = ""
+          el.textContent = ''
           el.appendChild(span)
         }
       }
@@ -46,8 +46,8 @@ export default defineComponent({
       const { size, color } = props
       return {
         color,
-        "font-size": `${parseInt(size.toString(), 10)}px`,
-        display: "inline-flex"
+        'font-size': `${parseInt(size.toString(), 10)}px`,
+        display: 'inline-flex'
       }
     })
 
@@ -56,7 +56,7 @@ export default defineComponent({
     })
 
     return () => (
-      <div ref={elRef} class={[attrs.class, "app-iconify"]} style={unref(wrapStyleRef)} />
+      <div ref={elRef} class={[attrs.class, 'app-iconify']} style={unref(wrapStyleRef)} />
     )
   }
 })

@@ -4,7 +4,7 @@ import { PointInfo } from '/@/lib/interface/PointInfo'
 import { pointStore } from '/@/store/modules/point'
 
 export function queryPoint(uuid: string): PointInfo | undefined {
-  const pointData = computed(() => pointStore.getPointState)
+  const pointData = computed(() => pointStore.getPointDataState)
 
   return unref(pointData).find((el) => el.uuid === uuid)
 }
@@ -20,7 +20,7 @@ export function templateInit<T>(uuid: Ref<string>, dataItem: T): void {
 
   // 数据改变触发
   function changeTrigger(key: string) {
-    pointStore.commitUpdatePointState({
+    pointStore.commitUpdatePointData({
       uuid: uuid.value,
       key,
       value: (dataItem as any)[key] as never
@@ -38,5 +38,13 @@ export function templateInit<T>(uuid: Ref<string>, dataItem: T): void {
     Reflect.ownKeys(point!).forEach((key) => {
       (dataItem as any)[key] = point![key as string]
     })
+
+    // watch(
+    //   () => point,
+    //   (val) => {
+    //     console.log(val)
+    //   },
+    //   { deep: true }
+    // )
   }
 }

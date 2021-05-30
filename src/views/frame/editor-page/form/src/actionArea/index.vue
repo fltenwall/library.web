@@ -1,10 +1,10 @@
 <template>
-  <div class="action-area">
+  <div class="action-area absolute">
     <GlobalDrawer v-model:value="visible" placement="right">
       <div class="action-area-header index-middle">
         {{ pointConfigs.name[dataItem.name] }}
       </div>
-      <a-form layout="vertical" class="action-area-main">
+      <a-form class="action-area-main" label-align="left">
         <component :is="`${dataItem.name}-point`" :uuid="uuid" />
       </a-form>
     </GlobalDrawer>
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const pointData = computed(() => pointStore.getPointState)
+    const pointData = computed(() => pointStore.getPointDataState)
 
     const dataItem = ref<PointInfo>({ name: 'form' })
     // 折叠面板
@@ -64,6 +64,8 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .action-area {
+  right: 0;
+  z-index: 2;
   width: 300px;
   height: 100%;
 
@@ -76,6 +78,24 @@ export default defineComponent({
 
   &-main {
     padding: 0 20px;
+
+    ::v-deep(.ant-row) {
+      .ant-col {
+        &.ant-form-item-control-wrapper {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+
+          .ant-form-item-control {
+            width: 100%;
+          }
+
+          .select-wrap {
+            min-width: 100%;
+          }
+        }
+      }
+    }
   }
 }
 </style>

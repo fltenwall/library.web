@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-area">
+  <div class="tool-area reactive">
     <div class="tool-area-switch">
       <a-tabs tab-position="left" @change="handleTabChange">
         <a-tab-pane v-for="(item, key) in viewList" :key="key">
@@ -20,7 +20,7 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-    <GlobalDrawer v-model:value="visible" class="tool-area-panel">
+    <GlobalDrawer v-model:value="visible" class="tool-area-panel absolute">
       <div v-for="(item, key) in viewList" :key="key" class="panel-content">
         <div
           v-for="(el, index) in item"
@@ -74,6 +74,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .tool-area {
+  z-index: 10;
   display: flex;
   height: 100%;
 
@@ -106,6 +107,7 @@ export default defineComponent({
   }
 
   &-panel {
+    left: 64px;
     width: 240px;
     border-left: 1px solid #f0f0f0;
     box-sizing: content-box;

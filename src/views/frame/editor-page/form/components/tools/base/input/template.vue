@@ -1,11 +1,11 @@
 <template>
-  <a-form-item label="字段名称：">
+  <a-form-item label="字段名称">
     <ui-index v-model:value="dataItem.label" prop="label" />
   </a-form-item>
-  <a-form-item label="提示信息：">
+  <a-form-item label="提示信息">
     <ui-index v-model:value="dataItem.placeholder" prop="placeholder" />
   </a-form-item>
-  <a-form-item label="最大输入长度：">
+  <a-form-item label="输入长度">
     <ui-index v-model:value="dataItem.maxlength" prop="maxlength" type="number" />
   </a-form-item>
 </template>

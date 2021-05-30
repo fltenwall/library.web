@@ -1,5 +1,7 @@
 <template>
-  <div>{{ point.label }}</div>
+  <div class="index-center-middle">
+    {{ point.label }}
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,7 +19,7 @@ export default defineComponent({
     // 拖拽数据信息
     const point = queryPoint(props.uuid)
 
-    console.log(point)
+    // console.log(point)
 
     return { point }
   }

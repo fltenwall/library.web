@@ -1,8 +1,10 @@
+import { CSSProperties } from 'vue'
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 import store from '/@/store/index'
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators'
+import { isObject } from '/@/utils/is'
 
-const NAME = 'component'
+const NAME = 'point'
 
 interface UpdatePointState {
   // 唯一值
@@ -17,20 +19,28 @@ export default class Point extends VuexModule {
   // 组件数据
   private pointDataState: PointInfo[] = []
 
+  // 组件数据样式
+  private pointStyleState: Indexable<CSSProperties> = {}
+
   // 获取组件数据
-  get getPointState(): PointInfo[] {
+  get getPointDataState(): PointInfo[] {
     return this.pointDataState
+  }
+
+  // 获取组件样式
+  get getPointStyleState(): Indexable<CSSProperties> {
+    return this.pointStyleState
   }
 
   // 添加数据
   @Mutation
-  commitAddPointState(data: PointInfo): void {
+  commitAddPointData(data: PointInfo): void {
     this.pointDataState.push(data)
   }
 
   // 更新数据
   @Mutation
-  commitUpdatePointState({ uuid, key, value }: UpdatePointState): void {
+  commitUpdatePointData({ uuid, key, value }: UpdatePointState): void {
     // 查找数据
     const point = this.pointDataState.find((el) => el.uuid === uuid)
 
@@ -38,9 +48,25 @@ export default class Point extends VuexModule {
     point && (point[key] = value)
   }
 
+  // 更新数据样式
+  @Mutation
+  commitUpdatePointStyle(options: { uuid: string; key: string; value: string }): void {
+    if (!isObject(this.pointStyleState[options.uuid])) {
+      this.pointStyleState[options.uuid] = {}
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.pointStyleState[options.uuid] as any)[options.key] = options.value
+  }
+
+  // 更新数据
+  @Mutation
+  commitUpdatePointDataState(data: PointInfo[]): void {
+    this.pointDataState = data
+  }
+
   // 删除数据
   @Mutation
-  commitDeletePointState({ uuid }: { uuid: string }): void {
+  commitDeletePointData({ uuid }: { uuid: string }): void {
     // 查找数据
     const index = this.pointDataState.findIndex((el) => el.uuid === uuid)
 

@@ -38,7 +38,7 @@ export default defineComponent({
     // 线条状态
     const lineStatus = ref<{ [key: string]: CSSProperties }>({ x: {}, y: {} })
     // 拖拽数据信息
-    const pointData = computed(() => pointStore.getPointState)
+    const pointData = computed(() => pointStore.getPointDataState)
 
     // 展示线条
     function handleShow() {
@@ -124,9 +124,9 @@ export default defineComponent({
       lineStatus.value[line].display = 'inline'
       lineStatus.value[line].transform = `translate${state[line]}(${move}px)`
       if (line === 'y') {
-        emit('on-suck', { uuid: props.uuid, x: vlaue, y: props.move.y })
+        emit('on-suck', { uuid: props.uuid, x: vlaue, y: move })
       } else {
-        emit('on-suck', { uuid: props.uuid, y: vlaue, x: props.move.x })
+        emit('on-suck', { uuid: props.uuid, y: vlaue, x: move })
       }
     }
 
@@ -156,6 +156,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .line {
   position: absolute;
+  z-index: 2;
   display: none;
 }
 
