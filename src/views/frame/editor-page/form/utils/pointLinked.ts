@@ -2,6 +2,7 @@ import { watch, computed, reactive, ref, unref } from 'vue'
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 import { pointStore } from '/@/store/modules/point'
 import Linked from '/@/utils/linked'
+import { cloneDeep } from 'lodash-es'
 
 interface UseLinked {
   linkedState: { undo: boolean; redo: boolean }
@@ -20,8 +21,6 @@ export default function (): UseLinked {
   const pointData = computed(() => pointStore.getPointDataState)
   // 内部更新不触发
   const isValueUpdateFromInner = ref<boolean>(false)
-  //
-  // const viewAreaRef = ref<{}|>
 
   // 监听数据变化
   watch(
@@ -66,7 +65,7 @@ export default function (): UseLinked {
     // 更新状态
     undateState()
     // 更新数据
-    pointStore.commitUpdatePointDataState(linked.current?.element || [])
+    pointStore.commitUpdatePointDataState(cloneDeep(linked.current?.element) || [])
     // 更新样式
     updateStyle()
   }

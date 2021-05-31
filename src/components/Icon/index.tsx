@@ -15,7 +15,7 @@ export default defineComponent({
     },
     size: {
       type: [String, Number] as PropType<string | number>,
-      default: 14
+      default: undefined
     }
   },
   setup(props, { attrs }) {
@@ -46,7 +46,7 @@ export default defineComponent({
       const { size, color } = props
       return {
         color,
-        'font-size': `${parseInt(size.toString(), 10)}px`,
+        'font-size': `${size && parseInt(size.toString(), 10)}px`,
         display: 'inline-flex'
       }
     })

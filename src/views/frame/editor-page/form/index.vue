@@ -226,6 +226,7 @@ export default defineComponent({
 }
 
 .point-history {
+  font-size: 18px;
   cursor: pointer;
 
   &[disable='true'] {

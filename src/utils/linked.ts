@@ -55,13 +55,16 @@ export default class LinkedList<T> {
 
   // 是否可以前进
   get isRedo(): boolean {
+    if (!this.current) {
+      return !!this.head.next?.next
+    }
     return !!this.current?.next?.next
   }
 
   // 添加数据 从当前节点添加 尾部抛弃
   add(element: T): void {
     if (!this._current) {
-      // 重新初始化
+      // 为空 重新初始化
       this.head.next = this.tail
       this.tail.prev = this.head
       // 判断为空, 从尾部添加
@@ -94,6 +97,10 @@ export default class LinkedList<T> {
   // 前进
   redo(): Node<T> | null {
     if (!this._current) {
+      if (this.head?.next?.next) {
+        this._current = this.head.next
+        return this._current
+      }
       return null
     }
     this._current = this._current.next
