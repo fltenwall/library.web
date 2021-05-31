@@ -1,4 +1,4 @@
-import { watch, computed, reactive, ref, unref } from 'vue'
+import { watch, computed, reactive, ref, unref, Ref } from 'vue'
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 import { pointStore } from '/@/store/modules/point'
 import Linked from '/@/utils/linked'
@@ -12,11 +12,11 @@ interface UseLinked {
   handleRedo: () => void
 }
 
-export default function (): UseLinked {
+export default function (selectUuid: Ref<string>): UseLinked {
   // 表示可以回退或者前进
   const linkedState = reactive({ undo: false, redo: false })
   // 链表
-  const linked = new Linked<PointInfo[]>()
+  const linked = new Linked<{ data: PointInfo[]; select: string }>()
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState)
   // 内部更新不触发
@@ -29,7 +29,7 @@ export default function (): UseLinked {
       if (unref(isValueUpdateFromInner)) {
         isValueUpdateFromInner.value = false
       } else {
-        linked.add(val)
+        linked.add({ data: val, select: unref(selectUuid) })
         undateState()
       }
     },
@@ -64,10 +64,11 @@ export default function (): UseLinked {
   function updateContent() {
     // 更新状态
     undateState()
+    const { data, select } = linked.current?.element || { data: [], select: '' }
     // 更新数据
-    pointStore.commitUpdatePointDataState(cloneDeep(linked.current?.element) || [])
+    pointStore.commitUpdatePointDataState(cloneDeep(data))
     // 更新样式
-    updateStyle()
+    updateStyle(select)
   }
 
   // 更新状态
@@ -77,9 +78,10 @@ export default function (): UseLinked {
   }
 
   // 跟新样式
-  function updateStyle() {
+  function updateStyle(select: string) {
     unref(pointData).forEach((el) => {
       const uuid = el.uuid!
+      selectUuid.value = select
       pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` })
       pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` })
       pointStore.commitUpdatePointStyle({

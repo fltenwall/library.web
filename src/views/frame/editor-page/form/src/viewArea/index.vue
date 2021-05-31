@@ -28,7 +28,7 @@
           @mouseenter="mouseenter(item.uuid)"
           @mouseleave="mouseleave"
         >
-          <component :is="`${item.name}-point`" :uuid="item.uuid" :title="item.uuid" />
+          <component :is="`${item.name}-point`" v-bind="item" />
         </draggable>
 
         <!-- 标线 -->
@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import type { PointInfo } from '/@/lib/interface/PointInfo'
-import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue'
+import { defineComponent, computed, reactive, CSSProperties, ref, watch } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
 import { pointList } from '../../components/tools/index'
 import { buildUUID } from '/@/utils/uuid'
@@ -96,8 +96,14 @@ interface Move {
 
 export default defineComponent({
   components: { Scrollbar, Draggable, ...pointList, markLine },
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
   emits: ['on-click-point'],
-  setup(_props, { emit }) {
+  setup(props, { emit }) {
     // 面板样式
     const panelStyle = reactive<CSSProperties>({})
     // 拖拽数据信息
@@ -297,6 +303,15 @@ export default defineComponent({
     function handleCancelSelect() {
       setSelectPoint('')
     }
+
+    // 监听数据变化
+    watch(
+      () => props.value,
+      (val) => {
+        // 如果为空,清除
+        dataItem.select = val
+      }
+    )
 
     return {
       panelRef,

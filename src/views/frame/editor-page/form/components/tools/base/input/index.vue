@@ -1,27 +1,19 @@
 <template>
   <div class="index-center-middle">
-    {{ point.label }}
+    {{ label }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { queryPoint } from '../../utils'
+import { InputSchema } from './schema'
+import { defineComponent, reactive, toRefs } from 'vue'
 
 export default defineComponent({
-  props: {
-    uuid: {
-      type: String,
-      default: ''
-    }
-  },
-  setup(props) {
-    // 拖拽数据信息
-    const point = queryPoint(props.uuid)
+  inheritAttrs: false,
+  setup(_props, { attrs }) {
+    const { label } = toRefs(reactive<InputSchema>(attrs as InputSchema))
 
-    // console.log(point)
-
-    return { point }
+    return { label }
   }
 })
 </script>

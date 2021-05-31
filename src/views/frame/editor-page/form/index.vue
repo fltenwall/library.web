@@ -50,8 +50,13 @@
     </PublicHeader>
     <div class="flex flex-item hidden editor-form-main relative">
       <tool-area />
-      <view-area ref="viewAreaRef" class="flex-item" @on-click-point="handleClickPoint" />
-      <action-area v-model:value="action.visible" :uuid="action.uuid" />
+      <view-area
+        ref="viewAreaRef"
+        class="flex-item"
+        :value="selectUuid"
+        @on-click-point="handleClickPoint"
+      />
+      <action-area v-model:value="actionItem.visible" :uuid="selectUuid" />
     </div>
   </div>
 </template>
@@ -78,7 +83,9 @@ export default defineComponent({
 
     const inputState = ref<boolean>(false)
 
-    const action = reactive<{ visible: boolean; uuid: string }>({ visible: false, uuid: '' })
+    const actionItem = reactive<{ visible: boolean }>({ visible: false })
+
+    const selectUuid = ref<string>('')
 
     // 处理点击编辑
     const onClickEdit = () => inputRef.value?.focus()
@@ -93,7 +100,7 @@ export default defineComponent({
     const onInputBlur = () => (inputState.value = false)
 
     // 使用链表
-    const linked = pointLinked()
+    const linked = pointLinked(selectUuid)
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
@@ -103,8 +110,8 @@ export default defineComponent({
 
     // 点击 point
     function handleClickPoint({ uuid }: { uuid: string }) {
-      action.visible = false
-      action.uuid = uuid
+      actionItem.visible = false
+      selectUuid.value = uuid
     }
 
     onBeforeUnmount(() => pointStore.commitEmptyPointState())
@@ -112,8 +119,9 @@ export default defineComponent({
     onLoadDataById(+unref(currentRoute).params.id)
 
     return {
-      action,
       dataItem,
+      selectUuid,
+      actionItem,
       inputRef,
       inputState,
       onClickEdit,

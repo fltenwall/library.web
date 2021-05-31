@@ -1,9 +1,9 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 
 export interface InputSchema extends PointInfo {
-  label: string,
+  label: string
 
-  placeholder: string,
+  placeholder: string
 
   maxlength: number | undefined
 
@@ -17,14 +17,12 @@ export const schema: InputSchema = {
 
   label: 'input',
 
-  placeholder: "",
+  placeholder: '',
 
   maxlength: undefined,
 
   allowClear: false
 }
-
-
 
 export const name = '输入框'
 
