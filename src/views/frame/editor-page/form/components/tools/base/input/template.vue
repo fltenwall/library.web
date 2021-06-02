@@ -12,26 +12,17 @@
 
 <script lang="ts">
 import type { InputSchema } from './schema'
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { templateInit } from '../../utils'
 import uiIndex from '/@/lib/UI/src/input/index'
 
 export default defineComponent({
   components: { uiIndex },
-  props: {
-    uuid: {
-      type: String,
-      default: ''
-    }
-  },
-  setup(props) {
-    const { uuid } = toRefs(props)
+  setup() {
     // 数据集合
     const dataItem = reactive<Partial<InputSchema>>({})
 
-    templateInit<Partial<InputSchema>>(uuid, dataItem)
-
-    console.log(dataItem)
+    templateInit<Partial<InputSchema>>(dataItem)
 
     return { dataItem }
   }

@@ -20,7 +20,7 @@
           :style="pointStyle[item.uuid]"
           :move="dataItem.isMove"
           :hover="dataItem.hover === item.uuid"
-          :select="dataItem.select === item.uuid"
+          :select="pointUUID === item.uuid"
           @dragleave.stop
           @on-end="handleMoveEnd"
           @on-move="handleMove"
@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import type { PointInfo } from '/@/lib/interface/PointInfo'
-import { defineComponent, computed, reactive, CSSProperties, ref, watch } from 'vue'
+import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
 import { pointList } from '../../components/tools/index'
 import { buildUUID } from '/@/utils/uuid'
@@ -70,8 +70,6 @@ import { handleStore, limitRules } from './utils'
 interface DataItem {
   // 选择鼠标指针浮动在其上的元素
   hover?: string
-  // 设置选中
-  select?: string
   // 是否移动
   isMove?: boolean
   // 状态
@@ -96,20 +94,19 @@ interface Move {
 
 export default defineComponent({
   components: { Scrollbar, Draggable, ...pointList, markLine },
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
   emits: ['on-click-point'],
-  setup(props, { emit }) {
+  setup(_props, { emit }) {
     // 面板样式
     const panelStyle = reactive<CSSProperties>({})
     // 拖拽数据信息
     const pointData = computed(() => pointStore.getPointDataState)
     // 拖拽数据样式
     const pointStyle = computed(() => pointStore.getPointStyleState)
+    // 选中数据
+    const pointUUID = computed({
+      set: (uuid) => pointStore.commitUpdatePointUUIDState({ uuid }),
+      get: () => pointStore.getPointUUIDState
+    })
     // 当前状态
     const dataItem = reactive<DataItem>({})
     // ref
@@ -294,9 +291,9 @@ export default defineComponent({
     // 设置数据
     function setSelectPoint(uuid: string) {
       // 传递数据
-      emit('on-click-point', { uuid })
+      emit('on-click-point')
       // 设置选中
-      dataItem.select = uuid
+      pointUUID.value = uuid
     }
 
     // 右键
@@ -304,18 +301,10 @@ export default defineComponent({
       setSelectPoint('')
     }
 
-    // 监听数据变化
-    watch(
-      () => props.value,
-      (val) => {
-        // 如果为空,清除
-        dataItem.select = val
-      }
-    )
-
     return {
       panelRef,
       dataItem,
+      pointUUID,
       pointData,
       pointStyle,
       panelStyle,

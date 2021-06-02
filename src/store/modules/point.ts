@@ -22,6 +22,9 @@ export default class Point extends VuexModule {
   // 组件数据样式
   private pointStyleState: Indexable<CSSProperties> = {}
 
+  // 当前选中下标
+  private pointUUIDState = ''
+
   // 获取组件数据
   get getPointDataState(): PointInfo[] {
     return this.pointDataState
@@ -30,6 +33,17 @@ export default class Point extends VuexModule {
   // 获取组件样式
   get getPointStyleState(): Indexable<CSSProperties> {
     return this.pointStyleState
+  }
+
+  // 获取选中参数
+  get getPointUUIDState(): string {
+    return this.pointUUIDState
+  }
+
+  // 获取数据
+  get getPointInfo(): PointInfo {
+    const point = this.pointDataState.find((el) => el.uuid === this.pointUUIDState)
+    return point ?? {}
   }
 
   // 添加数据
@@ -56,6 +70,12 @@ export default class Point extends VuexModule {
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this.pointStyleState[options.uuid] as any)[options.key] = options.value
+  }
+
+  // 更新选中参数
+  @Mutation
+  commitUpdatePointUUIDState({ uuid }: { uuid: string }): void {
+    this.pointUUIDState = uuid
   }
 
   // 更新数据

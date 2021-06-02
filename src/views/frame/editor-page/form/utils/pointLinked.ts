@@ -1,4 +1,4 @@
-import { watch, computed, reactive, ref, unref, Ref } from 'vue'
+import { watch, computed, reactive, ref, unref } from 'vue'
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 import { pointStore } from '/@/store/modules/point'
 import Linked from '/@/utils/linked'
@@ -12,13 +12,18 @@ interface UseLinked {
   handleRedo: () => void
 }
 
-export default function (selectUuid: Ref<string>): UseLinked {
+export default function (): UseLinked {
   // 表示可以回退或者前进
   const linkedState = reactive({ undo: false, redo: false })
   // 链表
   const linked = new Linked<{ data: PointInfo[]; select: string }>()
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState)
+  // 选中数据
+  const pointUUID = computed({
+    set: (uuid) => pointStore.commitUpdatePointUUIDState({ uuid }),
+    get: () => pointStore.getPointUUIDState
+  })
   // 内部更新不触发
   const isValueUpdateFromInner = ref<boolean>(false)
 
@@ -29,7 +34,7 @@ export default function (selectUuid: Ref<string>): UseLinked {
       if (unref(isValueUpdateFromInner)) {
         isValueUpdateFromInner.value = false
       } else {
-        linked.add({ data: val, select: unref(selectUuid) })
+        linked.add({ data: val, select: unref(pointUUID) })
         undateState()
       }
     },
@@ -79,16 +84,15 @@ export default function (selectUuid: Ref<string>): UseLinked {
 
   // 跟新样式
   function updateStyle(select: string) {
+    pointUUID.value = select
     unref(pointData).forEach((el) => {
       const uuid = el.uuid!
-      selectUuid.value = select
-      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` })
-      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` })
-      pointStore.commitUpdatePointStyle({
-        uuid,
-        key: 'transform',
-        value: `translate(${el.x}px,${el.y}px)`
-      })
+      const width = `${el.width}px`
+      const height = `${el.height}px`
+      const transform = `translate(${el.x}px,${el.y}px)`
+      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: width })
+      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: height })
+      pointStore.commitUpdatePointStyle({ uuid, key: 'transform', value: transform })
     })
   }
 
