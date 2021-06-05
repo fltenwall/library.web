@@ -96,8 +96,10 @@ export default class Point extends VuexModule {
 
   // 清空
   @Mutation
-  commitEmptyPointState(): void {
+  commitEmptyState(): void {
     this.pointDataState = []
+    this.pointStyleState = {}
+    this.pointUUIDState = ''
   }
 }
 

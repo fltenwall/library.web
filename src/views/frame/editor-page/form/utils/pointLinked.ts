@@ -87,12 +87,13 @@ export default function (): UseLinked {
     pointUUID.value = select
     unref(pointData).forEach((el) => {
       const uuid = el.uuid!
-      const width = `${el.width}px`
-      const height = `${el.height}px`
-      const transform = `translate(${el.x}px,${el.y}px)`
-      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: width })
-      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: height })
-      pointStore.commitUpdatePointStyle({ uuid, key: 'transform', value: transform })
+      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` })
+      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` })
+      pointStore.commitUpdatePointStyle({
+        uuid,
+        key: 'transform',
+        value: `translate(${el.x}px,${el.y}px)`
+      })
     })
   }
 

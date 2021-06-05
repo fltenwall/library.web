@@ -79,8 +79,8 @@ export function limitRules(panelRef: Ref<HTMLElement | null>): LimitRules {
   function limitPosition(pos: { x: number; y: number }, uuid: string): Position {
     const { clientHeight, clientWidth } = panelRef.value!
     const point = unref(pointData).find((el) => el.uuid === uuid)
-    const width = point?.width
-    const height = point?.height
+    const width = point!.width!
+    const height = point!.height!
     const scope = { x: pos.x + (point?.x || 0), y: pos.y + (point?.y || 0), width, height }
     const x = scope.x > clientWidth - width! ? clientWidth - width! : scope.x <= 0 ? 0 : scope.x
     const y = scope.y > clientHeight - height! ? clientHeight - height! : scope.y <= 0 ? 0 : scope.y

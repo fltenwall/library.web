@@ -106,7 +106,7 @@ export default defineComponent({
       actionItem.visible = false
     }
 
-    onBeforeUnmount(() => pointStore.commitEmptyPointState())
+    onBeforeUnmount(() => pointStore.commitEmptyState())
 
     onLoadDataById(+unref(currentRoute).params.id)
 
