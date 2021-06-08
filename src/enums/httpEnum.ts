@@ -1,17 +1,13 @@
-
-
-
 export enum ContentTypeEnum {
   // json
   JSON = 'application/json;charset=UTF-8',
 
   // form-data qs
-  FORM_URLENCODED = 'application/x-www-form-urlencoded;',
+  FORM_URLENCODED = 'application/x-www-form-urlencoded',
 
   // form-data  upload
-  FORM_DATA = 'multipart/form-data;charset=UTF-8',
+  FORM_DATA = 'multipart/form-data;charset=UTF-8'
 }
-
 
 export enum ResultEnum {
   // 成功状态码

@@ -7,8 +7,7 @@
     @on-refresh="onRefresh"
   >
     <template #status="{ record }">
-      <span v-if="record.status === 'SUCCESS'" color="#19be6b"> 成功 </span>
-      <span v-else-if="record.status === 'FAIL'" color="#ed4014"> 失败 </span>
+      {{ record.status }}
     </template>
     <template #createTime="{ record }">
       {{ useFromatlll(record.createTime) }}
@@ -20,9 +19,12 @@
     </template>
 
     <template #location="{ record }">
-      <span v-if="record.country !== 'XX'">{{ record.country }}</span>
-      <span v-if="record.region !== 'XX'" class="ml-2">{{ record.region }}</span>
-      <span v-if="record.city !== 'XX'" class="ml-2">{{ record.city }}</span>
+      <div class="">
+        <span>{{ record.ipRecord.nation }}</span>
+        <span>{{ record.ipRecord.region }}</span>
+        <span>{{ record.ipRecord.city }}</span>
+        <span>{{ record.ipRecord.district }}</span>
+      </div>
     </template>
 
     <template #footer-right>
@@ -32,15 +34,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import { tableColumns } from "./data-list"
-import {LoginRecord} from '/@/api/record-manage/login-record'
-import { injectListPage } from "/@/lib/idata/data-list/methods/useDepend"
-import { useFromatlll } from "/@/utils/dateFormat"
-import { usePagination } from "/@/hooks/web/usePagination"
+import { defineComponent, ref } from 'vue'
+import { tableColumns } from './data-list'
+import { LoginRecord } from '/@/api/record-manage/login-record'
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
+import { useFromatlll } from '/@/utils/dateFormat'
+import { usePagination } from '/@/hooks/web/usePagination'
 
 export default defineComponent({
-  emits: ["on-page-change", "on-refresh"],
+  emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
     const dataSource = ref<LoginRecord[]>([])
@@ -57,10 +59,10 @@ export default defineComponent({
     const { current, setPagination, getPagination } = usePagination()
 
     // 页面发生变化
-    const onPageChange = () => emit("on-page-change")
+    const onPageChange = () => emit('on-page-change')
 
     // 处理刷新
-    const onRefresh = () => emit("on-refresh")
+    const onRefresh = () => emit('on-refresh')
 
     return {
       loading,

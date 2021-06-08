@@ -1,5 +1,5 @@
-import type { Result, PagerQueryData, PagerResponseData } from "/@/lib/http/axios/types"
-import request from "/@/lib/http/axios/"
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
+import request from '/@/lib/http/axios/'
 
 export interface RoleManage {
   //  主键
@@ -15,7 +15,7 @@ export interface RoleManage {
   description?: string
 
   // 权限
-  authorities?: string
+  modularIds?: string
 
   // 创建者
   createBy?: string
@@ -30,20 +30,17 @@ export interface RoleManage {
   updateTime?: string
 }
 
-
-
 /**
  * 分页结果定义
  */
 export type DataPager = PagerResponseData<RoleManage>
 
 export default class Service {
-
   // 向服务查询数据并分页返回结果
   static fecthList(query?: Partial<PagerQueryData>): Promise<DataPager> {
     return request<DataPager>({
-      url: "/api/role",
-      method: "get",
+      url: '/epi/role',
+      method: 'get',
       params: query
     })
   }
@@ -51,8 +48,8 @@ export default class Service {
   // 保存数据到远程服务器
   static saveNewItem(item: RoleManage): Promise<Result<RoleManage>> {
     return request<Result<RoleManage>>({
-      url: "/api/role",
-      method: "post",
+      url: '/epi/role',
+      method: 'post',
       data: item
     })
   }
@@ -60,16 +57,16 @@ export default class Service {
   // 通过ID取得数据
   static getItemById(id: number): Promise<Result<RoleManage>> {
     return request<Result<RoleManage>>({
-      url: "/api/role/" + id,
-      method: "get"
+      url: '/epi/role/' + id,
+      method: 'get'
     })
   }
 
   // 更新数据到远程服务器
   static updateItem(id: number, item: RoleManage): Promise<Result<RoleManage>> {
     return request<Result<RoleManage>>({
-      url: "/api/role/" + id,
-      method: "put",
+      url: '/epi/role/' + id,
+      method: 'put',
       data: item
     })
   }
@@ -77,8 +74,8 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: "/api/role/" + id,
-      method: "delete"
+      url: '/epi/role/' + id,
+      method: 'delete'
     })
   }
 }

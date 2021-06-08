@@ -7,10 +7,10 @@
       </div>
     </div>
     <GlobalInput
-      v-model:value="formData.username"
+      v-model:value="formData.account"
       v-model:errorBorder="error.is"
       type="text"
-      placeholder="手机号/邮件地址/图书馆账号"
+      :placeholder="`手机号/邮件地址/${MixinConfig.shortTitle}账号`"
       @on-enter="onEnter"
     />
     <GlobalInput
@@ -26,7 +26,7 @@
       ref="buttonInstance"
       class="login-account-button"
       :size="1"
-      :disabled="!(!!formData.username && !!formData.password)"
+      :disabled="!(!!formData.account && !!formData.password)"
       @on-click="onButtonClick"
     >
       登 录
@@ -61,7 +61,7 @@ export default defineComponent({
 
     const buttonInstance = ref<Instance | null>(null)
 
-    const formData = reactive({ username: '', password: '' })
+    const formData = reactive({ account: '', password: '' })
 
     // 错误信息
     const error = reactive({ msg: '', is: false })
@@ -74,7 +74,7 @@ export default defineComponent({
     const onButtonClick = (event: MouseEvent) => handleUserLogin(event.offsetX, event.offsetY)
 
     async function handleUserLogin(x?: number, y?: number) {
-      if (!formData.username || !formData.password || loading.value) return
+      if (!formData.account || !formData.password || loading.value) return
       buttonInstance.value?.startAnimation(x, y)
       try {
         loading.value = true

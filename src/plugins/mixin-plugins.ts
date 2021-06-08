@@ -3,9 +3,7 @@ import { showByAuth } from '../hooks/web/useAuthorities'
 import { useMoment } from '/@/utils/dateFormat'
 import config from '/@/config'
 import { PageMode } from '../utils/helper/breadcrumb'
-
-
-
+import { PageEnum } from '../enums/pageEnum'
 
 export default class MixinPlugins {
   static init(app: App<Element>): void {
@@ -16,7 +14,10 @@ export default class MixinPlugins {
           MixinConfig: config,
 
           // 页面配置
-          MixinPageMode: PageMode
+          MixinPageMode: PageMode,
+
+          // 默认路由枚举
+          MixinPageEnum: PageEnum
         }
       },
       methods: {
@@ -25,7 +26,6 @@ export default class MixinPlugins {
 
         // 日期格式
         MixinUseMoment: useMoment
-
       }
     })
   }

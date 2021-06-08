@@ -1,5 +1,4 @@
 import type { Result } from '/@/lib/http/axios/types'
-import type { RoleManage } from './system-manage/role-mange'
 import request from '/@/lib/http/axios/'
 import { ContentTypeEnum } from '/@/enums/httpEnum'
 
@@ -11,10 +10,10 @@ export interface UserInfo {
   username?: string
 
   // 昵称
-  nickName?: string
+  nickname?: string
 
   // 角色权限
-  roles: RoleManage[]
+  authorities: string[]
 
   // 电话
   mobile?: string
@@ -25,22 +24,15 @@ export interface UserInfo {
   // 性别
   sex?: string
 
-  // 图片
-  md5?: string
+  // 是否超级管理员
+  superAdmin?: boolean
 
-  // 账户未过期
-  accountNonExpired?: boolean
-
-  // 账户未锁定
-  accountNonLocked?: boolean
-
-  // 凭证是否过期
-  credentialsNonExpired?: boolean
+  // 描述
+  description?: string
 
   // 是否禁用
   enabled?: boolean
 }
-
 
 export interface Register {
   // 账户
@@ -57,15 +49,11 @@ export interface Register {
 
   // 重复
   repeat?: string
-
 }
 
 export interface CSRF {
   // 用户标识符
   token: string
-
-  // 参数名称
-  parameterName: string
 
   // 请求头名称
   headerName: string
@@ -79,14 +67,14 @@ export interface Security {
 export interface LoginParams {
   password: string
 
-  username: string
+  account: string
 }
 
 export default class Service {
   // 获取用户信息和token
   static getAccountInfo(): Promise<Result<Security>> {
     return request<Result<Security>>({
-      url: '/api/user/me',
+      url: '/epi/user/me',
       method: 'get'
     })
   }
@@ -94,7 +82,7 @@ export default class Service {
   // 登录
   static loginApi(data: LoginParams): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/api/user/login',
+      url: '/epi/user/login',
       method: 'post',
       data: data,
       headers: {
@@ -106,8 +94,17 @@ export default class Service {
   // 退出
   static logoutApi(): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/api/user/logout',
+      url: '/epi/user/logout',
       method: 'post'
+    })
+  }
+
+  // 注册
+  static registerApi(data: Register): Promise<Result<null>> {
+    return request<Result<null>>({
+      url: '/epi/user/register',
+      method: 'post',
+      data: data
     })
   }
 }

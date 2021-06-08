@@ -15,7 +15,7 @@
           :row-key="'name'"
         />
       </div>
-      <module-visit :name="selectMenu.name" />
+      <module-visit :identifier="selectMenu.name" />
     </div>
   </div>
 </template>
@@ -31,10 +31,8 @@ import moduleVisit from './module-visit.vue'
 import { tableColumns } from './index'
 
 export default defineComponent({
-  components: { moduleTree, Scrollbar, moduleVisit  },
+  components: { moduleTree, Scrollbar, moduleVisit },
   setup() {
-
-
     // 查找菜单
     const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name === key)
 

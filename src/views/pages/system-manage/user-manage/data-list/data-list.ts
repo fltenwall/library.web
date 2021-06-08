@@ -6,7 +6,14 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'username',
     align: 'center',
     ellipsis: true
-
+  },
+  {
+    title: '超级管理员',
+    dataIndex: 'superAdmin',
+    align: 'center',
+    width: 100,
+    ellipsis: true,
+    slots: { customRender: 'superAdmin' }
   },
   {
     title: '用户状态',
@@ -16,15 +23,16 @@ export const tableColumns: TableColumn[] = [
     width: 100,
     slots: { customRender: 'enabled' }
   },
+
   {
     title: '用户名称',
-    dataIndex: 'nickName',
+    dataIndex: 'nickname',
     align: 'center',
     ellipsis: true
   },
   {
     title: '性别',
-    dataIndex: 'sex',
+    dataIndex: 'sex.label',
     align: 'center',
     width: 100,
     ellipsis: true
@@ -50,4 +58,3 @@ export const tableColumns: TableColumn[] = [
     slots: { customRender: 'operation' }
   }
 ]
-

@@ -3,10 +3,9 @@ import type { TableColumn } from '/@/lib/props/TableList'
 export const tableColumns: TableColumn[] = [
   {
     title: '登录账户',
-    dataIndex: 'userName',
+    dataIndex: 'account',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '登录地址',
@@ -22,24 +21,17 @@ export const tableColumns: TableColumn[] = [
     slots: { customRender: 'location' }
   },
   {
-    title: '运营商',
-    dataIndex: 'isp',
-    align: 'center',
-    ellipsis: true
-  },
-  {
     title: '浏览器',
-    dataIndex: 'client',
+    dataIndex: 'browser',
     align: 'center',
     ellipsis: true
   },
   {
     title: '操作系统',
-    dataIndex: 'operatingSystem',
+    dataIndex: 'os',
     align: 'center',
     ellipsis: true
   },
-
 
   {
     title: '登录状态',
@@ -47,7 +39,6 @@ export const tableColumns: TableColumn[] = [
     align: 'center',
     ellipsis: true,
     slots: { customRender: 'status' }
-
   },
   {
     title: '操作信息',
@@ -64,5 +55,4 @@ export const tableColumns: TableColumn[] = [
     width: 200,
     slots: { customRender: 'createTime' }
   }
-
 ]

@@ -1,5 +1,4 @@
 import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
-import { BookCategory } from './book-manage/book-category'
 import request from '/@/lib/http/axios/'
 
 export interface Search {
@@ -29,9 +28,6 @@ export interface Search {
 
   // 出版时间
   publicationTime?: string
-
-  // 学科分类
-  bookCategory?: BookCategory
 
   // 创建者
   createBy?: string
@@ -85,6 +81,4 @@ export default class Service {
       params: query
     })
   }
-
-
 }

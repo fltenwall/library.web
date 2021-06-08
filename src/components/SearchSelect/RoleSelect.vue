@@ -2,7 +2,6 @@
   <div>
     <select-search
       v-model:value="selectData"
-      mode="multiple"
       :filter-option="false"
       :not-found-content="null"
       :placeholder="placeholder"
@@ -29,11 +28,11 @@ export default defineComponent({
   components: { SelectSearch },
   props: {
     value: {
-      type: [Array, String],
+      type: [Number, String],
       default: undefined
     },
-    roles: {
-      type: Object as PropType<RoleManage[]>,
+    role: {
+      type: Object as PropType<RoleManage>,
       default: undefined
     },
     placeholder: {
@@ -41,12 +40,12 @@ export default defineComponent({
       default: '请输入'
     }
   },
-  emits: ['update:value', 'update:roles', 'on-focus'],
+  emits: ['update:value', 'update:role', 'on-focus'],
   setup(props, { emit }) {
     const options = ref<RoleManage[]>([])
 
     // 选中数据
-    const selectData = ref<number[]>([])
+    const selectData = ref<number | undefined>()
 
     // 获取焦点
     const onFocus = () => emit('on-focus')
@@ -78,15 +77,15 @@ export default defineComponent({
     watch(
       () => props.value,
       (value) => {
-        !value && (selectData.value = [])
+        !value && (selectData.value = undefined)
       }
     )
 
     watch(
-      () => props.roles,
+      () => props.role,
       (value) => {
-        selectData.value = value?.length ? value.map((el) => el.id!) : []
-        options.value = value?.length ? value : []
+        selectData.value = value.id
+        options.value = [value]
       }
     )
 

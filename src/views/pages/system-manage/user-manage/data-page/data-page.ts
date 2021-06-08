@@ -2,20 +2,8 @@ import type { FromRules } from '/@/lib/interface/From'
 
 export const formRules: FromRules = {
   username: [{ required: true, whitespace: true, message: '不允许为空' }],
-  nickName: [{ required: true, whitespace: true, message: '不允许为空' }],
   enabled: [{ type: 'number', required: true, message: '不允许为空' }],
-  role: [
-    {
-      type: 'object',
-      required: true,
-      validator: (_rule: unknown, value: number[]): Promise<void> => {
-        if (value?.length) {
-          return Promise.resolve()
-        }
-        return Promise.reject('不允许为空')
-      }
-    }
-  ],
+  roleId: [{ type: 'number', required: true, message: '不允许为空' }],
   mobile: [
     {
       required: true,
@@ -40,10 +28,7 @@ export const formRules: FromRules = {
       trigger: 'blur'
     }
   ]
-
 }
-
-
 
 export const selectEnableOption = [
   { value: 0, label: '禁用' },

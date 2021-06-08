@@ -14,10 +14,10 @@
 
 <script lang="ts">
 import type { Menu as MenuType } from '/@/router/types'
-import { defineComponent, ref, unref, watch } from 'vue'
+import { defineComponent, ref, unref, watch, computed } from 'vue'
 import { getMenus } from '/@/utils/helper/menu'
 import { Scrollbar } from '/@/components/Scrollbar'
-import { cloneDeep, debounce, keys, uniq } from 'lodash-es'
+import { cloneDeep, debounce } from 'lodash-es'
 import service, { ModuleManage } from '/@/api/system-manage/module-manage'
 import { message } from 'ant-design-vue'
 
@@ -33,8 +33,8 @@ export default defineComponent({
   components: { Scrollbar },
   props: {
     value: {
-      type: Array,
-      default: () => []
+      type: String,
+      default: '[]'
     },
     readonly: {
       type: Boolean,
@@ -53,12 +53,14 @@ export default defineComponent({
 
     const isValueUpdateFromInner = ref<boolean>(false)
 
+    const modularIds = computed(() => JSON.parse(props.value || '[]'))
+
     const setAuthValue = debounce(() => {
       const checked = unref(checkedKeys)
       const data = unref(moudleData).filter((el) => checked.includes(el.id!))
-      const authValue = data.map((el) => keys(JSON.parse(el.authorities!)))
+      const authValue = data.map((el) => el.id!)
       isValueUpdateFromInner.value = true
-      emit('update:value', uniq(authValue.flat()))
+      emit('update:value', JSON.stringify(authValue))
     }, 1000)
 
     // 请求服务器数据
@@ -69,7 +71,7 @@ export default defineComponent({
         moudleData.value = data.content
         treeData.value = handleTreeData(getMenus(false))
       } catch (err) {
-        message.error(`数据加载失败: ${err.msg}`)
+        message.error(`数据加载失败: ${err}`)
       } finally {
         loading.value = false
       }
@@ -83,10 +85,10 @@ export default defineComponent({
         if (value.children) {
           value.children = handleTreeData(value.children)
         } else {
-          const authData = moudleData.value.filter(({ name }) => name === value.name)
+          const authData = moudleData.value.filter(({ identifier }) => identifier === value.name)
           value.children = authData.map((el) => {
-            validChecked(el.authorities!, el.id!)
-            return { path: '', key: el.id, title: el.description }
+            validChecked(el.id!)
+            return { path: '', key: el.id, title: el.name }
           })
         }
         data.push(value)
@@ -95,9 +97,8 @@ export default defineComponent({
     }
 
     // 检测是否选中
-    function validChecked(authorities: string, id: number) {
-      const auth = JSON.parse(authorities)
-      if (keys(auth).every((name) => props.value.includes(name))) {
+    function validChecked(id: number) {
+      if (unref(modularIds).includes(id)) {
         checkedKeys.value.push(id)
       }
     }
@@ -109,19 +110,19 @@ export default defineComponent({
           handleChecked(item.children)
         } else {
           const authData = moudleData.value.filter(({ id }) => id === item.key)
-          authData.forEach((el) => validChecked(el.authorities!, el.id!))
+          authData.forEach((el) => validChecked(el.id!))
         }
       }
     }
 
     watch(
-      () => props.value,
+      () => modularIds,
       () => {
         if (loading.value) return
         if (isValueUpdateFromInner.value) {
           isValueUpdateFromInner.value = false
         } else {
-          checkedKeys.value.splice(1, checkedKeys.value.length)
+          checkedKeys.value = []
           handleChecked(treeData.value)
         }
       }

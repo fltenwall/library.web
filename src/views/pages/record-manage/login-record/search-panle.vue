@@ -3,7 +3,7 @@
     <a-row type="flex" justify="end">
       <a-col :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="登录账户">
-          <InputSearch v-model:value="queryData.userName" />
+          <InputSearch v-model:value="queryData.account" />
         </a-form-item>
       </a-col>
       <a-col :xs="24" :lg="8" class="index-table-search-col">
@@ -13,7 +13,7 @@
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="登录省份">
-          <InputSearch v-model:value="queryData.region" />
+          <InputSearch v-model:value="queryData.province" />
         </a-form-item>
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col" r>
@@ -38,12 +38,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue"
-import { PagerQueryData } from "/@/lib/http/axios/types"
-import { useSearch, SearchInstance } from "/@/lib/idata/data-list/methods/useSearch"
+import { defineComponent, reactive, ref } from 'vue'
+import { PagerQueryData } from '/@/lib/http/axios/types'
+import { useSearch, SearchInstance } from '/@/lib/idata/data-list/methods/useSearch'
 
 export default defineComponent({
-  emits: ["onSearch"],
+  emits: ['onSearch'],
   setup(_props, { emit }): SearchInstance {
     // 搜索是否展开
     const isOpen = ref<boolean>(false)
@@ -57,7 +57,7 @@ export default defineComponent({
     const getCurQueryData = (): PagerQueryData => queryData
 
     // 查询数据
-    const onSearchData = () => emit("onSearch")
+    const onSearchData = () => emit('onSearch')
 
     const { onResetData, onOpen } = useSearch(queryData, isOpen)
 

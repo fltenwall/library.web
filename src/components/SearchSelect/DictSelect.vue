@@ -1,6 +1,6 @@
 <template>
   <select-search v-model:value="selectData" :placeholder="placeholder" @on-change="handleChange">
-    <a-select-option v-for="item in options" :key="item.id" :value="item.value">
+    <a-select-option v-for="item in options" :key="item.id" :value="item.id">
       {{ item.label }}
     </a-select-option>
   </select-search>

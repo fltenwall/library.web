@@ -3,7 +3,7 @@
     <a-col :span="24" :lg="{ span: 12 }">
       <a-form layout="vertical">
         <a-form-item label="昵称">
-          <a-input v-model:value="dataItem.nickName" />
+          <a-input v-model:value="dataItem.nickname" />
         </a-form-item>
         <a-form-item label="个人介绍">
           <a-textarea

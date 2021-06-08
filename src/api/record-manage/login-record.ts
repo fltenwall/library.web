@@ -1,45 +1,42 @@
-import type { PagerQueryData,  PagerResponseData} from "/@/lib/http/axios/types"
-import request from "/@/lib/http/axios/"
+import type { PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
+import request from '/@/lib/http/axios/'
 
 export interface LoginRecord {
   //  主键
-  id?: number;
+  id?: number
 
   // 用户名
-  userName?: string;
+  account?: string
 
   // ip
-  ip?: string;
+  ip?: string
 
   // 国家
-  country?: string;
+  nation?: string
 
   // 省
-  region?: string;
+  province?: string
 
   // 市
-  city?: string;
-
-  // 运营商
-  isp?: string;
+  city?: string
 
   // 客户端
-  client?: string;
+  browser?: string
 
   // 操作系统
-  operatingSystem?: string;
+  os?: string
 
   // 登陆状态
-  status?: string;
+  status?: string
 
   // 描述
-  description?: string;
+  description?: string
 
   // 创建时间
-  createTime?: string;
+  createTime?: string
 
   // 更新时间
-  updateTime?: string;
+  updateTime?: string
 }
 
 /**
@@ -51,8 +48,8 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: "/api/logger/login",
-      method: "get",
+      url: '/epi/record/login',
+      method: 'get',
       params: query
     })
   }

@@ -1,12 +1,9 @@
 import type { TableColumn } from '/@/lib/props/TableList'
 
-
-
-
 export const tableColumns: TableColumn[] = [
   {
     title: '权限项名称',
-    dataIndex: 'description',
+    dataIndex: 'name',
     align: 'center'
   },
   {
@@ -23,4 +20,3 @@ export const tableColumns: TableColumn[] = [
     slots: { customRender: 'operation' }
   }
 ]
-

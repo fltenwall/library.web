@@ -32,7 +32,6 @@ export const IndexPage: AppRouteRecordRaw = {
   name: 'index-page',
   component: (): unknown => import('/@/views/frame/index-page/index-page.vue'),
   meta: {
-    title: '首页',
     ignoreAuth: true
   }
 }

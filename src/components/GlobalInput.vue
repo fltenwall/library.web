@@ -36,6 +36,8 @@
       class="global-input-password"
       @click="handleSwitch(true)"
     />
+    <!-- 加载中 -->
+    <LoadingOutlined v-if="loading" />
   </div>
 </template>
 
@@ -109,9 +111,14 @@ export default defineComponent({
     focusHighlight: {
       type: Boolean as PropType<boolean>,
       default: true
+    },
+    // 加载
+    loading: {
+      type: Boolean as PropType<boolean>,
+      default: false
     }
   },
-  emits: ['update:value', 'update:errorBorder', 'on-enter', 'on-blur', 'on-input'],
+  emits: ['update:value', 'update:errorBorder', 'on-enter', 'on-blur', 'on-input', 'on-focus'],
   setup(props, { emit }) {
     const userInput = reactive<UserInput>({
       type: InputTypeMap[props.type as InputTypeMap],
@@ -143,6 +150,7 @@ export default defineComponent({
       if (props.focusHighlight) {
         borderColor.value = '#1890ff'
       }
+      emit('on-focus')
     }
 
     // 输入内容

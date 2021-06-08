@@ -22,12 +22,12 @@ import { Button } from '/@/lib/UI/index'
 import { useGo } from '/@/hooks/web/usePage'
 import { PageEnum } from '/@/enums/pageEnum'
 import { userStore } from '/@/store/modules/user'
-import { isNull } from '/@/utils/is'
+import { isDef } from '/@/utils/is'
 import dropMenu from './dropMenu.vue'
 
 export default defineComponent({
   components: { Button, dropMenu },
-   props: {
+  props: {
     isShowUserInfo: {
       type: Boolean,
       default: true
@@ -43,7 +43,7 @@ export default defineComponent({
 
     // 用户是否登录
     const userIsLogin = computed(() => {
-      return !isNull(userStore.getUserInfoState?.id)
+      return isDef(userStore.getUserInfoState?.id)
     })
 
     // 用户信息

@@ -3,7 +3,7 @@
     <a-form :label-col="{ flex: '110px' }" :wrapper-col="{ flex: 'auto' }">
       <!-- 基本信息 -->
       <div class="flex">
-        <tree-menu v-model:value="dataItem.authorities" class="tree-menu" :readonly="readonly" />
+        <tree-menu v-model:value="dataItem.modularIds" class="tree-menu" :readonly="readonly" />
         <GlobalCard title="基本信息" class="flex-item">
           <a-row>
             <a-col :xs="24" :lg="9" class="pl-4 pr-4">

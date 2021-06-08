@@ -1,7 +1,7 @@
-import type { Result, PagerQueryData, PagerResponseData } from "/@/lib/http/axios/types"
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
 import type { RoleManage } from './role-mange'
-import request from "/@/lib/http/axios/"
-import { ContentTypeEnum } from "/@/enums/httpEnum"
+import request from '/@/lib/http/axios/'
+import { ContentTypeEnum } from '/@/enums/httpEnum'
 
 export interface UserManage {
   //  主键
@@ -11,7 +11,7 @@ export interface UserManage {
   username?: string
 
   // 昵称
-  nickName?: string
+  nickname?: string
 
   // 状态
   enabled?: boolean | 0 | 1
@@ -23,16 +23,16 @@ export interface UserManage {
   email?: string
 
   // 性别
-  sex?: string
+  sex?: number
 
   // 密码
   password?: string
 
   // 角色
-  role?: number[]
+  roleId?: number
 
   // 角色
-  roles?: RoleManage[]
+  role?: RoleManage
 
   // 描述
   description?: string
@@ -50,20 +50,17 @@ export interface UserManage {
   updateTime?: string
 }
 
-
-
 /**
  * 分页结果定义
  */
 export type DataPager = PagerResponseData<UserManage>
 
 export default class Service {
-
   // 向服务查询数据并分页返回结果
   static fecthList(query?: Partial<PagerQueryData>): Promise<DataPager> {
     return request<DataPager>({
-      url: "/api/user",
-      method: "get",
+      url: '/epi/user',
+      method: 'get',
       params: query
     })
   }
@@ -71,8 +68,8 @@ export default class Service {
   // 保存数据到远程服务器
   static saveNewItem(item: UserManage): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: "/api/user",
-      method: "post",
+      url: '/epi/user',
+      method: 'post',
       data: item
     })
   }
@@ -80,28 +77,28 @@ export default class Service {
   // 通过ID取得数据
   static getItemById(id: number): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: "/api/user/" + id,
-      method: "get"
+      url: '/epi/user/' + id,
+      method: 'get'
     })
   }
 
   // 更新数据到远程服务器
   static updateItem(id: number, item: UserManage): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: "/api/user/" + id,
-      method: "put",
+      url: '/epi/user/' + id,
+      method: 'put',
       data: item
     })
   }
 
-   // 更新密码到远程服务器
-   static updatePassword(id: number, password: string): Promise<Result<UserManage>> {
+  // 更新密码到远程服务器
+  static updatePassword(id: number, password: string): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: "/api/user/password/" + id,
-      method: "patch",
-      data: {password},
+      url: '/epi/user/password/' + id,
+      method: 'patch',
+      data: { password },
       headers: {
-        "Content-Type": ContentTypeEnum.FORM_URLENCODED
+        'Content-Type': ContentTypeEnum.FORM_URLENCODED
       }
     })
   }
@@ -109,8 +106,8 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: "/api/user/" + id,
-      method: "delete"
+      url: '/epi/user/' + id,
+      method: 'delete'
     })
   }
 }

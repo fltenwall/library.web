@@ -7,8 +7,8 @@
     @cancel="onCentel"
   >
     <a-form :layout="'vertical'">
-      <a-form-item label="权限项名称" v-bind="validateInfos.description">
-        <a-input v-model:value="dataItem.description" />
+      <a-form-item label="权限项名称" v-bind="validateInfos.name">
+        <a-input v-model:value="dataItem.name" />
       </a-form-item>
       <a-form-item label="权限项" v-bind="validateInfos.authorities">
         <a-select
@@ -29,48 +29,36 @@
 
 <script lang="ts">
 import { message } from 'ant-design-vue'
-import { defineComponent, reactive, ref, unref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { useForm } from '@ant-design-vue/use'
 import { formRules, DataItem } from './module-add-modal'
-import { queryRoleAuthority } from '/@/enums/roleEnum'
-import service, { Authority, ModuleManage } from '/@/api/system-manage/module-manage'
+import service, { ModuleManage } from '/@/api/system-manage/module-manage'
 import PinYin from 'word-pinyin'
 
 export default defineComponent({
   props: {
-    name: {
+    identifier: {
       type: String,
       default: ''
+    },
+    authorityList: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ['on-success'],
   setup(props, { emit }) {
-    // 权限列表
-    const authorityList = ref<Authority>()
-
     const rules = reactive(formRules)
 
-    const dataItem = reactive<DataItem>({ description: '', authorities: [] })
+    const dataItem = reactive<DataItem>({ name: '', authorities: [] })
 
     const confirmLoading = ref<boolean>(false)
 
     const { resetFields, validate, validateInfos } = useForm(dataItem, rules)
 
-    // 获取权限列表数据
-    async function fetchDataFromServer() {
-      authorityList.value = await queryRoleAuthority()
-    }
-
     // 发送前权限数据转为字符串
     function sendBefore(auth: string[]) {
-      const authorities = {}
-
-      auth.forEach((el) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (authorities as any)[el] = unref(authorityList as any)[el]
-      })
-
-      return JSON.stringify(authorities)
+      return JSON.stringify(auth)
     }
 
     // 添加新的数据
@@ -78,8 +66,8 @@ export default defineComponent({
       if (!(await validItem())) return
 
       const params: ModuleManage = {
-        name: props.name,
-        description: dataItem.description,
+        identifier: props.identifier,
+        name: dataItem.name,
         authorities: sendBefore(dataItem.authorities!)
       }
 
@@ -114,11 +102,8 @@ export default defineComponent({
       }
     }
 
-    fetchDataFromServer()
-
     return {
       dataItem,
-      authorityList,
       validateInfos,
       onCentel,
       onConfirm,

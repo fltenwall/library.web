@@ -17,6 +17,9 @@
         <div>{{ text ? '使用中' : '禁用中' }}</div>
       </div>
     </template>
+    <template #superAdmin="{ text }">
+      {{ text ? '是' : '否' }}
+    </template>
     <template #operation="{ record }">
       <div class="index-operation">
         <span @click="onViewDataItem(record)">查看</span>

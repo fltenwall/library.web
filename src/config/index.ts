@@ -1,7 +1,7 @@
 import logo from '/@/assets/svg/logo.svg'
 import { useSetting } from '/@/hooks/core/useSetting'
 
-const { title, publicPath, shortTitle } = useSetting()
+const { title, publicPath, shortTitle, auth } = useSetting()
 
 /**
  *  系统配置文件可用于设置使用系统运行的参数
@@ -16,7 +16,7 @@ interface Config {
 
   publicPath: string
 
-  theme: "dark" | "light" | undefined
+  theme: 'dark' | 'light' | undefined
 
   menuWidth: number
 
@@ -25,8 +25,9 @@ interface Config {
   collapsedWidth: number
 
   max: number
-}
 
+  auth: boolean
+}
 
 const config: Config = {
   // 系统名称
@@ -54,11 +55,10 @@ const config: Config = {
   collapsedWidth: 49,
 
   // 缓存最大数量
-  max: 2
+  max: 2,
 
+  // 权限
+  auth: auth
 }
 
-
-
 export default config
-

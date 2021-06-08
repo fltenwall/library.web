@@ -15,8 +15,8 @@
       :loading="loading"
     >
       <template #authorities="{ record }">
-        <a-tag v-for="item in record.authorities" :key="item">
-          {{ item }}
+        <a-tag v-for="key in record.authorities" :key="key">
+          {{ authorityList[key] }}
         </a-tag>
       </template>
       <template #operation="{ record }">
@@ -28,7 +28,8 @@
     <module-add-modal
       v-if="MixinShowByAuth('MODULAR_CREATE')"
       v-model:visible="visible"
-      :name="name"
+      :authority-list="authorityList"
+      :identifier="identifier"
       @on-success="onAddSuccess"
     />
   </div>
@@ -38,14 +39,15 @@
 import { message } from 'ant-design-vue'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { tableColumns } from './module-visit'
-import service, { ModuleManage } from '/@/api/system-manage/module-manage'
+import service, { ModuleManage, Authority } from '/@/api/system-manage/module-manage'
 import moduleAddModal from './module-add-modal.vue'
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
+import { queryRoleAuthority } from '/@/enums/roleEnum'
 
 export default defineComponent({
   components: { moduleAddModal },
   props: {
-    name: {
+    identifier: {
       type: String,
       default: ''
     }
@@ -53,7 +55,6 @@ export default defineComponent({
   setup(props) {
     // 对话框显示
     const visible = ref<boolean>(false)
-
     // 加载中
     const loading = ref<boolean>(true)
 
@@ -62,6 +63,8 @@ export default defineComponent({
     const moduleVisitRef = ref<HTMLElement | null>(null)
 
     const scroll = reactive<{ y?: number }>({})
+    // 权限列表
+    const authorityList = ref<Authority>({})
 
     // 新增数据
     const onClickNewItem = () => (visible.value = true)
@@ -70,7 +73,7 @@ export default defineComponent({
     async function fetchDataFromServer() {
       try {
         loading.value = true
-        const query = { name: props.name }
+        const query = { identifier: props.identifier }
         const { data } = await service.fecthList(query)
         dataSource.value = dataParse(data.content)
       } catch (err) {
@@ -78,6 +81,11 @@ export default defineComponent({
       } finally {
         loading.value = false
       }
+    }
+
+    // 获取权限列表数据
+    async function fetchAuthFromServer() {
+      authorityList.value = await queryRoleAuthority()
     }
 
     // 数据解析
@@ -109,7 +117,7 @@ export default defineComponent({
     }
 
     watch(
-      () => props.name,
+      () => props.identifier,
       () => {
         fetchDataFromServer()
       },
@@ -120,12 +128,15 @@ export default defineComponent({
       scroll.y = (moduleVisitRef.value?.offsetHeight as number) - 136
     }, 0)
 
+    fetchAuthFromServer()
+
     return {
       scroll,
       loading,
       visible,
       dataSource,
       tableColumns,
+      authorityList,
       onDeleteAuth,
       onClickNewItem,
       onAddSuccess,

@@ -10,8 +10,8 @@
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="用户名称" v-bind="validateInfos.nickName">
-              <InputWrap v-model:value="dataItem.nickName" />
+            <a-form-item label="用户名称" v-bind="validateInfos.nickname">
+              <InputWrap v-model:value="dataItem.nickname" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -20,8 +20,8 @@
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="角色" v-bind="validateInfos.role">
-              <RoleSearchSelect v-model:value="dataItem.role" v-model:roles="dataItem.roles" />
+            <a-form-item label="角色" v-bind="validateInfos.roleId">
+              <RoleSearchSelect v-model:value="dataItem.roleId" v-model:role="dataItem.role" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -109,7 +109,7 @@ export default defineComponent({
       }
     ]
 
-    const dataItem = reactive<UserManage>({ enabled: 1 })
+    const dataItem = reactive<UserManage>({ enabled: 1, role: {} })
     const rules = reactive({ ...formRules, password })
     const onServerMethods = { onNewData, onSaveData, onLoadDataById }
     const parameter = { rules, dataItem, onServerMethods }
@@ -128,7 +128,6 @@ export default defineComponent({
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
       const { data } = await service.getItemById(id)
-      dataItem.role = data.roles?.map((el) => el.id!)
       assign(dataItem, data)
       changeDataType()
     }

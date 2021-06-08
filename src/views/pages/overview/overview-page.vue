@@ -12,12 +12,10 @@
         </a-avatar>
         <div class="ml-4">
           <div class="content-title">
-            <span>{{ userInfo.nickName }}</span>
+            <span>{{ userInfo.username }}</span>
             <span>，{{ blessing }}</span>
           </div>
           <div class="content-tips">
-            <span>{{ userInfo.roles.map((el) => el.name).join(' ') }}</span>
-            <span> - </span>
             <span>{{ userInfo.description }}</span>
           </div>
         </div>
@@ -55,7 +53,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .overview {
