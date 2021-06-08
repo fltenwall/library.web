@@ -10,8 +10,8 @@
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="状态" v-bind="validateInfos.show">
-              <SelectWrap v-model:value="dataItem.show" :options="selectOption" />
+            <a-form-item label="状态" v-bind="validateInfos.state">
+              <SelectWrap v-model:value="dataItem.state" :options="selectOption" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -43,12 +43,7 @@
       <a-button v-if="!readonly" @click="onRestPage">
         重置
       </a-button>
-      <a-button
-        v-if="readonly"
-        v-show-by-auth="'PROBLEM_MANAGE_UPDATE'"
-        type="primary"
-        @click="onEditPage"
-      >
+      <a-button v-if="readonly" v-show-by-auth="'PROBLEM_MANAGE_UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
@@ -69,13 +64,11 @@ import PreviewMode from '/@/components/PublicEditor/src/Preview'
 export default defineComponent({
   components: { PreviewMode },
   setup() {
-    const dataItem = reactive<ProblemManage>({ show: 1, sortValue: 0 })
+    const dataItem = reactive<ProblemManage>({ state: 1, sortValue: 0 })
     const rules = reactive(formRules)
     const onServerMethods = { onNewData, onSaveData, onLoadDataById }
     const parameter = { rules, dataItem, onServerMethods }
-    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<ProblemManage>(
-      parameter
-    )
+    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<ProblemManage>(parameter)
 
     const { mode, readonly } = toRefs(pageInfo)
 
@@ -102,7 +95,7 @@ export default defineComponent({
 
     // 改变数据类型
     function changeDataType() {
-      dataItem.show = dataItem.show ? 1 : 0
+      dataItem.state = dataItem.state ? 1 : 0
     }
 
     return {

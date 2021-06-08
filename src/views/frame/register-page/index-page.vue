@@ -66,16 +66,11 @@
           <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }">
             登录现有帐号
           </router-link>
-          <GlobalButton
-            ref="buttonInstance"
-            :size="1"
-            :disabled="disabled"
-            @on-click="onButtonClick"
-          >
+          <GlobalButton ref="buttonInstance" :size="1" :disabled="disabled" @on-click="onButtonClick">
             注 册
           </GlobalButton>
         </div>
-        <div class="index-middle flex-item flex-column">
+        <div class="pt-15 index-middle flex-item flex-column">
           <img :src="accountImage" class="account-image">
           <div class="account-content">
             只需一个帐号，您便可以使用 {{ MixinConfig.shortTitle }} 的所有产品和服务。
@@ -192,7 +187,9 @@ export default defineComponent({
   border-radius: 8px;
 
   &-wrap {
-    padding: 50px 0 0;
+    display: flex;
+    justify-items: center;
+    height: 100vh;
   }
 
   &-header {

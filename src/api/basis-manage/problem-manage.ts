@@ -1,5 +1,5 @@
-import type { Result, PagerQueryData, PagerResponseData } from "/@/lib/http/axios/types"
-import request from "/@/lib/http/axios/"
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
+import request from '/@/lib/http/axios/'
 
 export interface ProblemManage {
   //  主键
@@ -9,13 +9,13 @@ export interface ProblemManage {
   title?: string
 
   // 是否展示
-  show?: boolean | 1 | 0
+  state?: boolean | 1 | 0
 
   // 内容
-  text?: string,
+  text?: string
 
   // 排序值
-  sortValue?: number,
+  sortValue?: number
 
   // 图标
   icon?: string
@@ -42,19 +42,17 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: "/api/problem-manage",
-      method: "get",
+      url: '/epi/problem',
+      method: 'get',
       params: query
     })
   }
 
-
-
   // 保存数据到远程服务器
   static saveNewItem(item: ProblemManage): Promise<Result<ProblemManage>> {
     return request<Result<ProblemManage>>({
-      url: "/api/problem-manage",
-      method: "post",
+      url: '/epi/problem',
+      method: 'post',
       data: item
     })
   }
@@ -62,16 +60,16 @@ export default class Service {
   // 通过ID取得数据
   static getItemById(id: number): Promise<Result<ProblemManage>> {
     return request<Result<ProblemManage>>({
-      url: "/api/problem-manage/" + id,
-      method: "get"
+      url: '/epi/problem/' + id,
+      method: 'get'
     })
   }
 
   // 更新数据到远程服务器
   static updateItem(id: number, item: ProblemManage): Promise<Result<ProblemManage>> {
     return request<Result<ProblemManage>>({
-      url: "/api/problem-manage/" + id,
-      method: "put",
+      url: '/epi/problem/' + id,
+      method: 'put',
       data: item
     })
   }
@@ -79,8 +77,8 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: "/api/problem-manage/" + id,
-      method: "delete"
+      url: '/epi/problem/' + id,
+      method: 'delete'
     })
   }
 }

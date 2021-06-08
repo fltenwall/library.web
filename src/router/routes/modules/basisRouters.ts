@@ -18,8 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'date-manage-list-page',
       name: 'date-manage-list-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/date-manage/data-list/list-page.vue`),
+      component: (): unknown => import(`/@/views/pages/basis-manage/date-manage/data-list/list-page.vue`),
       meta: {
         title: '日期管理'
       }
@@ -27,8 +26,7 @@ const routers: AppRouteModule = {
     {
       path: 'date-manage-data-page',
       name: 'date-manage-data-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/date-manage/data-page/data-page.vue`),
+      component: (): unknown => import(`/@/views/pages/basis-manage/date-manage/data-page/data-page.vue`),
       meta: {
         title: '日期管理详情',
         hideInMenu: true,
@@ -58,27 +56,19 @@ const routers: AppRouteModule = {
     {
       path: 'problem-manage-list-page',
       name: 'problem-manage-list-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/problem-manage/data-list/list-page.vue`),
+      component: (): unknown => import(`/@/views/pages/basis-manage/problem-manage/data-list/list-page.vue`),
       meta: {
-        title: '问题管理',
-        auth: ['PROBLEM_MANAGE_READ']
+        title: '问题管理'
       }
     },
     {
       path: 'problem-manage-data-page',
       name: 'problem-manage-data-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/problem-manage/data-page/data-page.vue`),
+      component: (): unknown => import(`/@/views/pages/basis-manage/problem-manage/data-page/data-page.vue`),
       meta: {
         title: '问题管理详情',
         hideInMenu: true,
-        ignoreTabKeepAlive: true,
-        auth: {
-          new: ['PROBLEM_MANAGE_CREATE'],
-          view: ['PROBLEM_MANAGE_READ'],
-          edit: ['PROBLEM_MANAGE_UPDATE']
-        }
+        ignoreTabKeepAlive: true
       }
     },
     {

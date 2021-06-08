@@ -2,7 +2,6 @@ import store from '/@/store/index'
 import { VuexModule, Mutation, Module, getModule, Action } from 'vuex-module-decorators'
 import Service, { UserInfo, LoginParams, Security, CSRF } from '/@/api/security'
 import { isNull } from '/@/utils/is'
-import { toArray } from 'lodash-es'
 
 const NAME = 'user'
 
@@ -24,15 +23,6 @@ export default class User extends VuexModule {
 
   get getTokenState(): CSRF | null {
     return this.tokenState
-  }
-
-  /**
-   * 用户权限
-   */
-  get getAuthorities(): string[] {
-    const userInfo = this.getUserInfoState
-    const authorities = userInfo?.roles?.map((el) => toArray(el.authorities!)) || []
-    return authorities.flat(1)
   }
 
   @Mutation

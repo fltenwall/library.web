@@ -13,7 +13,7 @@
     </template>
 
     <template #show="{ record }">
-      <a-tag v-if="record.show" color="#108ee9">
+      <a-tag v-if="record.state" color="#108ee9">
         可 见
       </a-tag>
       <a-tag v-else color="#f50">
