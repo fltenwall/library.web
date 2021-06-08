@@ -3,12 +3,7 @@
     <div class="index-table-search index-card">
       <search-panle ref="searchInstance" @onSearch="onSearchData" />
     </div>
-    <list-view
-      ref="listInstance"
-      @onPageChange="onFetchData"
-      @onRefresh="onFetchData"
-      @onComposePage="onComposePage"
-    />
+    <list-view ref="listInstance" @onPageChange="onFetchData" @onRefresh="onFetchData" @onComposePage="onComposePage" />
   </div>
 </template>
 

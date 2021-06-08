@@ -33,7 +33,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style lang="less" scoped>
 .new-user-wrap {
   overflow: hidden;

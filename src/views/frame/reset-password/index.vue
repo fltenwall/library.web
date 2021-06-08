@@ -31,9 +31,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import publicHeader from "/@/views/frame/components/publicHeader"
-import config from "/@/config/"
+import { defineComponent } from 'vue'
+import publicHeader from '/@/views/frame/components/publicHeader'
+import config from '/@/config/'
 
 export default defineComponent({
   components: { publicHeader },

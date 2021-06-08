@@ -26,12 +26,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue"
-import { PagerQueryData } from "/@/lib/http/axios/types"
-import { useSearch, SearchInstance } from "/@/lib/idata/data-list/methods/useSearch"
+import { defineComponent, reactive } from 'vue'
+import { PagerQueryData } from '/@/lib/http/axios/types'
+import { useSearch, SearchInstance } from '/@/lib/idata/data-list/methods/useSearch'
 
 export default defineComponent({
-  emits: ["onSearch"],
+  emits: ['onSearch'],
   setup(_props, { emit }): SearchInstance {
     // 数据搜索
     const queryData = reactive<PagerQueryData>({
@@ -43,7 +43,7 @@ export default defineComponent({
     const getCurQueryData = (): PagerQueryData => queryData
 
     // 查询数据
-    const onSearchData = () => emit("onSearch")
+    const onSearchData = () => emit('onSearch')
 
     const { onResetData } = useSearch(queryData)
 

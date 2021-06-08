@@ -2,8 +2,6 @@ import { createVNode } from 'vue'
 import { message, Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 
-
-
 export function useDeleteModal(callback: () => Promise<void>): void {
   Modal.confirm({
     icon: createVNode(ExclamationCircleOutlined),

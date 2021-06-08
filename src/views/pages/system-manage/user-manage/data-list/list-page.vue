@@ -9,11 +9,7 @@
       @onRefresh="onFetchData"
       @onResetPassword="openPasswordModal"
     />
-    <password-modal
-      v-model:value="modalData.visible"
-      title="密码重置"
-      @on-confirm="handleUpdatePassword"
-    />
+    <password-modal v-model:value="modalData.visible" title="密码重置" @on-confirm="handleUpdatePassword" />
   </div>
 </template>
 

@@ -11,12 +11,7 @@
   </PublicHeader>
   <div class="search-page-show-middle">
     <div class="content index-middle">
-      <Icon
-        icon="ion:arrow-back-outline"
-        size="22"
-        class="icon index-center-middle"
-        @click="back"
-      />
+      <Icon icon="ion:arrow-back-outline" size="22" class="icon index-center-middle" @click="back" />
       <span class="title">资源检索</span>
     </div>
   </div>
@@ -94,12 +89,10 @@
 </template>
 
 <script lang="ts">
-import type { BookDetail } from '/@/api/book-manage/book-detail'
 import { defineComponent, ref, unref, computed } from 'vue'
 import { holdInfoColumns } from './search-show'
 import { userStore } from '/@/store/modules/user'
 import { useRouter } from 'vue-router'
-import service from '/@/api/anonymous'
 import { isNull } from '/@/utils/is'
 import { message } from 'ant-design-vue'
 import { useGo } from '/@/hooks/web/usePage'
@@ -111,7 +104,7 @@ export default defineComponent({
 
     const bookInfo = ref({})
 
-    const bookDetail = ref<BookDetail[]>([])
+    const bookDetail = ref([])
 
     const loading = ref<boolean>(false)
 
@@ -121,11 +114,11 @@ export default defineComponent({
     async function fetchDataByService() {
       try {
         loading.value = true
-        const { params } = unref(currentRoute)
-        const id = parseInt(params.id as string)
-        const { data } = await service.fecthBookByAny(id)
-        bookInfo.value = data.book
-        bookDetail.value = data.detail
+        // const { params } = unref(currentRoute)
+        // const id = parseInt(params.id as string)
+        // const { data } = await service.fecthBookByAny(id)
+        // bookInfo.value = data.book
+        // bookDetail.value = data.detail
       } catch (err) {
         message.error(`获取资源失败: ${err.msg}`)
       } finally {
@@ -139,18 +132,9 @@ export default defineComponent({
     })
 
     // 借阅书籍
-    async function handleBorrow(record: BookDetail) {
+    async function handleBorrow() {
       // 未登录
       if (!validUserState()) return
-      // 发送请求
-      try {
-        loading.value = true
-        await service.bookBorrow(record.searchCode!)
-        await fetchDataByService()
-      } catch (err) {
-        message.error(`借阅失败: ${err.msg}`)
-        loading.value = false
-      }
     }
 
     // 判断用户登录

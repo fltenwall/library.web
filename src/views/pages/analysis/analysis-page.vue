@@ -1,4 +1,3 @@
-
 <template>
   <a-row type="flex" class="overview-chart" :gutter="[16, 16]">
     <a-col :span="12" :xl="6" class="overview-chart-col">
@@ -23,7 +22,6 @@ import search from './components/search.vue'
 import borrow from './components/borrow.vue'
 import newUser from './components/newUser.vue'
 
-
 export default defineComponent({
   components: { visits, search, borrow, newUser },
   setup() {
@@ -31,7 +29,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .overview {

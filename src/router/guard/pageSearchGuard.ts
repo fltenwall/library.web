@@ -9,6 +9,5 @@ export function createPageSearchGuard(router: Router): void {
     } else {
       next()
     }
-
   })
 }

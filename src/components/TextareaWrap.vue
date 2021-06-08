@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from "vue"
-import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from "vue"
-import { injectDatapage } from "/@/lib/idata/data-page/methods/useDepend"
+import type { Ref } from 'vue'
+import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue'
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
 
 const useinputReadonly = (readonly: Ref<boolean>) => {
   return computed(() => {
@@ -25,7 +25,7 @@ export default defineComponent({
   props: {
     value: {
       type: String as PropType<string>,
-      default: ""
+      default: ''
     },
     readonly: {
       type: Boolean as PropType<boolean>,
@@ -33,16 +33,16 @@ export default defineComponent({
     },
     placeholder: {
       type: String,
-      default: "请输入"
+      default: '请输入'
     }
   },
-  emits: ["update:value"],
+  emits: ['update:value'],
   setup(props, { emit }) {
-    const inputValue = ref<string>("")
+    const inputValue = ref<string>('')
     const { readonly } = toRefs(props)
 
     // 内容发送变化触发
-    const onChange = () => emit("update:value", inputValue.value)
+    const onChange = () => emit('update:value', inputValue.value)
 
     const inputReadonly = useinputReadonly(readonly)
 

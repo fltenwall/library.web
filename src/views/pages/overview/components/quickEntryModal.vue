@@ -21,18 +21,12 @@
       <a-button class="mr-4" @click="onCancel">
         取消
       </a-button>
-      <a-button
-        type="primary"
-        :disabled="!dataItem.name || !dataItem.link"
-        :loading="loading"
-        @click="onConfirm"
-      >
+      <a-button type="primary" :disabled="!dataItem.name || !dataItem.link" :loading="loading" @click="onConfirm">
         完成
       </a-button>
     </div>
   </a-modal>
 </template>
-
 
 <script lang="ts">
 import { assign } from 'lodash-es'
@@ -108,7 +102,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .modal-header {

@@ -1,22 +1,20 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-
 export interface RouteMeta {
-
   // 标题
-  title?: string;
+  title?: string
 
   // 忽略身份验证
-  ignoreAuth?: boolean;
+  ignoreAuth?: boolean
 
   // 权限
-  auth?: string[] | Auth;
+  auth?: string[] | Auth
 
   // 缓存页面
-  keepAlive?: boolean,
+  keepAlive?: boolean
 
   // 忽略标签缓存
-  ignoreTabKeepAlive?: boolean;
+  ignoreTabKeepAlive?: boolean
 
   // 菜单隐藏
   hideInMenu?: boolean
@@ -28,20 +26,19 @@ export interface RouteMeta {
   redirect?: string
 
   // 图标
-  icon?: string;
+  icon?: string
 
   // 固定标签
-  affix?: boolean,
+  affix?: boolean
 
   // 忽略标签
-  ignoreTab?: boolean,
+  ignoreTab?: boolean
 
   // 允许 子路由为空,
   allowChildNull?: boolean
 }
 
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'name' | 'redirect'> {
-
   name: string
 
   meta: RouteMeta
@@ -53,34 +50,29 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'name' 
   props?: unknown
 }
 
-
 export interface AppRouteModule {
+  layout: AppRouteRecordRaw
 
-  layout: AppRouteRecordRaw;
-
-  routes: AppRouteRecordRaw[];
+  routes: AppRouteRecordRaw[]
 
   sortValue: number
 }
 
-
 export interface Menu extends RouteMeta {
-  name?: string | symbol;
+  name?: string | symbol
 
   title?: string
 
-  path: string;
+  path: string
 
-  disabled?: boolean;
+  disabled?: boolean
 
-  children?: Menu[];
+  children?: Menu[]
 
-  orderNo?: number;
+  orderNo?: number
 
-  roles?: RoleEnum[];
-
+  roles?: RoleEnum[]
 }
-
 
 export interface FlatMenu {
   path: string

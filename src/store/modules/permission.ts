@@ -11,7 +11,6 @@ const NAME = 'permission'
  */
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class Permission extends VuexModule {
-
   // 菜单列表
   private backMenuListState: Menu[] = []
 
@@ -40,7 +39,6 @@ export default class Permission extends VuexModule {
   // async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
 
   // }
-
 }
 
 export { Permission }

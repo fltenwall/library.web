@@ -1,4 +1,4 @@
-import type { App } from 'vue';
+import type { App } from 'vue'
 import { useTitle } from '/@/hooks/core/useTitle'
 
 export default function (app: App) {

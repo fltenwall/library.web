@@ -6,7 +6,6 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'title',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '状态',
@@ -20,7 +19,6 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'sortValue',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '图标',

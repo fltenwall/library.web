@@ -1,9 +1,8 @@
-import { PagerQueryData } from "/@/lib/http/axios/types"
+import { PagerQueryData } from '/@/lib/http/axios/types'
 import { onMounted, ref } from 'vue'
 import { provideListPage } from './methods/useDepend'
-import { Instance } from "/@/lib/interface/ListPage"
-import { message } from "ant-design-vue"
-
+import { Instance } from '/@/lib/interface/ListPage'
+import { message } from 'ant-design-vue'
 
 interface Options<T> {
   // 跳转页面名称
@@ -18,7 +17,6 @@ interface Options<T> {
   instance: Instance<T>
 }
 
-
 interface onFetchData {
   // 刷新数据
   onFetchData: () => Promise<void>
@@ -30,7 +28,6 @@ interface onFetchData {
   queryData: () => PagerQueryData
 }
 
-
 export function listPageMix<T>(options: Options<T>): onFetchData {
   const { fetchDataFromServer, deleteDataFromServer, instance, name } = options
 
@@ -38,7 +35,6 @@ export function listPageMix<T>(options: Options<T>): onFetchData {
 
   // 设置实例
   provideListPage<T>({ name, deleteDataFromServer, loading, onFetchData })
-
 
   onMounted(async () => {
     // 首次加载 从服务器取得数据
@@ -57,8 +53,6 @@ export function listPageMix<T>(options: Options<T>): onFetchData {
     } finally {
       loading.value = false
     }
-
-
   }
 
   /**
@@ -87,4 +81,3 @@ export function listPageMix<T>(options: Options<T>): onFetchData {
     onSearchData
   }
 }
-

@@ -22,7 +22,7 @@ const routers: AppRouteModule = {
     {
       path: 'center',
       name: 'center',
-      component: (): unknown => import(`/@/views/pages/account-mange/center/index.vue`),
+      component: (): unknown => import('/@/views/pages/account-mange/center/index.vue'),
       meta: {
         title: '个人中心'
       }
@@ -30,7 +30,7 @@ const routers: AppRouteModule = {
     {
       path: 'setting',
       name: 'setting',
-      component: (): unknown => import(`/@/views/pages/account-mange/setting/index.vue`),
+      component: (): unknown => import('/@/views/pages/account-mange/setting/index.vue'),
       meta: {
         title: '个人设置',
         allowChildNull: true
@@ -40,8 +40,7 @@ const routers: AppRouteModule = {
         {
           path: 'base',
           name: 'base',
-          component: (): unknown =>
-            import(`/@/views/pages/account-mange/setting/components/base.vue`),
+          component: (): unknown => import('/@/views/pages/account-mange/setting/components/base.vue'),
           meta: {
             title: '基本设置',
             hideInMenu: true,
@@ -51,8 +50,7 @@ const routers: AppRouteModule = {
         {
           path: 'security',
           name: 'security',
-          component: (): unknown =>
-            import(`/@/views/pages/account-mange/setting/components/security.vue`),
+          component: (): unknown => import('/@/views/pages/account-mange/setting/components/security.vue'),
           meta: {
             title: '安全设置',
             hideInMenu: true,
@@ -62,8 +60,7 @@ const routers: AppRouteModule = {
         {
           path: 'custom',
           name: 'custom',
-          component: (): unknown =>
-            import(`/@/views/pages/account-mange/setting/components/custom.vue`),
+          component: (): unknown => import('/@/views/pages/account-mange/setting/components/custom.vue'),
           meta: {
             title: '个性化设置',
             hideInMenu: true,
@@ -73,8 +70,7 @@ const routers: AppRouteModule = {
         {
           path: 'binding',
           name: 'binding',
-          component: (): unknown =>
-            import(`/@/views/pages/account-mange/setting/components/binding.vue`),
+          component: (): unknown => import('/@/views/pages/account-mange/setting/components/binding.vue'),
           meta: {
             title: '账户绑定',
             hideInMenu: true,

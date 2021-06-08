@@ -1,4 +1,4 @@
-import type { App } from 'vue';
+import type { App } from 'vue'
 import setupTitle from './title'
 import clickAway from './clickAway'
 import showByAuth from './showByAuth'

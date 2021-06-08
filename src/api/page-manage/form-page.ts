@@ -1,5 +1,5 @@
-import type { Result, PagerQueryData, PagerResponseData } from "/@/lib/http/axios/types"
-import request from "/@/lib/http/axios/"
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
+import request from '/@/lib/http/axios/'
 
 export interface FormManage {
   //  主键
@@ -23,7 +23,7 @@ export interface FormManage {
   // 创建时间
   createTime?: string
 
-  //更新时间
+  // 更新时间
   updateTime?: string
 }
 
@@ -36,8 +36,8 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: "/epi/form",
-      method: "get",
+      url: '/epi/form',
+      method: 'get',
       params: query
     })
   }
@@ -45,8 +45,8 @@ export default class Service {
   // 保存数据到远程服务器
   static saveNewItem(item: FormManage): Promise<Result<FormManage>> {
     return request<Result<FormManage>>({
-      url: "/epi/form",
-      method: "post",
+      url: '/epi/form',
+      method: 'post',
       data: item
     })
   }
@@ -54,16 +54,16 @@ export default class Service {
   // 通过ID取得数据
   static getItemById(id: number): Promise<Result<FormManage>> {
     return request<Result<FormManage>>({
-      url: "/epi/form/" + id,
-      method: "get"
+      url: '/epi/form/' + id,
+      method: 'get'
     })
   }
 
   // 更新数据到远程服务器
   static updateItem(id: number, item: FormManage): Promise<Result<FormManage>> {
     return request<Result<FormManage>>({
-      url: "/epi/form/" + id,
-      method: "put",
+      url: '/epi/form/' + id,
+      method: 'put',
       data: item
     })
   }
@@ -71,8 +71,8 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: "/epi/form/" + id,
-      method: "delete"
+      url: '/epi/form/' + id,
+      method: 'delete'
     })
   }
 }

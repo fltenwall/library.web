@@ -68,14 +68,14 @@ export default defineComponent({
     async function onLoadDataById(id: number) {
       const { data } = await service.getItemById(id)
       assign(dataItem, data)
-       changeDataType()
+      changeDataType()
     }
 
     // 保存数据
     async function onSaveData(id: number, contrast: FormManage) {
       const { data } = await service.updateItem(id, contrast)
       assign(dataItem, data)
-       changeDataType()
+      changeDataType()
     }
 
     // 新增数据

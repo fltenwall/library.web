@@ -1,16 +1,16 @@
-import { defineComponent } from "vue"
-import Icon from "/@/components/Icon"
+import { defineComponent } from 'vue'
+import Icon from '/@/components/Icon'
 
 export default defineComponent({
-  name: "MenuContent",
+  name: 'MenuContent',
   props: {
     icon: {
       type: String,
-      default: ""
+      default: ''
     },
     title: {
       type: String,
-      default: ""
+      default: ''
     },
     showTitle: {
       type: Boolean,
@@ -29,7 +29,7 @@ export default defineComponent({
     return () => {
       const { title, icon, showTitle, level } = props
       const show = level === 1 ? showTitle : true
-      return [renderIcon(icon), <span class={!show && "index-hidden"}>{title}</span>]
+      return [renderIcon(icon), <span class={!show && 'index-hidden'}>{title}</span>]
     }
   }
 })

@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import publicLayout from "/@/views/frame/components/publicLayout.vue"
+import { defineComponent } from 'vue'
+import publicLayout from '/@/views/frame/components/publicLayout.vue'
 
 export default defineComponent({
   components: { publicLayout },
@@ -26,7 +26,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .choose-account {

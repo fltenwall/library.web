@@ -28,7 +28,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style lang="less" scoped>
 .exception {
   height: 80%;

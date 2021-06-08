@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from "vue"
-import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from "vue"
-import { injectDatapage } from "/@/lib/idata/data-page/methods/useDepend"
+import type { Ref } from 'vue'
+import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue'
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
 
 const useinputReadonly = (readonly: Ref<boolean>) => {
   return computed(() => {
@@ -25,7 +25,7 @@ export default defineComponent({
   props: {
     value: {
       type: [String, Number],
-      default: ""
+      default: ''
     },
     readonly: {
       type: Boolean as PropType<boolean>,
@@ -33,27 +33,27 @@ export default defineComponent({
     },
     placeholder: {
       type: String,
-      default: "请输入"
+      default: '请输入'
     },
     type: {
       tpye: String,
-      default: "text",
+      default: 'text',
       validator: (v: string): boolean => {
-        return ["text", "number"].includes(v)
+        return ['text', 'number'].includes(v)
       }
     }
   },
-  emits: ["update:value"],
+  emits: ['update:value'],
   setup(props, { emit }) {
-    const inputValue = ref<string | number>("")
+    const inputValue = ref<string | number>('')
     const { readonly } = toRefs(props)
 
     // 内容发送变化触发
     const onChange = () => {
-      if (props.type === "number") {
-        inputValue.value = Number((inputValue.value as string).replace(/[^0-9]+/g, ""))
+      if (props.type === 'number') {
+        inputValue.value = Number((inputValue.value as string).replace(/[^0-9]+/g, ''))
       }
-      emit("update:value", inputValue.value)
+      emit('update:value', inputValue.value)
     }
 
     const inputReadonly = useinputReadonly(readonly)

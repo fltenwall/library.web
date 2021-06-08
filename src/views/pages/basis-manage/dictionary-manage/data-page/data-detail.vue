@@ -10,10 +10,7 @@
         <a-col :xs="24" :lg="8" class="pl-4 pr-4" />
         <a-col :xs="24" :lg="8" class="pl-4 pr-4">
           <div class="index-button-right">
-            <a-button
-              :type="mode !== MixinPageMode.edit ? 'primary' : 'default'"
-              @click="onSearchData"
-            >
+            <a-button :type="mode !== MixinPageMode.edit ? 'primary' : 'default'" @click="onSearchData">
               查询
             </a-button>
             <a-button v-if="mode === MixinPageMode.edit" type="primary" @click="onNewDataItem">
@@ -172,5 +169,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

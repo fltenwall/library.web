@@ -147,13 +147,7 @@ export default defineComponent({
                   {() => (
                     <>
                       <img src={config.logo} class="layout-sider-header-logo" />
-                      <div
-                        class={[
-                          'layout-sider-header-title',
-                          getCollapsedState && 'index-hidden',
-                          'index-theme'
-                        ]}
-                      >
+                      <div class={['layout-sider-header-title', getCollapsedState && 'index-hidden', 'index-theme']}>
                         {config.title}
                       </div>
                     </>

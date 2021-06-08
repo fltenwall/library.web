@@ -12,7 +12,7 @@ export function createPageAuthGuard(router: Router): void {
 
     const { mode } = to.query as { mode?: Mode }
 
-    // 结果 
+    // 结果
     const result = useAuthorities(auth, mode)
 
     if (result) {

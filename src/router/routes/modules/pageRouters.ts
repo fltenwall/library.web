@@ -18,8 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'form-page-list-page',
       name: 'form-page-list-page',
-      component: (): unknown =>
-        import(`/@/views/pages/page-manage/form-page/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/page-manage/form-page/data-list/list-page.vue'),
       meta: {
         title: '表单页面'
       }
@@ -27,8 +26,7 @@ const routers: AppRouteModule = {
     {
       path: 'form-page-data-page',
       name: 'form-page-data-page',
-      component: (): unknown =>
-        import(`/@/views/pages/page-manage/form-page/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/page-manage/form-page/data-page/data-page.vue'),
       meta: {
         title: '表单页面详情',
         hideInMenu: true,

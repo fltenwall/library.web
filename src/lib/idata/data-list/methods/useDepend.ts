@@ -1,10 +1,8 @@
 import type { Ref } from 'vue'
 import { provide, inject } from 'vue'
-import { useGo } from "/@/hooks/web/usePage"
-import { PageMode } from "/@/utils/helper/breadcrumb"
+import { useGo } from '/@/hooks/web/usePage'
+import { PageMode } from '/@/utils/helper/breadcrumb'
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
-
-
 
 const key = Symbol('listPage')
 
@@ -15,13 +13,13 @@ interface DataPage<T> {
   // 从服务器获取数据
   onFetchData: () => Promise<void>
 
-  // 添加数据 
+  // 添加数据
   onNewDataItem: () => void
 
   // 查看数据
   onViewDataItem: (record: T) => void
 
-  // 编辑数据 
+  // 编辑数据
   onEditDataItem: (record: T) => void
 
   // 删除数据
@@ -41,17 +39,11 @@ interface Options {
   loading: Ref<boolean>
 }
 
-
-
-
-
-
 /**
  * @description 页面跳转进入的函数
  * @param name dataPage 页面 name 名称
  */
 export function provideListPage<T extends { id?: number }>(options: Options): void {
-
   const { name, deleteDataFromServer, onFetchData, loading } = options
 
   const go = useGo()
@@ -72,8 +64,14 @@ export function provideListPage<T extends { id?: number }>(options: Options): vo
     useDeleteModal(async () => await deleteDataFromServer(record.id!))
   }
 
-
-  const instance: DataPage<T> = { loading, onFetchData, onNewDataItem, onViewDataItem, onEditDataItem, onDeleteDataItem }
+  const instance: DataPage<T> = {
+    loading,
+    onFetchData,
+    onNewDataItem,
+    onViewDataItem,
+    onEditDataItem,
+    onDeleteDataItem
+  }
 
   provide(key, instance)
 }

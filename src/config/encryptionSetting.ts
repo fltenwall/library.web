@@ -1,4 +1,3 @@
-
 export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7
 
 /**
@@ -7,5 +6,5 @@ export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7
 
 export const cacheCipher = {
   key: '1234567812345678',
-  iv: '5685'  // 初始向量
+  iv: '5685' // 初始向量
 }

@@ -1,7 +1,6 @@
 import service, { Authority } from '/@/api/system-manage/module-manage'
 import { message } from 'ant-design-vue'
 
-
 export async function queryRoleAuthority(): Promise<Authority> {
   try {
     const { data } = await service.fecthListByAuthority()

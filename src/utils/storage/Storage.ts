@@ -10,7 +10,6 @@ export interface CreateStorage {
   remove: (key: string) => void
 }
 
-
 export const createStorage = ({ storage = sessionStorage } = {}): CreateStorage => {
   class WebStorage {
     private storage
@@ -24,7 +23,7 @@ export const createStorage = ({ storage = sessionStorage } = {}): CreateStorage 
       this.encryption = new aes({ key: cacheCipher.key, iv: cacheCipher.iv })
     }
 
-    // 获取 键 
+    // 获取 键
     private getKey(key: string): string {
       return CryptoES.MD5(key).toString()
     }
@@ -53,7 +52,7 @@ export const createStorage = ({ storage = sessionStorage } = {}): CreateStorage 
           }
           throw 'value null'
         } catch (e) {
-          return (this.remove(key), def)
+          return this.remove(key), def
         }
       }
       return def

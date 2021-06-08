@@ -21,7 +21,7 @@ export const importProps = {
     default: 'id'
   },
   // 显示隐藏
-  value:{
+  value: {
     type: Boolean as PropType<boolean>,
     default: false
   }

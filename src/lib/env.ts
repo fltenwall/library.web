@@ -1,12 +1,12 @@
 /**
  * @description: 开发模式
  */
-export const devMode = 'development';
+export const devMode = 'development'
 
 /**
  * @description: 生产模式
  */
-export const prodMode = 'production';
+export const prodMode = 'production'
 
 /**
  * @description: 获取环境变量
@@ -14,7 +14,7 @@ export const prodMode = 'production';
  * @returns:
  * @example:
  */
-export const getEnv = (): string => import.meta.env.MODE;
+export const getEnv = (): string => import.meta.env.MODE
 
 /**
  * @description: 是否是开发模式
@@ -22,7 +22,7 @@ export const getEnv = (): string => import.meta.env.MODE;
  * @returns:
  * @example:
  */
-export const isDevMode = (): boolean => import.meta.env.DEV;
+export const isDevMode = (): boolean => import.meta.env.DEV
 
 /**
  * @description: 是否是生产模式模式
@@ -30,6 +30,4 @@ export const isDevMode = (): boolean => import.meta.env.DEV;
  * @returns:
  * @example:
  */
-export const isProdMode = (): boolean => import.meta.env.PROD;
-
-
+export const isProdMode = (): boolean => import.meta.env.PROD

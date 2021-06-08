@@ -6,21 +6,18 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'id',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '名称',
     dataIndex: 'name',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '描述',
     dataIndex: 'description',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '更新者',

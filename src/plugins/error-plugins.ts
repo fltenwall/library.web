@@ -11,13 +11,7 @@ function vueErrorHandler(err: Error, vm: unknown, info: string) {
 /**
  * Configure script error handling function
  */
-function scriptErrorHandler(
-  event: Event | string,
-  source?: string,
-  lineno?: number,
-  colno?: number,
-  error?: Error
-) {
+function scriptErrorHandler(event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) {
   console.log(event, source, lineno, colno, error)
 }
 

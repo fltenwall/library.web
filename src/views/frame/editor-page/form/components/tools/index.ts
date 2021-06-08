@@ -1,5 +1,4 @@
-import { isArray } from "/@/utils/is"
-
+import { isArray } from '/@/utils/is'
 
 interface ViewList {
   [prop: string]: string[]
@@ -14,7 +13,6 @@ interface PointConfigs {
 
   icon: { [prop: string]: string }
 }
-
 
 // 视图工具
 const viewTools = import.meta.globEager('./**/index.vue')
@@ -39,7 +37,6 @@ export const pointConfigs: PointConfigs = {
   }
 }
 
-
 Object.keys(viewTools).forEach((key) => {
   // 读取文件名称
   const [classify, name] = key.replace(/\.\/|.index.vue/g, '').split('/')
@@ -51,13 +48,12 @@ Object.keys(viewTools).forEach((key) => {
   viewList[classify].push(name)
 })
 
-
 Object.keys(schemaTools).forEach((key) => {
   // 读取文件名称
   const [, name] = key.replace(/\.\/|.schema.ts/g, '').split('/')
   // 添加名称
   pointConfigs.name[name] = schemaTools[key].name as string
 
-   // 添加名称
-   pointConfigs.icon[name] = schemaTools[key].icon as string
+  // 添加名称
+  pointConfigs.icon[name] = schemaTools[key].icon as string
 })

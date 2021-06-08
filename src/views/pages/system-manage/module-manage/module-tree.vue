@@ -1,16 +1,6 @@
 <template>
-  <a-directory-tree
-    v-model:selectedKeys="selectedKeys"
-    class="tree-menu"
-    :show-icon="false"
-    @select="onSelect"
-  >
-    <a-tree-node
-      v-for="first in menuItem"
-      :key="first.name"
-      :title="first.title"
-      :disabled="!!first.children?.length"
-    >
+  <a-directory-tree v-model:selectedKeys="selectedKeys" class="tree-menu" :show-icon="false" @select="onSelect">
+    <a-tree-node v-for="first in menuItem" :key="first.name" :title="first.title" :disabled="!!first.children?.length">
       <a-tree-node
         v-for="second in first.children"
         :key="second.name"

@@ -17,5 +17,5 @@ export enum ResultEnum {
   SUCCESSMSG = 'OK',
 
   // 登录过期
-  OVERDUE = "Can't access resource"
+  OVERDUE = 'Can\'t access resource'
 }

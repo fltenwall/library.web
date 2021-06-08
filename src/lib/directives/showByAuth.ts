@@ -10,7 +10,7 @@ export default function (app: App) {
       if (!value || (!isString(value) && !isArray(value))) return
 
       // 结果
-      const result = useAuthorities(isArray(value) ? ((value as unknown) as string[]) : [value])
+      const result = useAuthorities(isArray(value) ? (value as unknown as string[]) : [value])
 
       if (result) return
 

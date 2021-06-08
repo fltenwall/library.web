@@ -20,9 +20,7 @@
     </template>
 
     <template #date="{ record }">
-      <div>
-        {{ record.startDate }} - {{ record.endDate }}
-      </div>
+      <div>{{ record.startDate }} - {{ record.endDate }}</div>
     </template>
 
     <template #delay="{ record }">
@@ -76,7 +74,9 @@ export default defineComponent({
     // 计算延迟时间
     const onDelayTime = ({ endDate, delayValue, delayUnit }: DateManage) => {
       const unit = ['y', 'Q', 'M', 'w', 'd'][delayUnit! - 1] as string
-      return moment(endDate, 'YYYY年MM月DD日').add(delayValue, unit as 'y').format('YYYY年MM月DD日')
+      return moment(endDate, 'YYYY年MM月DD日')
+        .add(delayValue, unit as 'y')
+        .format('YYYY年MM月DD日')
     }
 
     return {

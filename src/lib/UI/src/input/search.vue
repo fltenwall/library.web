@@ -42,8 +42,6 @@ import { defineComponent, ref, toRefs, unref, watch } from 'vue'
 import { CloseOutlined, ClockCircleOutlined } from '@ant-design/icons-vue'
 import { debounce } from 'lodash-es'
 import { rules } from '/@/utils/regExp'
-import { message } from 'ant-design-vue'
-import service from '/@/api/search'
 
 export default defineComponent({
   components: { CloseOutlined, ClockCircleOutlined },
@@ -111,7 +109,8 @@ export default defineComponent({
     // 从服务器获取数据
     async function fetchDataFromServer() {
       // try {
-      //   const query = queryData()
+      // const query = queryData()
+      queryData()
       //   if (!query.keyword) return
       //   const { data } = await service.fecthTipList(query)
       //   tipData.value = data

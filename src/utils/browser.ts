@@ -19,7 +19,7 @@ function getTypeVersion() {
   let version!: string | null | Array<string>
 
   for (type in browserTypes) {
-    if (version = browserTypes[type as BrowserKeys].exec(userAgent)) {
+    if ((version = browserTypes[type as BrowserKeys].exec(userAgent))) {
       version = version[1]
       break
     }
@@ -32,9 +32,7 @@ function getTypeVersion() {
   return { type, version }
 }
 
-
 const { type, version } = getTypeVersion()
-
 
 export function getVersion(): string | null | Array<string> {
   return version

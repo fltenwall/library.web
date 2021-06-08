@@ -1,5 +1,3 @@
-
-
 export interface Instance {
   // 开始动画
   startAnimation: (x?: number, y?: number) => void

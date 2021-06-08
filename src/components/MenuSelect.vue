@@ -7,12 +7,7 @@
     @select="onSelect"
     @blur="onBlur"
   >
-    <a-select-option
-      v-for="item in flatMenus"
-      :key="item.name"
-      :value="item.name"
-      :title="item.meta.title"
-    >
+    <a-select-option v-for="item in flatMenus" :key="item.name" :value="item.name" :title="item.meta.title">
       {{ item.meta.title }}
     </a-select-option>
   </a-select>

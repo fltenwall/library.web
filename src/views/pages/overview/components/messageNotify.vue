@@ -19,8 +19,6 @@
   </div>
 </template>
 
-
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Empty } from 'ant-design-vue'
@@ -36,7 +34,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .message-notify {

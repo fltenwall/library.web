@@ -26,7 +26,7 @@ export interface RoleManage {
   // 创建时间
   createTime?: string
 
-  //更新时间
+  // 更新时间
   updateTime?: string
 }
 

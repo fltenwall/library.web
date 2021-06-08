@@ -6,7 +6,6 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'name',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '日期范围',
@@ -43,8 +42,6 @@ export const tableColumns: TableColumn[] = [
     slots: { customRender: 'operation' }
   }
 ]
-
-
 
 export const selectUnitOption = [
   { value: 1, label: '年' },

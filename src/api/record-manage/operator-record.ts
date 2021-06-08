@@ -1,39 +1,39 @@
-import type { PagerQueryData, PagerResponseData } from "/@/lib/http/axios/types"
-import request from "/@/lib/http/axios/"
+import type { PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
+import request from '/@/lib/http/axios/'
 
 export interface OperatorRecord {
   //  主键
-  id?: number;
+  id?: number
 
   // 用户名
-  userName?: string;
+  userName?: string
 
   // ip
-  ip?: string;
+  ip?: string
 
   // 方法
-  httpMethod?: string;
+  httpMethod?: string
 
   // 参数
-  param?: string;
+  param?: string
 
   // 路径
-  path?: string;
+  path?: string
 
   // 请求响应时间
-  executionTime?: string;
+  executionTime?: string
 
   // 客户端
-  client?: string;
+  client?: string
 
   // 操作系统
-  operatingSystem?: string;
+  operatingSystem?: string
 
   // 后端方法名称
-  signatureName?: string;
+  signatureName?: string
 
   // 创建时间
-  createTime?: string;
+  createTime?: string
 }
 
 /**
@@ -45,8 +45,8 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: "/api/logger/operator",
-      method: "get",
+      url: '/api/logger/operator',
+      method: 'get',
       params: query
     })
   }

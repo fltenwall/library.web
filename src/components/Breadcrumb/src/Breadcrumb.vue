@@ -5,20 +5,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, provide } from "vue"
+import { defineComponent, PropType, provide } from 'vue'
 
 export default defineComponent({
   props: {
     separator: {
       type: String as PropType<string>,
-      default: "/"
+      default: '/'
     }
   },
   setup(props) {
-    provide("breadcrumb", props)
+    provide('breadcrumb', props)
   }
 })
 </script>
 
-<style>
-</style>
+<style></style>

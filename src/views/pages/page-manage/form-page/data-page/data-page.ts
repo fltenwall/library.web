@@ -10,7 +10,6 @@ export const formRules: FromRules = {
   ]
 }
 
-
 export const selectOption = [
   { value: 1, label: '正常' },
   { value: 0, label: '停用' }

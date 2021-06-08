@@ -38,16 +38,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import { UserOutlined, CalendarOutlined } from "@ant-design/icons-vue"
-import { useMoment } from "/@/utils/dateFormat"
+import { defineComponent } from 'vue'
+import { UserOutlined, CalendarOutlined } from '@ant-design/icons-vue'
+import { useMoment } from '/@/utils/dateFormat'
 
 export default defineComponent({
   components: { UserOutlined, CalendarOutlined },
   props: {
     title: {
       type: String,
-      default: "操作信息"
+      default: '操作信息'
     },
     data: {
       type: Object,
@@ -84,7 +84,7 @@ export default defineComponent({
 
   &-title::after {
     margin: 0 15px 0 0;
-    content: ":";
+    content: ':';
   }
 
   &-icon {

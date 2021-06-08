@@ -1,11 +1,5 @@
 <template>
-  <a-modal
-    title="新增"
-    :mask-closable="false"
-    :confirm-loading="confirmLoading"
-    @ok="onConfirm"
-    @cancel="onCentel"
-  >
+  <a-modal title="新增" :mask-closable="false" :confirm-loading="confirmLoading" @ok="onConfirm" @cancel="onCentel">
     <a-form :layout="'vertical'">
       <a-form-item label="权限项名称" v-bind="validateInfos.name">
         <a-input v-model:value="dataItem.name" />

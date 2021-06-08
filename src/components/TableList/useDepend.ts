@@ -1,9 +1,8 @@
-import type { ColumnProps } from "ant-design-vue/lib/table/interface"
+import type { ColumnProps } from 'ant-design-vue/lib/table/interface'
 import { provide, inject } from 'vue'
 
-
 export interface Instance {
-  getColumns: () => ColumnProps[];
+  getColumns: () => ColumnProps[]
   setColumns: (column: string[]) => void
 }
 

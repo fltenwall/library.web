@@ -25,13 +25,10 @@ export const BAR_MAP: BarMap = {
 }
 
 interface RenderThumbStyle {
-  move: number,
-  size: string,
+  move: number
+  size: string
   bar: BarMapItem
 }
-
-
-
 
 export function renderThumbStyle({ move, size, bar }: RenderThumbStyle): CSSProperties {
   const style = {} as CSSProperties

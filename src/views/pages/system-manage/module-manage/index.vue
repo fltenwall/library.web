@@ -8,12 +8,7 @@
         <div class="fw-b fs-4 pb-4">
           {{ selectMenu.meta.title }}
         </div>
-        <GlobalTable
-          bordered
-          :columns="tableColumns"
-          :data-source="[selectMenu]"
-          :row-key="'name'"
-        />
+        <GlobalTable bordered :columns="tableColumns" :data-source="[selectMenu]" :row-key="'name'" />
       </div>
       <module-visit :identifier="selectMenu.name" />
     </div>

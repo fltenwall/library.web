@@ -5,14 +5,9 @@ import { wrapperEnv } from './build/utils'
 import { createProxy } from './build/config/vite/proxy'
 import { createVitePlugins } from './build/config/plugin'
 
-
-
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
 }
-
-
-
 
 export default ({ mode, command }: ConfigEnv): UserConfig => {
   const root: string = process.cwd()
@@ -61,7 +56,6 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
           drop_console: VITE_DROP_CONSOLE
         }
       }
-
     },
 
     /**
@@ -73,8 +67,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     // 配置Dep优化行为
     // 会使用 rollup 对 包重新编译，将编译成符合 esm 模块规范的新的包放入 node_modules 下的 .
     optimizeDeps: {
-      include: [
-      ]
+      include: []
     },
 
     css: {
@@ -85,7 +78,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
             'primary-hover-color': '#2a7dc9',
             'tree-title-height': '35px',
             'table-header-bg': '#ffffff',
-            'drawer-body-padding':'24px 0'
+            'drawer-body-padding': '24px 0'
           },
           javascriptEnabled: true
         }
@@ -93,6 +86,5 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     plugins: createVitePlugins(viteEnv, isBuild)
-
   }
 }

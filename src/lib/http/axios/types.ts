@@ -1,15 +1,11 @@
-
-
-
 /**
  * 服务器回复数据
  */
 export interface Result<T = any> {
-  code: number;
-  msg: string;
-  data: T;
+  code: number
+  msg: string
+  data: T
 }
-
 
 /**
  * 分页请求
@@ -22,13 +18,12 @@ export interface PagerQueryData {
   [prop: string]: any
 }
 
-
 /**
  * 分页服务回复
  */
 export interface ResponseData<T = any> {
   // 数据
-  content: Array<T>,
+  content: Array<T>
   // 总个数
   totalElements: number
   // 总页数
@@ -39,16 +34,12 @@ export interface ResponseData<T = any> {
  * 服务器回复错误
  */
 export interface ResponseError {
-  code:number
-  msg:string
-  headers?:any
+  code: number
+  msg: string
+  headers?: any
 }
-
-
 
 /**
  * 分页数据结果
  */
-export interface PagerResponseData<T> extends Result<ResponseData<T>>{
-
-}
+export interface PagerResponseData<T> extends Result<ResponseData<T>> {}

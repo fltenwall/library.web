@@ -36,18 +36,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue"
-import { tableColumns } from "./data-list"
-import { OperatorRecord } from "/@/api/record-manage/operator-record"
-import { injectListPage } from "/@/lib/idata/data-list/methods/useDepend"
-import { useFromatlll } from "/@/utils/dateFormat"
-import { usePagination } from "/@/hooks/web/usePagination"
-import { queryModule } from "/@/utils/regExp"
-import modalDetails from "./components/modal-details.vue"
+import { defineComponent, reactive, ref } from 'vue'
+import { tableColumns } from './data-list'
+import { OperatorRecord } from '/@/api/record-manage/operator-record'
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
+import { useFromatlll } from '/@/utils/dateFormat'
+import { usePagination } from '/@/hooks/web/usePagination'
+import { queryModule } from '/@/utils/regExp'
+import modalDetails from './components/modal-details.vue'
 
 export default defineComponent({
   components: { modalDetails },
-  emits: ["on-page-change", "on-refresh"],
+  emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
     const dataSource = ref<OperatorRecord[]>([])
@@ -56,11 +56,10 @@ export default defineComponent({
     const totalElements = ref<number>(0)
 
     // 对话框
-    const dataDetails = reactive<{visible:boolean,dataItem?:OperatorRecord}>({visible:false})
-
+    const dataDetails = reactive<{ visible: boolean; dataItem?: OperatorRecord }>({ visible: false })
 
     // 详情数据
-    // const detailsDataItem = 
+    // const detailsDataItem =
 
     // 页面方法
     const listPage = injectListPage<OperatorRecord>()
@@ -72,10 +71,10 @@ export default defineComponent({
     const pagination = usePagination()
 
     // 页面发生变化
-    const onPageChange = () => emit("on-page-change")
+    const onPageChange = () => emit('on-page-change')
 
     // 处理刷新
-    const onRefresh = () => emit("on-refresh")
+    const onRefresh = () => emit('on-refresh')
 
     // 对话框处理
     const onDetailsDataItem = (record: OperatorRecord) => {
@@ -107,5 +106,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

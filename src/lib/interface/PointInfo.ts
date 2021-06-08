@@ -1,4 +1,3 @@
-
 // 组件数据
 export interface PointInfo {
   // 唯一值

@@ -11,12 +11,7 @@
               :disable="!linkedState.undo"
               @click="handleUndo"
             />
-            <Icon
-              icon="ion:arrow-redo-sharp"
-              class="point-history"
-              :disable="!linkedState.redo"
-              @click="handleRedo"
-            />
+            <Icon icon="ion:arrow-redo-sharp" class="point-history" :disable="!linkedState.redo" @click="handleRedo" />
           </div>
         </div>
       </template>

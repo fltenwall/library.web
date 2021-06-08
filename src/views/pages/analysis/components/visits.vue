@@ -98,7 +98,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style lang="less" scoped>
 .visits-wrap {
   overflow: hidden;

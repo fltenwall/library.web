@@ -1,23 +1,23 @@
-import type { TableColumn } from "/@/lib/props/TableList"
+import type { TableColumn } from '/@/lib/props/TableList'
 
 export const holdInfoColumns: TableColumn[] = [
   {
-    title: "索书号",
-    dataIndex: "searchCode",
-    align: "center",
+    title: '索书号',
+    dataIndex: 'searchCode',
+    align: 'center',
     ellipsis: true
   },
   {
-    title: "存放位置",
-    dataIndex: "address",
-    align: "center",
+    title: '存放位置',
+    dataIndex: 'address',
+    align: 'center',
     ellipsis: true,
     width: 260
   },
   {
-    title: "馆藏状态",
-    dataIndex: "status",
-    align: "center",
+    title: '馆藏状态',
+    dataIndex: 'status',
+    align: 'center',
     ellipsis: true,
     slots: { customRender: 'status' }
   },
@@ -40,11 +40,10 @@ export const holdInfoColumns: TableColumn[] = [
   //   ellipsis: true
   // },
   {
-    title: "操作",
-    dataIndex: "operation",
-    align: "center",
+    title: '操作',
+    dataIndex: 'operation',
+    align: 'center',
     ellipsis: true,
-    slots: { customRender: 'operation' }  
+    slots: { customRender: 'operation' }
   }
 ]
-

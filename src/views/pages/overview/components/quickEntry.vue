@@ -7,12 +7,7 @@
     </card-header>
 
     <div class="quick-entry-main">
-      <a-dropdown
-        v-for="(item, index) in dataSources"
-        :key="index"
-        class="quick-entry-item"
-        placement="bottomCenter"
-      >
+      <a-dropdown v-for="(item, index) in dataSources" :key="index" class="quick-entry-item" placement="bottomCenter">
         <div @click="handleClickEnter(item.link)" @contextmenu.prevent>
           {{ item.name }}
         </div>
@@ -126,7 +121,6 @@ export default defineComponent({
   }
 })
 </script>
-
 
 <style lang="less" scoped>
 .quick-entry {

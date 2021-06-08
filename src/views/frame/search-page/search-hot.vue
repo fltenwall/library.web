@@ -3,11 +3,7 @@
     <div v-show="dataSource.length" class="header-title">
       热搜书名
     </div>
-    <div
-      v-for="(item, index) in dataSource"
-      :key="item.name"
-      class="index-space-between index-middle mb-4"
-    >
+    <div v-for="(item, index) in dataSource" :key="item.name" class="index-space-between index-middle mb-4">
       <div class="index-middle mr-4">
         <span class="search-hot-item-index" :class="'search-hot-' + (index + 1)">
           {{ index + 1 }}
@@ -35,9 +31,7 @@ export default defineComponent({
   props: {
     dataSource: {
       type: Object as PropType<Hot>,
-      default: () => {
-        return []
-      }
+      default: () => ({})
     }
   }
 })

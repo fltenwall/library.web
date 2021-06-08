@@ -12,30 +12,22 @@
 
     <template #title>
       <div class="pt-1 pb-1">
-        <a-checkbox
-          v-model:checked="checkAll"
-          :indeterminate="indeterminate"
-          @change="onCheckAllChange"
-        >
+        <a-checkbox v-model:checked="checkAll" :indeterminate="indeterminate" @change="onCheckAllChange">
           列设置
         </a-checkbox>
       </div>
     </template>
     <template #content>
-      <a-checkbox-group
-        v-model:value="checkedList"
-        :options="plainOptions"
-        @change="onCheckChange"
-      />
+      <a-checkbox-group v-model:value="checkedList" :options="plainOptions" @change="onCheckChange" />
     </template>
   </a-popover>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue"
-import { State, Options } from "/@/lib/props/TableList"
-import TooltipButton from "./TooltipButton.vue"
-import { injectTable } from "./useDepend"
+import { defineComponent, reactive, toRefs } from 'vue'
+import { State, Options } from '/@/lib/props/TableList'
+import TooltipButton from './TooltipButton.vue'
+import { injectTable } from './useDepend'
 
 export default defineComponent({
   components: { TooltipButton },
@@ -62,9 +54,7 @@ export default defineComponent({
         })
       })
       plainOptions = result
-      const checkList = table
-        .getColumns()
-        .map((item) => item.dataIndex || item.title) as string[]
+      const checkList = table.getColumns().map((item) => item.dataIndex || item.title) as string[]
       state.checkedList = checkList
     }
 
@@ -72,8 +62,7 @@ export default defineComponent({
 
     // 处理多选改变
     function onCheckChange(checkedList: string[]) {
-      state.indeterminate =
-        !!checkedList.length && checkedList.length < plainOptions.length
+      state.indeterminate = !!checkedList.length && checkedList.length < plainOptions.length
       state.checkAll = checkedList.length === plainOptions.length
       table.setColumns(checkedList)
     }

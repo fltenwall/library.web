@@ -1,9 +1,7 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 
-
 // 模型工具
 const schemaTools = import.meta.globEager('./**/schema.ts')
-
 
 export const schemaList: { [prop: string]: PointInfo } = {}
 

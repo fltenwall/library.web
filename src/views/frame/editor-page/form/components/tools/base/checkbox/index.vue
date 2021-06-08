@@ -1,7 +1,5 @@
 <template>
-  <div>
-    checkbox
-  </div>
+  <div>checkbox</div>
 </template>
 
 <script lang="ts">
@@ -19,10 +17,9 @@ export default defineComponent({
     // 拖拽数据信息
     const point = queryPoint(props.uuid)
 
-
     console.log(point)
 
-    return {  }
+    return {}
   }
 })
 </script>

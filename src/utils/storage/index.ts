@@ -1,8 +1,6 @@
 import type { CreateStorage } from './Storage'
 import { createStorage as create } from './Storage'
 
-
-
 const createOptions = (storage = sessionStorage) => {
   return {
     storage

@@ -1,25 +1,22 @@
 import type { Ref } from 'vue'
-import type { CreateStorage } from "/@/utils/storage/Storage"
+import type { CreateStorage } from '/@/utils/storage/Storage'
 import type { FromRules } from '/@/lib/interface/From'
-import { unref, onBeforeUnmount, onMounted, reactive, toRef, ref } from "vue"
+import { unref, onBeforeUnmount, onMounted, reactive, toRef, ref } from 'vue'
 import { provideDataPage } from './methods/useDepend'
 import { checkCacheData, setCacheData } from './methods/cacheData'
 import { checkDataRouter, QueryRoute } from './methods/dataRouter'
-import { createStorage } from "/@/utils/storage/"
-import { PageMode } from "/@/utils/helper/breadcrumb"
-import { useForm } from "@ant-design-vue/use"
-import { useRouter } from "vue-router"
+import { createStorage } from '/@/utils/storage/'
+import { PageMode } from '/@/utils/helper/breadcrumb'
+import { useForm } from '@ant-design-vue/use'
+import { useRouter } from 'vue-router'
 import { assign, cloneDeep, isEqual } from 'lodash-es'
-import { difference } from "/@/utils/difference"
-import useToast from "/@/components/Toast"
-
+import { difference } from '/@/utils/difference'
+import useToast from '/@/components/Toast'
 
 import './index.less'
 import { isUnDef } from '/@/utils/is'
 
-
 interface DataPageMix {
-
   // 页面底部方法
   onDataMethods: {
     // 重置触发
@@ -76,7 +73,6 @@ interface PageInfo {
   query: QueryRoute
 }
 
-
 // 页面为新建模式  初始化
 function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: CreateStorage, cacheData: T) {
   // 页面刷新前处理
@@ -96,11 +92,10 @@ function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: C
     window.addEventListener('beforeunload', updateHandler)
   })
   onBeforeUnmount(() => {
-    // 
+    //
     updateHandler()
     // 停止监听刷新
     window.removeEventListener('beforeunload', updateHandler)
-
   })
 }
 
@@ -109,14 +104,12 @@ function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: C
  */
 export function dataItemInit<T>(dataItem: T, rules: FromRules) {
   const ruleKeys: string[] = Object.keys(rules)
-  ruleKeys.forEach(key => {
+  ruleKeys.forEach((key) => {
     if (isUnDef((dataItem as any)[key])) {
-      (dataItem as any)[key] = ''
+      ;(dataItem as any)[key] = ''
     }
   })
 }
-
-
 
 export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixParameter<T>): DataPageMix {
   // 参数解构
@@ -140,19 +133,18 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
   // 默认数据 和 原始数据
   let cacheData = cloneDeep(dataItem)
 
-  // 获取 ant 表单规则 
+  // 获取 ant 表单规则
   const { validateInfos, resetFields, validate, clearValidate } = useForm(dataItem, rules)
 
   // 页面模式
-  const mode = checkDataRouter((query as unknown) as QueryRoute, name as string)
+  const mode = checkDataRouter(query as unknown as QueryRoute, name as string)
 
   // 获取页面信息
   const pageInfo = reactive<PageInfo>({
     mode: mode,
     readonly: mode === -1 ? true : false,
-    query: (query as unknown) as QueryRoute
+    query: query as unknown as QueryRoute
   })
-
 
   /**
    * 设置元素数据
@@ -160,8 +152,6 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
   const setCacheData = () => {
     cacheData = cloneDeep(dataItem)
   }
-
-
 
   // 设置缓存
   const storage = createStorage(sessionStorage)
@@ -183,7 +173,7 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
     onLoadDataById()
   }
 
-  // 页面为新建模式 
+  // 页面为新建模式
   if (pageInfo.mode === PageMode.new) {
     newModeInit<T>(dataItem, toRef(pageInfo, 'mode'), name as string, storage, cacheData)
   }
@@ -206,9 +196,9 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
    */
   const onRestPage = () => {
     if (pageInfo.mode === PageMode.new) {
-      Object.keys(dataItem).forEach(key => {
+      Object.keys(dataItem).forEach((key) => {
         if (!ruleKeys.includes(key)) {
-          (dataItem as any)[key] = ''
+          ;(dataItem as any)[key] = ''
         }
       })
       resetFields()
@@ -216,8 +206,6 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
       assign(dataItem, cacheData)
       clearValidate()
     }
-
-
   }
 
   /**
@@ -233,7 +221,7 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
    * 页面点击保存触发的函数
    */
   const onSavePage = async () => {
-    if (!await validItem()) return
+    if (!(await validItem())) return
     try {
       loading.value = true
       useToast.clear()
@@ -246,14 +234,13 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
         await onServerMethods.onSaveData(parseInt(pageInfo.query.id!), contrast)
       }
 
-      useToast.success("数据保存成功")
+      useToast.success('数据保存成功')
       setCacheData()
     } catch (err) {
       useToast.error(err.msg)
     } finally {
       loading.value = false
     }
-
   }
 
   /**
@@ -277,15 +264,12 @@ export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixPar
     readonly: toRef(pageInfo, 'readonly')
   })
 
-
-
   // 数据方法
   const onDataMethods = {
     onRestPage,
     onEditPage,
     onSavePage
   }
-
 
   return { onDataMethods, pageInfo, validate, validateInfos, loading }
 }

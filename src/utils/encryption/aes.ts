@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CryptoES from 'crypto-es'
 
-
-
 export interface aesParams {
-  key: string;
-  iv: string;
+  key: string
+  iv: string
 }
 
 class aes {
-
   private key
 
   private iv
 
   constructor({ key, iv }: aesParams) {
-
     this.key = CryptoES.enc.Utf8.parse(key)
 
     this.iv = CryptoES.enc.Utf8.parse(iv)
@@ -28,7 +24,7 @@ class aes {
       iv: this.iv
     }
   }
-  
+
   // 加密
   encrypt(str: string): string {
     const encrypted = CryptoES.AES.encrypt(str, this.key, this.getOption)

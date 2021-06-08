@@ -71,9 +71,7 @@ export default defineComponent({
     const rules = reactive(formRules)
     const onServerMethods = { onNewData, onSaveData, onLoadDataById }
     const parameter = { rules, dataItem, onServerMethods }
-    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<DictionaryManage>(
-      parameter
-    )
+    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<DictionaryManage>(parameter)
     const { mode, readonly } = toRefs(pageInfo)
 
     // 通过ID加载数据

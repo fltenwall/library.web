@@ -26,11 +26,7 @@
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="状态" v-bind="validateInfos.enabled">
-              <SelectWrap
-                v-model:value="dataItem.enabled"
-                :options="selectEnableOption"
-                :readonly="enabledState"
-              />
+              <SelectWrap v-model:value="dataItem.enabled" :options="selectEnableOption" :readonly="enabledState" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">

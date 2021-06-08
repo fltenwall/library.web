@@ -20,10 +20,7 @@ export function getAuthFilterMenus(isFilterHide = true): AppRouteRecordRaw[] {
 }
 
 // 通过权限和菜单展示条件过滤菜单
-export function authFilterMenus(
-  menus: AppRouteRecordRaw[],
-  isFilterHide = true
-): AppRouteRecordRaw[] {
+export function authFilterMenus(menus: AppRouteRecordRaw[], isFilterHide = true): AppRouteRecordRaw[] {
   const data: AppRouteRecordRaw[] = []
   for (const el of menus) {
     const { auth, hideInMenu, allowChildNull } = el.meta

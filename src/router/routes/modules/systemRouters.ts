@@ -18,7 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'user-manage-list-page',
       name: 'user-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/system-manage/user-manage/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/system-manage/user-manage/data-list/list-page.vue'),
       meta: {
         title: '用户管理',
         auth: ['USER:GET']
@@ -27,7 +27,7 @@ const routers: AppRouteModule = {
     {
       path: 'user-manage-data-page',
       name: 'user-manage-data-page',
-      component: (): unknown => import(`/@/views/pages/system-manage/user-manage/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/system-manage/user-manage/data-page/data-page.vue'),
       meta: {
         title: '用户详情',
         hideInMenu: true,
@@ -37,7 +37,7 @@ const routers: AppRouteModule = {
     {
       path: 'role-manage-list-page',
       name: 'role-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/system-manage/role-manage/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/system-manage/role-manage/data-list/list-page.vue'),
       meta: {
         title: '角色管理',
         auth: ['ROLE_READ']
@@ -46,7 +46,7 @@ const routers: AppRouteModule = {
     {
       path: 'role-manage-data-page',
       name: 'role-manage-data-page',
-      component: (): unknown => import(`/@/views/pages/system-manage/role-manage/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/system-manage/role-manage/data-page/data-page.vue'),
       meta: {
         title: '角色详情',
         hideInMenu: true,
@@ -61,7 +61,7 @@ const routers: AppRouteModule = {
     {
       path: 'module-manage-list-page',
       name: 'module-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/system-manage/module-manage/index.vue`),
+      component: (): unknown => import('/@/views/pages/system-manage/module-manage/index.vue'),
       meta: {
         title: '模块管理',
         auth: ['MODULAR_READ']

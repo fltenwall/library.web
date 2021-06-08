@@ -27,8 +27,6 @@
       </div>
     </template>
 
-    
-
     <template #footer-right>
       <PaginationWrap v-model:current="current" :total="totalElements" @change="onPageChange" />
     </template>

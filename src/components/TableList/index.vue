@@ -27,12 +27,7 @@
         </TooltipButton>
       </div>
     </div>
-    <GlobalTable
-      :loading="loading"
-      :columns="getTableColumns"
-      :data-source="dataSource"
-      :scroll="scroll"
-    >
+    <GlobalTable :loading="loading" :columns="getTableColumns" :data-source="dataSource" :scroll="scroll">
       <template v-for="item in Object.keys($slots)" #[item]="data">
         <slot :name="item" v-bind="data" />
       </template>
@@ -56,12 +51,7 @@ import { browserClient, elementOffset } from '/@/utils/elelment'
 import listSetting from './listSetting.vue'
 import TooltipButton from './TooltipButton.vue'
 import { provideTable } from './useDepend'
-import {
-  SyncOutlined,
-  ExpandOutlined,
-  CompressOutlined,
-  VerticalAlignBottomOutlined
-} from '@ant-design/icons-vue'
+import { SyncOutlined, ExpandOutlined, CompressOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   components: {
@@ -88,8 +78,8 @@ export default defineComponent({
       translate: '(0px,0px)'
     })
     // table 表头数据
-    const tableColumns = (ref(unref(props).columns) as unknown) as Ref<TableColumn[]>
-    const cacheTableColumns = (ref(unref(props).columns) as unknown) as Ref<TableColumn[]>
+    const tableColumns = ref(unref(props).columns) as unknown as Ref<TableColumn[]>
+    const cacheTableColumns = ref(unref(props).columns) as unknown as Ref<TableColumn[]>
 
     // 获取 table 表头数据
     const getTableColumns = computed(() => {
@@ -114,7 +104,7 @@ export default defineComponent({
         if (props.dataSource.length) {
           scroll.x = true
         }
-        transform.translate = `(0px,0px)`
+        transform.translate = '(0px,0px)'
       } else {
         // 切换为全屏
         Reflect.deleteProperty(scroll, 'x')

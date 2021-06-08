@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 import { Layout } from 'ant-design-vue'
 import LayoutBreadcrumb from './LayoutBreadcrumb'
-import { MenuFoldOutlined, MenuUnfoldOutlined  } from '@ant-design/icons-vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import { menuStore } from '/@/store/modules/menu'
 import DropMenu from '/@/components/PublicHeader/dropMenu.vue'
 import { userStore } from '/@/store/modules/user'
@@ -10,8 +10,6 @@ import MenuSearch from '/@/components/MenuSearch.vue'
 export default defineComponent({
   name: 'DefaultLayoutHeader',
   setup() {
-
-
     // 处理点击折叠
     function handleTriggerClick() {
       if (menuStore.getCollapsedState) {
@@ -20,8 +18,6 @@ export default defineComponent({
         menuStore.commitCollapsedState(true)
       }
     }
-
-    
 
     return () => (
       <Layout.Header class="layout-header">
@@ -38,11 +34,7 @@ export default defineComponent({
               <MenuSearch />
               <DropMenu placement="bottomCenter">
                 {{
-                  default: () => (
-                    <div class="layout-header-right-action">
-                      {userStore.getUserInfoState?.username}
-                    </div>
-                  )
+                  default: () => <div class="layout-header-right-action">{userStore.getUserInfoState?.username}</div>
                 }}
               </DropMenu>
             </div>

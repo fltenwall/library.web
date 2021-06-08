@@ -31,11 +31,7 @@
         {{ pageInfo.query }}
       </search-empty>
       <div v-if="pageInfo.total" class="data-loading index-center">
-        <a-pagination
-          :current="pageInfo.page"
-          :total="pageInfo.total"
-          @change="handelepageChange"
-        />
+        <a-pagination :current="pageInfo.page" :total="pageInfo.total" @change="handelepageChange" />
       </div>
     </div>
     <div class="search-page-content-right">
@@ -55,7 +51,6 @@ import { InputSearch } from '/@/lib/UI/'
 import { rules } from '/@/utils/regExp'
 import { message } from 'ant-design-vue'
 import service, { Search, Hot } from '/@/api/search'
-import serviceBookInfo from '/@/api/book-manage/book-info'
 import searchList from './search-list.vue'
 import searchHot from './search-hot.vue'
 import searchEmpty from './search-empty.vue'
@@ -87,13 +82,9 @@ export default defineComponent({
         const query = queryData()
         loading.value = true
         const sendDate = new Date().getTime()
-        // 演示
-        const { data } = await serviceBookInfo.fecthList({
-          name: query.keyword,
-          size: 10,
-          page: 0,
-          sort: 'createTime,desc'
-        })
+
+        console.log(query)
+        const data = { content: [], totalElements: 10 }
 
         // const { data } = await service.fecthList(query)
         const receiveDate = new Date().getTime()

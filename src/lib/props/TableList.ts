@@ -1,26 +1,26 @@
-import type { ColumnProps } from "ant-design-vue/lib/table/interface";
-import type { PropType } from "vue";
+import type { ColumnProps } from 'ant-design-vue/lib/table/interface'
+import type { PropType } from 'vue'
 
 export const tableProps = {
   columns: {
     type: [Array] as PropType<ColumnProps[]>,
-    default: null,
+    default: null
   },
   dataSource: {
     type: Array as PropType<unknown[]>,
-    default: [],
+    default: []
   },
   rowKey: {
     type: [String, Function] as PropType<string | ((record: unknown) => string)>,
-    default: "id",
+    default: 'id'
   },
   scroll: {
     type: Object as PropType<{ x: number | true; y: number }>,
-    default: {},
+    default: {}
   },
   rowSelection: {
     type: Object,
-    default: undefined,
+    default: undefined
   },
   loading: {
     type: Boolean as PropType<boolean>,
@@ -36,18 +36,17 @@ export const tableListProps = {
   ...tableProps,
   download: {
     type: Boolean,
-    default: false,
+    default: false
   },
   title: {
     type: String,
-    default: ""
+    default: ''
   },
   templateLink: {
     type: String,
-    default: ""
+    default: ''
   }
 }
-
 
 export interface TableColumn extends ColumnProps {
   dataIndex: string
@@ -55,15 +54,14 @@ export interface TableColumn extends ColumnProps {
   // slots?: Indexable;
 }
 
-
 export interface Options {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
 export interface State {
-  indeterminate: boolean;
-  checkAll: boolean;
-  checkedList: string[];
-  defaultCheckList: string[];
+  indeterminate: boolean
+  checkAll: boolean
+  checkedList: string[]
+  defaultCheckList: string[]
 }

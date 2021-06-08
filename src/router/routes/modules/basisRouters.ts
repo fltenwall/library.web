@@ -18,7 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'date-manage-list-page',
       name: 'date-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/basis-manage/date-manage/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/date-manage/data-list/list-page.vue'),
       meta: {
         title: '日期管理'
       }
@@ -26,7 +26,7 @@ const routers: AppRouteModule = {
     {
       path: 'date-manage-data-page',
       name: 'date-manage-data-page',
-      component: (): unknown => import(`/@/views/pages/basis-manage/date-manage/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/date-manage/data-page/data-page.vue'),
       meta: {
         title: '日期管理详情',
         hideInMenu: true,
@@ -36,8 +36,7 @@ const routers: AppRouteModule = {
     {
       path: 'dictionary-manage-list-page',
       name: 'dictionary-manage-list-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/dictionary-manage/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/dictionary-manage/data-list/list-page.vue'),
       meta: {
         title: '字典管理'
       }
@@ -45,8 +44,7 @@ const routers: AppRouteModule = {
     {
       path: 'dictionary-manage-data-page',
       name: 'dictionary-manage-data-page',
-      component: (): unknown =>
-        import(`/@/views/pages/basis-manage/dictionary-manage/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/dictionary-manage/data-page/data-page.vue'),
       meta: {
         title: '字典管理详情',
         hideInMenu: true,
@@ -56,7 +54,7 @@ const routers: AppRouteModule = {
     {
       path: 'problem-manage-list-page',
       name: 'problem-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/basis-manage/problem-manage/data-list/list-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/problem-manage/data-list/list-page.vue'),
       meta: {
         title: '问题管理'
       }
@@ -64,7 +62,7 @@ const routers: AppRouteModule = {
     {
       path: 'problem-manage-data-page',
       name: 'problem-manage-data-page',
-      component: (): unknown => import(`/@/views/pages/basis-manage/problem-manage/data-page/data-page.vue`),
+      component: (): unknown => import('/@/views/pages/basis-manage/problem-manage/data-page/data-page.vue'),
       meta: {
         title: '问题管理详情',
         hideInMenu: true,
@@ -74,7 +72,7 @@ const routers: AppRouteModule = {
     {
       path: 'image-manage-list-page',
       name: 'image-manage-list-page',
-      component: (): unknown => import(`/@/views/pages/account-mange/center/index.vue`),
+      component: (): unknown => import('/@/views/pages/account-mange/center/index.vue'),
       meta: {
         title: '图片管理'
       }

@@ -6,7 +6,6 @@ const NAME = 'menu'
 
 @Module({ namespaced: true, name: NAME, dynamic: true, store })
 class Menu extends VuexModule {
-
   // 菜单宽度
   private menuWidthState: number = config.menuWidth
 
@@ -42,9 +41,6 @@ class Menu extends VuexModule {
   commitCollapsedWidth(collapsedWidth: number): void {
     this.collapsedWidth = collapsedWidth
   }
-
-
-
 }
 
 export { Menu }

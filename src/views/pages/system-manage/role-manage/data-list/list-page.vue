@@ -8,14 +8,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue"
-import service, { RoleManage } from "/@/api/system-manage/role-mange"
-import { Instance } from "/@/lib/interface/ListPage"
-import { listPageMix } from "/@/lib/idata/data-list/"
-import searchPanle from "./search-panle.vue"
-import listView from "./list-view.vue"
+import { defineComponent, reactive, toRefs } from 'vue'
+import service, { RoleManage } from '/@/api/system-manage/role-mange'
+import { Instance } from '/@/lib/interface/ListPage'
+import { listPageMix } from '/@/lib/idata/data-list/'
+import searchPanle from './search-panle.vue'
+import listView from './list-view.vue'
 
-const DATA_PAGE_NAME = "system-manage-role-manage-data-page"
+const DATA_PAGE_NAME = 'system-manage-role-manage-data-page'
 
 export default defineComponent({
   components: { listView, searchPanle },

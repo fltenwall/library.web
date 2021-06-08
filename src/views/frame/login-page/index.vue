@@ -23,29 +23,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, reactive, unref } from "vue"
-import publicLayout from "/@/views/frame/components/publicLayout.vue"
-import accountLogin from "./account.vue"
-import phoneLogin from "./phone.vue"
-import config from "/@/config/"
-import { toDataURL } from "qrcode"
-import { useRouter } from "vue-router"
-import { PageEnum } from "/@/enums/pageEnum"
+import { defineComponent, ref, onMounted, reactive, unref } from 'vue'
+import publicLayout from '/@/views/frame/components/publicLayout.vue'
+import accountLogin from './account.vue'
+import phoneLogin from './phone.vue'
+import config from '/@/config/'
+import { toDataURL } from 'qrcode'
+import { useRouter } from 'vue-router'
+import { PageEnum } from '/@/enums/pageEnum'
 // import { UserInfo } from "/@/api/security"
 
-
 export default defineComponent({
-  name: "Login",
+  name: 'Login',
   components: { accountLogin, phoneLogin, publicLayout },
   setup() {
     // 登录内容
-    const loginContent = reactive({ type: "account", title: `${config.shortTitle}账号登录` })
+    const loginContent = reactive({ type: 'account', title: `${config.shortTitle}账号登录` })
 
     // 二维码
     const qrcode = ref<null | HTMLImageElement>(null)
 
     // 二维码内容
-    const renderValue = String("https://library.tibis.top/help")
+    const renderValue = String('https://library.tibis.top/help')
 
     // 二维码宽度
     const width = 160
@@ -54,8 +53,6 @@ export default defineComponent({
     const { replace, currentRoute } = useRouter()
 
     const { query } = unref(currentRoute)
-
-
 
     onMounted(async () => {
       const url = await toDataURL(renderValue, {
@@ -66,11 +63,11 @@ export default defineComponent({
 
     // 账户登录改变
     const loginTypeChange = (value: string) => {
-      if (value === "account") {
-        loginContent.type = "phone"
-        loginContent.title = "短信验证码登录"
-      } else if (value === "phone") {
-        loginContent.type = "account"
+      if (value === 'account') {
+        loginContent.type = 'phone'
+        loginContent.title = '短信验证码登录'
+      } else if (value === 'phone') {
+        loginContent.type = 'account'
         loginContent.title = `${config.shortTitle}账号登录`
       }
     }

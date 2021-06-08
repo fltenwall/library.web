@@ -1,13 +1,13 @@
-import { defineComponent } from "vue"
-import config from "/@/config/"
-import { PageEnum } from "/@/enums/pageEnum"
-import { useGo } from "/@/hooks/web/usePage"
+import { defineComponent } from 'vue'
+import config from '/@/config/'
+import { PageEnum } from '/@/enums/pageEnum'
+import { useGo } from '/@/hooks/web/usePage'
 
 export default defineComponent({
   props: {
     mainClass: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   setup(props, { attrs }) {
@@ -16,8 +16,8 @@ export default defineComponent({
     const onTitleClick = () => go({ name: PageEnum.INDEX_PAGE })
 
     return () => (
-      <header class={[attrs.class, "index-middle", "pbulic-header"]}>
-        <div class={["pbulic-header-main", "index-middle", props.mainClass]}>
+      <header class={[attrs.class, 'index-middle', 'pbulic-header']}>
+        <div class={['pbulic-header-main', 'index-middle', props.mainClass]}>
           <img src={config.logo} />
           <div onClick={onTitleClick} class="pbulic-header-title index-theme">
             {config.title}

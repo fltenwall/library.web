@@ -50,7 +50,7 @@
     </a-row>
     <a-row type="flex" :gutter="[0, 42]">
       <a-col>
-        <div class="row-title ">
+        <div class="row-title">
           请求参数
         </div>
         <div class="row-content index-newline">
@@ -98,9 +98,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import { queryModule } from "/@/utils/regExp"
-import { useFromatlll } from "/@/utils/dateFormat"
+import { defineComponent } from 'vue'
+import { queryModule } from '/@/utils/regExp'
+import { useFromatlll } from '/@/utils/dateFormat'
 
 export default defineComponent({
   props: {
@@ -115,10 +115,10 @@ export default defineComponent({
       }
     }
   },
-  emits: ["update:visible"],
+  emits: ['update:visible'],
   setup(_props, { emit }) {
     // 用户点击取消
-    const onCancel = () => emit("update:visible", false)
+    const onCancel = () => emit('update:visible', false)
 
     return {
       onCancel,
@@ -147,7 +147,7 @@ export default defineComponent({
 
     &::after {
       margin: 0 15px 0 0;
-      content: ":";
+      content: ':';
     }
   }
 }

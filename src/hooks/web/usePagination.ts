@@ -1,8 +1,7 @@
 import { ref, Ref } from 'vue'
 
-
 export interface GetPagination {
-  page: number,
+  page: number
 
   size: number
 }
@@ -21,14 +20,10 @@ interface Pagination {
   getPagination: () => GetPagination
 }
 
-
-
 export function usePagination(page = 1, size = 10): Pagination {
-
   const pageSize = ref<number>(size)
 
   const current = ref<number>(page)
-
 
   const setPagination = (page = 0, size = 10) => {
     current.value = page + 1
@@ -42,7 +37,6 @@ export function usePagination(page = 1, size = 10): Pagination {
       size: pageSize.value
     }
   }
-
 
   return { current, pageSize, setPagination, getPagination }
 }

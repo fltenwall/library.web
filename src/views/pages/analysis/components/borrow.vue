@@ -46,7 +46,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style lang="less" scoped>
 .borrow-wrap {
   overflow: hidden;

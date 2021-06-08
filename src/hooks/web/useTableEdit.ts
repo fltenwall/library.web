@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Ref } from "vue"
-import { ref } from "vue"
-import { assign, cloneDeep } from "lodash-es"
-import { isNull } from "/@/utils/is"
-import { difference } from "/@/utils/difference"
+import type { Ref } from 'vue'
+import { ref } from 'vue'
+import { assign, cloneDeep } from 'lodash-es'
+import { isNull } from '/@/utils/is'
+import { difference } from '/@/utils/difference'
 
 interface Record {
-  editable?: boolean;
+  editable?: boolean
 }
 
 interface UseTableEdit<T> {
   // 编辑行
-  editingIndex: Ref<number | null>;
+  editingIndex: Ref<number | null>
 
   // 处理数据改变
-  handleEditChange: (value: string, record: T, column: string) => void;
+  handleEditChange: (value: string, record: T, column: string) => void
 
   // 处理点击编辑按键
-  handleClickEdit: (record: T, index: number) => void;
+  handleClickEdit: (record: T, index: number) => void
 
   // 处理点击取消按键
-  handleCancelEdit: (record: T) => void;
+  handleCancelEdit: (record: T) => void
 
-  //处理点击保存按键
-  handleSvaeEdit: (record: T) => void;
+  // 处理点击保存按键
+  handleSvaeEdit: (record: T) => void
 }
 // 参数
 interface Options {
-  onSaveData: (record: any, data: any) => Promise<void>;
+  onSaveData: (record: any, data: any) => Promise<void>
 }
 
 export interface EditCol {
@@ -73,5 +73,4 @@ export function useTableEdit<T extends Record>({ onSaveData }: Options): UseTabl
     handleClickEdit,
     handleCancelEdit
   }
-
 }

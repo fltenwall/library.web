@@ -1,15 +1,13 @@
 import { menuEnum } from '/@/enums/menuEnum'
 
-
 export interface DropMenu {
-  to?: string;
-  icon?: string;
-  event: string | number;
-  text: string;
-  disabled?: boolean;
-  divider?: boolean;
+  to?: string
+  icon?: string
+  event: string | number
+  text: string
+  disabled?: boolean
+  divider?: boolean
 }
-
 
 export function getActions(): DropMenu[] {
   const CLOSE_LEFT: DropMenu = {
@@ -40,4 +38,3 @@ export function getActions(): DropMenu[] {
   }
   return [CLOSE_LEFT, CLOSE_RIGHT, CLOSE_OTHER, CLOSE_ALL]
 }
-

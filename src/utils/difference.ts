@@ -2,7 +2,7 @@
 export function difference<T>(base: T, other: T): T {
   // 深拷贝
   const deepClone = (value: unknown) => {
-    if (typeof value !== "object" || value === null) {
+    if (typeof value !== 'object' || value === null) {
       return value
     }
     // 判断是否是数组
@@ -28,8 +28,7 @@ export function difference<T>(base: T, other: T): T {
   // 深检测对象差异
   const deepValid = (target: any, source: any) => {
     // 计算数组或者对象长度
-    const lengthValid = (value: any) =>
-      Array.isArray(value) ? value.length : Reflect.ownKeys(value).length
+    const lengthValid = (value: any) => (Array.isArray(value) ? value.length : Reflect.ownKeys(value).length)
 
     // 结果
     const result: { value?: unknown } = {}
@@ -37,7 +36,7 @@ export function difference<T>(base: T, other: T): T {
     if (!(typeValid(target) === typeValid(source))) {
       // 类型不一样, 那么值也就不一样
       result.value = deepClone(target)
-    } else if (typeof target !== "object" || target === null) {
+    } else if (typeof target !== 'object' || target === null) {
       // 类型为基本类型, 判断值是否相等
       if (target !== source) {
         result.value = deepClone(target)
@@ -60,9 +59,9 @@ export function difference<T>(base: T, other: T): T {
           const child = deepValid(target[key], source[key])
 
           // 查看 child 是否存在 value
-          if (child.hasOwnProperty("value")) {
+          if (child.hasOwnProperty('value')) {
             // 判断 value 的类型
-            if (typeof child.value === "object") {
+            if (typeof child.value === 'object') {
               // 判对象 或者数组 的长度, 长度为 0 不添加
               if (!!lengthValid(child)) {
                 (_result as any)[key] = child.value
@@ -82,5 +81,5 @@ export function difference<T>(base: T, other: T): T {
     return result
   }
 
-  return (deepValid(base, other).value as T)
+  return deepValid(base, other).value as T
 }

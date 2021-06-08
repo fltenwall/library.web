@@ -37,7 +37,7 @@ export const stringify = (value: any): false | string | number => {
         json.push(stringify(k) + ':' + stringify(value[k]))
       }
     }
-    return json.length ? ('{' + json.join(',') + '}') : false
+    return json.length ? '{' + json.join(',') + '}' : false
   }
   return false
 }

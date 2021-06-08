@@ -1,6 +1,11 @@
 <template>
   <SearchOutlined class="pr-2" @click="handleSearchClick" />
-  <MenuSelect :style="selectStyle" class="no-border menu-search-select" @on-select="handleSelect" @on-blur="handleBlur" />
+  <MenuSelect
+    :style="selectStyle"
+    class="no-border menu-search-select"
+    @on-select="handleSelect"
+    @on-blur="handleBlur"
+  />
 </template>
 
 <script lang="ts">

@@ -6,9 +6,7 @@ import { createRouteStateGuard } from './routeStateGuard'
 import { createPageSearchGuard } from './pageSearchGuard'
 import { createPageAuthGuard } from './pageAuthGuard'
 
-
 export function createGuard(router: Router): void {
-
   // 加载
   createPageLoadingGuard(router)
 
@@ -23,8 +21,6 @@ export function createGuard(router: Router): void {
 
   // 搜索页面拦截
   createPageSearchGuard(router)
-
-
 
   // 设置页面标题
   createPageTitleGuard(router)

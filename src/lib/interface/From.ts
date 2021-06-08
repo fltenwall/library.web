@@ -1,5 +1,3 @@
-
-
 interface RulesOptions {
   // 枚举类型
   enum?: string
@@ -23,22 +21,32 @@ interface RulesOptions {
   required?: boolean
 
   // 校验前转换字段值
-  transform?: (value: unknown) => unknown;
+  transform?: (value: unknown) => unknown
 
   // 内建校验类型
-  type?: 'string' | 'number' | 'boolean' | 'method' | 'regexp' | 'integer' | 'float' | 'object' | 'enum' | 'date' | 'url' | 'hex' | 'email'
+  type?:
+    | 'string'
+    | 'number'
+    | 'boolean'
+    | 'method'
+    | 'regexp'
+    | 'integer'
+    | 'float'
+    | 'object'
+    | 'enum'
+    | 'date'
+    | 'url'
+    | 'hex'
+    | 'email'
 
   // 自定义校验（注意，callback 必须被调用）
   validator?: (rule: unknown, value: unknown, callback: (error?: string) => void) => Promise<void>
 
   // 必选时，空格是否会被视为错误
-  whitespace?: boolean,
+  whitespace?: boolean
 
   trigger?: 'blur' | 'change'
 }
-
-
-
 
 export interface FromRules {
   [key: string]: RulesOptions[]

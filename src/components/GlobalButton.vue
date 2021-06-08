@@ -1,17 +1,12 @@
 <template>
-  <button
-    ref="button"
-    class="globla-button"
-    :class="{ 'index-disabled': disabled }"
-    @click="handleClick($event)"
-  >
+  <button ref="button" class="globla-button" :class="{ 'index-disabled': disabled }" @click="handleClick($event)">
     <slot />
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import { isNumber } from "/@/utils/is"
+import { defineComponent, ref } from 'vue'
+import { isNumber } from '/@/utils/is'
 
 export default defineComponent({
   props: {
@@ -24,7 +19,7 @@ export default defineComponent({
       default: undefined
     }
   },
-  emits: ["on-click"],
+  emits: ['on-click'],
   setup(props, { emit }) {
     const button = ref<HTMLElement | null>(null)
     const ripples: HTMLElement[] = []
@@ -33,16 +28,16 @@ export default defineComponent({
     const handleAnimation = (x?: number, y?: number): HTMLElement => {
       // const x = event.offsetX
       // const y = event.offsetY
-      const span = document.createElement("span")
-      span.style.left = x ? `${x}px` : "50%"
-      span.style.top = y ? `${y}px` : "50%"
+      const span = document.createElement('span')
+      span.style.left = x ? `${x}px` : '50%'
+      span.style.top = y ? `${y}px` : '50%'
       button.value!.appendChild(span)
       return span
     }
     // 处理点击
     const handleClick = (event: MouseEvent) => {
       if (props.disabled) return
-      emit("on-click", event)
+      emit('on-click', event)
     }
 
     const startAnimation = (x?: number, y?: number) => {

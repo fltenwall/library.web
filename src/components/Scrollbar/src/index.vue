@@ -11,20 +11,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import Bar from "./bar"
+import { defineComponent, ref } from 'vue'
+import Bar from './bar'
 
 export default defineComponent({
   components: { Bar },
   props: {
     tag: {
       type: String,
-      default: "div"
+      default: 'div'
     }
   },
   setup() {
-    const sizeWidth = ref<string>("0")
-    const sizeHeight = ref<string>("0")
+    const sizeWidth = ref<string>('0')
+    const sizeHeight = ref<string>('0')
     const wrap = ref<Element | null>(null)
     const resize = ref<HTMLElement | null>(null)
 

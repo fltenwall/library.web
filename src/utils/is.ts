@@ -9,7 +9,6 @@ export const isDef = <T = unknown>(val?: T): val is T => {
   return typeof val !== 'undefined'
 }
 
-
 export const isUnDef = <T = unknown>(val?: T): val is T => {
   return !isDef(val)
 }

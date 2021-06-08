@@ -1,28 +1,14 @@
 <template>
-  <a-modal
-    v-model:visible="visible"
-    :width="400"
-    :footer="null"
-    :mask-closable="false"
-    :closable="false"
-  >
+  <a-modal v-model:visible="visible" :width="400" :footer="null" :mask-closable="false" :closable="false">
     <div class="header">
       {{ title }}
     </div>
     <a-form layout="vertical">
       <a-form-item v-bind="validateInfos.password">
-        <a-input-password
-          v-model:value="dataItem.password"
-          placeholder="输入密码"
-          :visibility-toggle="false"
-        />
+        <a-input-password v-model:value="dataItem.password" placeholder="输入密码" :visibility-toggle="false" />
       </a-form-item>
       <a-form-item v-bind="validateInfos.repeat">
-        <a-input-password
-          v-model:value="dataItem.repeat"
-          placeholder="确认密码"
-          :visibility-toggle="false"
-        />
+        <a-input-password v-model:value="dataItem.repeat" placeholder="确认密码" :visibility-toggle="false" />
       </a-form-item>
     </a-form>
     <div class="footer">

@@ -1,15 +1,8 @@
 <template>
   <div ref="wrapRef" class="global-drawer-wrap" :style="wrapStyle">
     <slot />
-    <div
-      :class="['hide-panel index-center-middle', `hide-panel-${placement}`]"
-      @click="handleSwitchHide"
-    >
-      <Icon
-        color="#A1A6B3"
-        class="hide-panel-icon"
-        :icon="`ant-design:caret-${visible ? 'right' : 'left'}-outlined`"
-      />
+    <div :class="['hide-panel index-center-middle', `hide-panel-${placement}`]" @click="handleSwitchHide">
+      <Icon color="#A1A6B3" class="hide-panel-icon" :icon="`ant-design:caret-${visible ? 'right' : 'left'}-outlined`" />
     </div>
   </div>
 </template>

@@ -60,10 +60,7 @@ export default defineComponent({
     const onSearch = (value: string) => {
       value && (setLoadState(true), useDebugger(value))
     }
-    const useDebugger = debounce(
-      (value: string) => emit('on-search', value, () => setLoadState(false)),
-      1000
-    )
+    const useDebugger = debounce((value: string) => emit('on-search', value, () => setLoadState(false)), 1000)
     const selectReadonly = useSelectReadonly(readonly)
 
     const onSelect = () => listPage.onFetchData?.()

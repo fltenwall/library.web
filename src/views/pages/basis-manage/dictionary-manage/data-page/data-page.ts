@@ -18,12 +18,10 @@ export const formRules: FromRules = {
   ]
 }
 
-
 export const selectOption = [
   { value: 1, label: '正常' },
   { value: 0, label: '停用' }
 ]
-
 
 export const dataTypeColumn: TableColumn[] = [
   {
@@ -31,14 +29,12 @@ export const dataTypeColumn: TableColumn[] = [
     dataIndex: 'id',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '数据标签',
     dataIndex: 'label',
     align: 'center',
     ellipsis: true
-
   },
   {
     title: '数据键值',
@@ -69,7 +65,6 @@ export const dataTypeColumn: TableColumn[] = [
   }
 ]
 
-
 export const dictDetailRules: FromRules = {
   label: [
     {
@@ -85,5 +80,4 @@ export const dictDetailRules: FromRules = {
       message: '不允许为空'
     }
   ]
-  
 }

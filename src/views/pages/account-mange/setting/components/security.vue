@@ -1,7 +1,7 @@
 <template>
   <div v-for="(item, index) in listData" :key="index" class="list-row">
     <div class="right">
-      <div class="title ">
+      <div class="title">
         {{ item.title }}
       </div>
       <div class="content">

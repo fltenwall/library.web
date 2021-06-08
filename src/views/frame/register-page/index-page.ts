@@ -46,10 +46,7 @@ export function validDataContent(dataItem: Register, errorTip: Register): DataCo
           if (!dataItem.password || !dataItem.repeat) {
             errorTip.repeat = ''
           } else {
-            const character = dataItem.repeat.replace(
-              /(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g,
-              '\\$1'
-            )
+            const character = dataItem.repeat.replace(/(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g, '\\$1')
             if (!new RegExp(`^${character}.*`).test(dataItem.password)) {
               errorTip.repeat = '两次输入的密码不一致'
             } else {

@@ -1,13 +1,13 @@
-import type { AppRouteRecordRaw } from "/@/router/types"
-import type { RouteLocationMatched } from "vue-router"
-import { defineComponent, watch, unref, TransitionGroup, reactive } from "vue"
-import { Breadcrumb, BreadcrumbItem } from "/@/components/Breadcrumb/"
-import { parsePageModeFromString } from "/@/utils/helper/breadcrumb"
-import { useRouter } from "vue-router"
-import { PageEnum } from "/@/enums/pageEnum"
-import { useGo } from "/@/hooks/web/usePage"
-import { validData } from "/@/utils/regExp"
-import router from "/@/router"
+import type { AppRouteRecordRaw } from '/@/router/types'
+import type { RouteLocationMatched } from 'vue-router'
+import { defineComponent, watch, unref, TransitionGroup, reactive } from 'vue'
+import { Breadcrumb, BreadcrumbItem } from '/@/components/Breadcrumb/'
+import { parsePageModeFromString } from '/@/utils/helper/breadcrumb'
+import { useRouter } from 'vue-router'
+import { PageEnum } from '/@/enums/pageEnum'
+import { useGo } from '/@/hooks/web/usePage'
+import { validData } from '/@/utils/regExp'
+import router from '/@/router'
 
 interface ItemList {
   value: AppRouteRecordRaw[]
@@ -22,7 +22,7 @@ export default defineComponent({
     const itemList = reactive<ItemList>({
       value: [],
       length: 0,
-      queryMode: ""
+      queryMode: ''
     })
 
     // 路由发送变换
@@ -36,7 +36,7 @@ export default defineComponent({
       }
       itemList.queryMode = query.mode as string
       itemList.length = matchedList.length - 1
-      itemList.value = (matchedList as unknown) as AppRouteRecordRaw[]
+      itemList.value = matchedList as unknown as AppRouteRecordRaw[]
     }
 
     // 获取路由
@@ -78,9 +78,9 @@ export default defineComponent({
 
                 const isDivider = length !== index
 
-                let mode = ""
+                let mode = ''
 
-                if (validData({ data: el.path, rule: "dataPage" })) {
+                if (validData({ data: el.path, rule: 'dataPage' })) {
                   const pageMode = parsePageModeFromString(queryMode)
                   mode = `- ${pageMode.modeName}`
                 }

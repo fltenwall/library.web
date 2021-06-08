@@ -8,12 +8,7 @@
         新增
       </a-button>
     </div>
-    <GlobalTable
-      :scroll="scroll"
-      :columns="tableColumns"
-      :data-source="dataSource"
-      :loading="loading"
-    >
+    <GlobalTable :scroll="scroll" :columns="tableColumns" :data-source="dataSource" :loading="loading">
       <template #authorities="{ record }">
         <a-tag v-for="key in record.authorities" :key="key">
           {{ authorityList[key] }}

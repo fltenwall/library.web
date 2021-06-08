@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { AppRouteRecordRaw } from "/@/router/types"
-import { defineComponent, computed, unref, watch, ref, onUnmounted, onMounted } from "vue"
-import { useGo } from "/@/hooks/web/usePage"
-import { tabStore, TabItem } from "/@/store/modules/tab"
-import { Tabs, Dropdown, Menu } from "ant-design-vue"
-import { closeTab, useCacheTabs, useTabDropdown } from "/@/hooks/web/useTab"
-import { getActions } from "./tab.data"
-import { getAllParentPath, getFlatMenus } from "/@/utils/helper/menu"
-import Icon from "/@/components/Icon"
-import { useAuthorities } from "/@/hooks/web/useAuthorities"
+import type { AppRouteRecordRaw } from '/@/router/types'
+import { defineComponent, computed, unref, watch, ref, onUnmounted, onMounted } from 'vue'
+import { useGo } from '/@/hooks/web/usePage'
+import { tabStore, TabItem } from '/@/store/modules/tab'
+import { Tabs, Dropdown, Menu } from 'ant-design-vue'
+import { closeTab, useCacheTabs, useTabDropdown } from '/@/hooks/web/useTab'
+import { getActions } from './tab.data'
+import { getAllParentPath, getFlatMenus } from '/@/utils/helper/menu'
+import Icon from '/@/components/Icon'
+import { useAuthorities } from '/@/hooks/web/useAuthorities'
 
 export default defineComponent({
   setup() {
@@ -16,7 +16,7 @@ export default defineComponent({
     // 路由
     const routeSet = new Set()
     // 当前激活标签
-    const activeKey = ref<string>("")
+    const activeKey = ref<string>('')
     // 页面跳转
     const go = useGo()
 
@@ -31,7 +31,6 @@ export default defineComponent({
     // 使用下拉菜单
     const { handelMenuClick } = useTabDropdown(activeKey)
 
-
     // 监听路由变化
     watch(
       () => tabStore.getLastChangeRouteState,
@@ -43,7 +42,7 @@ export default defineComponent({
         }
 
         let route: any = unref(value)
-        const flatItems = getFlatMenus(false) 
+        const flatItems = getFlatMenus(false)
         if (route.meta?.hideInTab) {
           const parentPath = getAllParentPath(flatItems, value.name as string).reverse()
           route = parentPath.find((el) => !el.meta?.hideInTab)
@@ -70,7 +69,7 @@ export default defineComponent({
      * @description: 设置固定tabs
      */
     function addAffixTabs(): void {
-      const affixTabs = filterAffixTabs((getFlatMenus(false) as unknown) as AppRouteRecordRaw[])
+      const affixTabs = filterAffixTabs(getFlatMenus(false) as unknown as AppRouteRecordRaw[])
       const cacheTabs = readCacheTabs()
       tabStore.commitResetTabsState()
       if (cacheTabs) {
@@ -153,9 +152,7 @@ export default defineComponent({
       return (
         <Dropdown>
           {{
-            default: () => (
-              <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />
-            ),
+            default: () => <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />,
             overlay: () => <Menu onClick={handelMenuClick}>{() => renderMenu()}</Menu>
           }}
         </Dropdown>

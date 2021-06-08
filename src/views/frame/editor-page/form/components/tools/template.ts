@@ -1,9 +1,4 @@
-
-
-
-
 const templateTools = import.meta.globEager('./**/template.vue')
-
 
 export const templateList: { [prop: string]: unknown } = {}
 
