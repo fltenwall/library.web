@@ -34,71 +34,68 @@ import xss from 'xss'
 import { isString } from '/@/utils/is'
 
 export default defineComponent({
-  props: {
-    dataSource: {
-      type: Object as PropType<Search>,
-      default: () => {
-        return []
-      }
-    },
-    searchValue: {
-      type: String,
-      default: ''
-    }
-  },
-  setup() {
-    // 高亮
-    function highlight(value: string) {
-      if (!isString(value)) return
-      let result = xss(value, { whiteList: {} })
+	props: {
+		dataSource: {
+			type: Object as PropType<Search>,
+			default: () => ({})
+		},
+		searchValue: {
+			type: String,
+			default: ''
+		}
+	},
+	setup() {
+		// 高亮
+		function highlight(value: string) {
+			if (!isString(value)) return
+			let result = xss(value, { whiteList: {} })
 
-      return result.replace(/&lt;em data="([^"]+)"&gt;&lt;\/em&gt;/g, '<em>$1</em>')
-    }
+			return result.replace(/&lt;em data="([^"]+)"&gt;&lt;\/em&gt;/g, '<em>$1</em>')
+		}
 
-    return { highlight }
-  }
+		return { highlight }
+	}
 })
 </script>
 
 <style lang="less" scoped>
 .search-list-box {
-  display: flex;
-  margin: 0 0 30px 0;
+	display: flex;
+	margin: 0 0 30px 0;
 
-  ::v-deep(em) {
-    font-style: normal;
-    color: red;
-  }
+	::v-deep(em) {
+		font-style: normal;
+		color: red;
+	}
 
+	.header {
+		&-link {
+			font-size: 16px;
 
-  .header {
-    &-link {
-      font-size: 16px;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
 
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+	.main {
+		&-box {
+			font-size: 14px;
+			line-height: 30px;
 
-  .main {
-    &-box {
-      font-size: 14px;
-      line-height: 30px;
+			.box-title {
+				color: #333;
 
-      .box-title {
-        color: #333;
+				&::after {
+					margin: 0 5px 0 3px;
+					content: ':';
+				}
+			}
 
-        &::after {
-          margin: 0 5px 0 3px;
-          content: ':';
-        }
-      }
-
-      .box-content {
-        color: #555;
-      }
-    }
-  }
+			.box-content {
+				color: #555;
+			}
+		}
+	}
 }
 </style>
