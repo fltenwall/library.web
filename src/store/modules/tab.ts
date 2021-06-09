@@ -60,11 +60,11 @@ export default class Tab extends VuexModule {
       if (!curTab) return
       curTab.params = params || curTab.params
       curTab.query = query || curTab.query
-      curTab.meta = meta || curTab.meta
+      curTab.meta = meta || curTab.meta!
       this.tabsState.splice(updateIndex, 1, curTab)
       return
     }
-    this.tabsState.push({ path, name, meta, params, query })
+    this.tabsState.push({ path: path || '', name, meta: meta || {}, params, query })
   }
 
   @Mutation
@@ -90,7 +90,7 @@ export default class Tab extends VuexModule {
     // 设置开始下标
     const startIndex = isNumber(start) ? start : findIndex(start)
     // 设置结束下标
-    const endIndex = isDef(end) ? (isNumber(end) ? end : findIndex(end)) : undefined
+    const endIndex = isDef(end) ? (isNumber(end) ? end : findIndex(end!)) : undefined
     // 没有找到下标 就跳出
     if (endIndex === -1 || startIndex === -1) {
       return
