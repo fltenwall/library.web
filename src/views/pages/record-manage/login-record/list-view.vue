@@ -19,11 +19,11 @@
     </template>
 
     <template #location="{ record }">
-      <div class="">
-        <span>{{ record.ipRecord.nation }}</span>
-        <span>{{ record.ipRecord.region }}</span>
-        <span>{{ record.ipRecord.city }}</span>
-        <span>{{ record.ipRecord.district }}</span>
+      <div class="location">
+        <span v-if="record.ipRecord.nation">{{ record.ipRecord.nation }}</span>
+        <span v-if="record.ipRecord.province">{{ record.ipRecord.province }}</span>
+        <span v-if="record.ipRecord.city">{{ record.ipRecord.city }}</span>
+        <span v-if="record.ipRecord.district">{{ record.ipRecord.district }}</span>
       </div>
     </template>
 
@@ -87,4 +87,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.location {
+  span:not(:last-of-type) {
+    margin: 0 10px 0 0;
+  }
+}
+</style>

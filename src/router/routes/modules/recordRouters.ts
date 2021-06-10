@@ -21,7 +21,7 @@ const routers: AppRouteModule = {
       component: (): unknown => import('/@/views/pages/record-manage/login-record/list-page.vue'),
       meta: {
         title: '登录日志',
-        auth: ['LOGIN_LOGGER_READ']
+        auth: ['RECORDLOGIN:GET']
       }
     },
     {
@@ -30,7 +30,7 @@ const routers: AppRouteModule = {
       component: (): unknown => import('/@/views/pages/record-manage/operate-record/list-page.vue'),
       meta: {
         title: '操作日志',
-        auth: ['OPERATOR_LOGGER_READ']
+        auth: ['RECORDOPERATOR:GET']
       }
     }
   ],

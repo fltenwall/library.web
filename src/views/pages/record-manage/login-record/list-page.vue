@@ -49,7 +49,7 @@ export default defineComponent({
         const { data } = await service.fecthList(query)
         instance.listInstance?.setDataSource(data.content, data.totalElements)
       } catch (err) {
-        message.error('数据获取失败')
+        message.error(`数据获取失败: ${err.msg}`)
       }
     }
 

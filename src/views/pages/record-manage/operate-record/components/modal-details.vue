@@ -1,6 +1,6 @@
 <template>
   <a-modal title="操作日志详细" :width="700" :visible="visible" @cancel="onCancel">
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col span="12">
         <div class="row-title">
           操作模块
@@ -18,13 +18,13 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col span="12">
         <div class="row-title">
           登录信息
         </div>
         <div class="row-content">
-          <span>{{ data.username }}</span>
+          <span>{{ data.account }}</span>
           <span> / </span>
           <span>{{ data.ip }}</span>
         </div>
@@ -34,21 +34,24 @@
           请求方式
         </div>
         <div class="row-content">
-          {{ data.httpMethod }}
+          {{ data.method }}
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col>
         <div class="row-title">
-          操作方法
+          操作地点
         </div>
         <div class="row-content">
-          {{ data.signatureName }}
+          <span v-if="data.ipRecord.nation">{{ data.ipRecord.nation }}</span>
+          <span v-if="data.ipRecord.province">{{ data.ipRecord.province }}</span>
+          <span v-if="data.ipRecord.city">{{ data.ipRecord.city }}</span>
+          <span v-if="data.ipRecord.district">{{ data.ipRecord.district }}</span>
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col>
         <div class="row-title">
           请求参数
@@ -58,19 +61,19 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col>
         <div class="row-title">
           操作环境
         </div>
         <div class="row-content">
-          <span> {{ data.operatingSystem }}</span>
+          <span> {{ data.os }}</span>
           <span> / </span>
-          <span>{{ data.client }}</span>
+          <span>{{ data.browser }}</span>
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" :gutter="[0, 42]">
+    <a-row type="flex" class="pb-5">
       <a-col span="12">
         <div class="row-title">
           操作状态

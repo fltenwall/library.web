@@ -11,9 +11,16 @@
     </template>
 
     <template #status="{ record }">
-      <span v-if="record.status === 'SUCCESS'" color="#19be6b"> 成功 </span>
-      <span v-else-if="record.status === 'FAIL'" color="#ed4014"> 失败 </span>
-      <span v-else color="#ed4014"> - </span>
+      <div>{{ record.status }}</div>
+    </template>
+
+    <template #location="{ record }">
+      <div class="location">
+        <span v-if="record.ipRecord.nation">{{ record.ipRecord.nation }}</span>
+        <span v-if="record.ipRecord.province">{{ record.ipRecord.province }}</span>
+        <span v-if="record.ipRecord.city">{{ record.ipRecord.city }}</span>
+        <span v-if="record.ipRecord.district">{{ record.ipRecord.district }}</span>
+      </div>
     </template>
 
     <template #action="{ record }">
@@ -106,4 +113,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.location {
+  span:not(:last-of-type) {
+    margin: 0 10px 0 0;
+  }
+}
+</style>

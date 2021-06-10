@@ -95,7 +95,7 @@ export default class Service {
   static updatePassword(id: number, password: string): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
       url: '/epi/user/password/' + id,
-      method: 'patch',
+      method: 'put',
       data: { password },
       headers: {
         'Content-Type': ContentTypeEnum.FORM_URLENCODED

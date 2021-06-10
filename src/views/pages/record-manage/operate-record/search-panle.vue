@@ -13,11 +13,11 @@
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="请求方式">
-          <a-select v-model:value="queryData.httpMethod">
+          <a-select v-model:value="queryData.method">
             <a-select-option value="">
               全部
             </a-select-option>
-            <a-select-option v-for="value in httpMethod" :key="value" :value="value">
+            <a-select-option v-for="value in method" :key="value" :value="value">
               {{ value }}
             </a-select-option>
           </a-select>
@@ -74,7 +74,7 @@ export default defineComponent({
   },
   data() {
     return {
-      httpMethod: ['GET', 'POST', 'PUT', 'DELETE']
+      method: ['GET', 'POST', 'PUT', 'DELETE']
     }
   }
 })

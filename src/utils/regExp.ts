@@ -28,16 +28,16 @@ export function validData({ data, rule }: Parameter): boolean {
 // 系统模块 path -> 模块
 export function queryModule(path: string): string {
   const mapState = {
-    'book-category': '图书类别',
-    'book-detail': '图书详细信息',
-    book: '图书基本信息',
-    'problem-manage': '问题管理',
+    dict: '字典管理',
+    problem: '问题管理',
     'anonymous/problem': '帮助中心',
     modular: '模块管理',
     authority: '权限列表',
     role: '角色管理',
     search: '图书搜索',
-    user: '用户管理'
+    user: '用户管理',
+    date: '日期管理',
+    quick: '快捷方式'
   }
   const mapKey = Reflect.ownKeys(mapState)
   const key = mapKey.find((value: string) => new RegExp(value).test(path))

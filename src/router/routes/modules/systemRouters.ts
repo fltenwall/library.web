@@ -40,7 +40,7 @@ const routers: AppRouteModule = {
       component: (): unknown => import('/@/views/pages/system-manage/role-manage/data-list/list-page.vue'),
       meta: {
         title: '角色管理',
-        auth: ['ROLE_READ']
+        auth: ['ROLE:GET']
       }
     },
     {
@@ -64,7 +64,7 @@ const routers: AppRouteModule = {
       component: (): unknown => import('/@/views/pages/system-manage/module-manage/index.vue'),
       meta: {
         title: '模块管理',
-        auth: ['MODULAR_READ']
+        auth: ['MODULAR:GET']
       }
     }
   ],

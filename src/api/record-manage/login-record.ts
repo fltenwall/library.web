@@ -11,14 +11,16 @@ export interface LoginRecord {
   // ip
   ip?: string
 
-  // 国家
-  nation?: string
-
-  // 省
-  province?: string
-
-  // 市
-  city?: string
+  ipRecord?: {
+    // 国家
+    nation?: string
+    // 省
+    province?: string
+    // 市
+    city?: string
+    // 区
+    district?: string
+  }
 
   // 客户端
   browser?: string

@@ -6,13 +6,24 @@ export interface OperatorRecord {
   id?: number
 
   // 用户名
-  userName?: string
+  account?: string
 
   // ip
   ip?: string
 
+  ipRecord?: {
+    // 国家
+    nation?: string
+    // 省
+    province?: string
+    // 市
+    city?: string
+    // 区
+    district?: string
+  }
+
   // 方法
-  httpMethod?: string
+  method?: string
 
   // 参数
   param?: string
@@ -20,14 +31,11 @@ export interface OperatorRecord {
   // 路径
   path?: string
 
-  // 请求响应时间
-  executionTime?: string
-
   // 客户端
-  client?: string
+  browser?: string
 
   // 操作系统
-  operatingSystem?: string
+  os?: string
 
   // 后端方法名称
   signatureName?: string
@@ -45,7 +53,7 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: '/api/logger/operator',
+      url: '/epi/record/operator',
       method: 'get',
       params: query
     })

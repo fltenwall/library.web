@@ -2,14 +2,8 @@ import type { TableColumn } from '/@/lib/props/TableList'
 
 export const tableColumns: TableColumn[] = [
   {
-    title: '日志编号',
-    dataIndex: 'id',
-    align: 'center',
-    ellipsis: true
-  },
-  {
     title: '操作人员',
-    dataIndex: 'username',
+    dataIndex: 'account',
     align: 'center',
     ellipsis: true
   },
@@ -20,8 +14,15 @@ export const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
+    title: '操作地点',
+    dataIndex: 'location',
+    align: 'center',
+    ellipsis: true,
+    slots: { customRender: 'location' }
+  },
+  {
     title: '请求方式',
-    dataIndex: 'httpMethod',
+    dataIndex: 'method',
     align: 'center',
     ellipsis: true
   },
@@ -33,20 +34,14 @@ export const tableColumns: TableColumn[] = [
     slots: { customRender: 'systemModule' }
   },
   {
-    title: '响应时间',
-    dataIndex: 'executionTime',
-    align: 'center',
-    ellipsis: true
-  },
-  {
     title: '浏览器',
-    dataIndex: 'client',
+    dataIndex: 'browser',
     align: 'center',
     ellipsis: true
   },
   {
     title: '操作系统',
-    dataIndex: 'operatingSystem',
+    dataIndex: 'os',
     align: 'center',
     ellipsis: true
   },
