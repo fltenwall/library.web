@@ -35,6 +35,10 @@ export default defineComponent({
     title: {
       type: String,
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update:value', 'on-confirm'],
@@ -57,7 +61,7 @@ export default defineComponent({
             if (!dataItem.password) return Promise.resolve()
             if (!value) return Promise.reject('不允许为空')
             let character = value.replace(/(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g, '\\$1')
-            if (loading.value) character = `^${character}$`
+            if (props.loading) character = `^${character}$`
             else character = `^${character}.*`
             if (new RegExp(character).test(dataItem.password!)) return Promise.resolve()
             return Promise.reject('两次输入的密码不一致')
@@ -67,8 +71,6 @@ export default defineComponent({
     })
 
     const visible = ref<boolean>(props.value)
-
-    const loading = ref<boolean>(false)
 
     const { validate, validateInfos, resetFields } = useForm(dataItem, rules)
 
@@ -81,11 +83,9 @@ export default defineComponent({
 
     async function validItem() {
       try {
-        loading.value = true
         await validate()
         return true
       } catch (err) {
-        loading.value = false
         return false
       }
     }
@@ -94,12 +94,11 @@ export default defineComponent({
       () => props.value,
       (val) => {
         visible.value = val
-        loading.value = false
         resetFields()
       }
     )
 
-    return { visible, dataItem, loading, validateInfos, validate, onCancel, onConfirm }
+    return { visible, dataItem, validateInfos, validate, onCancel, onConfirm }
   }
 })
 </script>

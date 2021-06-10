@@ -33,7 +33,7 @@ export default function request<T extends Result>(requestConfig: AxiosRequestCon
         if (res.code === ResultEnum.SUCCESS && res.msg === ResultEnum.SUCCESSMSG) {
           // 请求成功
           resolve(res)
-        } else if (res.msg === ResultEnum.OVERDUE) {
+        } else if (res.code === ResultEnum.OVERDUECODE) {
           // 登录失效
           useOverdue()
         } else {

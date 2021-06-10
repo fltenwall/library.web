@@ -9,7 +9,12 @@
       @onRefresh="onFetchData"
       @onResetPassword="openPasswordModal"
     />
-    <password-modal v-model:value="modalData.visible" title="密码重置" @on-confirm="handleUpdatePassword" />
+    <password-modal
+      v-model:value="modalData.visible"
+      title="密码重置"
+      :loading="modalData.loading"
+      @on-confirm="handleUpdatePassword"
+    />
   </div>
 </template>
 
@@ -50,7 +55,7 @@ export default defineComponent({
     const { onFetchData, onSearchData, queryData } = listPageMix<UserManage>(options)
 
     // 对话框
-    const modalData = reactive({ visible: false, id: -1 })
+    const modalData = reactive({ visible: false, id: -1, loading: false })
 
     // 从服务器取得数据 设置列表数据
     async function fetchDataFromServer() {
@@ -74,11 +79,14 @@ export default defineComponent({
     // 密码修改
     async function handleUpdatePassword(password: string) {
       try {
+        modalData.loading = true
         await service.updatePassword(modalData.id, password)
         message.success('重置成功')
         modalData.visible = false
       } catch (err) {
         message.error(`重置失败: ${err.msg}`)
+      } finally {
+        modalData.loading = false
       }
     }
 
