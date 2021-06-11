@@ -39,7 +39,7 @@
       </a-col>
     </a-row>
     <a-row type="flex" class="pb-5">
-      <a-col>
+      <a-col span="12">
         <div class="row-title">
           操作地点
         </div>
@@ -48,6 +48,14 @@
           <span v-if="data.ipRecord.province">{{ data.ipRecord.province }}</span>
           <span v-if="data.ipRecord.city">{{ data.ipRecord.city }}</span>
           <span v-if="data.ipRecord.district">{{ data.ipRecord.district }}</span>
+        </div>
+      </a-col>
+      <a-col span="12">
+        <div class="row-title">
+          操作状态
+        </div>
+        <div class="row-content">
+          {{ data.status }}
         </div>
       </a-col>
     </a-row>
@@ -68,7 +76,7 @@
         </div>
         <div class="row-content">
           <span> {{ data.os }}</span>
-          <span> / </span>
+          <span> - </span>
           <span>{{ data.browser }}</span>
         </div>
       </a-col>
@@ -76,10 +84,10 @@
     <a-row type="flex" class="pb-5">
       <a-col span="12">
         <div class="row-title">
-          操作状态
+          操作描述
         </div>
         <div class="row-content">
-          <span>{{ data.status }}</span>
+          {{ data.description }}
         </div>
       </a-col>
       <a-col span="12">

@@ -37,6 +37,9 @@ export interface OperatorRecord {
   // 操作系统
   os?: string
 
+  // 描述
+  description?: string
+
   // 后端方法名称
   signatureName?: string
 

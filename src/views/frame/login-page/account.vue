@@ -52,6 +52,7 @@ import { defineComponent, reactive, ref } from 'vue'
 import { PageEnum } from '/@/enums/pageEnum'
 import { Instance } from '/@/lib/interface/GlobalButton'
 import { userStore } from '/@/store/modules/user'
+import md5 from '/@/utils/encryption/md5'
 
 export default defineComponent({
   emits: ['on-change', 'on-success'],
@@ -78,7 +79,9 @@ export default defineComponent({
       buttonInstance.value?.startAnimation(x, y)
       try {
         loading.value = true
-        const userInfo = await userStore.login(formData)
+        const account = formData.account
+        const password = md5(formData.password)
+        const userInfo = await userStore.login({ account, password })
         emit('on-success', userInfo)
       } catch (err) {
         error.is = true

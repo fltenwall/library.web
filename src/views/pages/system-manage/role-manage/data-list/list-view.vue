@@ -6,16 +6,16 @@
     :data-source="dataSource"
     @onRefresh="onRefresh"
   >
-    <template v-if="MixinShowByAuth('ROLE_CREATE')" #header-left>
+    <template v-if="MixinShowByAuth('ROLE:CREATE')" #header-left>
       <a-button type="primary" @click="onNewDataItem">
         新增
       </a-button>
     </template>
     <template #operation="{ record }">
       <div class="index-operation">
-        <span v-show-by-auth="['ROLE_READ', 'MODULAR_READ']" @click="onViewDataItem(record)">查看</span>
-        <span v-show-by-auth="['ROLE_UPDATE', 'MODULAR_READ']" @click="onEditDataItem(record)">编辑</span>
-        <span v-show-by-auth="'ROLE_DELETE'" @click="onDeleteDataItem(record)">删除</span>
+        <span v-show-by-auth="'MODULAR:GET'" @click="onViewDataItem(record)">查看</span>
+        <span v-show-by-auth="['ROLE:UPDATE', 'MODULAR:GET']" @click="onEditDataItem(record)">编辑</span>
+        <span v-show-by-auth="'ROLE:DELETE'" @click="onDeleteDataItem(record)">删除</span>
       </div>
     </template>
     <template #isDefault="{ record }">

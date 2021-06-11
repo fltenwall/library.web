@@ -43,7 +43,7 @@
       <a-button v-if="!readonly" @click="onRestPage">
         重置
       </a-button>
-      <a-button v-if="readonly" v-show-by-auth="'PROBLEM_MANAGE_UPDATE'" type="primary" @click="onEditPage">
+      <a-button v-if="readonly" type="primary" @click="onEditPage">
         编辑
       </a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">

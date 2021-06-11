@@ -11,7 +11,7 @@
     </template>
 
     <template #status="{ record }">
-      <div>{{ record.status }}</div>
+      {{ record.status }}
     </template>
 
     <template #location="{ record }">

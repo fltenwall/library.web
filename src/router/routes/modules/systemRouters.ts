@@ -31,7 +31,12 @@ const routers: AppRouteModule = {
       meta: {
         title: '用户详情',
         hideInMenu: true,
-        ignoreTabKeepAlive: true
+        ignoreTabKeepAlive: true,
+        auth: {
+          new: ['USER:CREATE'],
+          view: ['USER:GET'],
+          edit: ['USER:GET', 'USER:UPDATE']
+        }
       }
     },
     {
@@ -52,9 +57,9 @@ const routers: AppRouteModule = {
         hideInMenu: true,
         ignoreTabKeepAlive: true,
         auth: {
-          new: ['ROLE_CREATE', 'MODULAR_READ'],
-          view: ['ROLE_READ', 'MODULAR_READ'],
-          edit: ['ROLE_UPDATE', 'MODULAR_READ']
+          new: ['ROLE:CREATE', 'MODULAR:GET'],
+          view: ['ROLE:GET', 'MODULAR:GET'],
+          edit: ['ROLE:GET', 'ROLE:UPDATE', 'MODULAR:GET']
         }
       }
     },

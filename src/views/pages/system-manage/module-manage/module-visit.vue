@@ -4,7 +4,7 @@
       <div class="fw-b fs-4">
         模块权限设置
       </div>
-      <a-button v-show-by-auth="'MODULAR_CREATE'" type="link" @click="onClickNewItem">
+      <a-button v-show-by-auth="'MODULAR:CREATE'" type="link" @click="onClickNewItem">
         新增
       </a-button>
     </div>
@@ -15,13 +15,13 @@
         </a-tag>
       </template>
       <template #operation="{ record }">
-        <a-button v-show-by-auth="'MODULAR_DELETE'" type="link" @click="onDeleteAuth(record)">
+        <a-button v-show-by-auth="'MODULAR:DELETE'" type="link" @click="onDeleteAuth(record)">
           删除
         </a-button>
       </template>
     </GlobalTable>
     <module-add-modal
-      v-if="MixinShowByAuth('MODULAR_CREATE')"
+      v-if="MixinShowByAuth('MODULAR:CREATE')"
       v-model:visible="visible"
       :authority-list="authorityList"
       :identifier="identifier"

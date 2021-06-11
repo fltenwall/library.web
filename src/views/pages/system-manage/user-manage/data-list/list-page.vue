@@ -27,6 +27,7 @@ import passwordModal from '/@/components/passwordModal.vue'
 import searchPanle from './search-panle.vue'
 import listView from './list-view.vue'
 import { message } from 'ant-design-vue'
+import md5 from '/@/utils/encryption/md5'
 
 const DATA_PAGE_NAME = 'system-manage-user-manage-data-page'
 
@@ -80,7 +81,7 @@ export default defineComponent({
     async function handleUpdatePassword(password: string) {
       try {
         modalData.loading = true
-        await service.updatePassword(modalData.id, password)
+        await service.updatePassword(modalData.id, md5(password))
         message.success('重置成功')
         modalData.visible = false
       } catch (err) {

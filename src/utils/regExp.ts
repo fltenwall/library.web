@@ -35,9 +35,12 @@ export function queryModule(path: string): string {
     authority: '权限列表',
     role: '角色管理',
     search: '图书搜索',
+    'user/register': '用户注册',
+    'user/password': '用户密码修改',
     user: '用户管理',
     date: '日期管理',
-    quick: '快捷方式'
+    quick: '快捷方式',
+    form: '表单管理'
   }
   const mapKey = Reflect.ownKeys(mapState)
   const key = mapKey.find((value: string) => new RegExp(value).test(path))

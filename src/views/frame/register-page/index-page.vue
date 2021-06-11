@@ -92,6 +92,7 @@ import useToast from '/@/components/Toast'
 import service from '/@/api/security'
 import { useGo } from '/@/hooks/web/usePage'
 import { PageEnum } from '/@/enums/pageEnum'
+import md5 from '/@/utils/encryption/md5'
 
 export default defineComponent({
   setup() {
@@ -147,6 +148,8 @@ export default defineComponent({
         // 根据方式发送数据
         delete data.repeat
         content.mode ? delete data.mobile : delete data.email
+        // 加密
+        data.password = md5(data.password!)
         await service.registerApi(data)
         // 注册成功跳转登录页面
         go({ name: PageEnum.BASE_LOGIN })

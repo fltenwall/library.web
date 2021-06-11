@@ -6,7 +6,7 @@
         <a-row>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="登录账户" v-bind="validateInfos.username">
-              <InputWrap v-model:value="dataItem.username" />
+              <InputWrap v-model:value="dataItem.username" :readonly="mode !== 2" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -74,7 +74,7 @@
       <a-button v-if="!readonly" @click="onRestPage">
         重置
       </a-button>
-      <a-button v-if="readonly" type="primary" @click="onEditPage">
+      <a-button v-if="readonly" v-show-by-auth="'USER:UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
@@ -91,6 +91,7 @@ import { formRules, selectEnableOption } from './data-page'
 import service, { UserManage } from '/@/api/system-manage/user-manage'
 import { userStore } from '/@/store/modules/user'
 import { assign } from 'lodash-es'
+import md5 from '/@/utils/encryption/md5'
 
 export default defineComponent({
   setup() {
@@ -137,7 +138,8 @@ export default defineComponent({
 
     // 新增数据
     async function onNewData() {
-      const { data } = await service.saveNewItem(dataItem)
+      const password = md5(dataItem.password!)
+      const { data } = await service.saveNewItem({ ...dataItem, password })
       assign(dataItem, data)
       changeDataType()
     }

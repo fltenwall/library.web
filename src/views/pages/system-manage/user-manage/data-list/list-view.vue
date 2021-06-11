@@ -11,7 +11,7 @@
         新增
       </a-button>
     </template>
-    <template #enabled="{ text }">
+    <template v-if="MixinShowByAuth('USER:CREATE')" #enabled="{ text }">
       <div class="index-center-middle">
         <div :class="[text ? 'use' : 'disable', 'circle', 'mr-2']" />
         <div>{{ text ? '使用中' : '禁用中' }}</div>
@@ -23,9 +23,9 @@
     <template #operation="{ record }">
       <div class="index-operation">
         <span @click="onViewDataItem(record)">查看</span>
-        <span @click="onEditDataItem(record)">编辑</span>
-        <span @click="onDeleteDataItem(record)">删除</span>
-        <span @click="onEditPassword(record)">重置密码</span>
+        <span v-show-by-auth="'USER:UPDATE'" @click="onEditDataItem(record)">编辑</span>
+        <span v-show-by-auth="'USER:DELETE'" @click="onDeleteDataItem(record)">删除</span>
+        <span v-show-by-auth="'USERPASSWORD:UPDATE'" @click="onEditPassword(record)">重置密码</span>
       </div>
     </template>
 

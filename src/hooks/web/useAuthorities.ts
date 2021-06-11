@@ -10,7 +10,7 @@ export function useAuthorities(val: string[] | Auth = [], mode?: Mode): boolean 
 
   const { authorities, superAdmin } = userStore.getUserInfoState!
 
-  return auth?.length && config.auth && !superAdmin ? auth.every((el) => authorities.includes(el)) : true
+  return auth?.length && config.auth && !superAdmin ? auth.every((el) => authorities?.includes(el)) : true
 }
 
 export function showByAuth(auth: string): boolean {

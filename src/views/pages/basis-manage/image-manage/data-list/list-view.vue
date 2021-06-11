@@ -6,7 +6,7 @@
     :data-source="dataSource"
     @onRefresh="onRefresh"
   >
-    <template v-if="MixinShowByAuth('BOOK_CATEGORY_CREATE')" #header-left>
+    <template #header-left>
       <a-button type="primary" @click="onNewDataItem">
         新增
       </a-button>
@@ -31,9 +31,9 @@
 
     <template #operation="{ record }">
       <div class="index-operation">
-        <span v-show-by-auth="'PROBLEM_MANAGE_READ'" @click="onViewDataItem(record)">查看</span>
-        <span v-show-by-auth="'PROBLEM_MANAGE_UPDATE'" @click="onEditDataItem(record)">编辑</span>
-        <span v-show-by-auth="'PROBLEM_MANAGE_DELETE'" @click="onDeleteDataItem(record)">删除</span>
+        <span @click="onViewDataItem(record)">查看</span>
+        <span @click="onEditDataItem(record)">编辑</span>
+        <span @click="onDeleteDataItem(record)">删除</span>
       </div>
     </template>
 
