@@ -6,7 +6,7 @@
           新增用户
         </div>
         <div class="new-user-header-content">
-          2
+          {{ dataItem.newCount }}
         </div>
       </div>
       <div>
@@ -18,17 +18,37 @@
     <div class="new-user-main index-middle" />
     <div class="new-user-footer">
       <span>总用户</span>
-      <span class="ml-1"> 4 </span>
+      <span class="ml-1"> {{ dataItem.userCount }} </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import service, { NewUser } from '/@/api/analysis/newUser'
+import { message } from 'ant-design-vue'
+import moment from 'moment'
 
 export default defineComponent({
   setup() {
-    return {}
+    const dataItem = ref<NewUser>({})
+
+    // 加载数据
+
+    async function loadData() {
+      try {
+        const startTime = moment().format('YYYY-MM-01')
+        const endTime = moment().add(1, 'days').format('YYYY-MM-DD')
+        const { data } = await service.fetchUserCount({ startTime, endTime })
+        dataItem.value = data
+      } catch (err) {
+        message.error(`数据获取失败: ${err.msg}`)
+      }
+    }
+
+    loadData()
+
+    return { dataItem }
   }
 })
 </script>

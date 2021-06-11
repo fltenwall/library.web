@@ -6,7 +6,7 @@
           访问量
         </div>
         <div class="visits-header-content">
-          10
+          {{ newCount }}
         </div>
       </div>
       <div>
@@ -18,16 +18,19 @@
     <div ref="containerRef" />
     <div class="visits-footer">
       <span>总访问量</span>
-      <span class="ml-1"> 126 </span>
+      <span class="ml-1"> {{ visitData.count }} </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, ref, unref, watch } from 'vue'
 import { triggerResize } from '/@/utils/triggerResize'
 import { menuStore } from '/@/store/modules/menu'
 import { Chart } from '@antv/g2'
+import { message } from 'ant-design-vue'
+import service, { Visits } from '/@/api/analysis/visits'
+import moment from 'moment'
 
 export default defineComponent({
   setup() {
@@ -35,15 +38,9 @@ export default defineComponent({
 
     const containerRef = ref<HTMLElement | null>(null)
 
-    const data = [
-      { time: '2020-02-27', count: 5 },
-      { time: '2020-02-28', count: 15 },
-      { time: '2020-03-01', count: 2 },
-      { time: '2020-03-02', count: 12 },
-      { time: '2020-03-03', count: 6 },
-      { time: '2020-03-04', count: 4 },
-      { time: '2020-03-05', count: 20 }
-    ]
+    const visitData = ref<Visits>({})
+
+    const newCount = ref<number | undefined>(0)
 
     // 监听菜单折叠
     watch(
@@ -51,8 +48,20 @@ export default defineComponent({
       () => triggerResize()
     )
 
-    //
-    onMounted(() => chartInit())
+    // 加载数据
+    async function loadData() {
+      try {
+        const newDate = moment().format('YYYY-MM-DD')
+        const startTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
+        const endTime = moment().add(1, 'days').format('YYYY-MM-DD')
+        const { data } = await service.fetchUserVisit({ startTime, endTime })
+        visitData.value = data
+        newCount.value = data.visit?.find((el) => el.time === newDate)?.count
+        chartInit()
+      } catch (err) {
+        message.error(`数据获取失败: ${err.msg}`)
+      }
+    }
 
     // 数据初始化
     function chartInit() {
@@ -63,15 +72,11 @@ export default defineComponent({
         padding: [5, 0, 20, 0]
       })
 
-      chart.data(data)
+      chart.data(unref(visitData).visit!)
 
-      chart.scale('time', {
-        type: 'timeCat'
-      })
+      chart.scale('time', { type: 'timeCat' })
 
-      chart.scale('count', {
-        nice: true
-      })
+      chart.scale('count', { nice: true })
 
       chart.axis(false)
 
@@ -93,7 +98,9 @@ export default defineComponent({
       triggerResize()
     }
 
-    return { wrap, containerRef }
+    loadData()
+
+    return { wrap, visitData, newCount, containerRef }
   }
 })
 </script>
