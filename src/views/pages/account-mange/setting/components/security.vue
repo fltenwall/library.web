@@ -21,7 +21,7 @@ import { userStore } from '/@/store/modules/user'
 export default defineComponent({
   setup() {
     const listData = [
-      { title: '账户密码', content: '当前密码强度：强', action: '修改' },
+      { title: '账户密码', content: '当前密码：••••••••', action: '修改' },
       {
         title: '手机号码',
         content: `已绑定手机：${userStore.getUserInfoState?.mobile}`,

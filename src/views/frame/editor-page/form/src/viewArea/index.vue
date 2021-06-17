@@ -298,7 +298,7 @@ export default defineComponent({
 
     // 右键
     function handleCancelSelect() {
-      setSelectPoint('')
+      // setSelectPoint('')
     }
 
     return {

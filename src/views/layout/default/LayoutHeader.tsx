@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
-import { Layout } from 'ant-design-vue'
+import { Layout, Avatar } from 'ant-design-vue'
 import LayoutBreadcrumb from './LayoutBreadcrumb'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { menuStore } from '/@/store/modules/menu'
 import DropMenu from '/@/components/PublicHeader/dropMenu.vue'
 import { userStore } from '/@/store/modules/user'
@@ -34,7 +34,16 @@ export default defineComponent({
               <MenuSearch />
               <DropMenu placement="bottomCenter">
                 {{
-                  default: () => <div class="layout-header-right-action">{userStore.getUserInfoState?.username}</div>
+                  default: () => (
+                    <div class="index-middle layout-header-right-action">
+                      <Avatar size={25}>
+                        {{
+                          icon: () => <UserOutlined />
+                        }}
+                      </Avatar>
+                      <div class="ml-3">{userStore.getUserInfoState?.username}</div>
+                    </div>
+                  )
                 }}
               </DropMenu>
             </div>

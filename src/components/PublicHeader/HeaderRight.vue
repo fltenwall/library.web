@@ -4,8 +4,15 @@
     <div v-if="isShowUserInfo" class="ml-8">
       <div v-if="userIsLogin">
         <drop-menu>
-          <router-link :to="{ name: PageEnum.BASE_HOME }" class="header-title">
-            {{ userInfo?.username }}
+          <router-link :to="{ name: PageEnum.BASE_HOME }" class="index-middle pointer c000">
+            <a-avatar :size="25">
+              <template #icon>
+                <UserOutlined />
+              </template>
+            </a-avatar>
+            <div class="ml-3">
+              {{ userInfo.username }}
+            </div>
           </router-link>
         </drop-menu>
       </div>
@@ -60,10 +67,5 @@ export default defineComponent({
 .header-right-action {
   display: inline-flex;
   align-items: center;
-}
-
-.header-title {
-  display: inline-block;
-  line-height: 24px;
 }
 </style>

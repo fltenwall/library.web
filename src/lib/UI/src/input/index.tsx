@@ -5,7 +5,7 @@ import { EditorForm } from '/@/lib/interface/EditorForm'
 export default defineComponent({
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     prop: {

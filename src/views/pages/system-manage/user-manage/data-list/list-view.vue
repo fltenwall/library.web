@@ -6,12 +6,12 @@
     :data-source="dataSource"
     @onRefresh="onRefresh"
   >
-    <template #header-left>
+    <template v-if="MixinShowByAuth('USER:CREATE')" #header-left>
       <a-button type="primary" @click="onNewDataItem">
         新增
       </a-button>
     </template>
-    <template v-if="MixinShowByAuth('USER:CREATE')" #enabled="{ text }">
+    <template #enabled="{ text }">
       <div class="index-center-middle">
         <div :class="[text ? 'use' : 'disable', 'circle', 'mr-2']" />
         <div>{{ text ? '使用中' : '禁用中' }}</div>
