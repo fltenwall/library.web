@@ -1,26 +1,37 @@
 <template>
   <div class="action-area absolute">
     <GlobalDrawer v-model:value="visible" placement="right">
-      <div class="action-area-header index-middle index-space-between">
-        <div>
-          {{ pointConfigs.name[pointInfo.name] }}
+      <div v-show="pointInfo.name">
+        <div class="action-area-header index-middle index-space-between">
+          <div>
+            {{ pointConfigs.name[pointInfo.name] }}
+          </div>
+          <div>
+            <QuestionCircleOutlined />
+          </div>
         </div>
-        <div>
-          <QuestionCircleOutlined />
+        <a-tabs size="small">
+          <a-tab-pane key="1" tab="属性">
+            <a-form class="action-area-main" label-align="left">
+              <tool-attribute />
+            </a-form>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="交互">
+            <a-form class="action-area-main" label-align="left">
+              <component :is="`${pointInfo.name}-point`" />
+            </a-form>
+          </a-tab-pane>
+        </a-tabs>
+      </div>
+      <div v-show="!pointInfo.name" class="index-center-middle flex-column empty-content">
+        <img :src="emptyImage" width="200">
+        <div class="empty-content-title">
+          暂无数据
+        </div>
+        <div class="empty-content-tips">
+          拖拽组件来生成你的表单页面吧
         </div>
       </div>
-      <a-tabs size="small">
-        <a-tab-pane key="1" tab="属性">
-          <a-form class="action-area-main" label-align="left">
-            <tool-attribute />
-          </a-form>
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="交互">
-          <a-form class="action-area-main" label-align="left">
-            <component :is="`${pointInfo.name}-point`" />
-          </a-form>
-        </a-tab-pane>
-      </a-tabs>
     </GlobalDrawer>
   </div>
 </template>
@@ -32,6 +43,7 @@ import { pointStore } from '/@/store/modules/point'
 import { pointConfigs } from '../../components/tools/index'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import toolAttribute from '../../components/tool-attribute.vue'
+import emptyImage from '/@/assets/images/original.png'
 
 export default defineComponent({
   components: { ...templateList, toolAttribute, QuestionCircleOutlined },
@@ -58,7 +70,7 @@ export default defineComponent({
       (val) => (visible.value = val)
     )
 
-    return { visible, pointConfigs, pointInfo }
+    return { visible, emptyImage, pointConfigs, pointInfo }
   }
 })
 </script>
@@ -82,7 +94,7 @@ export default defineComponent({
   }
 
   ::v-deep(.ant-row) {
-    margin-bottom: 0;
+    margin-bottom: 10px;
 
     .ant-col {
       &.ant-form-item-control-wrapper {
@@ -108,6 +120,22 @@ export default defineComponent({
 
     .ant-tabs-tab {
       padding: 8px 0;
+    }
+  }
+
+  .empty-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &-title {
+      margin: 20px 0 10px;
+      font-size: 24px;
+    }
+
+    &-tips {
+      color: rgba(0, 0, 0, 0.45);
     }
   }
 }

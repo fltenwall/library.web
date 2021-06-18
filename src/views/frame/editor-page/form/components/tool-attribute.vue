@@ -1,19 +1,19 @@
 <template>
   <a-form-item label="宽度">
-    <ui-index v-model:value="dataItem.width" prop="width" type="number" />
+    <ui-input v-model:value="dataItem.width" prop="width" type="number" />
   </a-form-item>
   <a-form-item label="高度">
-    <ui-index v-model:value="dataItem.height" prop="height" />
+    <ui-input v-model:value="dataItem.height" prop="height" />
   </a-form-item>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import { templateInit } from './tools/utils'
-import uiIndex from '/@/lib/UI/src/input/index'
+import uiInput from '/@/lib/UI/src/input/index'
 
 export default defineComponent({
-  components: { uiIndex },
+  components: { uiInput },
   setup() {
     // 数据集合
     const dataItem = reactive({})

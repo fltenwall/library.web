@@ -29,7 +29,7 @@ export function templateInit<T>(dataItem: T): void {
         initData(val)
       }
     },
-    { immediate: true }
+    { immediate: true, deep: true }
   )
 
   // 数据改变触发
@@ -37,6 +37,11 @@ export function templateInit<T>(dataItem: T): void {
     const value = (dataItem as any)[key] as never
     isValueUpdateFromInner.value = true
     pointStore.commitUpdatePointData({ uuid: unref(pointUUID), key, value })
+
+    if (key === 'width' || key === 'height') {
+      // 宽度, 高度 样式修改
+      pointStore.commitUpdatePointStyle({ uuid: unref(pointUUID), key, value: `${value}px` })
+    }
   }
 
   // 数据信息 初始化
