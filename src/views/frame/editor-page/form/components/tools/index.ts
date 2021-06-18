@@ -30,7 +30,7 @@ export const pointList: PointList = {}
 export const pointConfigs: PointConfigs = {
   name: {
     base: '基础',
-    form: '表单配置'
+    form: '页面配置'
   },
   icon: {
     base: 'ant-design:highlight-outlined'

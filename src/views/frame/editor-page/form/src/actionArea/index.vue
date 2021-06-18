@@ -1,37 +1,33 @@
 <template>
   <div class="action-area absolute">
     <GlobalDrawer v-model:value="visible" placement="right">
-      <div v-show="pointInfo.name">
-        <div class="action-area-header index-middle index-space-between">
-          <div>
-            {{ pointConfigs.name[pointInfo.name] }}
-          </div>
-          <div>
-            <QuestionCircleOutlined />
-          </div>
+      <div class="action-area-header index-middle index-space-between">
+        <div>
+          {{ pointConfigs.name[pointInfo.name || 'form'] }}
         </div>
-        <a-tabs size="small">
-          <a-tab-pane key="1" tab="属性">
-            <a-form class="action-area-main" label-align="left">
-              <tool-attribute />
-            </a-form>
-          </a-tab-pane>
-          <a-tab-pane key="2" tab="交互">
-            <a-form class="action-area-main" label-align="left">
-              <component :is="`${pointInfo.name}-point`" />
-            </a-form>
-          </a-tab-pane>
-        </a-tabs>
-      </div>
-      <div v-show="!pointInfo.name" class="index-center-middle flex-column empty-content">
-        <img :src="emptyImage" width="200">
-        <div class="empty-content-title">
-          暂无数据
-        </div>
-        <div class="empty-content-tips">
-          拖拽组件来生成你的表单页面吧
+        <div>
+          <QuestionCircleOutlined />
         </div>
       </div>
+      <a-tabs v-show="pointInfo.name" size="small">
+        <a-tab-pane key="1" tab="属性">
+          <a-form class="action-area-main" label-align="left">
+            <tool-attribute />
+          </a-form>
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="交互">
+          <a-form class="action-area-main" label-align="left">
+            <component :is="`${pointInfo.name}-point`" />
+          </a-form>
+        </a-tab-pane>
+      </a-tabs>
+      <a-tabs v-show="!pointInfo.name" size="small">
+        <a-tab-pane key="3" tab="配置">
+          <a-form class="action-area-main" label-align="left">
+            <form-point />
+          </a-form>
+        </a-tab-pane>
+      </a-tabs>
     </GlobalDrawer>
   </div>
 </template>
@@ -43,10 +39,10 @@ import { pointStore } from '/@/store/modules/point'
 import { pointConfigs } from '../../components/tools/index'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import toolAttribute from '../../components/tool-attribute.vue'
-import emptyImage from '/@/assets/images/original.png'
+import formPoint from '../../components/form-point.vue'
 
 export default defineComponent({
-  components: { ...templateList, toolAttribute, QuestionCircleOutlined },
+  components: { ...templateList, toolAttribute, formPoint, QuestionCircleOutlined },
   props: {
     value: {
       type: Boolean,
@@ -70,7 +66,7 @@ export default defineComponent({
       (val) => (visible.value = val)
     )
 
-    return { visible, emptyImage, pointConfigs, pointInfo }
+    return { visible, pointConfigs, pointInfo }
   }
 })
 </script>
@@ -84,8 +80,9 @@ export default defineComponent({
 
   &-header {
     padding: 10px 16px 0;
+    font-family: Microsoft JhengHei;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     color: #292b33;
   }
 
@@ -120,22 +117,6 @@ export default defineComponent({
 
     .ant-tabs-tab {
       padding: 8px 0;
-    }
-  }
-
-  .empty-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    &-title {
-      margin: 20px 0 10px;
-      font-size: 24px;
-    }
-
-    &-tips {
-      color: rgba(0, 0, 0, 0.45);
     }
   }
 }

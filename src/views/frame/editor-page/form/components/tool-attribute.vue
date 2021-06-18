@@ -1,10 +1,32 @@
 <template>
-  <a-form-item label="宽度">
-    <ui-input v-model:value="dataItem.width" prop="width" type="number" />
-  </a-form-item>
-  <a-form-item label="高度">
-    <ui-input v-model:value="dataItem.height" prop="height" />
-  </a-form-item>
+  <div class="flex">
+    <div class="flex-item mr-3 index-middle">
+      <div class="flex-shrink-0 w-6">
+        w
+      </div>
+      <ui-input v-model:value="dataItem.width" prop="width" type="number" />
+    </div>
+    <div class="flex-item index-middle">
+      <div class="flex-shrink-0 w-6">
+        h
+      </div>
+      <ui-input v-model:value="dataItem.height" prop="height" type="number" />
+    </div>
+  </div>
+  <div class="flex mt-4">
+    <div class="flex-item mr-3 index-middle">
+      <div class="flex-shrink-0 w-6">
+        x
+      </div>
+      <ui-input v-model:value="dataItem.x" prop="x" type="number" />
+    </div>
+    <div class="flex-item index-middle">
+      <div class="flex-shrink-0 w-6">
+        y
+      </div>
+      <ui-input v-model:value="dataItem.y" prop="y" type="number" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
