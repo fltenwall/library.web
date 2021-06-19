@@ -1,21 +1,21 @@
 <template>
-  <div class="flex">
-    <div class="flex-item mr-3 index-middle">
-      <div class="flex-shrink-0 w-6">
-        w
-      </div>
-      <ui-input />
-    </div>
-    <div class="flex-item index-middle">
-      <div class="flex-shrink-0 w-6">
-        h
-      </div>
-      <ui-input />
-    </div>
+  <div class="c333 mb-2">
+    页面尺寸
   </div>
-  <div class="mt-4 flex flex-space-between index-middle">
-    <div>布局类型</div>
-    <a-radio-group value="a">
+  <div class="flex flex-space-between index-middle">
+    <div>宽度</div>
+    <ui-input class="w-100" />
+  </div>
+  <div class="flex flex-space-between index-middle mt-2">
+    <div>高度</div>
+    <ui-input class="w-100" />
+  </div>
+  <a-divider />
+  <div class="flex flex-space-between index-middle">
+    <div class="c333">
+      布局类型
+    </div>
+    <a-radio-group class="flex-end flex" value="a">
       <a-radio-button value="a">
         自由布局
       </a-radio-button>
