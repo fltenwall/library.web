@@ -1,46 +1,35 @@
 <template>
-  <TableList
-    title="问题列表"
-    :loading="loading"
-    :columns="tableColumns"
-    :data-source="dataSource"
-    @onRefresh="onRefresh"
-  >
-    <template #header-left>
-      <a-button type="primary" @click="onNewDataItem">
-        新增
-      </a-button>
-    </template>
-
-    <template #show="{ record }">
-      <a-tag v-if="record.show" color="#108ee9">
-        可 见
-      </a-tag>
-      <a-tag v-else color="#f50">
-        不可见
-      </a-tag>
-    </template>
-
-    <template #icon="{ record }">
-      <Icon v-if="record.icon" :icon="record.icon" />
-    </template>
-
-    <template #updateTime="{ record }">
-      {{ MixinUseMoment(record.updateTime, 'YYYY-MM-DD HH:mm:ss') }}
-    </template>
-
-    <template #operation="{ record }">
-      <div class="index-operation">
-        <span @click="onViewDataItem(record)">查看</span>
-        <span @click="onEditDataItem(record)">编辑</span>
-        <span @click="onDeleteDataItem(record)">删除</span>
+  <div class="list-view">
+    <div class="list-view-header">
+      分组
+    </div>
+    <div class="flex-item flex flex-column list-view-cotent">
+      <Scrollbar class="list-view-main">
+        <div class="flex flex-space-between">
+          <div>
+            <a-button type="primary">
+              上传图片
+            </a-button>
+          </div>
+          <div class="operation-content">
+            <a-checkbox> 当前页全选 </a-checkbox>
+            <a-button class="ml-4">
+              删除
+            </a-button>
+            <a-button class="ml-4">
+              移动至
+            </a-button>
+            <a-button class="ml-4">
+              重命名
+            </a-button>
+          </div>
+        </div>
+      </Scrollbar>
+      <div class="list-view-footer">
+        <PaginationWrap v-model:current="current" :total="totalElements" @change="onPageChange" />
       </div>
-    </template>
-
-    <template #footer-right>
-      <PaginationWrap v-model:current="current" :total="totalElements" @change="onPageChange" />
-    </template>
-  </TableList>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -49,8 +38,10 @@ import { tableColumns } from './data-list'
 import { ProblemManage } from '/@/api/basis-manage/problem-manage'
 import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
 import { usePagination } from '/@/hooks/web/usePagination'
+import { Scrollbar } from '/@/components/Scrollbar'
 
 export default defineComponent({
+  components: { Scrollbar },
   emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
@@ -104,4 +95,37 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.list-view {
+  display: flex;
+  flex-direction: column;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 20px;
+  }
+
+  &-main {
+    flex: 1;
+    height: 0;
+  }
+
+  &-cotent {
+    padding: 16px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 1230px) {
+  .operation-content {
+    display: none;
+  }
+}
+</style>

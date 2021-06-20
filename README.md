@@ -13,8 +13,11 @@
 # 演示地址
 [https://library.tibis.top/](https://library.tibis.top/)
 
-# 后端仓库
+# 后端仓库 (JAVA)
 [https://github.com/Abouerp/web-library](https://github.com/Abouerp/web-library)
+
+# 后端仓库 (Node.js)
+[https://github.com/PBOVE/library.web](https://github.com/PBOVE/library.web)
 
 ## 启动项目
 `npm insert (yarn)`
@@ -87,6 +90,6 @@ Markdown
 暗黑主题
 mock
 jest
-表单页面可视化
+低代码
 图片管理
 ```

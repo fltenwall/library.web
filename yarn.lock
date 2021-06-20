@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@aesoper/normal-utils@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.npm.taobao.org/@aesoper/normal-utils/download/@aesoper/normal-utils-0.1.5.tgz#82b7c899ab9670c55515f949a3766d24260b8039"
-  integrity sha1-grfImauWcMVVFflJo3ZtJCYLgDk=
-
 "@ant-design-vue/use@^0.0.1-0":
   version "0.0.1-alpha.10"
   resolved "https://registry.nlark.com/@ant-design-vue/use/download/@ant-design-vue/use-0.0.1-alpha.10.tgz?cache=0&sync_timestamp=1621867030532&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40ant-design-vue%2Fuse%2Fdownload%2F%40ant-design-vue%2Fuse-0.0.1-alpha.10.tgz#14697ced4aa3e6d76a63008e87dbf6d3ef3e07da"
@@ -556,11 +551,6 @@
   resolved "https://registry.npm.taobao.org/@pawelgalazka/shell/download/@pawelgalazka/shell-2.0.0.tgz#7174a2d904375e435f6a012322713234c00e75cd"
   integrity sha1-cXSi2QQ3XkNfagEjInEyNMAOdc0=
 
-"@popperjs/core@^2.6.0":
-  version "2.9.2"
-  resolved "https://registry.nlark.com/@popperjs/core/download/@popperjs/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
-  integrity sha1-rep7aVPLs0ZRdmsFSEaOdDxqI1M=
-
 "@purge-icons/generated@^0.4.1":
   version "0.4.1"
   resolved "https://registry.npm.taobao.org/@purge-icons/generated/download/@purge-icons/generated-0.4.1.tgz#b2e447ab56a59a254ce56f1529964cd887732f54"
@@ -883,11 +873,6 @@
   resolved "https://registry.nlark.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.13.tgz?cache=0&sync_timestamp=1623060345677&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vue%2Fdevtools-api%2Fdownload%2F%40vue%2Fdevtools-api-6.0.0-beta.13.tgz#ff31e552ae3e99b5f2c0af0ca81f0889dbfb2155"
   integrity sha1-/zHlUq4+mbXywK8MqB8Iidv7IVU=
 
-"@vue/devtools-api@^6.0.0-beta.14":
-  version "6.0.0-beta.14"
-  resolved "https://registry.nlark.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.14.tgz?cache=0&sync_timestamp=1623239831716&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vue%2Fdevtools-api%2Fdownload%2F%40vue%2Fdevtools-api-6.0.0-beta.14.tgz#6ed2d6f8d66a9256c9ad04bfff08309ba87b9723"
-  integrity sha1-btLW+NZqklbJrQS//wgwm6h7lyM=
-
 "@vue/reactivity@3.1.1":
   version "3.1.1"
   resolved "https://registry.nlark.com/@vue/reactivity/download/@vue/reactivity-3.1.1.tgz#9c02fd146a6c3b03e7d658b7cf76f4b69b0f98c8"
@@ -991,10 +976,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.2.0-beta.2:
-  version "2.2.0-beta.2"
-  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.0-beta.2.tgz#f6a97245a81e4aabfb792c3ff17292919a2112a7"
-  integrity sha1-9qlyRageSqv7eSw/8XKSkZohEqc=
+ant-design-vue@^2.2.0-beta.3:
+  version "2.2.0-beta.3"
+  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.0-beta.3.tgz#ef01b99b8b823a00ace4d373539bfd393b96a640"
+  integrity sha1-7wG5m4uCOgCs5NNzU5v9OTuWpkA=
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^6.0.0"
@@ -1117,11 +1102,6 @@ bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.nlark.com/bluebird/download/bluebird-3.7.2.tgz?cache=0&sync_timestamp=1618847007562&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbluebird%2Fdownload%2Fbluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha1-nyKcFb4nJFT/qXOs4NvueaGww28=
-
-body-scroll-lock@^3.1.5:
-  version "3.1.5"
-  resolved "https://registry.npm.taobao.org/body-scroll-lock/download/body-scroll-lock-3.1.5.tgz#c1392d9217ed2c3e237fee1e910f6cdd80b7aaec"
-  integrity sha1-wTktkhftLD4jf+4ekQ9s3YC3quw=
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -1340,15 +1320,6 @@ cli-truncate@^2.1.0:
     slice-ansi "^3.0.0"
     string-width "^4.2.0"
 
-clipboard@^2.0.6:
-  version "2.0.8"
-  resolved "https://registry.npm.taobao.org/clipboard/download/clipboard-2.0.8.tgz?cache=0&sync_timestamp=1615409953598&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fclipboard%2Fdownload%2Fclipboard-2.0.8.tgz#ffc6c103dd2967a83005f3f61976aa4655a4cdba"
-  integrity sha1-/8bBA90pZ6gwBfP2GXaqRlWkzbo=
-  dependencies:
-    good-listener "^1.2.2"
-    select "^1.1.2"
-    tiny-emitter "^2.0.0"
-
 cliui@^5.0.0:
   version "5.0.0"
   resolved "https://registry.nlark.com/cliui/download/cliui-5.0.0.tgz#deefcfdb2e800784aa34f46fa08e06851c7bbbc5"
@@ -1459,7 +1430,7 @@ copy-anything@^2.0.1:
   dependencies:
     is-what "^3.12.0"
 
-core-js@^3.12.1, core-js@^3.6.5:
+core-js@^3.12.1:
   version "3.14.0"
   resolved "https://registry.nlark.com/core-js/download/core-js-3.14.0.tgz#62322b98c71cc2018b027971a69419e2425c2a6c"
   integrity sha1-YjIrmMccwgGLAnlxppQZ4kJcKmw=
@@ -1475,7 +1446,7 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cross-env@^7.0.2, cross-env@^7.0.3:
+cross-env@^7.0.2:
   version "7.0.3"
   resolved "https://registry.nlark.com/cross-env/download/cross-env-7.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcross-env%2Fdownload%2Fcross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
   integrity sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=
@@ -1588,11 +1559,6 @@ deepmerge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
   integrity sha1-RNLqNnm49NT/ujPwPYZfwee/SVU=
-
-delegate@^3.1.2:
-  version "3.2.0"
-  resolved "https://registry.npm.taobao.org/delegate/download/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166"
-  integrity sha1-tmtxwxWFIuirV0T3INjKDCr1kWY=
 
 detect-browser@^5.0.0, detect-browser@^5.1.0:
   version "5.2.0"
@@ -2240,13 +2206,6 @@ gonzales-pe@^4.3.0:
   dependencies:
     minimist "^1.2.5"
 
-good-listener@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.npm.taobao.org/good-listener/download/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50"
-  integrity sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=
-  dependencies:
-    delegate "^3.1.2"
-
 graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   version "4.2.6"
   resolved "https://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
@@ -2746,11 +2705,6 @@ lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
-
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.nlark.com/lodash.debounce/download/lodash.debounce-4.0.8.tgz?cache=0&sync_timestamp=1618847031591&other_urls=https%3A%2F%2Fregistry.nlark.com%2Flodash.debounce%2Fdownload%2Flodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.merge@^4.6.2:
   version "4.6.2"
@@ -3647,11 +3601,6 @@ scroll-into-view-if-needed@^2.2.25:
   dependencies:
     compute-scroll-into-view "^1.0.17"
 
-select@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npm.taobao.org/select/download/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
-  integrity sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=
-
 semver-compare@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/semver-compare/download/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
@@ -4059,16 +4008,6 @@ through@^2.3.8:
   resolved "https://registry.npm.taobao.org/through/download/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-tiny-emitter@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/tiny-emitter/download/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
-  integrity sha1-HRpW7fxRxD6GPLtTgqcjMONVVCM=
-
-tinycolor2@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
-  integrity sha1-P2pNEHGtB2dtf6Ry4frECnGdiAM=
-
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/to-fast-properties/download/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
@@ -4309,11 +4248,6 @@ vite@2.2.4:
   optionalDependencies:
     fsevents "~2.3.1"
 
-vue-class-component@^8.0.0-0, vue-class-component@^8.0.0-rc.1:
-  version "8.0.0-rc.1"
-  resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-8.0.0-rc.1.tgz#db692cd97656eb9a08206c03d0b7398cdb1d9420"
-  integrity sha1-22ks2XZW65oIIGwD0Lc5jNsdlCA=
-
 vue-eslint-parser@^7.6.0:
   version "7.6.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.6.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.6.0.tgz#01ea1a2932f581ff244336565d712801f8f72561"
@@ -4325,13 +4259,6 @@ vue-eslint-parser@^7.6.0:
     espree "^6.2.1"
     esquery "^1.4.0"
     lodash "^4.17.15"
-
-vue-router@^4.0.0-0, vue-router@^4.0.6:
-  version "4.0.9"
-  resolved "https://registry.nlark.com/vue-router/download/vue-router-4.0.9.tgz?cache=0&sync_timestamp=1623832754570&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-router%2Fdownload%2Fvue-router-4.0.9.tgz#248496941b79c4c1010f6ebfcf235cd4267d85da"
-  integrity sha1-JISWlBt5xMEBD26/zyNc1CZ9hdo=
-  dependencies:
-    "@vue/devtools-api" "^6.0.0-beta.14"
 
 vue-router@^4.0.4:
   version "4.0.8"
@@ -4357,48 +4284,7 @@ vue3-click-away@^1.1.0:
   resolved "https://registry.nlark.com/vue3-click-away/download/vue3-click-away-1.2.1.tgz#3645b2671db152d53c95b936540f7e449616f5d4"
   integrity sha1-NkWyZx2xUtU8lbk2VA9+RJYW9dQ=
 
-vue3-colorpicker@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.nlark.com/vue3-colorpicker/download/vue3-colorpicker-1.0.5.tgz#2d4116c8e1525add6aa1a661f257de4d4d9f32b2"
-  integrity sha1-LUEWyOFSWt1qoaZh8lfeTU2fMrI=
-  dependencies:
-    "@aesoper/normal-utils" "^0.1.5"
-    "@popperjs/core" "^2.6.0"
-    body-scroll-lock "^3.1.5"
-    core-js "^3.6.5"
-    lodash.debounce "^4.0.8"
-    tinycolor2 "^1.4.2"
-    vue "^3.0.11"
-    vue-class-component "^8.0.0-rc.1"
-    vue-router "^4.0.6"
-    vue3-normal-directive "^0.1.2"
-    vue3-storage "^0.1.9"
-
-vue3-normal-directive@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.nlark.com/vue3-normal-directive/download/vue3-normal-directive-0.1.2.tgz#1bb7fa0be1fe6d657964d9dba5c8a44477936e11"
-  integrity sha1-G7f6C+H+bWV5ZNnbpcikRHeTbhE=
-  dependencies:
-    body-scroll-lock "^3.1.5"
-    clipboard "^2.0.6"
-    core-js "^3.6.5"
-    lodash.debounce "^4.0.8"
-    vue "^3.0.0"
-    vue-class-component "^8.0.0-0"
-    vue-router "^4.0.0-0"
-
-vue3-storage@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.nlark.com/vue3-storage/download/vue3-storage-0.1.9.tgz#4c825259207fdf0644142fd215d972a967ad4615"
-  integrity sha1-TIJSWSB/3wZEFC/SFdlyqWetRhU=
-  dependencies:
-    core-js "^3.6.5"
-    cross-env "^7.0.3"
-    vue "^3.0.0"
-    vue-class-component "^8.0.0-0"
-    vue-router "^4.0.0-0"
-
-vue@^3.0.0, vue@^3.0.11, vue@^3.0.7:
+vue@^3.0.0, vue@^3.0.7:
   version "3.1.1"
   resolved "https://registry.nlark.com/vue/download/vue-3.1.1.tgz#9ad655758a0fa6c0dee5b3d2431d3912a9b381aa"
   integrity sha1-mtZVdYoPpsDe5bPSQx05Eqmzgao=

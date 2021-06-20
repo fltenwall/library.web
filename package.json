@@ -29,7 +29,7 @@
     "@antv/g2": "^4.1.12",
     "@iconify/iconify": "^2.0.0-rc.2",
     "@types/qs": "^6.9.5",
-    "ant-design-vue": "^2.2.0-beta.2",
+    "ant-design-vue": "^2.2.0-beta.3",
     "axios": "^0.21.1",
     "crypto-es": "^1.2.6",
     "lodash-es": "^4.17.21",
@@ -88,5 +88,5 @@
     "type": "git",
     "url": "git+https://github.com/PBOVE/library-webfront.git"
   },
-  "homepage": "https://github.com/PBOVE/library-webfront"
+  "homepage": "https://github.com/PBOVE/library.web"
 }

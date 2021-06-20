@@ -3,7 +3,17 @@
     <div class="index-table-search index-card">
       <search-panle ref="searchInstance" @onSearch="onSearchData" />
     </div>
-    <list-view ref="listInstance" @onPageChange="onFetchData" @onRefresh="onFetchData" />
+    <GlobalCard title="图片管理" class="flex-item flex flex-column default-shadow h0">
+      <div class="flex-item flex h0">
+        <folder-panle class="folder-panle-wrap w-400 mr-4" />
+        <list-view
+          ref="listInstance"
+          class="flex-item"
+          @onPageChange="onFetchData"
+          @onRefresh="onFetchData"
+        />
+      </div>
+    </GlobalCard>
   </div>
 </template>
 
@@ -14,11 +24,12 @@ import { Instance } from '/@/lib/interface/ListPage'
 import { listPageMix } from '/@/lib/idata/data-list/'
 import searchPanle from './search-panle.vue'
 import listView from './list-view.vue'
+import folderPanle from './folder-panle.vue'
 
 const DATA_PAGE_NAME = 'basis-manage-problem-manage-data-page'
 
 export default defineComponent({
-  components: { listView, searchPanle },
+  components: { listView, searchPanle, folderPanle },
   setup() {
     // 实例
     const instance = reactive<Instance<ProblemManage>>({
@@ -59,4 +70,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.index-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+</style>
