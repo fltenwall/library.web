@@ -3,6 +3,7 @@ import type { PointInfo } from '/@/lib/interface/PointInfo'
 import store from '/@/store/index'
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators'
 import { isObject } from '/@/utils/is'
+import { FormManage } from '/@/api/page-manage/form-page'
 
 const NAME = 'point'
 
@@ -17,7 +18,7 @@ interface UpdatePointState {
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class Point extends VuexModule {
   // 组件数据
-  private pointDataState: PointInfo[] = []
+  private pointDataState: Required<PointInfo>[] = []
 
   // 组件数据样式
   private pointStyleState: Indexable<CSSProperties> = {}
@@ -25,8 +26,11 @@ export default class Point extends VuexModule {
   // 当前选中下标
   private pointUUIDState = ''
 
+  // 页面配置
+  private pageOptionsState: FormManage = {}
+
   // 获取组件数据
-  get getPointDataState(): PointInfo[] {
+  get getPointDataState(): Required<PointInfo>[] {
     return this.pointDataState
   }
 
@@ -40,6 +44,11 @@ export default class Point extends VuexModule {
     return this.pointUUIDState
   }
 
+  // 获取页面配置
+  get getPageOptionsState(): FormManage {
+    return this.pageOptionsState
+  }
+
   // 获取数据
   get getPointInfo(): PointInfo {
     const point = this.pointDataState.find((el) => el.uuid === this.pointUUIDState)
@@ -48,7 +57,7 @@ export default class Point extends VuexModule {
 
   // 添加数据
   @Mutation
-  commitAddPointData(data: PointInfo): void {
+  commitAddPointData(data: Required<PointInfo>): void {
     this.pointDataState.push(data)
   }
 
@@ -80,8 +89,20 @@ export default class Point extends VuexModule {
 
   // 更新数据
   @Mutation
-  commitUpdatePointDataState(data: PointInfo[]): void {
+  commitUpdatePointDataState(data: Required<PointInfo>[]): void {
     this.pointDataState = data
+  }
+
+  // 设置页面配置
+  @Mutation
+  commitSetPageOptionsState(options: FormManage): void {
+    this.pageOptionsState = options
+  }
+
+  // 更新页面配置
+  @Mutation
+  commitUpdatePageOptionsState({ key, value }: { key: keyof FormManage; value: unknown }): void {
+    this.pageOptionsState[key] = value as undefined
   }
 
   // 删除数据
@@ -97,9 +118,10 @@ export default class Point extends VuexModule {
   // 清空
   @Mutation
   commitEmptyState(): void {
+    this.pointUUIDState = ''
     this.pointDataState = []
     this.pointStyleState = {}
-    this.pointUUIDState = ''
+    this.pageOptionsState = {}
   }
 }
 

@@ -1,3 +1,5 @@
+// 链表
+
 import { watch, computed, reactive, ref, unref } from 'vue'
 import type { PointInfo } from '/@/lib/interface/PointInfo'
 import { pointStore } from '/@/store/modules/point'
@@ -16,7 +18,7 @@ export default function (): UseLinked {
   // 表示可以回退或者前进
   const linkedState = reactive({ undo: false, redo: false })
   // 链表
-  const linked = new Linked<{ data: PointInfo[]; select: string }>()
+  const linked = new Linked<{ data: Required<PointInfo>[]; select: string }>()
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState)
   // 选中数据
@@ -82,7 +84,7 @@ export default function (): UseLinked {
     linkedState.undo = linked.isUndo
   }
 
-  // 跟新样式
+  // 更新样式
   function updateStyle(select: string) {
     pointUUID.value = select
     unref(pointData).forEach((el) => {

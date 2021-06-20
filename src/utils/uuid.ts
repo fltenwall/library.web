@@ -17,3 +17,15 @@ export function buildUUID(): string {
   }
   return uuid
 }
+
+export function buildShortUUID(): string {
+  let uuid = ''
+  for (let i = 1; i <= 16; i++) {
+    if (i === 5 || i === 12) {
+      uuid += '-'
+    } else {
+      uuid += hexList[(Math.random() * 16) | 0]
+    }
+  }
+  return uuid
+}

@@ -17,11 +17,11 @@
           :key="item.uuid"
           class="view-item"
           :uuid="item.uuid"
+          :class="panelStyle.opacity !== 1 && 'stop-events'"
           :style="pointStyle[item.uuid]"
           :move="dataItem.isMove"
           :hover="dataItem.hover === item.uuid"
           :select="pointUUID === item.uuid"
-          @dragleave.stop
           @on-end="handleMoveEnd"
           @on-move="handleMove"
           @on-start="handleMoveStart"
@@ -59,13 +59,16 @@ import type { PointInfo } from '/@/lib/interface/PointInfo'
 import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
 import { pointList } from '../../components/tools/index'
-import { buildUUID } from '/@/utils/uuid'
+import { buildShortUUID } from '/@/utils/uuid'
 import { Draggable } from '/@/lib/UI/'
 import { pointStore } from '/@/store/modules/point'
 import { schemaList } from '../../components/tools/schema'
 import markLine from '../../components/mark-line.vue'
 import { assign, cloneDeep } from 'lodash-es'
-import { handleStore, limitRules } from './utils'
+import { handleStore, limitRules, viewResize, pointDataModify } from './utils'
+import usePointPos from '../../utils/usePointPos'
+
+type Position = Pick<PointInfo, 'x' | 'y' | 'width' | 'height'>
 
 interface DataItem {
   // 选择鼠标指针浮动在其上的元素
@@ -76,10 +79,10 @@ interface DataItem {
   state?: 'start' | 'end' | 'move'
   // 唯一值
   uuid?: string
-  // 当前位置
-  pos?: Pick<PointInfo, 'x' | 'y' | 'width' | 'height'>
-  // 移动中位置
-  scope?: Pick<PointInfo, 'x' | 'y' | 'width' | 'height'>
+  // 计算后放下位置
+  pos?: Position
+  // 鼠标拖动位置
+  scope?: Position
 }
 
 interface Move {
@@ -112,18 +115,21 @@ export default defineComponent({
     // ref
     const panelRef = ref<HTMLElement | null>(null)
 
-    const limit = limitRules(panelRef)
+    const limit = limitRules()
+
+    // 计算组件大小
+    function usePointSize({ x, y, width: w, height: h }: Required<PointInfo>) {
+      const { clientHeight: cH, clientWidth: cW } = panelRef.value!
+      const width = x + w > cW ? cW - x : w
+      const height = y + h > cH ? cH - y : h
+      return { width, height }
+    }
 
     //  初始化样式
-    function initPointStyle(uuid: string, { x, y, width: w, height: h }: PointInfo) {
-      const { clientHeight: cH, clientWidth: cW } = panelRef.value!
-      const width = x! + w! > cW ? cW - x! : w
-      const height = y! + h! > cH ? cH - y! : h
+    function initPointStyle(uuid: string, { x, y, width, height }: PointInfo) {
       setPointStyle({ uuid, key: 'transform', value: `translate(${x}px,${y}px)` })
       setPointStyle({ uuid, key: 'width', value: `${width}px` })
       setPointStyle({ uuid, key: 'height', value: `${height}px` })
-
-      return { width, height }
     }
 
     // 处理移动
@@ -131,9 +137,12 @@ export default defineComponent({
       const mapState = {
         mouse: () => {
           const { pos, scope } = limit.limitPosition({ x, y }, uuid)
+          const place = usePointPos(pos as Required<Position>, uuid)
           // 记录位置
-          dataItem.pos = pos
+          dataItem.pos = { ...pos, ...place }
           dataItem.scope = scope
+          // 更新数据
+          pointDataModify({ ...pos, ...place, uuid })
           // 设置样式
           setPointTransform({ uuid, x: scope.x!, y: scope.y! })
         },
@@ -241,7 +250,8 @@ export default defineComponent({
     const mouseEvent = {
       // 处理鼠标进入
       mouseenter(uuid: string) {
-        dataItem.hover = uuid
+        // 移动中禁止高亮
+        !dataItem.isMove && (dataItem.hover = uuid)
       },
       // 处理鼠标离开
       mouseleave() {
@@ -259,22 +269,25 @@ export default defineComponent({
         const { name, offset } = JSON.parse(event.dataTransfer?.getData('tool') || '')
         // 获取数据位置
         const { offsetX, offsetY } = event
-        // 计算位置 设置中间对齐
-        const x = offsetX + offset.x
-        const y = offsetY + offset.y
         // 唯一值
-        const uuid = buildUUID()
+        const uuid = buildShortUUID()
         const schema = cloneDeep(schemaList[name])
         // 合并
-        assign(schema, { x, y, uuid, name })
-        // 初始化样式
-        const { width, height } = initPointStyle(uuid, schema)
+        assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, uuid, name })
+        // 计算大小
+        const { width, height } = usePointSize(schema as Required<PointInfo>)
         schema.width = width
         schema.height = height
+        // 计算位置
+        const { x, y } = usePointPos(schema as Required<PointInfo>)
+        schema.x = x
+        schema.y = y
+        // 初始化样式
+        initPointStyle(uuid, schema)
         // 传递数据
         setSelectPoint(uuid)
         // 添加数据
-        pointStore.commitAddPointData(schema)
+        pointStore.commitAddPointData(schema as Required<PointInfo>)
       },
 
       // 当被鼠标拖动的对象进入其容器范围内时触发此事件
@@ -300,6 +313,9 @@ export default defineComponent({
     function handleCancelSelect() {
       setSelectPoint('')
     }
+
+    // 监听视图变化
+    viewResize(panelRef)
 
     return {
       panelRef,
@@ -342,6 +358,10 @@ export default defineComponent({
     box-sizing: border-box;
     transition: all 0.2s ease;
 
+    &.stop-events {
+      pointer-events: none;
+    }
+
     &[hover='true'] {
       cursor: move;
       border-color: @primary-color;
@@ -352,7 +372,9 @@ export default defineComponent({
     }
 
     &[move='true'] {
-      transition: none;
+      &[select='true'] {
+        transition: none;
+      }
     }
   }
 

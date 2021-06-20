@@ -1,4 +1,9 @@
 <template>
+  <div class="flex flex-space-between index-middle">
+    <div>唯一标识</div>
+    <ui-input v-model:value="dataItem.uuid" readonly prop="zIndex" type="number" class="w-200" />
+  </div>
+  <a-divider />
   <div class="flex">
     <div class="flex-item mr-3 index-middle">
       <div class="flex-shrink-0 w-6">
@@ -26,6 +31,11 @@
       </div>
       <ui-input v-model:value="dataItem.y" prop="y" type="number" />
     </div>
+  </div>
+  <a-divider />
+  <div class="flex flex-space-between index-middle">
+    <div>层级</div>
+    <ui-input v-model:value="dataItem.zIndex" class="w-100" prop="zIndex" type="number" />
   </div>
 </template>
 

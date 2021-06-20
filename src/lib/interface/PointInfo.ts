@@ -18,5 +18,8 @@ export interface PointInfo {
   // 高度
   height?: number
 
+  // 层级
+  zIndex?: number
+
   [key: string]: unknown
 }

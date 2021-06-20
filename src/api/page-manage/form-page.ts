@@ -11,6 +11,9 @@ export interface FormManage {
   // 状态
   state?: boolean | 1 | 0
 
+  // 布局类型
+  layoutType?: 1 | 2
+
   // 描述
   description?: string
 

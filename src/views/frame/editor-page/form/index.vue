@@ -11,7 +11,12 @@
               :disable="!linkedState.undo"
               @click="handleUndo"
             />
-            <Icon icon="ion:arrow-redo-sharp" class="point-history" :disable="!linkedState.redo" @click="handleRedo" />
+            <Icon
+              icon="ion:arrow-redo-sharp"
+              class="point-history"
+              :disable="!linkedState.redo"
+              @click="handleRedo"
+            />
           </div>
         </div>
       </template>
@@ -19,10 +24,11 @@
         <div class="header-input index-theme index-center-middle">
           <input
             ref="inputRef"
-            v-model="dataItem.name"
+            :value="pageOptions.name"
             class="name-input mr-2"
             @focus="onInputFocus"
             @blur="onInputBlur"
+            @input="onInputChange"
           >
           <div class="edit-icon-wrap">
             <Icon v-show="!inputState" icon="entypo:edit" class="pointer" @click="onClickEdit" />
@@ -52,20 +58,20 @@
 </template>
 
 <script lang="ts">
-import { assign } from 'lodash-es'
-import { defineComponent, onBeforeUnmount, reactive, ref, unref } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, reactive, ref, unref } from 'vue'
 import { useRouter } from 'vue-router'
 import actionArea from './src/actionArea/index.vue'
 import toolArea from './src/toolArea/index.vue'
 import viewArea from './src/viewArea/index.vue'
-import service, { FormManage } from '/@/api/page-manage/form-page'
+import service from '/@/api/page-manage/form-page'
 import { pointStore } from '/@/store/modules/point'
 import pointLinked from './utils/pointLinked'
+import useViewSize from './utils/useViewSize'
 
 export default defineComponent({
   components: { actionArea, toolArea, viewArea },
   setup() {
-    const dataItem = reactive<FormManage>({})
+    const pageOptions = computed(() => pointStore.getPageOptionsState)
 
     const { currentRoute, back } = useRouter()
 
@@ -74,26 +80,30 @@ export default defineComponent({
     const inputState = ref<boolean>(false)
 
     const actionItem = reactive<{ visible: boolean }>({ visible: false })
-
     // 处理点击编辑
     const onClickEdit = () => inputRef.value?.focus()
-
     // 处理页面返回
     const onGoBack = () => back()
-
     // 处理输入框获取焦点
     const onInputFocus = () => (inputState.value = true)
-
     // 处理输入框失去焦点
     const onInputBlur = () => (inputState.value = false)
+    // 处理输入内容
+    function onInputChange(e: Event) {
+      const value = (e.target as unknown as { value: string }).value
+      pointStore.commitUpdatePageOptionsState({ key: 'name', value })
+    }
 
     // 使用链表
     const linked = pointLinked()
 
+    // 视图大小
+    useViewSize()
+
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
       const { data } = await service.getItemById(id)
-      assign(dataItem, data)
+      pointStore.commitSetPageOptionsState(data)
     }
 
     // 点击 point
@@ -106,13 +116,14 @@ export default defineComponent({
     onLoadDataById(+unref(currentRoute).params.id)
 
     return {
-      dataItem,
       actionItem,
+      pageOptions,
       inputRef,
       inputState,
       onClickEdit,
       onInputFocus,
       onInputBlur,
+      onInputChange,
       onGoBack,
       ...linked,
       handleClickPoint

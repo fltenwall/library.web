@@ -15,7 +15,7 @@
             <tool-attribute />
           </a-form>
         </a-tab-pane>
-        <a-tab-pane key="2" tab="交互">
+        <a-tab-pane key="2" tab="配置">
           <a-form class="action-area-main" label-align="left">
             <component :is="`${pointInfo.name}-point`" />
           </a-form>
@@ -88,6 +88,7 @@ export default defineComponent({
 
   &-main {
     padding: 0 16px;
+    font-size: 12px;
   }
 
   ::v-deep(.ant-row) {
@@ -108,6 +109,14 @@ export default defineComponent({
         }
       }
     }
+  }
+
+  ::v-deep(.ant-input) {
+    font-size: 12px;
+  }
+
+  ::v-deep(label) {
+    font-size: 12px;
   }
 
   ::v-deep(.ant-tabs) {
