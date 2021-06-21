@@ -1,7 +1,7 @@
 <template>
   <div class="list-view">
     <div class="list-view-header">
-      分组
+      {{ title }}
     </div>
     <div class="flex-item flex flex-column list-view-cotent">
       <Scrollbar class="list-view-main">
@@ -42,6 +42,12 @@ import { Scrollbar } from '/@/components/Scrollbar'
 
 export default defineComponent({
   components: { Scrollbar },
+  props: {
+    title: {
+      type: String,
+      default: '全部'
+    }
+  },
   emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
