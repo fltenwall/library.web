@@ -7,9 +7,17 @@
       <Scrollbar class="list-view-main">
         <div class="flex flex-space-between">
           <div>
-            <a-button type="primary">
+            <a-button type="primary" @click="onUploadChange">
               上传图片
             </a-button>
+            <input
+              ref="fileRef"
+              type="file"
+              accept="image/*"
+              class="input-file"
+              multiple="multiple"
+              @change="handleFileChange"
+            >
           </div>
           <div class="operation-content">
             <a-checkbox> 当前页全选 </a-checkbox>
@@ -39,6 +47,7 @@ import { ProblemManage } from '/@/api/basis-manage/problem-manage'
 import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
 import { usePagination } from '/@/hooks/web/usePagination'
 import { Scrollbar } from '/@/components/Scrollbar'
+import fileUpload from '/@/utils/fileUpload'
 
 export default defineComponent({
   components: { Scrollbar },
@@ -52,11 +61,12 @@ export default defineComponent({
   setup(_props, { emit }) {
     // 数据源
     const dataSource = ref<ProblemManage[]>([])
-
     // 总数据
     const totalElements = ref<number>(0)
 
     const listPage = injectListPage<ProblemManage>()
+    // 文件
+    const fileRef = ref<{ click: () => void } | null>(null)
 
     // 数据加载
     const loading = listPage.loading
@@ -70,14 +80,22 @@ export default defineComponent({
     const onDeleteDataItem = (record: ProblemManage) => listPage.onDeleteDataItem(record)
 
     const pagination = usePagination()
-
     // 页面发生变化
     const onPageChange = () => emit('on-page-change')
-
     // 处理刷新
     const onRefresh = () => emit('on-refresh')
+    // 处理点击上传
+    const onUploadChange = () => fileRef.value!.click()
+    // 选中文件
+    function handleFileChange(event: InputEvent) {
+      const files = (event.target! as unknown as { files: File[] }).files
+      if (!files.length) return
+      // 进行上传
+      fileUpload(files)
+    }
 
     return {
+      fileRef,
       loading,
       dataSource,
       ...pagination,
@@ -86,9 +104,11 @@ export default defineComponent({
       onRefresh,
       onPageChange,
       onNewDataItem,
+      onUploadChange,
       onViewDataItem,
       onEditDataItem,
-      onDeleteDataItem
+      onDeleteDataItem,
+      handleFileChange
     }
   },
   methods: {
@@ -127,6 +147,10 @@ export default defineComponent({
     display: flex;
     justify-content: flex-end;
   }
+}
+
+.input-file {
+  display: none;
 }
 
 @media screen and (max-width: 1230px) {

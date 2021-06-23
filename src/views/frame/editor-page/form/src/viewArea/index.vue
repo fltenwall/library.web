@@ -19,7 +19,7 @@
           :uuid="item.uuid"
           :class="panelStyle.opacity !== 1 && 'stop-events'"
           :style="pointStyle[item.uuid]"
-          :move="dataItem.isMove"
+          :move="!!dataItem.isMove"
           :hover="dataItem.hover === item.uuid"
           :select="pointUUID === item.uuid"
           @on-end="handleMoveEnd"
