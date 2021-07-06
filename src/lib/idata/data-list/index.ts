@@ -59,9 +59,9 @@ export function listPageMix<T>(options: Options<T>): onFetchData {
    * 查询数据
    */
   function queryData(): PagerQueryData {
-    const search = instance.searchInstance?.getCurQueryData()
+    const search = instance.searchInstance?.getCurQueryData?.()
 
-    const pagination = instance.listInstance?.getPagination()
+    const pagination = instance.listInstance?.getPagination?.()
 
     return { sort: '', size: 10, page: 0, ...search, ...pagination }
   }

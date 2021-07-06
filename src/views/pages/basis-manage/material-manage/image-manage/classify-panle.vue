@@ -5,51 +5,45 @@
       <div>操作</div>
     </div>
     <Scrollbar class="classify-panle-main">
-      <a-menu v-model:selectedKeys="selectedKeys" @select="handleSelect">
-        <a-menu-item key="">
-          <div class="classify-item-title">
-            全部
-          </div>
-        </a-menu-item>
-        <a-menu-item v-for="item in dataSource" :key="item.id">
-          <div class="classify-item">
+      <a-spin :spinning="loading">
+        <a-menu v-model:selectedKeys="selectedKeys" class="main-menu" @select="handleSelect">
+          <a-menu-item key="">
             <div class="classify-item-title">
-              {{ item.title }}
+              全部
             </div>
-            <div class="classify-item-operation">
-              <span>编辑</span>
-              <span>删除</span>
+          </a-menu-item>
+          <a-menu-item v-for="item in dataSource" :key="item.id">
+            <div class="classify-item">
+              <div class="classify-item-title">
+                {{ item.title }}
+              </div>
+              <div class="classify-item-operation">
+                <span @click="handleEditor(item)">编辑</span>
+                <span>删除</span>
+              </div>
             </div>
-          </div>
-        </a-menu-item>
-      </a-menu>
+          </a-menu-item>
+          <a-menu-item v-if="visible" key="new-classify">
+            <a-input
+              ref="inputRef"
+              v-model:value="cTitle"
+              placeholder="新建分组"
+              @blur="onNewData"
+            />
+          </a-menu-item>
+        </a-menu>
+      </a-spin>
     </Scrollbar>
-    <div class="index-center-middle mb-2 mt-2">
+    <div class="classify-panle-footer index-center-middle pb-2 pt-2">
       <a-button @click="handleNewGroup">
         新建分组
       </a-button>
     </div>
-
-    <a-modal
-      v-model:visible="visible"
-      title="新建分组"
-      width="300px"
-      centered
-      ok-text="新建"
-      :ok-button-props="{ disabled: !cTitle.length, loading: loading }"
-      @ok="onNewData"
-    >
-      <a-input v-model:value="cTitle" :maxlength="8">
-        <template #suffix>
-          <span>{{ cTitle.length }}/8</span>
-        </template>
-      </a-input>
-    </a-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, unref } from 'vue'
+import { defineComponent, nextTick, ref, unref } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
 import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage'
 import { message } from 'ant-design-vue'
@@ -59,6 +53,7 @@ export default defineComponent({
   emits: ['on-select'],
   setup(_props, { emit }) {
     // 对话框显示
+    const inputRef = ref<{ focus: () => void } | null>(null)
     const visible = ref<boolean>(false)
     // 数据
     const cTitle = ref<string>('')
@@ -70,8 +65,11 @@ export default defineComponent({
 
     // 处理新建分组
     function handleNewGroup() {
+      if (loading.value) return
       visible.value = true
       cTitle.value = ''
+      selectedKeys.value = ['new-classify']
+      nextTick(() => inputRef.value?.focus())
     }
 
     // 获取服务器数据
@@ -88,6 +86,11 @@ export default defineComponent({
 
     // 保存数据
     async function onNewData() {
+      if (!unref(cTitle)) {
+        visible.value = false
+        return
+      }
+
       try {
         loading.value = true
         await service.saveClassifyNewItem({ title: unref(cTitle) })
@@ -106,16 +109,23 @@ export default defineComponent({
       emit('on-select', record)
     }
 
+    // 处理编辑
+    function handleEditor(record: ImageManage) {
+      console.log(record)
+    }
+
     fetchDataFromServer()
 
     return {
-      visible,
       cTitle,
+      visible,
+      inputRef,
       loading,
       dataSource,
       selectedKeys,
       onNewData,
       handleSelect,
+      handleEditor,
       handleNewGroup
     }
   }
@@ -127,8 +137,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #e3e3e3;
-  border-radius: 8px;
 
   &-header {
     display: flex;
@@ -136,11 +144,24 @@ export default defineComponent({
     padding: 13px 20px;
     color: rgba(0, 0, 0, 0.45);
     background: #f3f5f7;
+    border: 1px solid #e3e3e3;
+    border-radius: 2px 2px 0 0;
   }
 
   &-main {
     flex: 1;
     height: 0;
+    border-right: 1px solid #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+
+    .main-menu {
+      border-right-width: 0;
+    }
+  }
+
+  &-footer {
+    border: 1px solid #e3e3e3;
+    border-radius: 0 0 2px 2px;
   }
 
   .classify-item {

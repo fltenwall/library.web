@@ -27,6 +27,8 @@ interface Config {
   max: number
 
   auth: boolean
+
+  preview: string
 }
 
 const config: Config = {
@@ -58,7 +60,10 @@ const config: Config = {
   max: 2,
 
   // 权限
-  auth: auth
+  auth: auth,
+
+  // 预览前缀
+  preview: '/epi/storage/preview/'
 }
 
 export default config

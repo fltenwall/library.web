@@ -1,8 +1,5 @@
 <template>
   <div class="index-content">
-    <div class="index-table-search index-card">
-      <search-panle ref="searchInstance" @onSearch="onSearchData" />
-    </div>
     <GlobalCard title="图片管理" class="flex-item flex flex-column default-shadow h0">
       <div class="flex-item flex h0">
         <classify-panle class="folder-panle-wrap mr-4" @on-select="handleSelect" />
@@ -10,6 +7,7 @@
           ref="listInstance"
           class="flex-item"
           :title="selectData.title || '全部'"
+          :classify-id="selectData.id"
           @onPageChange="onFetchData"
           @onRefresh="onFetchData"
         />
@@ -22,15 +20,14 @@
 import { defineComponent, reactive, toRefs, ref } from 'vue'
 import { Instance } from '/@/lib/interface/ListPage'
 import { listPageMix } from '/@/lib/idata/data-list/'
-import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage'
-import searchPanle from './search-panle.vue'
+import service, { ImageManage, Classify } from '/@/api/basis-manage/material-manage/image-manage'
 import listView from './list-view.vue'
 import classifyPanle from './classify-panle.vue'
 
 const DATA_PAGE_NAME = 'basis-manage-problem-manage-data-page'
 
 export default defineComponent({
-  components: { listView, searchPanle, classifyPanle },
+  components: { listView, classifyPanle },
   setup() {
     // 实例
     const instance = reactive<Instance<ImageManage>>({
@@ -52,16 +49,15 @@ export default defineComponent({
     }
 
     // 选中数据
-    const selectData = ref<ImageManage>({})
+    const selectData = ref<Classify>({})
 
     const { onFetchData, onSearchData, queryData } = listPageMix<ImageManage>(options)
 
     // 从服务器取得数据 设置列表数据
     async function fetchDataFromServer() {
-      const query = queryData()
-      console.log(query)
-      // const { data } = await service.fecthClassifyList(query)
-      // instance.listInstance?.setDataSource(data.content, data.totalElements)
+      const query = { ...queryData(), classifyId: selectData.value.id }
+      const { data } = await service.fecthImageList(query)
+      instance.listInstance?.setDataSource(data.content, data.totalElements)
     }
 
     // 删除数据, 刷新数据
@@ -73,6 +69,8 @@ export default defineComponent({
     // 处理选中数据
     function handleSelect(record: ImageManage) {
       selectData.value = record
+      // 重新加载数据
+      onFetchData()
     }
 
     return { selectData, onFetchData, onSearchData, ...toRefs(instance), handleSelect }
@@ -89,7 +87,7 @@ export default defineComponent({
 
 .folder-panle-wrap {
   width: 30%;
-  max-width: 400px;
+  max-width: 350px;
   min-width: 300px;
 }
 </style>

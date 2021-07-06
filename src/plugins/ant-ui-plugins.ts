@@ -29,7 +29,9 @@ import {
   Drawer,
   Avatar,
   Tabs,
-  Radio
+  Radio,
+  Collapse,
+  Spin
 } from 'ant-design-vue'
 
 // 导入 Icon
@@ -52,8 +54,8 @@ export default class AntUiPlugins {
   static init(app: App<Element>): void {
     app.use(Button).use(Divider).use(Form).use(Input).use(Modal).use(Pagination).use(Select)
     app.use(Row).use(Col).use(Checkbox).use(Popover).use(Popconfirm).use(Menu).use(Dropdown)
-    app.use(Progress).use(DatePicker).use(InputNumber).use(Tag).use(Upload).use(Tooltip)
-    app.use(Tree).use(Affix).use(Layout).use(Drawer).use(Avatar).use(Tabs).use(Radio)
+    app.use(Progress).use(DatePicker).use(InputNumber).use(Tag).use(Upload).use(Tooltip).use(Spin)
+    app.use(Tree).use(Affix).use(Layout).use(Drawer).use(Avatar).use(Tabs).use(Radio).use(Collapse)
     app.component('PlusOutlined', PlusOutlined)
     app.component('DownOutlined', DownOutlined)
     app.component('SettingOutlined', SettingOutlined)

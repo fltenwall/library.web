@@ -6,7 +6,7 @@ export enum ContentTypeEnum {
   FORM_URLENCODED = 'application/x-www-form-urlencoded',
 
   // form-data  upload
-  FORM_DATA = 'multipart/form-data;charset=UTF-8'
+  FORM_DATA = 'multipart/form-data'
 }
 
 export enum ResultEnum {

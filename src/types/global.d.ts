@@ -6,3 +6,5 @@ declare type Indexable<T = unknown> = {
 declare type Recordable<T extends any = any> = Record<string, T>
 
 declare type Callback = () => void
+
+declare type OnUploadProgress = (event: { loaded: number; total: number }) => void

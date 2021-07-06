@@ -43,7 +43,7 @@ export default defineComponent({
 
       vditor.value = new Vditor(element, {
         cache: { enable: false },
-        input: (v) => handleInput(v),
+        input: (v: string) => handleInput(v),
         after: () => {
           initedRef.value = true
           unref(vditor)?.setValue(props.value)
