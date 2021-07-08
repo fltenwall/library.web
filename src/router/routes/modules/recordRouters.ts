@@ -32,6 +32,15 @@ const routers: AppRouteModule = {
         title: '操作日志',
         auth: ['RECORDOPERATOR:GET']
       }
+    },
+    {
+      path: 'access-record-list-page',
+      name: 'access-record-list-page',
+      component: (): unknown => import('/@/views/pages/record-manage/access-record/list-page.vue'),
+      meta: {
+        title: '访问日志',
+        auth: ['RECORDACCESS:GET']
+      }
     }
   ],
   sortValue: 4

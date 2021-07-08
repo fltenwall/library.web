@@ -14,22 +14,25 @@
           </a-menu-item>
           <a-menu-item v-for="item in dataSource" :key="item.id">
             <div class="classify-item">
-              <div class="classify-item-title">
+              <a-input
+                v-if="item.isEdit"
+                ref="editorRef"
+                v-model:value="item.newTitle"
+                class="mr-4"
+                placeholder="编辑分组"
+                @blur="onEditorData(item)"
+              />
+              <div v-else class="classify-item-title">
                 {{ item.title }}
               </div>
               <div class="classify-item-operation">
-                <span @click="handleEditor(item)">编辑</span>
+                <span @click="handleClickEditor(item)">编辑</span>
                 <span>删除</span>
               </div>
             </div>
           </a-menu-item>
           <a-menu-item v-if="visible" key="new-classify">
-            <a-input
-              ref="inputRef"
-              v-model:value="cTitle"
-              placeholder="新建分组"
-              @blur="onNewData"
-            />
+            <a-input ref="inputRef" v-model:value="cTitle" placeholder="新建" @blur="onNewData" />
           </a-menu-item>
         </a-menu>
       </a-spin>
@@ -45,21 +48,32 @@
 <script lang="ts">
 import { defineComponent, nextTick, ref, unref } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
-import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage'
+import service, { Classify } from '/@/api/basis-manage/material-manage/image-manage'
 import { message } from 'ant-design-vue'
+
+interface ClassifyEdit extends Classify {
+  id: string
+  // 标题
+  title: string
+  // 是否编辑
+  isEdit: boolean
+  // 新名称
+  newTitle: string
+}
 
 export default defineComponent({
   components: { Scrollbar },
   emits: ['on-select'],
   setup(_props, { emit }) {
-    // 对话框显示
+    // 输入框显示
     const inputRef = ref<{ focus: () => void } | null>(null)
+    const editorRef = ref<{ focus: () => void } | null>(null)
     const visible = ref<boolean>(false)
     // 数据
     const cTitle = ref<string>('')
     const loading = ref<boolean>(false)
     // 数据源
-    const dataSource = ref<ImageManage[]>([])
+    const dataSource = ref<Classify[]>([])
     // 选中数据
     const selectedKeys = ref<string[]>([''])
 
@@ -103,6 +117,14 @@ export default defineComponent({
       }
     }
 
+    // 编辑数据
+    async function onEditorData(record: ClassifyEdit) {
+      record.isEdit = false
+      if (!record.newTitle || record.newTitle === record.title) {
+        return
+      }
+    }
+
     // 选中数据
     async function handleSelect({ key }: { key: string }) {
       const record = unref(dataSource).find((el) => el.id === key) || {}
@@ -110,8 +132,10 @@ export default defineComponent({
     }
 
     // 处理编辑
-    function handleEditor(record: ImageManage) {
-      console.log(record)
+    function handleClickEditor(record: ClassifyEdit) {
+      record.isEdit = true
+      record.newTitle = record.title
+      nextTick(() => editorRef.value?.focus())
     }
 
     fetchDataFromServer()
@@ -120,12 +144,14 @@ export default defineComponent({
       cTitle,
       visible,
       inputRef,
+      editorRef,
       loading,
       dataSource,
       selectedKeys,
       onNewData,
+      onEditorData,
       handleSelect,
-      handleEditor,
+      handleClickEditor,
       handleNewGroup
     }
   }

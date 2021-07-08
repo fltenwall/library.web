@@ -2,10 +2,10 @@
   <div class="image-list flex flex-column">
     <div class="flex flex-space-between p-4">
       <div v-if="classifyId">
-        <a-button type="primary" @click="onUploadChange">
+        <!-- <a-button type="primary" @click="onUploadChange">
           上传图片
         </a-button>
-        <input ref="fileRef" type="file" class="input-file" @change="handleFileChange">
+        <input ref="fileRef" type="file" accept="image/*" class="input-file" @change="handleFileChange"> -->
       </div>
       <div />
       <div class="operation-content">
