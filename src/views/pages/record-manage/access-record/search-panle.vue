@@ -2,25 +2,21 @@
   <a-form :label-col="{ flex: '100px' }">
     <a-row type="flex" justify="end">
       <a-col :xs="24" :lg="8" class="index-table-search-col">
-        <a-form-item label="登录账户">
-          <InputSearch v-model:value="queryData.account" />
-        </a-form-item>
-      </a-col>
-      <a-col :xs="24" :lg="8" class="index-table-search-col">
-        <a-form-item label="登录地址">
+        <a-form-item label="访问地址">
           <InputSearch v-model:value="queryData.ip" />
         </a-form-item>
       </a-col>
-      <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
-        <a-form-item label="登录省份">
+      <a-col :xs="24" :lg="8" class="index-table-search-col">
+        <a-form-item label="访问省份">
           <InputSearch v-model:value="queryData.province" />
         </a-form-item>
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col" r>
-        <a-form-item label="登录城市">
+        <a-form-item label="访问城市">
           <InputSearch v-model:value="queryData.city" />
         </a-form-item>
       </a-col>
+      <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col" />
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col" />
       <a-col :xs="24" :lg="8" class="index-table-search-col">
         <div class="index-button-right">

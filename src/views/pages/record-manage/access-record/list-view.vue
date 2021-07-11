@@ -6,16 +6,8 @@
     :data-source="dataSource"
     @on-refresh="onRefresh"
   >
-    <template #status="{ record }">
-      {{ record.status }}
-    </template>
     <template #createTime="{ record }">
       {{ useFromatlll(record.createTime) }}
-    </template>
-
-    <template #description="{ record }">
-      <span v-if="record.description">{{ record.description }}</span>
-      <span v-else>登录成功</span>
     </template>
 
     <template #location="{ record }">

@@ -4,7 +4,7 @@ import { ContentTypeEnum } from '/@/enums/httpEnum'
 
 export interface ImageManage {
   //  主键
-  id?: string
+  id?: number
 
   // 名称
   name?: string
@@ -44,8 +44,8 @@ export type DataPager = PagerResponseData<ImageManage>
 
 export default class Service {
   // 向服务查询数据并分页返回结果
-  static fecthClassifyList(query?: PagerQueryData): Promise<Result<ImageManage[]>> {
-    return request<Result<ImageManage[]>>({
+  static fecthClassifyList(query?: PagerQueryData): Promise<Result<Classify[]>> {
+    return request<Result<Classify[]>>({
       url: '/epi/material/image/classify',
       method: 'get',
       params: query
@@ -70,27 +70,36 @@ export default class Service {
     })
   }
 
-  // 通过ID取得数据
-  static getItemById(id: number): Promise<Result<ImageManage>> {
+  // 更新数据到远程服务器
+  static updateClassify(id: string, item: { title: string }): Promise<Result<ImageManage>> {
     return request<Result<ImageManage>>({
-      url: '/epi/date/' + id,
-      method: 'get'
+      url: '/epi/material/image/classify/' + id,
+      method: 'put',
+      data: item
     })
   }
 
   // 更新数据到远程服务器
-  static updateItem(id: number, item: ImageManage): Promise<Result<ImageManage>> {
+  static updateImage(id: number, item: { name: string }): Promise<Result<ImageManage>> {
     return request<Result<ImageManage>>({
-      url: '/epi/date/' + id,
+      url: '/epi/material/image/' + id,
       method: 'put',
       data: item
     })
   }
 
   // 删除指定ID的数据
-  static deleteItemById(id: number): Promise<Result<null>> {
+  static deleteImageById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/epi/date/' + id,
+      url: '/epi/material/image/' + id,
+      method: 'delete'
+    })
+  }
+
+  // 删除指定ID的数据
+  static deleteClassifyById(id: string): Promise<Result<null>> {
+    return request<Result<null>>({
+      url: '/epi/material/image/classify/' + id,
       method: 'delete'
     })
   }

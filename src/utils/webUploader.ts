@@ -55,7 +55,7 @@ export default class WebUploader {
   // 上传信息列表
   protected _uploadInfoList: UploadContent[] = []
 
-  constructor(options = {}) {
+  constructor(options: Options = {}) {
     // 合并默认配置
     assign(this._configs, options)
   }
@@ -137,8 +137,8 @@ export default class WebUploader {
   }
 
   // 服务端验证是否上传, 实现上传
-  private async validUpload({ fileInfo: { name }, hash, chunkList }: UploadContent) {
-    return await service.validUpload({ name, hash, length: chunkList.length })
+  private async validUpload({ fileInfo: { name, size, type }, hash, chunkList }: UploadContent) {
+    return await service.validUpload({ name, size, type, hash, length: chunkList.length })
   }
 
   // 秒传更新数据

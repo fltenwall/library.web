@@ -8,13 +8,13 @@ export const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
-    title: '登录地址',
+    title: '访问地址',
     dataIndex: 'ip',
     align: 'center',
     ellipsis: true
   },
   {
-    title: '登录地点',
+    title: '访问地点',
     dataIndex: 'location',
     align: 'center',
     ellipsis: true,
@@ -33,7 +33,7 @@ export const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
-    title: '登录日期',
+    title: '访问日期',
     dataIndex: 'createTime',
     align: 'center',
     ellipsis: true,

@@ -18,16 +18,17 @@
                 v-if="item.isEdit"
                 ref="editorRef"
                 v-model:value="item.newTitle"
+                v-click-away="onClickInputAway"
                 class="mr-4"
                 placeholder="编辑分组"
-                @blur="onEditorData(item)"
               />
               <div v-else class="classify-item-title">
                 {{ item.title }}
               </div>
               <div class="classify-item-operation">
-                <span @click="handleClickEditor(item)">编辑</span>
-                <span>删除</span>
+                <span @click.stop="handleClickEditor(item)">编辑</span>
+                <a-divider type="vertical" />
+                <span @click="onDeleteDataItem(item)">删除</span>
               </div>
             </div>
           </a-menu-item>
@@ -49,16 +50,17 @@
 import { defineComponent, nextTick, ref, unref } from 'vue'
 import { Scrollbar } from '/@/components/Scrollbar'
 import service, { Classify } from '/@/api/basis-manage/material-manage/image-manage'
+import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
 import { message } from 'ant-design-vue'
 
 interface ClassifyEdit extends Classify {
-  id: string
+  id?: string
   // 标题
-  title: string
+  title?: string
   // 是否编辑
-  isEdit: boolean
+  isEdit?: boolean
   // 新名称
-  newTitle: string
+  newTitle?: string
 }
 
 export default defineComponent({
@@ -76,6 +78,8 @@ export default defineComponent({
     const dataSource = ref<Classify[]>([])
     // 选中数据
     const selectedKeys = ref<string[]>([''])
+    // 当前编辑数据
+    const currentEditor = ref<ClassifyEdit>({})
 
     // 处理新建分组
     function handleNewGroup() {
@@ -116,15 +120,6 @@ export default defineComponent({
         loading.value = false
       }
     }
-
-    // 编辑数据
-    async function onEditorData(record: ClassifyEdit) {
-      record.isEdit = false
-      if (!record.newTitle || record.newTitle === record.title) {
-        return
-      }
-    }
-
     // 选中数据
     async function handleSelect({ key }: { key: string }) {
       const record = unref(dataSource).find((el) => el.id === key) || {}
@@ -132,10 +127,35 @@ export default defineComponent({
     }
 
     // 处理编辑
-    function handleClickEditor(record: ClassifyEdit) {
+    function handleClickEditor(record: Required<ClassifyEdit>) {
+      // 初始化全部数据
+      unref(dataSource).forEach((el: ClassifyEdit) => (el.isEdit = false))
+      // 设置当前为可编辑数据
       record.isEdit = true
       record.newTitle = record.title
+      selectedKeys.value = [record.id]
+      currentEditor.value = record
       nextTick(() => editorRef.value?.focus())
+    }
+
+    // 点击input以外地区
+    async function onClickInputAway() {
+      const record = currentEditor.value
+      currentEditor.value = {}
+      record.isEdit = false
+      if (!record.newTitle || record.newTitle === record.title) return
+      record.title = record.newTitle
+      await service.updateClassify(record.id!, { title: record.newTitle })
+      // 刷新数据
+      fetchDataFromServer()
+    }
+
+    // 删除数据
+    async function onDeleteDataItem(record: Required<Classify>) {
+      useDeleteModal(async () => {
+        await service.deleteClassifyById(record.id)
+        fetchDataFromServer()
+      })
     }
 
     fetchDataFromServer()
@@ -149,7 +169,8 @@ export default defineComponent({
       dataSource,
       selectedKeys,
       onNewData,
-      onEditorData,
+      onDeleteDataItem,
+      onClickInputAway,
       handleSelect,
       handleClickEditor,
       handleNewGroup
@@ -169,16 +190,15 @@ export default defineComponent({
     justify-content: space-between;
     padding: 13px 20px;
     color: rgba(0, 0, 0, 0.45);
-    background: #f3f5f7;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #f0f0f0;
     border-radius: 2px 2px 0 0;
   }
 
   &-main {
     flex: 1;
     height: 0;
-    border-right: 1px solid #e3e3e3;
-    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
 
     .main-menu {
       border-right-width: 0;
@@ -186,7 +206,7 @@ export default defineComponent({
   }
 
   &-footer {
-    border: 1px solid #e3e3e3;
+    border: 1px solid #f0f0f0;
     border-radius: 0 0 2px 2px;
   }
 

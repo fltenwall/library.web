@@ -1,38 +1,37 @@
 <template>
-  <div class="image-list flex flex-column">
-    <div class="flex flex-space-between p-4">
-      <div v-if="classifyId">
-        <!-- <a-button type="primary" @click="onUploadChange">
-          上传图片
-        </a-button>
-        <input ref="fileRef" type="file" accept="image/*" class="input-file" @change="handleFileChange"> -->
-      </div>
-      <div />
-      <div class="operation-content">
-        <a-checkbox> 当前页全选 </a-checkbox>
-        <a-button class="ml-4">
-          删除
-        </a-button>
-        <a-button class="ml-4">
-          移动至
-        </a-button>
-        <a-button class="ml-4">
-          重命名
-        </a-button>
-      </div>
-    </div>
-    <Scrollbar class="flex-item">
-      <template v-for="item in dataSource" :key="item.id">
-        <div class="preview-wrap">
-          <div class="preview-content">
-            <img :src="MixinConfig.preview + item.hash" class="preview-image">
-            <div class="index-hidden-newline w-200">
-              {{ item.name }}
-            </div>
-          </div>
+  <div ref="visitRef" class="image-list flex flex-column">
+    <GlobalTable
+      :scroll="scroll"
+      :columns="tableColumns"
+      :loading="loading"
+      :data-source="dataSource"
+    >
+      <template #name="{ record }">
+        <input
+          v-model="record.name"
+          class="input-name"
+          :title="record.name"
+          @focus="handleImageEditorBefore(record)"
+          @blur="handleImageEditorAfter(record)"
+        >
+      </template>
+      <template #image="{ record }">
+        <a-image :src="MixinConfig.preview + record.hash" class="preview-image" />
+      </template>
+      <template #updateTime="{ record }">
+        {{ useMoment(record.createTime) }}
+      </template>
+      <template #size="{ record }">
+        {{ (((record.size / 1024) | 0) + ' KB').replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}
+      </template>
+
+      <template #operation="{ record }">
+        <div class="index-operation">
+          <span @click="onDeleteDataItem(record)">删除</span>
         </div>
       </template>
-    </Scrollbar>
+    </GlobalTable>
+
     <div class="image-list-footer">
       <PaginationWrap :total="totalElements" />
     </div>
@@ -40,48 +39,117 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, watch, ref, unref, PropType, toRefs, reactive } from 'vue'
 import { usePagination } from '/@/hooks/web/usePagination'
-import { Scrollbar } from '/@/components/Scrollbar'
-import { imageUploader } from './image-list'
+import { useMoment } from '/@/utils/dateFormat'
+import { tableColumns } from './image-list'
+import service, { Classify, ImageManage } from '/@/api/basis-manage/material-manage/image-manage'
+import { message } from 'ant-design-vue'
+import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
 
 export default defineComponent({
-  components: { Scrollbar },
   props: {
-    classifyId: {
+    classify: {
       // 分组
-      type: String,
-      default: ''
-    },
-    dataSource: {
-      type: Array,
-      default: () => []
-    },
-    totalElements: {
-      type: Number,
-      default: 0
+      type: Object as PropType<Required<Classify>>,
+      default: () => ({})
     }
   },
   setup(props) {
-    const selectUploadImages = imageUploader()
-    // 处理点击上传
-    const onUploadChange = () => fileRef.value!.click()
-    // 文件
-    const fileRef = ref<{ click: () => void; value: null } | null>(null)
+    const { classify } = toRefs(props)
+    // 选中的数据
+    const selectData = ref<ImageManage>({})
     // 获取分页
     const pagination = usePagination()
-    // 文件改变
-    async function handleFileChange(event: InputEvent) {
-      // 获取选中的文件
-      const files = (event.target! as unknown as { files: File[] }).files
-      if (!files.length) return
-      // 设置上传数据
-      await selectUploadImages(files, props.classifyId)
-      // 置空数据, 可以重复上传
-      fileRef.value!.value = null
+    // 列表数据
+    const dataSource = ref<ImageManage[]>([])
+    // 总数
+    const totalElements = ref<number>(0)
+    // 加载中
+    const loading = ref<boolean>(false)
+    // 视图
+    const visitRef = ref<HTMLElement | null>(null)
+
+    const scroll = reactive<{ y?: number }>({})
+    // 从服务器取得数据 设置列表数据
+    async function fetchDataFromServer() {
+      try {
+        const query = queryData()
+        loading.value = true
+        const { data } = await service.fecthImageList(query)
+        dataSource.value = data.content
+        totalElements.value = data.totalElements
+      } catch (err) {
+        message.error(`数据获取失败: ${err.msg}`)
+      } finally {
+        loading.value = false
+      }
     }
 
-    return { fileRef, ...pagination, onUploadChange, handleFileChange }
+    // 获取查询的数据
+    function queryData() {
+      return {
+        ...pagination.getPagination(),
+        sort: 'createTime,desc',
+        classifyId: unref(classify).id || ''
+      }
+    }
+
+    // 处理照片名称修改之前
+    function handleImageEditorBefore(record: Required<ImageManage>) {
+      selectData.value.name = record.name
+    }
+
+    // 处理照片名称修改之后
+    async function handleImageEditorAfter(record: Required<ImageManage>) {
+      if (!record.name || record.name === unref(selectData).name!) {
+        record.name = unref(selectData).name!
+        return
+      }
+      try {
+        loading.value = true
+        await service.updateImage(record.id, { name: record.name })
+        loading.value = false
+        fetchDataFromServer()
+      } catch (err) {
+        message.error(`数据更新失败: ${err.msg}`)
+        record.name = unref(selectData).name!
+      }
+    }
+
+    // 删除数据
+    async function onDeleteDataItem(record: ImageManage) {
+      useDeleteModal(async () => {
+        await service.deleteImageById(record.id!)
+        fetchDataFromServer()
+      })
+    }
+
+    // 分组id变化重新请求数据
+    watch(
+      () => classify.value,
+      () => fetchDataFromServer(),
+      { immediate: true }
+    )
+
+    setTimeout(() => {
+      scroll.y = (visitRef.value?.offsetHeight as number) - 102
+    }, 0)
+
+    return {
+      scroll,
+      loading,
+      visitRef,
+      dataSource,
+      totalElements,
+      ...pagination,
+      tableColumns,
+      useMoment,
+      onDeleteDataItem,
+      fetchDataFromServer,
+      handleImageEditorAfter,
+      handleImageEditorBefore
+    }
   }
 })
 </script>
@@ -89,39 +157,36 @@ export default defineComponent({
 <style lang="less" scoped>
 .image-list {
   height: 100%;
-  border: 1px solid #e3e3e3;
 
-  .preview-wrap {
-    display: inline-block;
-    margin: 0 8px 10px 16px;
-    text-align: center;
-  }
-
-  .preview-image {
-    width: 200px;
-    height: 135px;
-    border-radius: 8px;
-    object-fit: cover;
+  .picture-selet__content-item {
+    &.select {
+      background: #1d39c422;
+      border: 1px solid #1d39c4;
+      border-radius: 2px;
+    }
   }
 
   &-footer {
-    padding: 16px;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 50px;
   }
 }
 
-.input-file {
-  display: none;
+::v-deep(.preview-image) {
+  width: 100px;
+  height: 50px;
+  object-fit: cover;
 }
 
-.upload-button {
-  height: 32px;
+.input-name {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
-}
-
-@media screen and (max-width: 1230px) {
-  .operation-content {
-    display: none;
-  }
+  background: transparent;
+  border-width: 0;
+  outline: none;
 }
 </style>

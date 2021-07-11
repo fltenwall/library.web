@@ -1,53 +1,49 @@
-import WebUploader from '/@/utils/webUploader'
-import service from '/@/api/basis-manage/material-manage/image-manage'
+import type { TableColumn } from '/@/lib/props/TableList'
 
-export function imageUploader(): (files: File[], id: string) => Promise<void> {
-  const webUploader = new WebUploader()
-
-  function sendRequest(list: FormData[]) {
-    return new Promise((resolve) => {
-      let idx = 0
-      let max = 5
-      let counter = 0
-      const total = list.length
-      const start = () => {
-        // 有请求，有通道
-        while (idx < total && max > 0) {
-          max--
-          console.log(idx)
-          service.saveImageNewItem(list[idx++]).then(() => {
-            max++
-            counter++
-            if (counter === total) {
-              resolve('')
-            } else {
-              start()
-            }
-          })
-        }
-      }
-      start()
-    })
+export const tableColumns: TableColumn[] = [
+  {
+    title: '名称',
+    dataIndex: 'name',
+    ellipsis: true,
+    slots: { customRender: 'name' }
+  },
+  {
+    title: '日期',
+    dataIndex: 'updateTime',
+    align: 'center',
+    ellipsis: true,
+    width: 200,
+    slots: { customRender: 'updateTime' }
+  },
+  {
+    title: '类型',
+    dataIndex: 'type',
+    align: 'center',
+    ellipsis: true,
+    width: 132,
+    slots: { customRender: 'type' }
+  },
+  {
+    title: '大小',
+    dataIndex: 'size',
+    align: 'center',
+    ellipsis: true,
+    width: 132,
+    slots: { customRender: 'size' }
+  },
+  {
+    title: '图片',
+    dataIndex: 'image',
+    align: 'center',
+    width: 132,
+    slots: { customRender: 'image' }
+  },
+  {
+    title: '操作',
+    align: 'center',
+    width: 100,
+    ellipsis: true,
+    dataIndex: 'operation',
+    slots: { customRender: 'operation' }
   }
-
-  return async function (files: File[], classifyId: string) {
-    const currents = await webUploader.sendUploadContent(files)
-    // 校验文件
-    const [current] = await webUploader.uploadFileBefore(currents)
-
-    if (!current) return
-
-    const list = []
-
-    for (const { chunk, hash } of current.chunkList) {
-      const data = new FormData()
-      data.append('chunkHash', hash)
-      data.append('chunk', chunk)
-      list.push(data)
-    }
-
-    await sendRequest(list)
-    // 合并请求
-    await service.mergeChunks({ classifyId, hash: current.hash })
-  }
-}
+]
