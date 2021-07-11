@@ -142,15 +142,14 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .row {
-  word-break: break-all;
-  word-wrap: break-word;
-
   &-title,
   &-content {
-    display: inline-block;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 
   &-title {
+    flex-shrink: 0;
     width: 90px;
     font-size: #606266;
     font-weight: 700;
@@ -161,5 +160,9 @@ export default defineComponent({
       content: ':';
     }
   }
+}
+
+.ant-col {
+  display: flex;
 }
 </style>

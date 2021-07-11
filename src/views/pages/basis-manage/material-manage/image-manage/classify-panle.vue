@@ -189,7 +189,8 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     padding: 13px 20px;
-    color: rgba(0, 0, 0, 0.45);
+    font-weight: bold;
+    color: #000000d9;
     border: 1px solid #f0f0f0;
     border-radius: 2px 2px 0 0;
   }

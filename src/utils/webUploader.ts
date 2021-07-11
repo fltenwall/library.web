@@ -66,7 +66,7 @@ export default class WebUploader {
     // 遍历文件将文件进行切割
     for (const file of files) {
       // 切割文件
-      const fileChunk = this.createFileChunk(file)
+      const fileChunk = this.createFileChunk(file, this._configs.chunkSize)
       // 文件生成唯一值
       const hash = await this.calculateHashSample(fileChunk)
       // 上传文件配置

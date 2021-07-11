@@ -90,6 +90,8 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: 9px 0 9px;
+    font-weight: bold;
+    color: #000000d9;
   }
 
   &-main {
