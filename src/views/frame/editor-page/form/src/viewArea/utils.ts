@@ -13,16 +13,16 @@ interface Store {
   value: any
 }
 
-type Place = Pick<PointInfo, 'x' | 'y' | 'width' | 'height' | 'uuid'>
+type Place = Required<Pick<PointInfo, 'x' | 'y' | 'width' | 'height' | 'uuid'>>
 
 interface Position {
-  pos: Required<Omit<Place, 'uuid'>>
+  layout: Place
 
-  scope: { x: number; y: number }
+  move: Place
 }
 
 interface LimitRules {
-  limitSize: (pos: { x?: number; y?: number }, uuid: string) => Required<Omit<Place, 'uuid'>>
+  limitSize: (pos: { x?: number; y?: number }, uuid: string) => Place
 
   limitPosition: (pos: { x: number; y: number }, uuid: string) => Position
 }
@@ -70,7 +70,7 @@ export function limitRules(): LimitRules {
     if (isNumber(pos.x)) {
       width = x + width + pos.x > CW ? CW - x : width + pos.x
     }
-    return { x, y, height, width }
+    return { x, y, height, width, uuid }
   }
 
   // 位置信息处理
@@ -79,11 +79,11 @@ export function limitRules(): LimitRules {
     const point = unref(pointData).find((el) => el.uuid === uuid)
     const width = point!.width!
     const height = point!.height!
-    const scope = { x: pos.x + (point?.x || 0), y: pos.y + (point?.y || 0), width, height }
-    const x = scope.x > CW - width! ? CW - width! : scope.x <= 0 ? 0 : scope.x
-    const y = scope.y > CH - height! ? CH - height! : scope.y <= 0 ? 0 : scope.y
+    const move = { x: pos.x + (point?.x || 0), y: pos.y + (point?.y || 0), width, height, uuid }
+    const x = move.x > CW - width! ? CW - width! : move.x <= 0 ? 0 : move.x
+    const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y
 
-    return { pos: { x, y, width, height }, scope }
+    return { layout: { x, y, width, height, uuid }, move }
   }
 
   return { limitSize, limitPosition }
@@ -107,24 +107,59 @@ export function viewResize(panelRef: Ref<HTMLElement | null>): void {
 }
 
 // 修改全部组件位置
-export function pointDataModify(point: Required<Place>): void {
+/**
+ * @param point 鼠标拖动位置
+ * @param pos 计算后放下位置
+ * @returns
+ */
+export function pointDataModify(point: Required<Place>, pos: Place): void {
+  // 差异
+  const diff = 3
+  // 表单样式配置
   const pageOptions = pointStore.getPageOptionsState
-  const pointData = pointStore.getPointDataState
+  // 组件
+  const pointData = computed(() => pointStore.getPointDataState)
   // 弹性布局
   if (pageOptions.layoutType !== 2) return
 
-  for (const el of pointData) {
-    const { x, y } = usePointPos(el.uuid === point.uuid ? point : el, el.uuid, point.uuid)
+  for (const el of unref(pointData)) {
+    // 相等跳出
+    if (el.uuid === point.uuid) continue
+    const lo = Math.max(point.x, el.x)
+    const hi = Math.min(point.x + point.width, el.x + el.width)
+    // 求区间交际
+    if (lo > hi) continue
+    // 判断 拖动 point 再当前 el 上面
+    // if (point.y +)
 
-    if (el.uuid !== point.uuid) {
-      const uuid = el.uuid
-      pointStore.commitUpdatePointData({ uuid, key: 'x', value: x as never })
-      pointStore.commitUpdatePointData({ uuid, key: 'y', value: y as never })
-      pointStore.commitUpdatePointStyle({
-        uuid,
-        key: 'transform',
-        value: `translate(${el.x}px,${el.y}px)`
-      })
+    if (point.y <= el.y + diff && point.y >= el.y - diff) {
+      const y = pos.y!
+      // 更新 el 位置
+      updatePointStyle(el.x, y, el.uuid)
+      // point 顶部 el 底部 表示向上移动
+      pos.y = y + el.height
+      // 更新点位置
+      console.log(point.x, el.y, point.uuid)
     }
+
+    // updatePointStyle(point.x, el.y, point.uuid)
+
+    // if (el.uuid !== point.uuid) {
+    //   const place = usePointPos(el, el.uuid, point.uuid)
+    //   updatePointStyle(place.x, place.y, el.uuid)
+    // }
   }
+  // for (const el of unref(pointData)) {
+  //   // 相等跳出
+  //   if (el.uuid === point.uuid) continue
+  //   const place = usePointPos(el, el.uuid)
+  //   updatePointStyle(place.x, place.y, el.uuid)
+  // }
+}
+
+// 样式更新
+function updatePointStyle(x: number, y: number, uuid: string): void {
+  pointStore.commitUpdatePointData({ uuid, key: 'x', value: x as never })
+  pointStore.commitUpdatePointData({ uuid, key: 'y', value: y as never })
+  pointStore.commitUpdatePointStyle({ uuid, key: 'transform', value: `translate(${x}px,${y}px)` })
 }
