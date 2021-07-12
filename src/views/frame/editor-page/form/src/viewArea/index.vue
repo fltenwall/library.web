@@ -34,7 +34,7 @@
         <!-- 标线 -->
         <mark-line
           :uuid="dataItem.uuid"
-          :move="dataItem.scope"
+          :move="dataItem.pos.move"
           :is-move="dataItem.state === 'move'"
           @on-suck="handlePointSuck"
         />
@@ -44,9 +44,9 @@
           v-show="dataItem.state === 'move'"
           class="resize-item"
           :style="{
-            width: `${dataItem.pos?.width}px`,
-            height: `${dataItem.pos?.height}px`,
-            transform: `translate(${dataItem.pos?.x}px,${dataItem.pos?.y}px)`
+            width: `${dataItem.pos.layout?.width}px`,
+            height: `${dataItem.pos.layout?.height}px`,
+            transform: `translate(${dataItem.pos.layout?.x}px,${dataItem.pos.layout?.y}px)`
           }"
         />
       </div>
@@ -79,10 +79,13 @@ interface DataItem {
   state?: 'start' | 'end' | 'move'
   // 唯一值
   uuid?: string
-  // 计算后放下位置
-  pos?: Position
-  // 鼠标拖动位置
-  scope?: Position
+  // 位置
+  pos: {
+    // 布局位置
+    layout?: Required<Position>
+    // 移动位置
+    move?: Required<Position>
+  }
 }
 
 interface Move {
@@ -111,7 +114,7 @@ export default defineComponent({
       get: () => pointStore.getPointUUIDState
     })
     // 当前状态
-    const dataItem = reactive<DataItem>({})
+    const dataItem = reactive<DataItem>({ pos: {} })
     // ref
     const panelRef = ref<HTMLElement | null>(null)
 
@@ -136,37 +139,36 @@ export default defineComponent({
     function handleMove({ uuid, x, y, type }: Move) {
       const mapState = {
         mouse: () => {
-          const { pos, scope } = limit.limitPosition({ x, y }, uuid)
-          const place = usePointPos(pos as Required<Position>, uuid)
+          // pos 计算位置
+          const pos = limit.limitPosition({ x, y }, uuid)
           // 记录位置
-          dataItem.pos = { ...pos, ...place }
-          dataItem.scope = scope
+          dataItem.pos = pos
           // 更新数据
-          pointDataModify({ ...pos, ...place, uuid })
+          // pointDataModify({ ...pos, ...scope, uuid }, dataItem.layoutPos)
           // 设置样式
-          setPointTransform({ uuid, x: scope.x!, y: scope.y! })
+          setPointTransform({ uuid, x: pos.move.x, y: pos.move.y })
         },
         ew: () => {
-          const pos = limit.limitSize({ x }, uuid)
+          const layout = limit.limitSize({ x }, uuid)
           // 记录位置
-          dataItem.pos = pos
+          dataItem.pos.layout = layout
           // 设置样式
-          setPointStyle({ uuid, key: 'width', value: `${pos.width}px` })
+          setPointStyle({ uuid, key: 'width', value: `${layout.width}px` })
         },
         ns: () => {
-          const pos = limit.limitSize({ y }, uuid)
+          const layout = limit.limitSize({ y }, uuid)
           // 记录位置
-          dataItem.pos = pos
+          dataItem.pos.layout = layout
           // 设置样式
-          setPointStyle({ uuid, key: 'height', value: `${pos.height}px` })
+          setPointStyle({ uuid, key: 'height', value: `${layout.height}px` })
         },
         se: () => {
-          const pos = limit.limitSize({ y, x }, uuid)
+          const layout = limit.limitSize({ y, x }, uuid)
           // 记录位置
-          dataItem.pos = pos
+          dataItem.pos.layout = layout
           // 设置样式
-          setPointStyle({ uuid, key: 'width', value: `${pos.width}px` })
-          setPointStyle({ uuid, key: 'height', value: `${pos.height}px` })
+          setPointStyle({ uuid, key: 'width', value: `${layout.width}px` })
+          setPointStyle({ uuid, key: 'height', value: `${layout.height}px` })
         }
       }
       mapState[type]()
@@ -184,10 +186,10 @@ export default defineComponent({
       const mapState = {
         mouse: () => {
           // 更新数据
-          handleStore('u', { uuid, key: 'x', value: dataItem.pos?.x })
-          handleStore('u', { uuid, key: 'y', value: dataItem.pos?.y })
+          handleStore('u', { uuid, key: 'x', value: dataItem.pos.layout?.x })
+          handleStore('u', { uuid, key: 'y', value: dataItem.pos.layout?.y })
           // 样式更新
-          setPointTransform({ uuid, x: dataItem.pos!.x!, y: dataItem.pos!.y! })
+          setPointTransform({ uuid, x: dataItem.pos.layout!.x, y: dataItem.pos.layout!.y })
         },
         ew: () => {
           const { width } = limit.limitSize({ x }, uuid)
