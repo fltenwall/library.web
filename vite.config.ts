@@ -4,6 +4,7 @@ import { loadEnv } from 'vite'
 import { wrapperEnv } from './build/utils'
 import { createProxy } from './build/config/vite/proxy'
 import { createVitePlugins } from './build/config/plugin'
+import { generateModifyVars } from './build/generate/generateModifyVars'
 
 function pathResolve(dir: string) {
   return resolve(__dirname, '.', dir)
@@ -32,7 +33,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     server: {
-      // Listening on all local IPs
+      // 监听地址
       host: true,
       /**
        * 端口号
@@ -51,6 +52,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     build: {
+      target: 'es2015',
       // terser options
       terserOptions: {
         compress: {
@@ -75,13 +77,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: {
-            'primary-color': '#0960bd',
-            'primary-hover-color': '#2a7dc9',
-            'tree-title-height': '35px',
-            'table-header-bg': '#ffffff',
-            'drawer-body-padding': '24px 0'
-          },
+          modifyVars: generateModifyVars(),
           javascriptEnabled: true
         }
       }
