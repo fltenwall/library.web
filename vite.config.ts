@@ -32,6 +32,8 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     server: {
+      // Listening on all local IPs
+      host: true,
       /**
        * 端口号
        * @default 3000

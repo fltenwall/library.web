@@ -2,17 +2,13 @@
   <div class="new-user-wrap">
     <div class="new-user-header">
       <div>
-        <div class="new-user-header-title">
-          新增用户
-        </div>
+        <div class="new-user-header-title">新增用户</div>
         <div class="new-user-header-content">
           {{ dataItem.newCount }}
         </div>
       </div>
       <div>
-        <a-tag color="#52c41a" class="index-no-margin">
-          月
-        </a-tag>
+        <a-tag color="#52c41a" class="index-no-margin"> 月 </a-tag>
       </div>
     </div>
     <div class="new-user-main index-middle" />

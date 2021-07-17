@@ -1,30 +1,42 @@
 <template>
-  <a-modal v-model:visible="visible" :width="400" :footer="null" :mask-closable="false" :closable="false">
+  <a-modal
+    v-model:visible="visible"
+    :width="400"
+    :footer="null"
+    :mask-closable="false"
+    :closable="false"
+  >
     <div class="header">
       {{ title }}
     </div>
     <a-form layout="vertical">
       <a-form-item v-bind="validateInfos.password">
-        <a-input-password v-model:value="dataItem.password" placeholder="输入密码" :visibility-toggle="false" />
+        <a-input-password
+          v-model:value="dataItem.password"
+          placeholder="输入密码"
+          :visibility-toggle="false"
+        />
       </a-form-item>
       <a-form-item v-bind="validateInfos.repeat">
-        <a-input-password v-model:value="dataItem.repeat" placeholder="确认密码" :visibility-toggle="false" />
+        <a-input-password
+          v-model:value="dataItem.repeat"
+          placeholder="确认密码"
+          :visibility-toggle="false"
+        />
       </a-form-item>
     </a-form>
     <div class="footer">
-      <a-button @click="onCancel">
-        取消
-      </a-button>
-      <a-button type="primary" class="ml-4" :loading="loading" @click="onConfirm">
-        确定
-      </a-button>
+      <a-button @click="onCancel"> 取消 </a-button>
+      <a-button type="primary" class="ml-4" :loading="loading" @click="onConfirm"> 确定 </a-button>
     </div>
   </a-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from 'vue'
-import { useForm } from '@ant-design-vue/use'
+import { Form } from 'ant-design-vue'
+
+const useForm = Form.useForm
 
 export default defineComponent({
   props: {

@@ -20,7 +20,10 @@ export default defineComponent({
 
     return () => (
       <div class={['scrollbar-bar', 'is-' + bar.value.key]}>
-        <div class="scrollbar-thumb" style={renderThumbStyle({ move: props.move, size: props.size, bar: bar.value })} />
+        <div
+          class="scrollbar-thumb"
+          style={renderThumbStyle({ move: props.move, size: props.size, bar: bar.value })}
+        />
       </div>
     )
   }

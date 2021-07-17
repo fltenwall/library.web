@@ -7,7 +7,7 @@ import { checkCacheData, setCacheData } from './methods/cacheData'
 import { checkDataRouter, QueryRoute } from './methods/dataRouter'
 import { createStorage } from '/@/utils/storage/'
 import { PageMode } from '/@/utils/helper/breadcrumb'
-import { useForm } from '@ant-design-vue/use'
+import { Form } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
 import { assign, cloneDeep, isEqual } from 'lodash-es'
 import { difference } from '/@/utils/difference'
@@ -15,6 +15,8 @@ import useToast from '/@/components/Toast'
 
 import './index.less'
 import { isUnDef } from '/@/utils/is'
+
+const useForm = Form.useForm
 
 interface DataPageMix {
   // 页面底部方法
@@ -74,7 +76,13 @@ interface PageInfo {
 }
 
 // 页面为新建模式  初始化
-function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: CreateStorage, cacheData: T) {
+function newModeInit<T>(
+  dataItem: T,
+  mode: Ref<number>,
+  name: string,
+  storage: CreateStorage,
+  cacheData: T
+) {
   // 页面刷新前处理
   function updateHandler() {
     if (mode.value === PageMode.new && !isEqual(dataItem, cacheData)) {
@@ -111,7 +119,9 @@ export function dataItemInit<T>(dataItem: T, rules: FromRules) {
   })
 }
 
-export function dataPageMix<T extends { id?: number }>(parameter: DataPageMixParameter<T>): DataPageMix {
+export function dataPageMix<T extends { id?: number }>(
+  parameter: DataPageMixParameter<T>
+): DataPageMix {
   // 参数解构
   const { dataItem, rules, onServerMethods } = parameter
 

@@ -152,7 +152,9 @@ export default defineComponent({
       return (
         <Dropdown>
           {{
-            default: () => <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />,
+            default: () => (
+              <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />
+            ),
             overlay: () => <Menu onClick={handelMenuClick}>{() => renderMenu()}</Menu>
           }}
         </Dropdown>

@@ -1,5 +1,11 @@
 <template>
-  <a-modal title="新增" :mask-closable="false" :confirm-loading="confirmLoading" @ok="onConfirm" @cancel="onCentel">
+  <a-modal
+    title="新增"
+    :mask-closable="false"
+    :confirm-loading="confirmLoading"
+    @ok="onConfirm"
+    @cancel="onCentel"
+  >
     <a-form :layout="'vertical'">
       <a-form-item label="权限项名称" v-bind="validateInfos.name">
         <a-input v-model:value="dataItem.name" />
@@ -22,12 +28,13 @@
 </template>
 
 <script lang="ts">
-import { message } from 'ant-design-vue'
+import { message, Form } from 'ant-design-vue'
 import { defineComponent, reactive, ref } from 'vue'
-import { useForm } from '@ant-design-vue/use'
 import { formRules, DataItem } from './module-add-modal'
 import service, { ModuleManage } from '/@/api/system-manage/module-manage'
 import PinYin from 'word-pinyin'
+
+const useForm = Form.useForm
 
 export default defineComponent({
   props: {

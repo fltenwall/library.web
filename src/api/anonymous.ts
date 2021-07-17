@@ -4,7 +4,9 @@ import request from '/@/lib/http/axios/'
 
 export default class Service {
   // 向服务查询数据并分页返回结果 无须权限
-  static fecthProblemByAny(query?: Partial<PagerQueryData>): Promise<PagerResponseData<ProblemManage>> {
+  static fecthProblemByAny(
+    query?: Partial<PagerQueryData>
+  ): Promise<PagerResponseData<ProblemManage>> {
     return request<PagerResponseData<ProblemManage>>({
       url: '/api/anonymous/problem',
       method: 'get',

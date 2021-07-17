@@ -3,7 +3,13 @@ import { getRouteModule } from '/@/utils/helper/route'
 import { PageEnum } from '/@/enums/pageEnum'
 
 import { DEFAULT_LAYOUT_COMPONENT } from '../constant'
-import { OverviewPage, NoFountPage, IndexPage, Forbidden, AnalysisPage } from './default/indexRoutes'
+import {
+  OverviewPage,
+  NoFountPage,
+  IndexPage,
+  Forbidden,
+  AnalysisPage
+} from './default/indexRoutes'
 import { FrameRouters } from './default/frameRouters'
 
 // 路由
