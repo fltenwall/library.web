@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { useForm } from '@ant-design-vue/use'
+import { Form } from 'ant-design-vue'
 import { assign } from 'lodash-es'
 import { defineComponent, PropType, reactive, ref, watch } from 'vue'
 import { selectOption, dictDetailRules } from './data-page'
@@ -35,6 +35,8 @@ import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail
 import { isDef } from '/@/utils/is'
 import { message } from 'ant-design-vue'
 import { resetDataItem } from '/@/hooks/web/useForm'
+
+const useForm = Form.useForm
 
 export default defineComponent({
   props: {

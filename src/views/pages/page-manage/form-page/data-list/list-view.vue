@@ -7,9 +7,7 @@
     @onRefresh="onRefresh"
   >
     <template #header-left>
-      <a-button type="primary" @click="onNewDataItem">
-        新增
-      </a-button>
+      <a-button type="primary" @click="onNewDataItem"> 新增 </a-button>
     </template>
 
     <template #operation="{ record }">

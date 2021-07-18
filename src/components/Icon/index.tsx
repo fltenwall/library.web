@@ -55,6 +55,8 @@ export default defineComponent({
       update()
     })
 
-    return () => <div ref={elRef} class={[attrs.class, 'app-iconify']} style={unref(wrapStyleRef)} />
+    return () => (
+      <div ref={elRef} class={[attrs.class, 'app-iconify']} style={unref(wrapStyleRef)} />
+    )
   }
 })

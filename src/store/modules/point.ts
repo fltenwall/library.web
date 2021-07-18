@@ -78,7 +78,7 @@ export default class Point extends VuexModule {
       this.pointStyleState[options.uuid] = {}
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.pointStyleState[options.uuid] as any)[options.key] = options.value
+    ;(this.pointStyleState[options.uuid] as any)[options.key] = options.value
   }
 
   // 更新选中参数

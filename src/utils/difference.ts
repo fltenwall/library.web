@@ -14,7 +14,7 @@ export function difference<T>(base: T, other: T): T {
     // 遍历引用类型
     for (const key in value) {
       if (value.hasOwnProperty(key)) {
-        (result as any)[key] = deepClone((value as any)[key])
+        ;(result as any)[key] = deepClone((value as any)[key])
       }
     }
 
@@ -28,7 +28,8 @@ export function difference<T>(base: T, other: T): T {
   // 深检测对象差异
   const deepValid = (target: any, source: any) => {
     // 计算数组或者对象长度
-    const lengthValid = (value: any) => (Array.isArray(value) ? value.length : Reflect.ownKeys(value).length)
+    const lengthValid = (value: any) =>
+      Array.isArray(value) ? value.length : Reflect.ownKeys(value).length
 
     // 结果
     const result: { value?: unknown } = {}
@@ -64,10 +65,10 @@ export function difference<T>(base: T, other: T): T {
             if (typeof child.value === 'object') {
               // 判对象 或者数组 的长度, 长度为 0 不添加
               if (!!lengthValid(child)) {
-                (_result as any)[key] = child.value
+                ;(_result as any)[key] = child.value
               }
             } else {
-              (_result as any)[key] = child.value
+              ;(_result as any)[key] = child.value
             }
           }
         }

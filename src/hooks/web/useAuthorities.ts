@@ -6,11 +6,17 @@ import config from '/@/config/'
 
 // 判断是否有权限
 export function useAuthorities(val: string[] | Auth = [], mode?: Mode): boolean {
-  const auth: string[] = !val ? [] : isArray(val) ? (val as string[]) : (mode && (val as Auth)[mode]) || []
+  const auth: string[] = !val
+    ? []
+    : isArray(val)
+    ? (val as string[])
+    : (mode && (val as Auth)[mode]) || []
 
   const { authorities, superAdmin } = userStore.getUserInfoState!
 
-  return auth?.length && config.auth && !superAdmin ? auth.every((el) => authorities?.includes(el)) : true
+  return auth?.length && config.auth && !superAdmin
+    ? auth.every((el) => authorities?.includes(el))
+    : true
 }
 
 export function showByAuth(auth: string): boolean {

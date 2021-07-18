@@ -45,7 +45,9 @@ export default defineComponent({
         } else if (!findMenu.meta?.hideInMenu) {
           menuState.selectedKeys = [findMenu.name]
         } else {
-          const parentMenus = flatItems.filter((el) => menuState.openKeys?.includes(el.name)).reverse()
+          const parentMenus = flatItems
+            .filter((el) => menuState.openKeys?.includes(el.name))
+            .reverse()
           menuState.selectedKeys = [parentMenus.find((el) => !el.meta?.hideInMenu)?.name as string]
         }
       }
@@ -77,14 +79,18 @@ export default defineComponent({
         if (!menuHasChildren(menu)) {
           return (
             <Menu.Item key={name as string} title={index === 1 && !showTitle ? title : ''}>
-              {() => [<MenuContent icon={icon} level={index} title={title} showTitle={showTitle} />]}
+              {() => [
+                <MenuContent icon={icon} level={index} title={title} showTitle={showTitle} />
+              ]}
             </Menu.Item>
           )
         }
         return (
           <Menu.SubMenu key={name as string} class="layout-sider-menu-sub">
             {{
-              title: () => [<MenuContent icon={icon} level={index} title={title} showTitle={showTitle} />],
+              title: () => [
+                <MenuContent icon={icon} level={index} title={title} showTitle={showTitle} />
+              ],
               default: () => renderMenuItem(menu.children, index + 1)
             }}
           </Menu.SubMenu>
@@ -147,7 +153,13 @@ export default defineComponent({
                   {() => (
                     <>
                       <img src={config.logo} class="layout-sider-header-logo" />
-                      <div class={['layout-sider-header-title', getCollapsedState && 'index-hidden', 'index-theme']}>
+                      <div
+                        class={[
+                          'layout-sider-header-title',
+                          getCollapsedState && 'index-hidden',
+                          'index-theme'
+                        ]}
+                      >
                         {config.title}
                       </div>
                     </>

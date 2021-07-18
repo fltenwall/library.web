@@ -1,7 +1,9 @@
 import type { AppRouteModule, AppRouteRecordRaw } from '/@/router/types'
 
 export function routerHasChildren(routerItem: AppRouteRecordRaw): boolean {
-  return Reflect.has(routerItem, 'children') && !!routerItem.children && routerItem.children.length > 0
+  return (
+    Reflect.has(routerItem, 'children') && !!routerItem.children && routerItem.children.length > 0
+  )
 }
 
 /**

@@ -41,7 +41,7 @@ export function useTableEdit<T extends Record>({ onSaveData }: Options): UseTabl
   let cacheRecord = {}
 
   function handleEditChange(value: string, record: T, column: string): void {
-    (record as any)[column] = value
+    ;(record as any)[column] = value
   }
 
   function handleClickEdit(record: T, index: number): void {

@@ -15,7 +15,9 @@ export default defineComponent({
       <header class="index-space-between h-12 pr-12 pl-4">
         <HeaderLeft>{() => slots.left && slots.left()}</HeaderLeft>
         {slots.center && <HeaderCenter>{() => slots.center && slots.center()}</HeaderCenter>}
-        <HeaderRight isShowUserInfo={props.isShowUserInfo}>{() => slots.right && slots.right()}</HeaderRight>
+        <HeaderRight isShowUserInfo={props.isShowUserInfo}>
+          {() => slots.right && slots.right()}
+        </HeaderRight>
       </header>
     )
   }

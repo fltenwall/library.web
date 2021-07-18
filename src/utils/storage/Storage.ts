@@ -33,7 +33,10 @@ export const createStorage = ({ storage = sessionStorage } = {}): CreateStorage 
       // 有数据再进行缓存
       const result = stringify(value)
       if (isString(result)) {
-        const stringData = stringify({ value, expire: new Date().getTime() + expire * 1000 }) as string
+        const stringData = stringify({
+          value,
+          expire: new Date().getTime() + expire * 1000
+        }) as string
         const encrypted = this.encryption.encrypt(stringData)
         this.storage.setItem(this.getKey(key), encrypted)
       }

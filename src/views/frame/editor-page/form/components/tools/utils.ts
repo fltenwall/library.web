@@ -91,7 +91,7 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
     })
 
     Reflect.ownKeys(data!).forEach((key) => {
-      (dataItem as any)[key] = data![key as string]
+      ;(dataItem as any)[key] = data![key as string]
     })
   }
 }
