@@ -1,5 +1,5 @@
-import type { ColumnProps } from 'ant-design-vue/lib/table/interface'
-import type { PropType } from 'vue'
+import type { ColumnProps } from 'ant-design-vue/lib/table/interface';
+import type { PropType } from 'vue';
 
 export const tableProps = {
   columns: {
@@ -30,7 +30,7 @@ export const tableProps = {
     type: [Boolean, Object],
     default: false
   }
-}
+};
 
 export const tableListProps = {
   ...tableProps,
@@ -46,22 +46,22 @@ export const tableListProps = {
     type: String,
     default: ''
   }
-}
+};
 
 export interface TableColumn extends ColumnProps {
-  dataIndex: string
+  dataIndex: string;
 
   // slots?: Indexable;
 }
 
 export interface Options {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 export interface State {
-  indeterminate: boolean
-  checkAll: boolean
-  checkedList: string[]
-  defaultCheckList: string[]
+  indeterminate: boolean;
+  checkAll: boolean;
+  checkedList: string[];
+  defaultCheckList: string[];
 }

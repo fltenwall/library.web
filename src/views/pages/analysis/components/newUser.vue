@@ -20,33 +20,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import service, { NewUser } from '/@/api/analysis/newUser'
-import { message } from 'ant-design-vue'
-import moment from 'moment'
+import { defineComponent, ref } from 'vue';
+import service, { NewUser } from '/@/api/analysis/newUser';
+import { message } from 'ant-design-vue';
+import moment from 'moment';
 
 export default defineComponent({
   setup() {
-    const dataItem = ref<NewUser>({})
+    const dataItem = ref<NewUser>({});
 
     // 加载数据
 
     async function loadData() {
       try {
-        const startTime = moment().format('YYYY-MM-01')
-        const endTime = moment().add(1, 'days').format('YYYY-MM-DD')
-        const { data } = await service.fetchUserCount({ startTime, endTime })
-        dataItem.value = data
+        const startTime = moment().format('YYYY-MM-01');
+        const endTime = moment().add(1, 'days').format('YYYY-MM-DD');
+        const { data } = await service.fetchUserCount({ startTime, endTime });
+        dataItem.value = data;
       } catch (err) {
-        message.error(`数据获取失败: ${err.msg}`)
+        message.error(`数据获取失败: ${err.msg}`);
       }
     }
 
-    loadData()
+    loadData();
 
-    return { dataItem }
+    return { dataItem };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

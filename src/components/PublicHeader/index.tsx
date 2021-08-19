@@ -1,7 +1,7 @@
-import { defineComponent } from 'vue'
-import HeaderLeft from './HeaderLeft.vue'
-import HeaderRight from './HeaderRight.vue'
-import HeaderCenter from './HeaderCenter.vue'
+import { defineComponent } from 'vue';
+import HeaderLeft from './HeaderLeft.vue';
+import HeaderRight from './HeaderRight.vue';
+import HeaderCenter from './HeaderCenter.vue';
 
 export default defineComponent({
   props: {
@@ -19,6 +19,6 @@ export default defineComponent({
           {() => slots.right && slots.right()}
         </HeaderRight>
       </header>
-    )
+    );
   }
-})
+});

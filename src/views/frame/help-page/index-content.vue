@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Preview from '/@/components/PublicEditor/src/Preview'
+import { defineComponent } from 'vue';
+import Preview from '/@/components/PublicEditor/src/Preview';
 export default defineComponent({
   components: { Preview },
   props: {
@@ -13,7 +13,7 @@ export default defineComponent({
       default: ''
     }
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

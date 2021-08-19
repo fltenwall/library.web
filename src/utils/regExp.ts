@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { isString } from './is'
+import { isString } from './is';
 
 export const rules = {
   digital: /^\d*$/,
@@ -13,16 +13,16 @@ export const rules = {
   email: /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/,
 
   username: /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/
-}
+};
 
 interface Parameter {
-  data: string
-  rule: 'telephone' | 'dataPage' | 'digital'
+  data: string;
+  rule: 'telephone' | 'dataPage' | 'digital';
 }
 
 // 检查数据
 export function validData({ data, rule }: Parameter): boolean {
-  return rules[rule].test(data)
+  return rules[rule].test(data);
 }
 
 // 系统模块 path -> 模块
@@ -44,9 +44,9 @@ export function queryModule(path: string): string {
     preview: '预览',
     'material/image/classify': '素材管理-图片分组',
     'material/image': '素材管理-图片'
-  }
-  const mapKey = Reflect.ownKeys(mapState)
-  const key = mapKey.find((value: string) => new RegExp(value).test(path))
+  };
+  const mapKey = Reflect.ownKeys(mapState);
+  const key = mapKey.find((value: string) => new RegExp(value).test(path));
 
-  return isString(key) ? (mapState as any)[key] : '未知模块'
+  return isString(key) ? (mapState as any)[key] : '未知模块';
 }

@@ -14,9 +14,7 @@
           />
         </a-form-item>
         <a-form-item>
-          <a-button type="primary">
-            保存
-          </a-button>
+          <a-button type="primary"> 保存 </a-button>
         </a-form-item>
       </a-form>
     </a-col>
@@ -24,18 +22,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import { userStore } from '/@/store/modules/user'
-import { UserInfo } from '/@/api/security'
-import { cloneDeep } from 'lodash-es'
+import { defineComponent, reactive } from 'vue';
+import { userStore } from '/@/store/modules/user';
+import { UserInfo } from '/@/api/security';
+import { cloneDeep } from 'lodash-es';
 
 export default defineComponent({
   setup() {
-    const dataItem = reactive<UserInfo>(cloneDeep(userStore.getUserInfoState!))
+    const dataItem = reactive<UserInfo>(cloneDeep(userStore.getUserInfoState!));
 
-    return { dataItem }
+    return { dataItem };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

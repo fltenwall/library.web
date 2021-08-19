@@ -1,11 +1,11 @@
-import type { Result } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { Result } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 export interface Visits {
   // 总数
-  count?: number
+  count?: number;
   // 当日访问量
-  visit?: { time: string; count: number }[]
+  visit?: { time: string; count: number }[];
 }
 
 export default class Service {
@@ -15,6 +15,6 @@ export default class Service {
       url: '/epi/record/user/visit',
       method: 'get',
       params: query
-    })
+    });
   }
 }

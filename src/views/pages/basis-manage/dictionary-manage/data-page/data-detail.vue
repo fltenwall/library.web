@@ -10,7 +10,10 @@
         <a-col :xs="24" :lg="8" class="pl-4 pr-4" />
         <a-col :xs="24" :lg="8" class="pl-4 pr-4">
           <div class="index-button-right">
-            <a-button :type="mode !== MixinPageMode.edit ? 'primary' : 'default'" @click="onSearchData">
+            <a-button
+              :type="mode !== MixinPageMode.edit ? 'primary' : 'default'"
+              @click="onSearchData"
+            >
               查询
             </a-button>
             <a-button v-if="mode === MixinPageMode.edit" type="primary" @click="onNewDataItem">
@@ -52,22 +55,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, ref } from 'vue'
-import { dataTypeColumn } from './data-page'
-import { PageMode } from '/@/utils/helper/breadcrumb'
-import { usePagination } from '/@/hooks/web/usePagination'
-import dataDetailModal from './data-detail-modal.vue'
-import { message } from 'ant-design-vue'
-import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
-import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail'
+import { defineComponent, reactive, PropType, ref } from 'vue';
+import { dataTypeColumn } from './data-page';
+import { PageMode } from '/@/utils/helper/breadcrumb';
+import { usePagination } from '/@/hooks/web/usePagination';
+import dataDetailModal from './data-detail-modal.vue';
+import { message } from 'ant-design-vue';
+import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 
 interface Modal {
   // 标题
-  title?: string
+  title?: string;
   // 隐藏/显示
-  visible: boolean
+  visible: boolean;
   // 数据集
-  data: DictionaryDetail
+  data: DictionaryDetail;
 }
 
 export default defineComponent({
@@ -85,70 +88,70 @@ export default defineComponent({
   },
   setup(props) {
     // 查询数据
-    const queryData = reactive({ type: props.dictType })
+    const queryData = reactive({ type: props.dictType });
 
     // 对话框
-    const modal = reactive<Modal>({ visible: false, data: {}, title: '' })
+    const modal = reactive<Modal>({ visible: false, data: {}, title: '' });
 
     // 全部数据
-    const dataSource = ref<DictionaryDetail[]>([])
+    const dataSource = ref<DictionaryDetail[]>([]);
 
     // 加载
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
 
     // 总页数
-    const totalElements = ref<number>(0)
+    const totalElements = ref<number>(0);
 
     // 页面发生变换
-    const pagination = usePagination()
+    const pagination = usePagination();
 
     // 页面发生变化
-    const onPageChange = () => fetchDataFromServer()
+    const onPageChange = () => fetchDataFromServer();
 
     // 搜索数据
-    const onSearchData = () => fetchDataFromServer()
+    const onSearchData = () => fetchDataFromServer();
 
     // 对话框数据修改成功
-    const onModalSuccess = () => fetchDataFromServer()
+    const onModalSuccess = () => fetchDataFromServer();
 
     // 点击添加按钮
     const onNewDataItem = () => {
-      modal.title = '添加字典数据'
-      modal.visible = true
-      modal.data = { type: props.dictType }
-    }
+      modal.title = '添加字典数据';
+      modal.visible = true;
+      modal.data = { type: props.dictType };
+    };
 
     // 编辑数据
     const onEditDataItem = (record: DictionaryDetail) => {
-      modal.title = '修改字典数据'
-      modal.visible = true
-      modal.data = record
-    }
+      modal.title = '修改字典数据';
+      modal.visible = true;
+      modal.data = record;
+    };
 
     // 数据删除
     async function onDeleteDataItem({ id }: DictionaryDetail) {
       useDeleteModal(async () => {
-        await service.deleteItemById(id!)
-        fetchDataFromServer()
-      })
+        await service.deleteItemById(id!);
+        fetchDataFromServer();
+      });
     }
 
     // 获取服务器数据
     async function fetchDataFromServer() {
       try {
-        loading.value = true
-        const { page, size } = pagination.getPagination()
-        const { data } = await service.fecthList({ page, size, sort: '', ...queryData })
-        dataSource.value = data.content
-        totalElements.value = data.totalElements
+        loading.value = true;
+        const { page, size } = pagination.getPagination();
+        const { data } = await service.fecthList({ page, size, sort: '', ...queryData });
+        dataSource.value = data.content;
+        totalElements.value = data.totalElements;
       } catch (err) {
-        message.error(`数据获取失败: ${err.msg}`)
+        message.error(`数据获取失败: ${err.msg}`);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
 
-    fetchDataFromServer()
+    fetchDataFromServer();
 
     return {
       modal,
@@ -164,9 +167,9 @@ export default defineComponent({
       onEditDataItem,
       onModalSuccess,
       onDeleteDataItem
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

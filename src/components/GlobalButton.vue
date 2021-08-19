@@ -1,12 +1,17 @@
 <template>
-  <button ref="button" class="globla-button" :class="{ 'index-disabled': disabled }" @click="handleClick($event)">
+  <button
+    ref="button"
+    class="globla-button"
+    :class="{ 'index-disabled': disabled }"
+    @click="handleClick($event)"
+  >
     <slot />
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { isNumber } from '/@/utils/is'
+import { defineComponent, ref } from 'vue';
+import { isNumber } from '/@/utils/is';
 
 export default defineComponent({
   props: {
@@ -21,39 +26,39 @@ export default defineComponent({
   },
   emits: ['on-click'],
   setup(props, { emit }) {
-    const button = ref<HTMLElement | null>(null)
-    const ripples: HTMLElement[] = []
+    const button = ref<HTMLElement | null>(null);
+    const ripples: HTMLElement[] = [];
 
     // 处理动画
     const handleAnimation = (x?: number, y?: number): HTMLElement => {
       // const x = event.offsetX
       // const y = event.offsetY
-      const span = document.createElement('span')
-      span.style.left = x ? `${x}px` : '50%'
-      span.style.top = y ? `${y}px` : '50%'
-      button.value!.appendChild(span)
-      return span
-    }
+      const span = document.createElement('span');
+      span.style.left = x ? `${x}px` : '50%';
+      span.style.top = y ? `${y}px` : '50%';
+      button.value!.appendChild(span);
+      return span;
+    };
     // 处理点击
     const handleClick = (event: MouseEvent) => {
-      if (props.disabled) return
-      emit('on-click', event)
-    }
+      if (props.disabled) return;
+      emit('on-click', event);
+    };
 
     const startAnimation = (x?: number, y?: number) => {
-      if (isNumber(props.size) && ripples.length >= props.size) return
-      const span = handleAnimation(x, y)
-      ripples.push(span)
-    }
+      if (isNumber(props.size) && ripples.length >= props.size) return;
+      const span = handleAnimation(x, y);
+      ripples.push(span);
+    };
 
     const stopAnimation = () => {
-      const span = ripples.shift()
-      span?.remove()
-    }
+      const span = ripples.shift();
+      span?.remove();
+    };
 
-    return { handleClick, button, startAnimation, stopAnimation }
+    return { handleClick, button, startAnimation, stopAnimation };
   }
-})
+});
 </script>
 
 <style lang="less">

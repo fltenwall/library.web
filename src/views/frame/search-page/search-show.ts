@@ -1,4 +1,4 @@
-import type { TableColumn } from '/@/lib/props/TableList'
+import type { TableColumn } from '/@/lib/props/TableList';
 
 export const holdInfoColumns: TableColumn[] = [
   {
@@ -46,4 +46,4 @@ export const holdInfoColumns: TableColumn[] = [
     ellipsis: true,
     slots: { customRender: 'operation' }
   }
-]
+];

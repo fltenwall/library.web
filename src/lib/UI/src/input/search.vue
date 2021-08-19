@@ -7,7 +7,7 @@
       'query-box-content': tipData.length && queryBoxFoucs
     }"
   >
-    <div class="ui-input-search" @click="handleSearchClick" :style="{ height: `${height}px` }">
+    <div class="ui-input-search" :style="{ height: `${height}px` }" @click="handleSearchClick">
       <SearchOutlined v-if="prefix" class="ui-input-prefix mr-4" />
       <input
         ref="inputInstance"
@@ -38,13 +38,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, unref, watch } from 'vue'
-import { CloseOutlined, ClockCircleOutlined } from '@ant-design/icons-vue'
-import { debounce } from 'lodash-es'
-import { rules } from '/@/utils/regExp'
+import { defineComponent, ref, toRefs, unref, watch } from 'vue';
+import { debounce } from 'lodash-es';
+import { rules } from '/@/utils/regExp';
 
 export default defineComponent({
-  components: { CloseOutlined, ClockCircleOutlined },
   props: {
     value: {
       type: String,
@@ -65,52 +63,52 @@ export default defineComponent({
   },
   emits: ['on-enter'],
   setup(props, { emit }) {
-    const { value: searchValue } = toRefs(props)
+    const { value: searchValue } = toRefs(props);
 
     // 输入内容
-    const inputValue = ref<string>('')
-    const originData = ref<string>('')
+    const inputValue = ref<string>('');
+    const originData = ref<string>('');
     // 按下方向键下标
-    const selectIndex = ref<number>(-1)
+    const selectIndex = ref<number>(-1);
     // 输入框焦点
-    const inputInstance = ref<HTMLElement | null>(null)
+    const inputInstance = ref<HTMLElement | null>(null);
     // 获取焦点显示阴影
-    const queryBoxFoucs = ref<boolean>(false)
+    const queryBoxFoucs = ref<boolean>(false);
     // 处理输入
-    const handleInput = debounce(fetchDataFromServer, 600)
+    const handleInput = debounce(fetchDataFromServer, 600);
     // 联想数据
-    const tipData = ref<string[]>([])
+    const tipData = ref<string[]>([]);
 
     // 获取焦点
     function handleFocus() {
-      queryBoxFoucs.value = true
+      queryBoxFoucs.value = true;
     }
     // 失去焦点
     function handleBlur() {
-      queryBoxFoucs.value = false
+      queryBoxFoucs.value = false;
     }
     // 处理搜索点击
     function handleSearchClick() {
-      inputInstance.value?.focus()
+      inputInstance.value?.focus();
     }
     // 处理按下enter
     function handleEnter() {
-      inputInstance.value?.blur()
-      queryBoxFoucs.value = false
-      emit('on-enter', unref(inputValue))
+      inputInstance.value?.blur();
+      queryBoxFoucs.value = false;
+      emit('on-enter', unref(inputValue));
     }
     // 处理点击
     function handleBoxClick(title: string) {
-      inputValue.value = title
-      originData.value = title
-      queryBoxFoucs.value = false
-      emit('on-enter', unref(inputValue))
+      inputValue.value = title;
+      originData.value = title;
+      queryBoxFoucs.value = false;
+      emit('on-enter', unref(inputValue));
     }
     // 从服务器获取数据
     async function fetchDataFromServer() {
       // try {
       // const query = queryData()
-      queryData()
+      queryData();
       //   if (!query.keyword) return
       //   const { data } = await service.fecthTipList(query)
       //   tipData.value = data
@@ -123,33 +121,33 @@ export default defineComponent({
 
     // 获取搜索数据
     function queryData() {
-      const keyword = unref(inputValue).replace(rules.whitespace, '').substr(0, 30)
-      return { keyword }
+      const keyword = unref(inputValue).replace(rules.whitespace, '').substr(0, 30);
+      return { keyword };
     }
 
     function handleUp() {
-      if (!unref(tipData).length) return
-      selectIndex.value -= 1
+      if (!unref(tipData).length) return;
+      selectIndex.value -= 1;
       if (unref(selectIndex) < -1) {
-        selectIndex.value = unref(tipData).length - 1
-        inputValue.value = unref(tipData)[unref(selectIndex)]
+        selectIndex.value = unref(tipData).length - 1;
+        inputValue.value = unref(tipData)[unref(selectIndex)];
       } else if (unref(selectIndex) === -1) {
-        inputValue.value = unref(originData)
+        inputValue.value = unref(originData);
       } else {
-        inputValue.value = unref(tipData)[unref(selectIndex)]
+        inputValue.value = unref(tipData)[unref(selectIndex)];
       }
     }
 
     function handleDown() {
-      if (!unref(tipData).length) return
-      selectIndex.value += 1
+      if (!unref(tipData).length) return;
+      selectIndex.value += 1;
       if (unref(selectIndex) > unref(tipData).length) {
-        selectIndex.value = 0
-        inputValue.value = unref(tipData)[0]
+        selectIndex.value = 0;
+        inputValue.value = unref(tipData)[0];
       } else if (unref(selectIndex) === unref(tipData).length) {
-        inputValue.value = unref(originData)
+        inputValue.value = unref(originData);
       } else {
-        inputValue.value = unref(tipData)[unref(selectIndex)]
+        inputValue.value = unref(tipData)[unref(selectIndex)];
       }
     }
 
@@ -157,7 +155,7 @@ export default defineComponent({
       () => searchValue.value,
       (value) => (inputValue.value = value),
       { immediate: true }
-    )
+    );
 
     return {
       tipData,
@@ -173,9 +171,9 @@ export default defineComponent({
       handleFocus,
       handleBoxClick,
       handleSearchClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less">

@@ -2,18 +2,12 @@
   <div v-title="'输入账号'" class="forget">
     <public-header class="forget-header" main-class="header-main" />
     <div class="forget-main pr-8 pl-8">
-      <div class="h p-4">
-        找回密码
-      </div>
+      <div class="h p-4">找回密码</div>
       <div class="m index-middle">
         <div class="m-edit">
           <div class="pl-5 mt-5 mb-4">
-            <div class="m-title mb-1">
-              输入{{ shortTitle }}账号
-            </div>
-            <div class="m-tip">
-              输入注册{{ shortTitle }}帐号的手机号或邮件地址
-            </div>
+            <div class="m-title mb-1">输入{{ shortTitle }}账号</div>
+            <div class="m-tip">输入注册{{ shortTitle }}帐号的手机号或邮件地址</div>
           </div>
           <GlobalInput
             class="input-account"
@@ -21,9 +15,7 @@
             placeholder="手机号/邮件地址/图书馆账号"
             :focus-highlight="false"
           />
-          <div class="button index-center-middle">
-            下一步
-          </div>
+          <div class="button index-center-middle">下一步</div>
         </div>
       </div>
     </div>
@@ -31,20 +23,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import publicHeader from '/@/views/frame/components/publicHeader'
-import config from '/@/config/'
+import { defineComponent } from 'vue';
+import publicHeader from '/@/views/frame/components/publicHeader';
+import config from '/@/config/';
 
 export default defineComponent({
   components: { publicHeader },
   setup() {
     // 短标题
-    const shortTitle = config.shortTitle
+    const shortTitle = config.shortTitle;
     return {
       shortTitle
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

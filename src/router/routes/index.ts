@@ -1,30 +1,30 @@
-import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types'
-import { getRouteModule } from '/@/utils/helper/route'
-import { PageEnum } from '/@/enums/pageEnum'
+import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
+import { getRouteModule } from '/@/utils/helper/route';
+import { PageEnum } from '/@/enums/pageEnum';
 
-import { DEFAULT_LAYOUT_COMPONENT } from '../constant'
+import { DEFAULT_LAYOUT_COMPONENT } from '../constant';
 import {
   OverviewPage,
   NoFountPage,
   IndexPage,
   Forbidden,
   AnalysisPage
-} from './default/indexRoutes'
-import { FrameRouters } from './default/frameRouters'
+} from './default/indexRoutes';
+import { FrameRouters } from './default/frameRouters';
 
 // 路由
-const modulesRouters = import.meta.globEager('./modules/**.ts')
+const modulesRouters = import.meta.globEager('./modules/**.ts');
 
-const routeModuleList: AppRouteModule[] = []
+const routeModuleList: AppRouteModule[] = [];
 
-Object.keys(modulesRouters).forEach((key) => routeModuleList.push(modulesRouters[key].default))
+Object.keys(modulesRouters).forEach((key) => routeModuleList.push(modulesRouters[key].default));
 
-const routeList = [OverviewPage, AnalysisPage, ...getRouteModule(routeModuleList)]
+const routeList = [OverviewPage, AnalysisPage, ...getRouteModule(routeModuleList)];
 
 // 获取菜单 树级
 export const getRouteList = (): AppRouteRecordRaw[] => {
-  return routeList
-}
+  return routeList;
+};
 
 // 主框架根路由
 export const RootRoute: AppRouteRecordRaw = {
@@ -36,8 +36,8 @@ export const RootRoute: AppRouteRecordRaw = {
     title: '首页'
   },
   children: routeList
-}
+};
 
-const indexRoute = [Forbidden, NoFountPage]
+const indexRoute = [Forbidden, NoFountPage];
 
-export const basicRoutes = [...FrameRouters, IndexPage, RootRoute, ...indexRoute]
+export const basicRoutes = [...FrameRouters, IndexPage, RootRoute, ...indexRoute];

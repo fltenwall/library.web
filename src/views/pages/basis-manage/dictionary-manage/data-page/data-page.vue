@@ -43,12 +43,8 @@
 
     <!-- 操作 -->
     <template #footer-block>
-      <a-button v-if="!readonly" @click="onRestPage">
-        重置
-      </a-button>
-      <a-button v-if="readonly" type="primary" @click="onEditPage">
-        编辑
-      </a-button>
+      <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
+      <a-button v-if="readonly" type="primary" @click="onEditPage"> 编辑 </a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
         保存
       </a-button>
@@ -57,47 +53,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import { dataPageMix } from '/@/lib/idata/data-page/'
-import { formRules, selectOption } from './data-page'
-import service, { DictionaryManage } from '/@/api/basis-manage/dictionary-manage'
-import { assign } from 'lodash-es'
-import dataDetail from './data-detail.vue'
+import { defineComponent, reactive, toRefs } from 'vue';
+import { dataPageMix } from '/@/lib/idata/data-page/';
+import { formRules, selectOption } from './data-page';
+import service, { DictionaryManage } from '/@/api/basis-manage/dictionary-manage';
+import { assign } from 'lodash-es';
+import dataDetail from './data-detail.vue';
 
 export default defineComponent({
   components: { dataDetail },
   setup() {
-    const dataItem = reactive<DictionaryManage>({ state: 1 })
-    const rules = reactive(formRules)
-    const onServerMethods = { onNewData, onSaveData, onLoadDataById }
-    const parameter = { rules, dataItem, onServerMethods }
-    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<DictionaryManage>(parameter)
-    const { mode, readonly } = toRefs(pageInfo)
+    const dataItem = reactive<DictionaryManage>({ state: 1 });
+    const rules = reactive(formRules);
+    const onServerMethods = { onNewData, onSaveData, onLoadDataById };
+    const parameter = { rules, dataItem, onServerMethods };
+    const { pageInfo, onDataMethods, validateInfos, loading } =
+      dataPageMix<DictionaryManage>(parameter);
+    const { mode, readonly } = toRefs(pageInfo);
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
-      const { data } = await service.getItemById(id)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.getItemById(id);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 保存数据
     async function onSaveData(id: number, contrast: DictionaryManage) {
-      const { data } = await service.updateItem(id, contrast)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.updateItem(id, contrast);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 新增数据
     async function onNewData() {
-      const { data } = await service.saveNewItem(dataItem)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.saveNewItem(dataItem);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 改变数据类型
     function changeDataType() {
-      dataItem.state = dataItem.state ? 1 : 0
+      dataItem.state = dataItem.state ? 1 : 0;
     }
 
     return {
@@ -108,9 +105,9 @@ export default defineComponent({
       selectOption,
       validateInfos,
       ...onDataMethods
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

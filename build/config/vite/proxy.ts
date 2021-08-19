@@ -1,11 +1,10 @@
-import type { ServerOptions } from 'http-proxy';
-
+import type { ProxyOptions } from 'vite';
 
 type ProxyItem = [string, string];
 
 type ProxyList = ProxyItem[];
 
-type ProxyTargetList = Record<string, ServerOptions & { rewrite: (path: string) => string }>;
+type ProxyTargetList = Record<string, ProxyOptions & { rewrite: (path: string) => string }>;
 
 const httpsRE = /^https:\/\//;
 
@@ -18,8 +17,8 @@ export function createProxy(list: ProxyList = []) {
       target: target,
       changeOrigin: true,
       ws: true,
-      rewrite: (path) => path,
-      ...(isHttps ? { secure: false } : {}),
+      rewrite: (path: string) => path,
+      ...(isHttps ? { secure: false } : {})
     };
   }
   return ret;

@@ -16,18 +16,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import visits from './components/visits.vue'
-import search from './components/search.vue'
-import borrow from './components/borrow.vue'
-import newUser from './components/newUser.vue'
+import { defineComponent } from 'vue';
+import visits from './components/visits.vue';
+import search from './components/search.vue';
+import borrow from './components/borrow.vue';
+import newUser from './components/newUser.vue';
 
 export default defineComponent({
   components: { visits, search, borrow, newUser },
   setup() {
     //
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

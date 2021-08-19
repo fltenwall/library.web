@@ -26,7 +26,11 @@
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="状态" v-bind="validateInfos.enabled">
-              <SelectWrap v-model:value="dataItem.enabled" :options="selectEnableOption" :readonly="enabledState" />
+              <SelectWrap
+                v-model:value="dataItem.enabled"
+                :options="selectEnableOption"
+                :readonly="enabledState"
+              />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -71,9 +75,7 @@
 
     <!-- 操作 -->
     <template #footer-block>
-      <a-button v-if="!readonly" @click="onRestPage">
-        重置
-      </a-button>
+      <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
       <a-button v-if="readonly" v-show-by-auth="'USER:UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
@@ -85,13 +87,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, unref, computed } from 'vue'
-import { dataPageMix } from '/@/lib/idata/data-page/'
-import { formRules, selectEnableOption } from './data-page'
-import service, { UserManage } from '/@/api/system-manage/user-manage'
-import { userStore } from '/@/store/modules/user'
-import { assign } from 'lodash-es'
-import md5 from '/@/utils/encryption/md5'
+import { defineComponent, reactive, toRefs, ref, unref, computed } from 'vue';
+import { dataPageMix } from '/@/lib/idata/data-page/';
+import { formRules, selectEnableOption } from './data-page';
+import service, { UserManage } from '/@/api/system-manage/user-manage';
+import { userStore } from '/@/store/modules/user';
+import { assign } from 'lodash-es';
+import md5 from '/@/utils/encryption/md5';
 
 export default defineComponent({
   setup() {
@@ -99,54 +101,54 @@ export default defineComponent({
     const password = [
       {
         validator: (_rule: unknown, value: string): Promise<void> => {
-          if (unref(mode) !== 2) return Promise.resolve()
-          if (!value) return Promise.reject('不允许为空')
-          return Promise.resolve()
+          if (unref(mode) !== 2) return Promise.resolve();
+          if (!value) return Promise.reject('不允许为空');
+          return Promise.resolve();
         }
       }
-    ]
+    ];
 
-    const dataItem = reactive<UserManage>({ enabled: 1, role: {} })
-    const rules = reactive({ ...formRules, password })
-    const onServerMethods = { onNewData, onSaveData, onLoadDataById }
-    const parameter = { rules, dataItem, onServerMethods }
-    const dataPageMethods = dataPageMix<UserManage>(parameter)
-    const { pageInfo, onDataMethods, validate, validateInfos, loading } = dataPageMethods
-    const { mode, readonly, query } = toRefs(pageInfo)
+    const dataItem = reactive<UserManage>({ enabled: 1, role: {} });
+    const rules = reactive({ ...formRules, password });
+    const onServerMethods = { onNewData, onSaveData, onLoadDataById };
+    const parameter = { rules, dataItem, onServerMethods };
+    const dataPageMethods = dataPageMix<UserManage>(parameter);
+    const { pageInfo, onDataMethods, validate, validateInfos, loading } = dataPageMethods;
+    const { mode, readonly, query } = toRefs(pageInfo);
 
     // 对话框
-    const visible = ref<boolean>(true)
+    const visible = ref<boolean>(true);
 
     // 当前用户不能修改自己的状态
     const enabledState = computed(() => {
-      return userStore.getUserInfoState?.id == unref(query).id
-    })
+      return userStore.getUserInfoState?.id == unref(query).id;
+    });
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
-      const { data } = await service.getItemById(id)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.getItemById(id);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 保存数据
     async function onSaveData(id: number, contrast: UserManage) {
-      const { data } = await service.updateItem(id, contrast)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.updateItem(id, contrast);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 新增数据
     async function onNewData() {
-      const password = md5(dataItem.password!)
-      const { data } = await service.saveNewItem({ ...dataItem, password })
-      assign(dataItem, data)
-      changeDataType()
+      const password = md5(dataItem.password!);
+      const { data } = await service.saveNewItem({ ...dataItem, password });
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 改变数据类型
     function changeDataType() {
-      dataItem.enabled = dataItem.enabled ? 1 : 0
+      dataItem.enabled = dataItem.enabled ? 1 : 0;
     }
 
     return {
@@ -160,9 +162,9 @@ export default defineComponent({
       validate,
       validateInfos,
       ...onDataMethods
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

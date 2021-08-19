@@ -1,11 +1,11 @@
-import type { App } from 'vue'
+import type { App } from 'vue';
 
 /**
  * Configure Vue error handling function
  */
 
 function vueErrorHandler(err: Error, vm: unknown, info: string) {
-  console.log(err, vm, info)
+  console.warn(err, vm, info);
 }
 
 /**
@@ -18,15 +18,22 @@ function scriptErrorHandler(
   colno?: number,
   error?: Error
 ) {
-  console.log(event, source, lineno, colno, error)
+  console.warn(event, source, lineno, colno, error);
+}
+
+function asyncErrorHandler(event: Event) {
+  console.log(event);
 }
 
 export default class ErrorPlugin {
   static init(app: App): void {
     // Vue exception monitoring;
-    app.config.errorHandler = vueErrorHandler
+    app.config.errorHandler = vueErrorHandler;
 
     // script error
-    window.onerror = scriptErrorHandler
+    window.onerror = scriptErrorHandler;
+
+    // 异步错误
+    window.addEventListener('unhandledrejection', asyncErrorHandler);
   }
 }

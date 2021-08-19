@@ -13,20 +13,20 @@
 </template>
 
 <script lang="ts">
-import type { Menu as MenuType } from '/@/router/types'
-import { defineComponent, ref, unref, watch, computed } from 'vue'
-import { getMenus } from '/@/utils/helper/menu'
-import { Scrollbar } from '/@/components/Scrollbar'
-import { cloneDeep, debounce } from 'lodash-es'
-import service, { ModuleManage } from '/@/api/system-manage/module-manage'
-import { message } from 'ant-design-vue'
+import type { Menu as MenuType } from '/@/router/types';
+import { defineComponent, ref, unref, watch, computed } from 'vue';
+import { getMenus } from '/@/utils/helper/menu';
+import { Scrollbar } from '/@/components/Scrollbar';
+import { cloneDeep, debounce } from 'lodash-es';
+import service, { ModuleManage } from '/@/api/system-manage/module-manage';
+import { message } from 'ant-design-vue';
 
 interface TreeData extends MenuType {
-  disabled?: boolean
+  disabled?: boolean;
 
-  checkable?: boolean
+  checkable?: boolean;
 
-  key?: string
+  key?: string;
 }
 
 export default defineComponent({
@@ -43,63 +43,63 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
 
-    const treeData = ref<TreeData[]>([])
+    const treeData = ref<TreeData[]>([]);
 
-    const moudleData = ref<ModuleManage[]>([])
+    const moudleData = ref<ModuleManage[]>([]);
 
-    const checkedKeys = ref<number[]>([])
+    const checkedKeys = ref<number[]>([]);
 
-    const isValueUpdateFromInner = ref<boolean>(false)
+    const isValueUpdateFromInner = ref<boolean>(false);
 
-    const modularIds = computed(() => JSON.parse(props.value || '[]'))
+    const modularIds = computed(() => JSON.parse(props.value || '[]'));
 
     const setAuthValue = debounce(() => {
-      const checked = unref(checkedKeys)
-      const data = unref(moudleData).filter((el) => checked.includes(el.id!))
-      const authValue = data.map((el) => el.id!)
-      isValueUpdateFromInner.value = true
-      emit('update:value', JSON.stringify(authValue))
-    }, 1000)
+      const checked = unref(checkedKeys);
+      const data = unref(moudleData).filter((el) => checked.includes(el.id!));
+      const authValue = data.map((el) => el.id!);
+      isValueUpdateFromInner.value = true;
+      emit('update:value', JSON.stringify(authValue));
+    }, 1000);
 
     // 请求服务器数据
     async function fetchDataFromServer() {
       try {
-        loading.value = true
-        const { data } = await service.fecthList({ size: 1000 })
-        moudleData.value = data.content
-        treeData.value = handleTreeData(getMenus(false))
+        loading.value = true;
+        const { data } = await service.fecthList({ size: 1000 });
+        moudleData.value = data.content;
+        treeData.value = handleTreeData(getMenus(false));
       } catch (err) {
-        message.error(`数据加载失败: ${err}`)
+        message.error(`数据加载失败: ${err}`);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
 
     // 处理tree数据
     function handleTreeData(source: TreeData[]) {
-      const data: TreeData[] = []
+      const data: TreeData[] = [];
       for (const item of source) {
-        const value = cloneDeep(item)
+        const value = cloneDeep(item);
         if (value.children) {
-          value.children = handleTreeData(value.children)
+          value.children = handleTreeData(value.children);
         } else {
-          const authData = moudleData.value.filter(({ identifier }) => identifier === value.name)
+          const authData = moudleData.value.filter(({ identifier }) => identifier === value.name);
           value.children = authData.map((el) => {
-            validChecked(el.id!)
-            return { path: '', key: el.id, title: el.name }
-          })
+            validChecked(el.id!);
+            return { path: '', key: el.id, title: el.name };
+          });
         }
-        data.push(value)
+        data.push(value);
       }
-      return data
+      return data;
     }
 
     // 检测是否选中
     function validChecked(id: number) {
       if (unref(modularIds).includes(id)) {
-        checkedKeys.value.push(id)
+        checkedKeys.value.push(id);
       }
     }
 
@@ -107,10 +107,10 @@ export default defineComponent({
     function handleChecked(source: TreeData[]) {
       for (const item of source) {
         if (item.children) {
-          handleChecked(item.children)
+          handleChecked(item.children);
         } else {
-          const authData = moudleData.value.filter(({ id }) => id === item.key)
-          authData.forEach((el) => validChecked(el.id!))
+          const authData = moudleData.value.filter(({ id }) => id === item.key);
+          authData.forEach((el) => validChecked(el.id!));
         }
       }
     }
@@ -118,23 +118,23 @@ export default defineComponent({
     watch(
       () => modularIds,
       () => {
-        if (loading.value) return
+        if (loading.value) return;
         if (isValueUpdateFromInner.value) {
-          isValueUpdateFromInner.value = false
+          isValueUpdateFromInner.value = false;
         } else {
-          checkedKeys.value = []
-          handleChecked(treeData.value)
+          checkedKeys.value = [];
+          handleChecked(treeData.value);
         }
       }
-    )
+    );
 
-    watch(() => checkedKeys.value, setAuthValue)
+    watch(() => checkedKeys.value, setAuthValue);
 
-    fetchDataFromServer()
+    fetchDataFromServer();
 
-    return { treeData, checkedKeys }
+    return { treeData, checkedKeys };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

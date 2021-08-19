@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:visible="visible" style="top: 50px;" :width="width" :mask-closable="false" @cancel="onCancel">
+  <a-modal v-model:visible="visible" :width="width" :mask-closable="false" @cancel="onCancel">
     <template #title>
       <slot name="header-title" />
     </template>
@@ -26,12 +26,8 @@
           已选择 <a class="fw-b">{{ selectedRowKeys?.length }}</a> 项
         </div>
         <div>
-          <a-button @click="onCancel">
-            取消
-          </a-button>
-          <a-button type="primary" :loading="loading" @click="onConfirm">
-            创建
-          </a-button>
+          <a-button @click="onCancel"> 取消 </a-button>
+          <a-button type="primary" :loading="loading" @click="onConfirm"> 创建 </a-button>
         </div>
       </div>
     </template>
@@ -39,79 +35,79 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, toRefs, ref, reactive, computed, watch, unref } from 'vue'
-import { importProps, SelectedData } from '/@/lib/props/ImportModal'
-import { browserClient } from '/@/utils/elelment'
+import { defineComponent, onMounted, toRefs, ref, reactive, computed, watch, unref } from 'vue';
+import { importProps, SelectedData } from '/@/lib/props/ImportModal';
+import { browserClient } from '/@/utils/elelment';
 
 export default defineComponent({
   props: importProps,
   emits: ['update:value', 'on-confirm', 'on-click-table-away'],
   setup(props, { emit }) {
-    const { dataSource } = toRefs(props)
+    const { dataSource } = toRefs(props);
     // 视图大小
-    const browserSize = ref<{ width?: number; height?: number }>({})
+    const browserSize = ref<{ width?: number; height?: number }>({});
 
     // 对话框是否可见
-    const visible = ref<boolean>(false)
+    const visible = ref<boolean>(false);
 
     // 加载
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
 
     // 选中的数据
-    const selectedData = reactive<SelectedData>({ selectedRows: [], selectedRowKeys: [] })
+    const selectedData = reactive<SelectedData>({ selectedRows: [], selectedRowKeys: [] });
 
     // 点击 table 以外的地方
-    const onClickTableAway = () => emit('on-click-table-away')
+    const onClickTableAway = () => emit('on-click-table-away');
 
-    const isValueUpdateFromInner = ref<boolean>(false)
+    const isValueUpdateFromInner = ref<boolean>(false);
 
     // 选择功能的配置
     const rowSelection = computed(() => {
       return {
         onChange: (selectedRowKeys: number[], selectedRows: unknown[]) => {
-          selectedData.selectedRowKeys = selectedRowKeys
-          selectedData.selectedRows = selectedRows
+          selectedData.selectedRowKeys = selectedRowKeys;
+          selectedData.selectedRows = selectedRows;
         },
         // 	指定选中项的 key 数组，需要和 onChange 进行配合
         selectedRowKeys: selectedData.selectedRowKeys,
         // 	指定选中项的 key 数组，需要和 onChange 进行配合
         selectedRows: selectedData.selectedRows
-      }
-    })
+      };
+    });
 
-    onMounted(() => (browserSize.value = browserClient()))
+    onMounted(() => (browserSize.value = browserClient()));
 
     watch(
       () => props.value,
       (val) => {
         if (isValueUpdateFromInner.value) {
-          isValueUpdateFromInner.value = false
+          isValueUpdateFromInner.value = false;
         } else if (val) {
           // 打开对话框
-          visible.value = true
+          visible.value = true;
           // 设置全选
-          selectedData.selectedRowKeys = [...new Array(unref(dataSource).length).keys()]
+          selectedData.selectedRowKeys = [...new Array(unref(dataSource).length).keys()];
           // 选中项目
-          selectedData.selectedRows = unref(dataSource)
+          selectedData.selectedRows = unref(dataSource);
         } else {
-          visible.value = false
+          visible.value = false;
         }
       }
-    )
+    );
 
     // 点击遮罩层或右上角叉或取消按钮的回调
     function onCancel() {
-      visible.value = false
-      isValueUpdateFromInner.value = true
-      emit('update:value', false)
+      visible.value = false;
+      isValueUpdateFromInner.value = true;
+      emit('update:value', false);
     }
 
     // 点击确定回调
     function onConfirm() {
-      loading.value = true
+      loading.value = true;
       emit('on-confirm', selectedData.selectedRows, () => {
-        loading.value = false
-      })
+        loading.value = false;
+      });
     }
 
     return {
@@ -123,9 +119,9 @@ export default defineComponent({
       onConfirm,
       onClickTableAway,
       ...toRefs(selectedData)
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   props: {
@@ -30,21 +30,21 @@ export default defineComponent({
   emits: ['update:current', 'update:pageSize', 'change', 'showSizeChange'],
   setup(_props, { emit }) {
     function onPageChange(page: number, size: number) {
-      emit('update:current', page)
-      emit('change', page, size)
+      emit('update:current', page);
+      emit('change', page, size);
     }
 
     function onSizeChange(page: number, size: number) {
-      emit('update:pageSize', size)
-      emit('showSizeChange', page, size)
+      emit('update:pageSize', size);
+      emit('showSizeChange', page, size);
     }
 
     return {
       onPageChange,
       onSizeChange
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

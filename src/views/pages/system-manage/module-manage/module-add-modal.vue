@@ -28,13 +28,13 @@
 </template>
 
 <script lang="ts">
-import { message, Form } from 'ant-design-vue'
-import { defineComponent, reactive, ref } from 'vue'
-import { formRules, DataItem } from './module-add-modal'
-import service, { ModuleManage } from '/@/api/system-manage/module-manage'
-import PinYin from 'word-pinyin'
+import { message, Form } from 'ant-design-vue';
+import { defineComponent, reactive, ref } from 'vue';
+import { formRules, DataItem } from './module-add-modal';
+import service, { ModuleManage } from '/@/api/system-manage/module-manage';
+import PinYin from 'word-pinyin';
 
-const useForm = Form.useForm
+const useForm = Form.useForm;
 
 export default defineComponent({
   props: {
@@ -49,57 +49,57 @@ export default defineComponent({
   },
   emits: ['on-success'],
   setup(props, { emit }) {
-    const rules = reactive(formRules)
+    const rules = reactive(formRules);
 
-    const dataItem = reactive<DataItem>({ name: '', authorities: [] })
+    const dataItem = reactive<DataItem>({ name: '', authorities: [] });
 
-    const confirmLoading = ref<boolean>(false)
+    const confirmLoading = ref<boolean>(false);
 
-    const { resetFields, validate, validateInfos } = useForm(dataItem, rules)
+    const { resetFields, validate, validateInfos } = useForm(dataItem, rules);
 
     // 发送前权限数据转为字符串
     function sendBefore(auth: string[]) {
-      return JSON.stringify(auth)
+      return JSON.stringify(auth);
     }
 
     // 添加新的数据
     async function onConfirm() {
-      if (!(await validItem())) return
+      if (!(await validItem())) return;
 
       const params: ModuleManage = {
         identifier: props.identifier,
         name: dataItem.name,
         authorities: sendBefore(dataItem.authorities!)
-      }
+      };
 
       try {
-        confirmLoading.value = true
-        await service.saveNewItem(params)
-        resetFields()
+        confirmLoading.value = true;
+        await service.saveNewItem(params);
+        resetFields();
       } catch (err) {
-        message.error(`模块权限添加失败: ${err.msg}`)
+        message.error(`模块权限添加失败: ${err.msg}`);
       } finally {
-        confirmLoading.value = false
-        emit('on-success')
+        confirmLoading.value = false;
+        emit('on-success');
       }
     }
 
-    const onCentel = () => resetFields()
+    const onCentel = () => resetFields();
 
     // 是否根据输入项进行筛选
     function handleFilterSelect(inputValue: string, option: { key: string }) {
-      const value = PinYin.getPinyin(inputValue).replace(/\s+/g, '')
-      const target = PinYin.getPinyin(option.key).replace(/\s+/g, '')
-      return new RegExp(value).test(target)
+      const value = PinYin.getPinyin(inputValue).replace(/\s+/g, '');
+      const target = PinYin.getPinyin(option.key).replace(/\s+/g, '');
+      return new RegExp(value).test(target);
     }
 
     // 检测数据
     async function validItem() {
       try {
-        await validate()
-        return true
+        await validate();
+        return true;
       } catch (err) {
-        return false
+        return false;
       }
     }
 
@@ -110,9 +110,9 @@ export default defineComponent({
       onConfirm,
       confirmLoading,
       handleFilterSelect
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

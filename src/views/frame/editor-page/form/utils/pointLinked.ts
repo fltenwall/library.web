@@ -1,103 +1,103 @@
 // 链表
 
-import { watch, computed, reactive, ref, unref } from 'vue'
-import type { PointInfo } from '/@/lib/interface/PointInfo'
-import { pointStore } from '/@/store/modules/point'
-import Linked from '/@/utils/linked'
-import { cloneDeep } from 'lodash-es'
+import { watch, computed, reactive, ref, unref } from 'vue';
+import type { PointInfo } from '/@/lib/interface/PointInfo';
+import { pointStore } from '/@/store/modules/point';
+import Linked from '/@/utils/linked';
+import { cloneDeep } from 'lodash-es';
 
 interface UseLinked {
-  linkedState: { undo: boolean; redo: boolean }
+  linkedState: { undo: boolean; redo: boolean };
 
-  handleUndo: () => void
+  handleUndo: () => void;
 
-  handleRedo: () => void
+  handleRedo: () => void;
 }
 
 export default function (): UseLinked {
   // 表示可以回退或者前进
-  const linkedState = reactive({ undo: false, redo: false })
+  const linkedState = reactive({ undo: false, redo: false });
   // 链表
-  const linked = new Linked<{ data: Required<PointInfo>[]; select: string }>()
+  const linked = new Linked<{ data: Required<PointInfo>[]; select: string }>();
   // 拖拽数据信息
-  const pointData = computed(() => pointStore.getPointDataState)
+  const pointData = computed(() => pointStore.getPointDataState);
   // 选中数据
   const pointUUID = computed({
     set: (uuid) => pointStore.commitUpdatePointUUIDState({ uuid }),
     get: () => pointStore.getPointUUIDState
-  })
+  });
   // 内部更新不触发
-  const isValueUpdateFromInner = ref<boolean>(false)
+  const isValueUpdateFromInner = ref<boolean>(false);
 
   // 监听数据变化
   watch(
     () => pointData.value,
     (val) => {
       if (unref(isValueUpdateFromInner)) {
-        isValueUpdateFromInner.value = false
+        isValueUpdateFromInner.value = false;
       } else {
-        linked.add({ data: val, select: unref(pointUUID) })
-        undateState()
+        linked.add({ data: val, select: unref(pointUUID) });
+        undateState();
       }
     },
     { deep: true }
-  )
+  );
 
   // 处理后退
   function handleUndo(): void {
     // 判断是否可以后退
-    if (!linked.isUndo) return
+    if (!linked.isUndo) return;
     // 标记
-    isValueUpdateFromInner.value = true
+    isValueUpdateFromInner.value = true;
     // 回退
-    linked.undo()
+    linked.undo();
     // 更新
-    updateContent()
+    updateContent();
   }
 
   // 处理前进
   function handleRedo(): void {
     // 判断是否可以前进
-    if (!linked.isRedo) return
+    if (!linked.isRedo) return;
     // 标记
-    isValueUpdateFromInner.value = true
+    isValueUpdateFromInner.value = true;
     // 前进
-    linked.redo()
+    linked.redo();
     // 更新
-    updateContent()
+    updateContent();
   }
 
   // 更新数据
   function updateContent() {
     // 更新状态
-    undateState()
-    const { data, select } = linked.current?.element || { data: [], select: '' }
+    undateState();
+    const { data, select } = linked.current?.element || { data: [], select: '' };
     // 更新数据
-    pointStore.commitUpdatePointDataState(cloneDeep(data))
+    pointStore.commitUpdatePointDataState(cloneDeep(data));
     // 更新样式
-    updateStyle(select)
+    updateStyle(select);
   }
 
   // 更新状态
   function undateState() {
-    linkedState.redo = linked.isRedo
-    linkedState.undo = linked.isUndo
+    linkedState.redo = linked.isRedo;
+    linkedState.undo = linked.isUndo;
   }
 
   // 更新样式
   function updateStyle(select: string) {
-    pointUUID.value = select
+    pointUUID.value = select;
     unref(pointData).forEach((el) => {
-      const uuid = el.uuid!
-      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` })
-      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` })
+      const uuid = el.uuid!;
+      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` });
+      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` });
       pointStore.commitUpdatePointStyle({
         uuid,
         key: 'transform',
         value: `translate(${el.x}px,${el.y}px)`
-      })
-    })
+      });
+    });
   }
 
-  return { linkedState, handleUndo, handleRedo }
+  return { linkedState, handleUndo, handleRedo };
 }

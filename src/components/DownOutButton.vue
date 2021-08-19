@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { DownOutlined } from '@ant-design/icons-vue'
+import { defineComponent, PropType } from 'vue';
+import { DownOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
   components: { DownOutlined },
@@ -20,5 +20,5 @@ export default defineComponent({
       default: false
     }
   }
-})
+});
 </script>

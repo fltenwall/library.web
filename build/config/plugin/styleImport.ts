@@ -1,5 +1,3 @@
-
-
 import styleImport from 'vite-plugin-style-import';
 
 export function configStyleImportPlugin() {
@@ -10,9 +8,9 @@ export function configStyleImportPlugin() {
         esModule: true,
         resolveStyle: (name) => {
           return `ant-design-vue/es/${name}/style/index`;
-        },
-      },
-    ],
+        }
+      }
+    ]
   });
   return pwaPlugin;
 }

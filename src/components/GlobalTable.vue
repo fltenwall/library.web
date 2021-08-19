@@ -17,28 +17,28 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs, unref } from 'vue'
-import { Table } from 'ant-design-vue'
-import { tableProps } from '/@/lib/props/TableList'
-import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
-import { cloneDeep } from 'lodash-es'
+import { computed, defineComponent, toRefs, unref } from 'vue';
+import { Table } from 'ant-design-vue';
+import { tableProps } from '/@/lib/props/TableList';
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
+import { cloneDeep } from 'lodash-es';
 
 export default defineComponent({
   components: { Table },
   props: tableProps,
   setup(props) {
-    const { columns } = toRefs(props)
+    const { columns } = toRefs(props);
 
     const tableColumns = computed(() => {
-      const { readonly } = injectDatapage()
-      const newColumns = cloneDeep(unref(columns))
-      if (readonly?.value) newColumns.pop()
-      return newColumns
-    })
+      const { readonly } = injectDatapage();
+      const newColumns = cloneDeep(unref(columns));
+      if (readonly?.value) newColumns.pop();
+      return newColumns;
+    });
 
-    return { tableColumns }
+    return { tableColumns };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

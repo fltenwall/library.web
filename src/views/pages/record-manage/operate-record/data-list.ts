@@ -1,4 +1,4 @@
-import type { TableColumn } from '/@/lib/props/TableList'
+import type { TableColumn } from '/@/lib/props/TableList';
 
 export const tableColumns: TableColumn[] = [
   {
@@ -66,4 +66,4 @@ export const tableColumns: TableColumn[] = [
     ellipsis: true,
     slots: { customRender: 'action' }
   }
-]
+];

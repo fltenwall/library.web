@@ -10,16 +10,16 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
-import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue'
-import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
+import type { Ref } from 'vue';
+import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue';
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean>) => {
   return computed(() => {
-    const dataPage = injectDatapage()
-    return readonly.value || dataPage.readonly?.value
-  })
-}
+    const dataPage = injectDatapage();
+    return readonly.value || dataPage.readonly?.value;
+  });
+};
 
 export default defineComponent({
   props: {
@@ -39,37 +39,37 @@ export default defineComponent({
       tpye: String,
       default: 'text',
       validator: (v: string): boolean => {
-        return ['text', 'number'].includes(v)
+        return ['text', 'number'].includes(v);
       }
     }
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const inputValue = ref<string | number>('')
-    const { readonly } = toRefs(props)
+    const inputValue = ref<string | number>('');
+    const { readonly } = toRefs(props);
 
     // 内容发送变化触发
     const onChange = () => {
       if (props.type === 'number') {
-        inputValue.value = Number((inputValue.value as string).replace(/[^0-9]+/g, ''))
+        inputValue.value = Number((inputValue.value as string).replace(/[^0-9]+/g, ''));
       }
-      emit('update:value', inputValue.value)
-    }
+      emit('update:value', inputValue.value);
+    };
 
-    const inputReadonly = useinputReadonly(readonly)
+    const inputReadonly = useinputReadonly(readonly);
 
     watch(
       () => props.value,
       (newValue) => {
-        if (unref(inputValue) === newValue) return
-        inputValue.value = newValue
+        if (unref(inputValue) === newValue) return;
+        inputValue.value = newValue;
       },
       { immediate: true }
-    )
+    );
 
-    return { inputValue, inputReadonly, onChange }
+    return { inputValue, inputReadonly, onChange };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

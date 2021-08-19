@@ -1,56 +1,56 @@
-import type { PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 export interface OperatorRecord {
   //  主键
-  id?: number
+  id?: number;
 
   // 用户名
-  account?: string
+  account?: string;
 
   // ip
-  ip?: string
+  ip?: string;
 
   ipRecord?: {
     // 国家
-    nation?: string
+    nation?: string;
     // 省
-    province?: string
+    province?: string;
     // 市
-    city?: string
+    city?: string;
     // 区
-    district?: string
-  }
+    district?: string;
+  };
 
   // 方法
-  method?: string
+  method?: string;
 
   // 参数
-  param?: string
+  param?: string;
 
   // 路径
-  path?: string
+  path?: string;
 
   // 客户端
-  browser?: string
+  browser?: string;
 
   // 操作系统
-  os?: string
+  os?: string;
 
   // 描述
-  description?: string
+  description?: string;
 
   // 后端方法名称
-  signatureName?: string
+  signatureName?: string;
 
   // 创建时间
-  createTime?: string
+  createTime?: string;
 }
 
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<OperatorRecord>
+export type DataPager = PagerResponseData<OperatorRecord>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
@@ -59,6 +59,6 @@ export default class Service {
       url: '/epi/record/operator',
       method: 'get',
       params: query
-    })
+    });
   }
 }

@@ -1,5 +1,5 @@
-import type { PropType } from 'vue'
-import type { ColumnProps } from 'ant-design-vue/lib/table/interface'
+import type { PropType } from 'vue';
+import type { ColumnProps } from 'ant-design-vue/lib/table/interface';
 
 export const importProps = {
   columns: {
@@ -25,10 +25,10 @@ export const importProps = {
     type: Boolean as PropType<boolean>,
     default: false
   }
-}
+};
 
 // 选中的数据
 export interface SelectedData {
-  selectedRows?: unknown[]
-  selectedRowKeys?: number[]
+  selectedRows?: unknown[];
+  selectedRowKeys?: number[];
 }

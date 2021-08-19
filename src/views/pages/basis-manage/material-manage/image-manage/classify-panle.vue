@@ -8,9 +8,7 @@
       <a-spin :spinning="loading">
         <a-menu v-model:selectedKeys="selectedKeys" class="main-menu" @select="handleSelect">
           <a-menu-item key="">
-            <div class="classify-item-title">
-              全部
-            </div>
+            <div class="classify-item-title">全部</div>
           </a-menu-item>
           <a-menu-item v-for="item in dataSource" :key="item.id">
             <div class="classify-item">
@@ -39,28 +37,26 @@
       </a-spin>
     </Scrollbar>
     <div class="classify-panle-footer index-center-middle pb-2 pt-2">
-      <a-button @click="handleNewGroup">
-        新建分组
-      </a-button>
+      <a-button @click="handleNewGroup"> 新建分组 </a-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref, unref } from 'vue'
-import { Scrollbar } from '/@/components/Scrollbar'
-import service, { Classify } from '/@/api/basis-manage/material-manage/image-manage'
-import { useDeleteModal } from '/@/hooks/web/useDeleteModal'
-import { message } from 'ant-design-vue'
+import { defineComponent, nextTick, ref, unref } from 'vue';
+import { Scrollbar } from '/@/components/Scrollbar';
+import service, { Classify } from '/@/api/basis-manage/material-manage/image-manage';
+import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import { message } from 'ant-design-vue';
 
 interface ClassifyEdit extends Classify {
-  id?: string
+  id?: string;
   // 标题
-  title?: string
+  title?: string;
   // 是否编辑
-  isEdit?: boolean
+  isEdit?: boolean;
   // 新名称
-  newTitle?: string
+  newTitle?: string;
 }
 
 export default defineComponent({
@@ -68,97 +64,97 @@ export default defineComponent({
   emits: ['on-select'],
   setup(_props, { emit }) {
     // 输入框显示
-    const inputRef = ref<{ focus: () => void } | null>(null)
-    const editorRef = ref<{ focus: () => void } | null>(null)
-    const visible = ref<boolean>(false)
+    const inputRef = ref<{ focus: () => void } | null>(null);
+    const editorRef = ref<{ focus: () => void } | null>(null);
+    const visible = ref<boolean>(false);
     // 数据
-    const cTitle = ref<string>('')
-    const loading = ref<boolean>(false)
+    const cTitle = ref<string>('');
+    const loading = ref<boolean>(false);
     // 数据源
-    const dataSource = ref<Classify[]>([])
+    const dataSource = ref<Classify[]>([]);
     // 选中数据
-    const selectedKeys = ref<string[]>([''])
+    const selectedKeys = ref<string[]>(['']);
     // 当前编辑数据
-    const currentEditor = ref<ClassifyEdit>({})
+    const currentEditor = ref<ClassifyEdit>({});
 
     // 处理新建分组
     function handleNewGroup() {
-      if (loading.value) return
-      visible.value = true
-      cTitle.value = ''
-      selectedKeys.value = ['new-classify']
-      nextTick(() => inputRef.value?.focus())
+      if (loading.value) return;
+      visible.value = true;
+      cTitle.value = '';
+      selectedKeys.value = ['new-classify'];
+      nextTick(() => inputRef.value?.focus());
     }
 
     // 获取服务器数据
     async function fetchDataFromServer() {
       try {
-        const { data } = await service.fecthClassifyList()
-        dataSource.value = data
+        const { data } = await service.fecthClassifyList();
+        dataSource.value = data;
       } catch (err) {
-        message.error(err.msg)
+        message.error(err.msg);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
 
     // 保存数据
     async function onNewData() {
       if (!unref(cTitle)) {
-        visible.value = false
-        return
+        visible.value = false;
+        return;
       }
 
       try {
-        loading.value = true
-        await service.saveClassifyNewItem({ title: unref(cTitle) })
-        visible.value = false
-        fetchDataFromServer()
+        loading.value = true;
+        await service.saveClassifyNewItem({ title: unref(cTitle) });
+        visible.value = false;
+        fetchDataFromServer();
       } catch (err) {
-        message.error(err.msg)
+        message.error(err.msg);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
     // 选中数据
     async function handleSelect({ key }: { key: string }) {
-      const record = unref(dataSource).find((el) => el.id === key) || {}
-      emit('on-select', record)
+      const record = unref(dataSource).find((el) => el.id === key) || {};
+      emit('on-select', record);
     }
 
     // 处理编辑
     function handleClickEditor(record: Required<ClassifyEdit>) {
       // 初始化全部数据
-      unref(dataSource).forEach((el: ClassifyEdit) => (el.isEdit = false))
+      unref(dataSource).forEach((el: ClassifyEdit) => (el.isEdit = false));
       // 设置当前为可编辑数据
-      record.isEdit = true
-      record.newTitle = record.title
-      selectedKeys.value = [record.id]
-      currentEditor.value = record
-      nextTick(() => editorRef.value?.focus())
+      record.isEdit = true;
+      record.newTitle = record.title;
+      selectedKeys.value = [record.id];
+      currentEditor.value = record;
+      nextTick(() => editorRef.value?.focus());
     }
 
     // 点击input以外地区
     async function onClickInputAway() {
-      const record = currentEditor.value
-      currentEditor.value = {}
-      record.isEdit = false
-      if (!record.newTitle || record.newTitle === record.title) return
-      record.title = record.newTitle
-      await service.updateClassify(record.id!, { title: record.newTitle })
+      const record = currentEditor.value;
+      currentEditor.value = {};
+      record.isEdit = false;
+      if (!record.newTitle || record.newTitle === record.title) return;
+      record.title = record.newTitle;
+      await service.updateClassify(record.id!, { title: record.newTitle });
       // 刷新数据
-      fetchDataFromServer()
+      fetchDataFromServer();
     }
 
     // 删除数据
     async function onDeleteDataItem(record: Required<Classify>) {
       useDeleteModal(async () => {
-        await service.deleteClassifyById(record.id)
-        fetchDataFromServer()
-      })
+        await service.deleteClassifyById(record.id);
+        fetchDataFromServer();
+      });
     }
 
-    fetchDataFromServer()
+    fetchDataFromServer();
 
     return {
       cTitle,
@@ -174,9 +170,9 @@ export default defineComponent({
       handleSelect,
       handleClickEditor,
       handleNewGroup
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

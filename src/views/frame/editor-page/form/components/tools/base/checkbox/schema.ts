@@ -1,7 +1,7 @@
-import type { PointInfo } from '/@/lib/interface/PointInfo'
+import type { PointInfo } from '/@/lib/interface/PointInfo';
 
 export interface CheckboxSchema extends PointInfo {
-  label: string
+  label: string;
 }
 
 export const schema: CheckboxSchema = {
@@ -10,8 +10,8 @@ export const schema: CheckboxSchema = {
   width: 300,
 
   label: ''
-}
+};
 
-export const name = '多选框'
+export const name = '多选框';
 
-export const icon = 'ion:checkbox-outline'
+export const icon = 'ion:checkbox-outline';

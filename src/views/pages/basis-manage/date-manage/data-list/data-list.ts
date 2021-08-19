@@ -1,4 +1,4 @@
-import type { TableColumn } from '/@/lib/props/TableList'
+import type { TableColumn } from '/@/lib/props/TableList';
 
 export const tableColumns: TableColumn[] = [
   {
@@ -41,7 +41,7 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'operation',
     slots: { customRender: 'operation' }
   }
-]
+];
 
 export const selectUnitOption = [
   { value: 1, label: '年' },
@@ -49,4 +49,4 @@ export const selectUnitOption = [
   { value: 3, label: '月' },
   { value: 4, label: '周' },
   { value: 5, label: '日' }
-]
+];

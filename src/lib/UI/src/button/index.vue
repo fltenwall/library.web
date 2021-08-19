@@ -5,24 +5,24 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue';
 export default defineComponent({
   props: {
     type: {
       type: String as PropType<string>,
       default: 'default',
       validator: (v: string): boolean => {
-        return ['default', 'primary'].includes(v)
+        return ['default', 'primary'].includes(v);
       }
     }
   },
   setup(props) {
     const classes = computed(() => {
-      return [`ui-button-${props.type}`]
-    })
-    return { classes }
+      return [`ui-button-${props.type}`];
+    });
+    return { classes };
   }
-})
+});
 </script>
 
 <style lang="less">

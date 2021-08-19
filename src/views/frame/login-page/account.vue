@@ -32,63 +32,57 @@
       登 录
     </GlobalButton>
     <div class="login-account-link">
-      <router-link :to="{ name: PageEnum.BASE_REGISTER }">
-        注册
-      </router-link>
+      <router-link :to="{ name: PageEnum.BASE_REGISTER }"> 注册 </router-link>
       <a-divider type="vertical" />
-      <router-link :to="{ name: 'reset-password' }">
-        忘记密码
-      </router-link>
+      <router-link :to="{ name: 'reset-password' }"> 忘记密码 </router-link>
       <a-divider type="vertical" />
-      <router-link :to="{ name: 'help' }">
-        帮助中心
-      </router-link>
+      <router-link :to="{ name: 'help' }"> 帮助中心 </router-link>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import { PageEnum } from '/@/enums/pageEnum'
-import { Instance } from '/@/lib/interface/GlobalButton'
-import { userStore } from '/@/store/modules/user'
-import md5 from '/@/utils/encryption/md5'
+import { defineComponent, reactive, ref } from 'vue';
+import { PageEnum } from '/@/enums/pageEnum';
+import { Instance } from '/@/lib/interface/GlobalButton';
+import { userStore } from '/@/store/modules/user';
+import md5 from '/@/utils/encryption/md5';
 
 export default defineComponent({
   emits: ['on-change', 'on-success'],
   setup(_props, { emit }) {
     // 数据加载
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
 
-    const buttonInstance = ref<Instance | null>(null)
+    const buttonInstance = ref<Instance | null>(null);
 
-    const formData = reactive({ account: '', password: '' })
+    const formData = reactive({ account: '', password: '' });
 
     // 错误信息
-    const error = reactive({ msg: '', is: false })
+    const error = reactive({ msg: '', is: false });
 
     // 点击短信登录
-    const onChange = () => emit('on-change', 'account')
+    const onChange = () => emit('on-change', 'account');
 
-    const onEnter = () => handleUserLogin()
+    const onEnter = () => handleUserLogin();
 
-    const onButtonClick = (event: MouseEvent) => handleUserLogin(event.offsetX, event.offsetY)
+    const onButtonClick = (event: MouseEvent) => handleUserLogin(event.offsetX, event.offsetY);
 
     async function handleUserLogin(x?: number, y?: number) {
-      if (!formData.account || !formData.password || loading.value) return
-      buttonInstance.value?.startAnimation(x, y)
+      if (!formData.account || !formData.password || loading.value) return;
+      buttonInstance.value?.startAnimation(x, y);
       try {
-        loading.value = true
-        const account = formData.account
-        const password = md5(formData.password)
-        const userInfo = await userStore.login({ account, password })
-        emit('on-success', userInfo)
+        loading.value = true;
+        const account = formData.account;
+        const password = md5(formData.password);
+        const userInfo = await userStore.login({ account, password });
+        emit('on-success', userInfo);
       } catch (err) {
-        error.is = true
-        error.msg = err.msg
-        buttonInstance.value?.stopAnimation()
+        error.is = true;
+        error.msg = err.msg;
+        buttonInstance.value?.stopAnimation();
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
 
@@ -100,9 +94,9 @@ export default defineComponent({
       onChange,
       onButtonClick,
       buttonInstance
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

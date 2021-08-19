@@ -2,17 +2,11 @@
   <div ref="wrap" class="search-wrap">
     <div class="search-header">
       <div>
-        <div class="search-header-title">
-          搜索量
-        </div>
-        <div class="search-header-content">
-          50
-        </div>
+        <div class="search-header-title">搜索量</div>
+        <div class="search-header-content">50</div>
       </div>
       <div>
-        <a-tag color="#f5222d" class="index-no-margin">
-          日
-        </a-tag>
+        <a-tag color="#f5222d" class="index-no-margin"> 日 </a-tag>
       </div>
     </div>
     <div ref="containerRef" />
@@ -24,16 +18,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue'
-import { triggerResize } from '/@/utils/triggerResize'
-import { menuStore } from '/@/store/modules/menu'
-import { Chart } from '@antv/g2'
+import { defineComponent, onMounted, ref, watch } from 'vue';
+import { triggerResize } from '/@/utils/triggerResize';
+import { menuStore } from '/@/store/modules/menu';
+import { Chart } from '@antv/g2';
 
 export default defineComponent({
   setup() {
-    const wrap = ref<HTMLElement | null>(null)
+    const wrap = ref<HTMLElement | null>(null);
 
-    const containerRef = ref<HTMLElement | null>(null)
+    const containerRef = ref<HTMLElement | null>(null);
 
     const data = [
       { time: '2020-02-27', count: 30 },
@@ -43,16 +37,16 @@ export default defineComponent({
       { time: '2020-03-03', count: 45 },
       { time: '2020-03-04', count: 60 },
       { time: '2020-03-05', count: 50 }
-    ]
+    ];
 
     // 监听菜单折叠
     watch(
       () => menuStore.getCollapsedState,
       () => triggerResize()
-    )
+    );
 
     //
-    onMounted(() => chartInit())
+    onMounted(() => chartInit());
 
     // 数据初始化
     function chartInit() {
@@ -61,41 +55,41 @@ export default defineComponent({
         height: 60,
         autoFit: true,
         padding: [5, 10, 20, 10]
-      })
+      });
 
-      chart.data(data)
+      chart.data(data);
 
       chart.scale('time', {
         type: 'timeCat'
-      })
+      });
 
       chart.scale('count', {
         nice: true
-      })
+      });
 
-      chart.axis(false)
+      chart.axis(false);
 
       chart.tooltip({
         showTitle: false,
         itemTpl:
           '<div class="g2-tooltip-list-item"><span class="g2-tooltip-name">{time}</span><span class="g2-tooltip-value">{count}</span></div>'
-      })
+      });
 
       chart
         .interval()
         .position('time*count')
         .style({ fill: '#597ef7', fillOpacity: 1 })
         .shape('smooth')
-        .tooltip('time*count', (time: string, count: number) => ({ time, count }))
+        .tooltip('time*count', (time: string, count: number) => ({ time, count }));
 
-      chart.render()
+      chart.render();
 
-      triggerResize()
+      triggerResize();
     }
 
-    return { wrap, containerRef }
+    return { wrap, containerRef };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

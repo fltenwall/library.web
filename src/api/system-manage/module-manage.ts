@@ -1,48 +1,48 @@
-import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 export interface ModuleManage {
   //  主键
-  id?: number
+  id?: number;
 
   // 权限项名称
-  name?: string
+  name?: string;
 
   // 权限项
-  authorities?: string
+  authorities?: string;
 
   // 模块表示符
-  identifier?: string
+  identifier?: string;
 
   // 创建者
-  createBy?: string
+  createBy?: string;
 
   // 更新者
-  updateBy?: string
+  updateBy?: string;
 
   // 创建时间
-  createTime?: string
+  createTime?: string;
 
   // 更新时间
-  updateTime?: string
+  updateTime?: string;
 }
 
 // 权限项
 export interface Authority {
-  [prop: string]: unknown
+  [prop: string]: unknown;
 }
 
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<ModuleManage>
+export type DataPager = PagerResponseData<ModuleManage>;
 
 export default class Service {
   static fecthListByAuthority(): Promise<Result<Authority>> {
     return request<Result<Authority>>({
       url: '/epi/authority',
       method: 'get'
-    })
+    });
   }
 
   // 向服务查询数据并分页返回结果
@@ -51,7 +51,7 @@ export default class Service {
       url: '/epi/modular',
       method: 'get',
       params: query
-    })
+    });
   }
 
   // 保存数据到远程服务器
@@ -60,7 +60,7 @@ export default class Service {
       url: '/epi/modular',
       method: 'post',
       data: item
-    })
+    });
   }
 
   // 通过ID取得数据
@@ -68,7 +68,7 @@ export default class Service {
     return request<Result<ModuleManage>>({
       url: '/epi/modular/' + name,
       method: 'get'
-    })
+    });
   }
 
   // 更新数据到远程服务器
@@ -77,7 +77,7 @@ export default class Service {
       url: '/epi/modular/' + id,
       method: 'put',
       data: item
-    })
+    });
   }
 
   // 删除指定ID的数据
@@ -85,6 +85,6 @@ export default class Service {
     return request<Result<null>>({
       url: '/epi/modular/' + id,
       method: 'delete'
-    })
+    });
   }
 }

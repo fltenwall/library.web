@@ -1,4 +1,4 @@
-import type { FromRules } from '/@/lib/interface/From'
+import type { FromRules } from '/@/lib/interface/From';
 
 export const formRules: FromRules = {
   name: [
@@ -16,4 +16,4 @@ export const formRules: FromRules = {
       message: '不允许为空'
     }
   ]
-}
+};

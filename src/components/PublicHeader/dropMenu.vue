@@ -22,16 +22,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { userStore } from '/@/store/modules/user'
-import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons-vue'
-import { PageEnum } from '/@/enums/pageEnum'
-import { useGo } from '/@/hooks/web/usePage'
+import { defineComponent } from 'vue';
+import { userStore } from '/@/store/modules/user';
+import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons-vue';
+import { PageEnum } from '/@/enums/pageEnum';
+import { useGo } from '/@/hooks/web/usePage';
 
 export default defineComponent({
   components: { UserOutlined, SettingOutlined, LogoutOutlined },
   setup() {
-    const go = useGo()
+    const go = useGo();
 
     // 处理菜单点击
     async function handlemenuClick({ key }: { key: string }) {
@@ -39,25 +39,25 @@ export default defineComponent({
         // 退出
         case 'logout':
           try {
-            await userStore.logout()
-            userStore.commitResetState()
-            go({ name: PageEnum.BASE_LOGIN })
+            await userStore.logout();
+            userStore.commitResetState();
+            go({ name: PageEnum.BASE_LOGIN });
           } catch (err) {}
-          break
+          break;
         case 'center':
-          go({ name: PageEnum.PERSONAL_CENTER })
-          break
+          go({ name: PageEnum.PERSONAL_CENTER });
+          break;
         case 'setting':
-          go({ name: PageEnum.PERSONAL_SETTING })
-          break
+          go({ name: PageEnum.PERSONAL_SETTING });
+          break;
         default:
-          break
+          break;
       }
     }
 
-    return { handlemenuClick }
+    return { handlemenuClick };
   }
-})
+});
 </script>
 
 <style lang="less">

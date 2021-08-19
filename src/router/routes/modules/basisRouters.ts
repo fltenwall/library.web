@@ -1,6 +1,6 @@
-import type { AppRouteModule } from '/@/router/types'
+import type { AppRouteModule } from '/@/router/types';
 
-import { PAGE_LAYOUT_COMPONENT } from '/@/router/constant'
+import { PAGE_LAYOUT_COMPONENT } from '/@/router/constant';
 
 const routers: AppRouteModule = {
   layout: {
@@ -95,6 +95,6 @@ const routers: AppRouteModule = {
     }
   ],
   sortValue: 1
-}
+};
 
-export default routers
+export default routers;

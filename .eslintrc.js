@@ -1,4 +1,4 @@
-const { defineConfig } = require('eslint-define-config')
+const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({
   root: true,
@@ -26,8 +26,6 @@ module.exports = defineConfig({
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'vue/max-attributes-per-line': 'off',
-    semi: ['error', 'never'],
-    '@typescript-eslint/semi': ['error', 'never'],
     'comma-dangle': ['error', 'never'],
     'spaced-comment': [
       'error',
@@ -46,4 +44,4 @@ module.exports = defineConfig({
     ],
     quotes: ['error', 'single']
   }
-})
+});

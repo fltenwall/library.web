@@ -1,27 +1,27 @@
 interface RulesOptions {
   // 枚举类型
-  enum?: string
+  enum?: string;
 
   // 字段长度
-  len?: number
+  len?: number;
 
   // 最大长度
-  max?: number
+  max?: number;
 
   // 	校验文案
-  message?: string
+  message?: string;
 
   // 	最小长度
-  min?: number
+  min?: number;
 
   // 正则表达式校验
-  pattern?: RegExp
+  pattern?: RegExp;
 
   // 是否必选
-  required?: boolean
+  required?: boolean;
 
   // 校验前转换字段值
-  transform?: (value: unknown) => unknown
+  transform?: (value: unknown) => unknown;
 
   // 内建校验类型
   type?:
@@ -37,17 +37,17 @@ interface RulesOptions {
     | 'date'
     | 'url'
     | 'hex'
-    | 'email'
+    | 'email';
 
   // 自定义校验（注意，callback 必须被调用）
-  validator?: (rule: unknown, value: unknown, callback: (error?: string) => void) => Promise<void>
+  validator?: (rule: unknown, value: unknown, callback: (error?: string) => void) => Promise<void>;
 
   // 必选时，空格是否会被视为错误
-  whitespace?: boolean
+  whitespace?: boolean;
 
-  trigger?: 'blur' | 'change'
+  trigger?: 'blur' | 'change';
 }
 
 export interface FromRules {
-  [key: string]: RulesOptions[]
+  [key: string]: RulesOptions[];
 }

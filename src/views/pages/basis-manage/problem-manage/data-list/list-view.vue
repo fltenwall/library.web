@@ -7,18 +7,12 @@
     @onRefresh="onRefresh"
   >
     <template #header-left>
-      <a-button type="primary" @click="onNewDataItem">
-        新增
-      </a-button>
+      <a-button type="primary" @click="onNewDataItem"> 新增 </a-button>
     </template>
 
     <template #show="{ record }">
-      <a-tag v-if="record.state" color="#108ee9">
-        可 见
-      </a-tag>
-      <a-tag v-else color="#f50">
-        不可见
-      </a-tag>
+      <a-tag v-if="record.state" color="#108ee9"> 可 见 </a-tag>
+      <a-tag v-else color="#f50"> 不可见 </a-tag>
     </template>
 
     <template #icon="{ record }">
@@ -44,41 +38,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { tableColumns } from './data-list'
-import { ProblemManage } from '/@/api/basis-manage/problem-manage'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
-import { usePagination } from '/@/hooks/web/usePagination'
+import { defineComponent, ref } from 'vue';
+import { tableColumns } from './data-list';
+import { ProblemManage } from '/@/api/basis-manage/problem-manage';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
+import { usePagination } from '/@/hooks/web/usePagination';
 
 export default defineComponent({
   emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
-    const dataSource = ref<ProblemManage[]>([])
+    const dataSource = ref<ProblemManage[]>([]);
 
     // 总数据
-    const totalElements = ref<number>(0)
+    const totalElements = ref<number>(0);
 
-    const listPage = injectListPage<ProblemManage>()
+    const listPage = injectListPage<ProblemManage>();
 
     // 数据加载
-    const loading = listPage.loading
+    const loading = listPage.loading;
     // 添加新的数据
-    const onNewDataItem = () => listPage.onNewDataItem()
+    const onNewDataItem = () => listPage.onNewDataItem();
     // 查看数据
-    const onViewDataItem = (record: ProblemManage) => listPage.onViewDataItem(record)
+    const onViewDataItem = (record: ProblemManage) => listPage.onViewDataItem(record);
     // 编辑数据
-    const onEditDataItem = (record: ProblemManage) => listPage.onEditDataItem(record)
+    const onEditDataItem = (record: ProblemManage) => listPage.onEditDataItem(record);
     // 删除数据
-    const onDeleteDataItem = (record: ProblemManage) => listPage.onDeleteDataItem(record)
+    const onDeleteDataItem = (record: ProblemManage) => listPage.onDeleteDataItem(record);
 
-    const pagination = usePagination()
+    const pagination = usePagination();
 
     // 页面发生变化
-    const onPageChange = () => emit('on-page-change')
+    const onPageChange = () => emit('on-page-change');
 
     // 处理刷新
-    const onRefresh = () => emit('on-refresh')
+    const onRefresh = () => emit('on-refresh');
 
     return {
       loading,
@@ -92,16 +86,16 @@ export default defineComponent({
       onViewDataItem,
       onEditDataItem,
       onDeleteDataItem
-    }
+    };
   },
   methods: {
     // 设置数据源
     setDataSource(data: ProblemManage[], total: number) {
-      this.dataSource = data
-      this.totalElements = total
+      this.dataSource = data;
+      this.totalElements = total;
     }
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

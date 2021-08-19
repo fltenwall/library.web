@@ -43,51 +43,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import { tableColumns } from './data-list'
-import { OperatorRecord } from '/@/api/record-manage/operator-record'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
-import { useFromatlll } from '/@/utils/dateFormat'
-import { usePagination } from '/@/hooks/web/usePagination'
-import { queryModule } from '/@/utils/regExp'
-import modalDetails from './components/modal-details.vue'
+import { defineComponent, reactive, ref } from 'vue';
+import { tableColumns } from './data-list';
+import { OperatorRecord } from '/@/api/record-manage/operator-record';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
+import { useFromatlll } from '/@/utils/dateFormat';
+import { usePagination } from '/@/hooks/web/usePagination';
+import { queryModule } from '/@/utils/regExp';
+import modalDetails from './components/modal-details.vue';
 
 export default defineComponent({
   components: { modalDetails },
   emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
-    const dataSource = ref<OperatorRecord[]>([])
+    const dataSource = ref<OperatorRecord[]>([]);
 
     // 总数据
-    const totalElements = ref<number>(0)
+    const totalElements = ref<number>(0);
 
     // 对话框
-    const dataDetails = reactive<{ visible: boolean; dataItem?: OperatorRecord }>({ visible: false })
+    const dataDetails = reactive<{ visible: boolean; dataItem?: OperatorRecord }>({
+      visible: false
+    });
 
     // 详情数据
     // const detailsDataItem =
 
     // 页面方法
-    const listPage = injectListPage<OperatorRecord>()
+    const listPage = injectListPage<OperatorRecord>();
 
     // 数据加载
-    const loading = listPage.loading
+    const loading = listPage.loading;
 
     // 分页方法
-    const pagination = usePagination()
+    const pagination = usePagination();
 
     // 页面发生变化
-    const onPageChange = () => emit('on-page-change')
+    const onPageChange = () => emit('on-page-change');
 
     // 处理刷新
-    const onRefresh = () => emit('on-refresh')
+    const onRefresh = () => emit('on-refresh');
 
     // 对话框处理
     const onDetailsDataItem = (record: OperatorRecord) => {
-      dataDetails.visible = true
-      dataDetails.dataItem = record
-    }
+      dataDetails.visible = true;
+      dataDetails.dataItem = record;
+    };
 
     return {
       loading,
@@ -101,16 +103,16 @@ export default defineComponent({
       onRefresh,
       onPageChange,
       onDetailsDataItem
-    }
+    };
   },
   methods: {
     // 设置数据源
     setDataSource(data: OperatorRecord[], total: number) {
-      this.dataSource = data
-      this.totalElements = total
+      this.dataSource = data;
+      this.totalElements = total;
     }
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

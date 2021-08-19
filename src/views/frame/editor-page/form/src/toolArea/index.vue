@@ -13,9 +13,7 @@
         <a-tab-pane>
           <template #tab>
             <Icon icon="ant-design:user-outlined" size="18" />
-            <div class="pt-1">
-              我的
-            </div>
+            <div class="pt-1">我的</div>
           </template>
         </a-tab-pane>
       </a-tabs>
@@ -42,34 +40,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { viewList, pointConfigs } from '../../components/tools/index'
+import { defineComponent, ref } from 'vue';
+import { viewList, pointConfigs } from '../../components/tools/index';
 
 export default defineComponent({
   setup() {
     // 折叠面板
-    const visible = ref<boolean>(false)
+    const visible = ref<boolean>(false);
     // 处理拖拽开始
     function handleDragstart(event: DragEvent, name: string) {
       // 获取鼠标点击位置
-      const { offsetX, offsetY, target } = event
+      const { offsetX, offsetY, target } = event;
 
-      const { clientHeight: height, clientWidth: width } = target as HTMLElement
+      const { clientHeight: height, clientWidth: width } = target as HTMLElement;
 
-      const tool = { name, offset: { x: width / 2 - offsetX, y: height / 2 - offsetY } }
+      const tool = { name, offset: { x: width / 2 - offsetX, y: height / 2 - offsetY } };
 
       // 数据传递
-      event.dataTransfer?.setData('tool', JSON.stringify(tool))
+      event.dataTransfer?.setData('tool', JSON.stringify(tool));
     }
 
     // 处理标签切换
     function handleTabChange() {
-      visible.value = false
+      visible.value = false;
     }
 
-    return { viewList, visible, pointConfigs, handleDragstart, handleTabChange }
+    return { viewList, visible, pointConfigs, handleDragstart, handleTabChange };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

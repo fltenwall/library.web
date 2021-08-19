@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { queryPoint } from '../../utils'
+import { defineComponent } from 'vue';
+import { queryPoint } from '../../utils';
 
 export default defineComponent({
   props: {
@@ -15,13 +15,13 @@ export default defineComponent({
   },
   setup(props) {
     // 拖拽数据信息
-    const point = queryPoint(props.uuid)
+    const point = queryPoint(props.uuid);
 
-    console.log(point)
+    console.log(point);
 
-    return {}
+    return {};
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

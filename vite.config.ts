@@ -1,23 +1,23 @@
-import type { UserConfig, ConfigEnv } from 'vite'
-import { resolve } from 'path'
-import { loadEnv } from 'vite'
-import { wrapperEnv } from './build/utils'
-import { createProxy } from './build/config/vite/proxy'
-import { createVitePlugins } from './build/config/plugin'
-import { generateModifyVars } from './build/generate/generateModifyVars'
+import type { UserConfig, ConfigEnv } from 'vite';
+import { resolve } from 'path';
+import { loadEnv } from 'vite';
+import { wrapperEnv } from './build/utils';
+import { createProxy } from './build/config/vite/proxy';
+import { createVitePlugins } from './build/config/plugin';
+import { generateModifyVars } from './build/generate/generateModifyVars';
 
 function pathResolve(dir: string) {
-  return resolve(__dirname, '.', dir)
+  return resolve(__dirname, '.', dir);
 }
 
 export default ({ mode, command }: ConfigEnv): UserConfig => {
-  const root: string = process.cwd()
+  const root: string = process.cwd();
 
-  const env = loadEnv(mode, root)
-  const viteEnv = wrapperEnv(env)
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_DROP_CONSOLE, VITE_PROXY, VITE_OPEN } = viteEnv
+  const env = loadEnv(mode, root);
+  const viteEnv = wrapperEnv(env);
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_DROP_CONSOLE, VITE_PROXY, VITE_OPEN } = viteEnv;
 
-  const isBuild = command === 'build'
+  const isBuild = command === 'build';
 
   return {
     root,
@@ -84,5 +84,5 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     plugins: createVitePlugins(viteEnv, isBuild)
-  }
-}
+  };
+};

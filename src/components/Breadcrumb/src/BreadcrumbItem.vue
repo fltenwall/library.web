@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
+import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
   props: {
@@ -22,13 +22,13 @@ export default defineComponent({
     }
   },
   setup() {
-    const parent = inject('breadcrumb') as { separator: string }
+    const parent = inject('breadcrumb') as { separator: string };
 
     return {
       separator: parent.separator
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

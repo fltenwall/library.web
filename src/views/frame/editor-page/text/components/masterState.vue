@@ -3,9 +3,7 @@
     <Icon class="pointer" icon="mdi:language-markdown" size="30" />
     <template #overlay>
       <div class="master-content" @click.stop>
-        <div class="master-content-title">
-          快捷键
-        </div>
+        <div class="master-content-title">快捷键</div>
         <table class="w100">
           <thead>
             <tr>
@@ -28,7 +26,7 @@
   </a-dropdown>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -43,11 +41,11 @@ export default defineComponent({
       { title: '![alt](http://)', result: '图片', shortcut: 'Ctrl / ⌘ + Alt + I' },
       { title: '1. item', result: '有序列表', shortcut: 'Ctrl / ⌘ + Alt + L' },
       { title: '`code`', result: '<pre>Inline Code</pre>', shortcut: 'Ctrl / ⌘ + Alt + C' }
-    ]
+    ];
 
-    return { tableContent }
+    return { tableContent };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

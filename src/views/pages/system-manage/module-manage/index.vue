@@ -8,7 +8,12 @@
         <div class="fw-b fs-4 pb-4">
           {{ selectMenu.meta.title }}
         </div>
-        <GlobalTable bordered :columns="tableColumns" :data-source="[selectMenu]" :row-key="'name'" />
+        <GlobalTable
+          bordered
+          :columns="tableColumns"
+          :data-source="[selectMenu]"
+          :row-key="'name'"
+        />
       </div>
       <module-visit :identifier="selectMenu.name" />
     </div>
@@ -16,35 +21,35 @@
 </template>
 
 <script lang="ts">
-import type { FlatMenu } from '/@/router/types'
-import { defineComponent, ref } from 'vue'
-import { Scrollbar } from '/@/components/Scrollbar'
-import { getFlatMenus } from '/@/utils/helper/menu'
-import { PageEnum } from '/@/enums/pageEnum'
-import moduleTree from './module-tree.vue'
-import moduleVisit from './module-visit.vue'
-import { tableColumns } from './index'
+import type { FlatMenu } from '/@/router/types';
+import { defineComponent, ref } from 'vue';
+import { Scrollbar } from '/@/components/Scrollbar';
+import { getFlatMenus } from '/@/utils/helper/menu';
+import { PageEnum } from '/@/enums/pageEnum';
+import moduleTree from './module-tree.vue';
+import moduleVisit from './module-visit.vue';
+import { tableColumns } from './index';
 
 export default defineComponent({
   components: { moduleTree, Scrollbar, moduleVisit },
   setup() {
     // 查找菜单
-    const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name === key)
+    const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name === key);
 
     // 选中
-    const selectMenu = ref<FlatMenu | undefined>(findMenu(PageEnum.BASE_HOME))
+    const selectMenu = ref<FlatMenu | undefined>(findMenu(PageEnum.BASE_HOME));
 
     function handleSelect(selectedKey: string) {
-      selectMenu.value = findMenu(selectedKey)
+      selectMenu.value = findMenu(selectedKey);
     }
 
     return {
       tableColumns,
       handleSelect,
       selectMenu
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

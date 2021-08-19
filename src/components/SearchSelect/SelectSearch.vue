@@ -19,18 +19,18 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref } from 'vue'
-import { debounce } from 'lodash-es'
-import { defineComponent, PropType, computed, toRefs } from 'vue'
-import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
+import { ref, Ref } from 'vue';
+import { debounce } from 'lodash-es';
+import { defineComponent, PropType, computed, toRefs } from 'vue';
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
 
 const useSelectReadonly = (readonly: Ref<boolean>) => {
   return computed(() => {
-    const dataPage = injectDatapage()
-    return readonly.value || dataPage.readonly?.value
-  })
-}
+    const dataPage = injectDatapage();
+    return readonly.value || dataPage.readonly?.value;
+  });
+};
 
 export default defineComponent({
   props: {
@@ -45,31 +45,34 @@ export default defineComponent({
   },
   emits: ['on-change', 'on-search', 'on-focus'],
   setup(props, { emit }) {
-    const { readonly } = toRefs(props)
+    const { readonly } = toRefs(props);
     // 加载
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
     // 方法
-    const listPage = injectListPage()
+    const listPage = injectListPage();
     // 内容发送变化触发
     const onChange = (value: string, options: { key: number }) => {
-      emit('on-change', value, options)
-    }
+      emit('on-change', value, options);
+    };
     // 设置加载
-    const setLoadState = (state: boolean) => (loading.value = state)
+    const setLoadState = (state: boolean) => (loading.value = state);
     // 处理加载
     const onSearch = (value: string) => {
-      value && (setLoadState(true), useDebugger(value))
-    }
-    const useDebugger = debounce((value: string) => emit('on-search', value, () => setLoadState(false)), 1000)
-    const selectReadonly = useSelectReadonly(readonly)
+      value && (setLoadState(true), useDebugger(value));
+    };
+    const useDebugger = debounce(
+      (value: string) => emit('on-search', value, () => setLoadState(false)),
+      1000
+    );
+    const selectReadonly = useSelectReadonly(readonly);
 
-    const onSelect = () => listPage.onFetchData?.()
+    const onSelect = () => listPage.onFetchData?.();
 
-    const onFocus = () => emit('on-focus')
+    const onFocus = () => emit('on-focus');
 
-    return { selectReadonly, loading, onChange, onSearch, onSelect, onFocus }
+    return { selectReadonly, loading, onChange, onSearch, onSelect, onFocus };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -1,25 +1,25 @@
 // 组件数据
 export interface PointInfo {
   // 唯一值
-  uuid?: string
+  uuid?: string;
 
   // 距离左边位置
-  x?: number
+  x?: number;
 
   // 距离顶部位置
-  y?: number
+  y?: number;
 
   // 工具名称
-  name?: string
+  name?: string;
 
   // 宽度
-  width?: number
+  width?: number;
 
   // 高度
-  height?: number
+  height?: number;
 
   // 层级
-  zIndex?: number
+  zIndex?: number;
 
-  [key: string]: unknown
+  [key: string]: unknown;
 }

@@ -1,9 +1,9 @@
-import store from '/@/store/index'
-import { VuexModule, Mutation, Module, getModule, Action } from 'vuex-module-decorators'
-import Service, { UserInfo, LoginParams, Security, CSRF } from '/@/api/security'
-import { isNull } from '/@/utils/is'
+import store from '/@/store/index';
+import { VuexModule, Mutation, Module, getModule, Action } from 'vuex-module-decorators';
+import Service, { UserInfo, LoginParams, Security, CSRF } from '/@/api/security';
+import { isNull } from '/@/utils/is';
 
-const NAME = 'user'
+const NAME = 'user';
 
 /**
  * dynamic: true: 动态创建动态模块,即new Vuex.Store({})里面不用注册的,
@@ -12,33 +12,33 @@ const NAME = 'user'
  */
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class User extends VuexModule {
-  private userInfoState: UserInfo | null = null
+  private userInfoState: UserInfo | null = null;
 
-  private tokenState: CSRF | null = null
+  private tokenState: CSRF | null = null;
 
   // 获取用户信息
   get getUserInfoState(): UserInfo | null {
-    return this.userInfoState
+    return this.userInfoState;
   }
 
   get getTokenState(): CSRF | null {
-    return this.tokenState
+    return this.tokenState;
   }
 
   @Mutation
   commitResetState(): void {
-    this.userInfoState = null
-    this.tokenState = null
+    this.userInfoState = null;
+    this.tokenState = null;
   }
 
   @Mutation
   commitUserInfoState(info: UserInfo): void {
-    this.userInfoState = info
+    this.userInfoState = info;
   }
 
   @Mutation
   commitTokenState(info: CSRF): void {
-    this.tokenState = info
+    this.tokenState = info;
   }
 
   /**
@@ -49,17 +49,17 @@ export default class User extends VuexModule {
     if (isNull(this.userInfoState)) {
       return new Promise(async (resolve, reject) => {
         try {
-          const { user } = await this.getAccountInfoAction()
-          resolve(user)
+          const { user } = await this.getAccountInfoAction();
+          resolve(user);
         } catch (err) {
-          reject(err)
+          reject(err);
         }
-      })
+      });
     }
 
     return new Promise((resolve) => {
-      resolve(this.userInfoState!)
-    })
+      resolve(this.userInfoState!);
+    });
   }
 
   /**
@@ -69,15 +69,15 @@ export default class User extends VuexModule {
   async getAccountInfoAction(): Promise<Security> {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data: accountInfo } = await Service.getAccountInfo()
-        const { user, _csrf } = accountInfo
-        this.commitUserInfoState(user)
-        this.commitTokenState(_csrf)
-        resolve(accountInfo)
+        const { data: accountInfo } = await Service.getAccountInfo();
+        const { user, _csrf } = accountInfo;
+        this.commitUserInfoState(user);
+        this.commitTokenState(_csrf);
+        resolve(accountInfo);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -87,13 +87,13 @@ export default class User extends VuexModule {
   login(params: LoginParams): Promise<UserInfo> {
     return new Promise(async (reslove, reject) => {
       try {
-        await Service.loginApi(params)
-        const { user } = await this.getAccountInfoAction()
-        reslove(user)
+        await Service.loginApi(params);
+        const { user } = await this.getAccountInfoAction();
+        reslove(user);
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 
   /**
@@ -103,14 +103,14 @@ export default class User extends VuexModule {
   logout(): Promise<void> {
     return new Promise(async (reslove, reject) => {
       try {
-        await Service.logoutApi()
-        reslove()
+        await Service.logoutApi();
+        reslove();
       } catch (err) {
-        reject(err)
+        reject(err);
       }
-    })
+    });
   }
 }
 
-export { User }
-export const userStore = getModule<User>(User)
+export { User };
+export const userStore = getModule<User>(User);

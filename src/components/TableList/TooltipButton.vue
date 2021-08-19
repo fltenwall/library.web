@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue';
 
 export default defineComponent({
   props: {
@@ -23,16 +23,16 @@ export default defineComponent({
   setup(_props, { emit }) {
     // 点击按键触发
     function onClick() {
-      visible.value = false
-      emit('on-click')
+      visible.value = false;
+      emit('on-click');
     }
-    const visible = ref<boolean>(false)
+    const visible = ref<boolean>(false);
     return {
       visible,
       onClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

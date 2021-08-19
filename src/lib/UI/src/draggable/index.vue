@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
-type Type = 'mouse' | 'ew' | 'ns' | 'se'
+type Type = 'mouse' | 'ew' | 'ns' | 'se';
 
 export default defineComponent({
   props: {
@@ -27,63 +27,63 @@ export default defineComponent({
   emits: ['on-move', 'on-end', 'on-start', 'on-resize'],
   setup(props, { emit }) {
     // 开始位置
-    let startX: number, startY: number
+    let startX: number, startY: number;
     // 位移数据
-    let distanceX = 0
-    let distanceY = 0
+    let distanceX = 0;
+    let distanceY = 0;
     // 事件名称
 
-    let eventType: Type
+    let eventType: Type;
     // 鼠标按下
     function startMove(event: Mouse, name: Type) {
       // 判断鼠标按键
-      if (event.button !== 0) return
+      if (event.button !== 0) return;
       // 鼠标按下
       // this.isMove = true
       // 设置开始位置
-      startX = event.pageX
-      startY = event.pageY
+      startX = event.pageX;
+      startY = event.pageY;
       // 事件类型
-      eventType = name
+      eventType = name;
       // 记录开始滚动条位置
       // this.startTop = this.screenTop
       // 设置移动事件 鼠标抬起事件
-      document.addEventListener('mousemove', moving, false)
-      document.addEventListener('mouseup', endMove, false)
+      document.addEventListener('mousemove', moving, false);
+      document.addEventListener('mouseup', endMove, false);
 
-      emit('on-start', { uuid: props.uuid, type: eventType })
+      emit('on-start', { uuid: props.uuid, type: eventType });
     }
 
     // 拖拽移动事件
     function moving(event: Mouse) {
       // 获取移动 时 x, y 位置
-      const currentX = event.pageX
-      const currentY = event.pageY
+      const currentX = event.pageX;
+      const currentY = event.pageY;
       // 计算 开始移动 到 此刻的 距离
-      distanceX = currentX - startX
-      distanceY = currentY - startY
+      distanceX = currentX - startX;
+      distanceY = currentY - startY;
 
-      emit('on-move', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType })
+      emit('on-move', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
     }
 
     // 拖拽结束事件
     function endMove() {
       // 没有移动不更新
       if (distanceX !== 0 || distanceX !== 0) {
-        emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType })
+        emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
       }
 
       // 清空数据
-      distanceX = distanceY = 0
+      distanceX = distanceY = 0;
 
       // 移除移动事件 鼠标抬起事件
-      document.removeEventListener('mousemove', moving)
-      document.removeEventListener('mouseup', endMove)
+      document.removeEventListener('mousemove', moving);
+      document.removeEventListener('mouseup', endMove);
     }
 
-    return { startMove }
+    return { startMove };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

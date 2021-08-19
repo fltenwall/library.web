@@ -33,10 +33,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from 'vue'
-import { Form } from 'ant-design-vue'
+import { defineComponent, reactive, ref, watch } from 'vue';
+import { Form } from 'ant-design-vue';
 
-const useForm = Form.useForm
+const useForm = Form.useForm;
 
 export default defineComponent({
   props: {
@@ -55,64 +55,67 @@ export default defineComponent({
   },
   emits: ['update:value', 'on-confirm'],
   setup(props, { emit }) {
-    const dataItem = reactive<{ password?: string; repeat?: string }>({ password: '', repeat: '' })
+    const dataItem = reactive<{ password?: string; repeat?: string }>({ password: '', repeat: '' });
 
     const rules = reactive({
       password: [
         {
           validator: (_rule: unknown, value: string): Promise<void> => {
-            if (!value) return Promise.reject('不允许为空')
-            if (dataItem.repeat) validate('repeat').catch(() => ({}))
-            return Promise.resolve()
+            if (!value) return Promise.reject('不允许为空');
+            if (dataItem.repeat) validate('repeat').catch(() => ({}));
+            return Promise.resolve();
           }
         }
       ],
       repeat: [
         {
           validator: (_rule: unknown, value: string): Promise<void> => {
-            if (!dataItem.password) return Promise.resolve()
-            if (!value) return Promise.reject('不允许为空')
-            let character = value.replace(/(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g, '\\$1')
-            if (props.loading) character = `^${character}$`
-            else character = `^${character}.*`
-            if (new RegExp(character).test(dataItem.password!)) return Promise.resolve()
-            return Promise.reject('两次输入的密码不一致')
+            if (!dataItem.password) return Promise.resolve();
+            if (!value) return Promise.reject('不允许为空');
+            let character = value.replace(
+              /(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g,
+              '\\$1'
+            );
+            if (props.loading) character = `^${character}$`;
+            else character = `^${character}.*`;
+            if (new RegExp(character).test(dataItem.password!)) return Promise.resolve();
+            return Promise.reject('两次输入的密码不一致');
           }
         }
       ]
-    })
+    });
 
-    const visible = ref<boolean>(props.value)
+    const visible = ref<boolean>(props.value);
 
-    const { validate, validateInfos, resetFields } = useForm(dataItem, rules)
+    const { validate, validateInfos, resetFields } = useForm(dataItem, rules);
 
-    const onCancel = () => emit('update:value', false)
+    const onCancel = () => emit('update:value', false);
 
     const onConfirm = async () => {
-      if (!(await validItem())) return
-      emit('on-confirm', dataItem.password)
-    }
+      if (!(await validItem())) return;
+      emit('on-confirm', dataItem.password);
+    };
 
     async function validItem() {
       try {
-        await validate()
-        return true
+        await validate();
+        return true;
       } catch (err) {
-        return false
+        return false;
       }
     }
 
     watch(
       () => props.value,
       (val) => {
-        visible.value = val
-        resetFields()
+        visible.value = val;
+        resetFields();
       }
-    )
+    );
 
-    return { visible, dataItem, validateInfos, validate, onCancel, onConfirm }
+    return { visible, dataItem, validateInfos, validate, onCancel, onConfirm };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

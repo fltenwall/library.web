@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '/@/router/types'
+import type { AppRouteRecordRaw } from '/@/router/types';
 
 /**
  * @description 概述页面
@@ -12,7 +12,7 @@ export const OverviewPage: AppRouteRecordRaw = {
     affix: true,
     icon: 'ant-design:home-outlined'
   }
-}
+};
 
 export const AnalysisPage: AppRouteRecordRaw = {
   path: 'analysis-page',
@@ -22,7 +22,7 @@ export const AnalysisPage: AppRouteRecordRaw = {
     title: '分析页',
     icon: 'ant-design:dashboard-outlined'
   }
-}
+};
 
 /**
  * @description 系统首页
@@ -34,7 +34,7 @@ export const IndexPage: AppRouteRecordRaw = {
   meta: {
     ignoreAuth: true
   }
-}
+};
 
 /**
  * @description 页面丢失
@@ -48,7 +48,7 @@ export const NoFountPage: AppRouteRecordRaw = {
     ignoreTab: true,
     ignoreAuth: true
   }
-}
+};
 
 /**
  * @description 没有权限, 禁止访问
@@ -62,4 +62,4 @@ export const Forbidden: AppRouteRecordRaw = {
     ignoreTab: true,
     ignoreAuth: true
   }
-}
+};

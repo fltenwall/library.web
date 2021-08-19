@@ -19,17 +19,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import service, { UserManage } from '/@/api/system-manage/user-manage'
-import { Instance } from '/@/lib/interface/ListPage'
-import { listPageMix } from '/@/lib/idata/data-list/'
-import passwordModal from '/@/components/passwordModal.vue'
-import searchPanle from './search-panle.vue'
-import listView from './list-view.vue'
-import { message } from 'ant-design-vue'
-import md5 from '/@/utils/encryption/md5'
+import { defineComponent, reactive, toRefs } from 'vue';
+import service, { UserManage } from '/@/api/system-manage/user-manage';
+import { Instance } from '/@/lib/interface/ListPage';
+import { listPageMix } from '/@/lib/idata/data-list/';
+import passwordModal from '/@/components/passwordModal.vue';
+import searchPanle from './search-panle.vue';
+import listView from './list-view.vue';
+import { message } from 'ant-design-vue';
+import md5 from '/@/utils/encryption/md5';
 
-const DATA_PAGE_NAME = 'system-manage-user-manage-data-page'
+const DATA_PAGE_NAME = 'system-manage-user-manage-data-page';
 
 export default defineComponent({
   components: { listView, searchPanle, passwordModal },
@@ -40,7 +40,7 @@ export default defineComponent({
       searchInstance: null,
       // 列表实例
       listInstance: null
-    })
+    });
 
     // 配置信息
     const options = {
@@ -51,43 +51,43 @@ export default defineComponent({
       deleteDataFromServer,
 
       instance
-    }
+    };
 
-    const { onFetchData, onSearchData, queryData } = listPageMix<UserManage>(options)
+    const { onFetchData, onSearchData, queryData } = listPageMix<UserManage>(options);
 
     // 对话框
-    const modalData = reactive({ visible: false, id: -1, loading: false })
+    const modalData = reactive({ visible: false, id: -1, loading: false });
 
     // 从服务器取得数据 设置列表数据
     async function fetchDataFromServer() {
-      const query = queryData()
-      const { data } = await service.fecthList(query)
-      instance.listInstance?.setDataSource(data.content, data.totalElements)
+      const query = queryData();
+      const { data } = await service.fecthList(query);
+      instance.listInstance?.setDataSource(data.content, data.totalElements);
     }
 
     // 删除数据, 刷新数据
     async function deleteDataFromServer(id: number) {
-      await service.deleteItemById(id)
-      onFetchData()
+      await service.deleteItemById(id);
+      onFetchData();
     }
 
     // 打开对话框
     function openPasswordModal({ id }: UserManage) {
-      modalData.visible = true
-      modalData.id = id!
+      modalData.visible = true;
+      modalData.id = id!;
     }
 
     // 密码修改
     async function handleUpdatePassword(password: string) {
       try {
-        modalData.loading = true
-        await service.updatePassword(modalData.id, md5(password))
-        message.success('重置成功')
-        modalData.visible = false
+        modalData.loading = true;
+        await service.updatePassword(modalData.id, md5(password));
+        message.success('重置成功');
+        modalData.visible = false;
       } catch (err) {
-        message.error(`重置失败: ${err.msg}`)
+        message.error(`重置失败: ${err.msg}`);
       } finally {
-        modalData.loading = false
+        modalData.loading = false;
       }
     }
 
@@ -98,9 +98,9 @@ export default defineComponent({
       ...toRefs(instance),
       openPasswordModal,
       handleUpdatePassword
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

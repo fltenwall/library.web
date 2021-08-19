@@ -30,43 +30,43 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { tableColumns } from './data-list'
-import { FormManage } from '/@/api/page-manage/form-page'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
-import { usePagination } from '/@/hooks/web/usePagination'
+import { defineComponent, ref } from 'vue';
+import { tableColumns } from './data-list';
+import { FormManage } from '/@/api/page-manage/form-page';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
+import { usePagination } from '/@/hooks/web/usePagination';
 
 export default defineComponent({
   emits: ['on-page-change', 'on-refresh', 'on-compose-page'],
   setup(_props, { emit }) {
     // 数据源
-    const dataSource = ref<FormManage[]>([])
+    const dataSource = ref<FormManage[]>([]);
 
     // 总数据
-    const totalElements = ref<number>(0)
+    const totalElements = ref<number>(0);
 
-    const listPage = injectListPage<FormManage>()
+    const listPage = injectListPage<FormManage>();
 
     // 数据加载
-    const loading = listPage.loading
+    const loading = listPage.loading;
     // 添加新的数据
-    const onNewDataItem = () => listPage.onNewDataItem()
+    const onNewDataItem = () => listPage.onNewDataItem();
     // 查看数据
-    const onViewDataItem = (record: FormManage) => listPage.onViewDataItem(record)
+    const onViewDataItem = (record: FormManage) => listPage.onViewDataItem(record);
     // 编辑数据
-    const onEditDataItem = (record: FormManage) => listPage.onEditDataItem(record)
+    const onEditDataItem = (record: FormManage) => listPage.onEditDataItem(record);
     // 删除数据
-    const onDeleteDataItem = (record: FormManage) => listPage.onDeleteDataItem(record)
+    const onDeleteDataItem = (record: FormManage) => listPage.onDeleteDataItem(record);
     // 排版页面
-    const onComposePage = (record: FormManage) => emit('on-compose-page', record)
+    const onComposePage = (record: FormManage) => emit('on-compose-page', record);
 
-    const pagination = usePagination()
+    const pagination = usePagination();
 
     // 页面发生变化
-    const onPageChange = () => emit('on-page-change')
+    const onPageChange = () => emit('on-page-change');
 
     // 处理刷新
-    const onRefresh = () => emit('on-refresh')
+    const onRefresh = () => emit('on-refresh');
 
     return {
       loading,
@@ -81,16 +81,16 @@ export default defineComponent({
       onViewDataItem,
       onEditDataItem,
       onDeleteDataItem
-    }
+    };
   },
   methods: {
     // 设置数据源
     setDataSource(data: FormManage[], total: number) {
-      this.dataSource = data
-      this.totalElements = total
+      this.dataSource = data;
+      this.totalElements = total;
     }
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

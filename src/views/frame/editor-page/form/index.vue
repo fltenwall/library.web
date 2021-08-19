@@ -29,7 +29,7 @@
             @focus="onInputFocus"
             @blur="onInputBlur"
             @input="onInputChange"
-          >
+          />
           <div class="edit-icon-wrap">
             <Icon v-show="!inputState" icon="entypo:edit" class="pointer" @click="onClickEdit" />
           </div>
@@ -37,15 +37,9 @@
       </template>
       <template #right>
         <div class="header-right flex">
-          <div class="button pointer index-center-middle">
-            保存
-          </div>
-          <div class="button pointer index-center-middle">
-            预览
-          </div>
-          <div class="button-primary index-center-middle" @click="onGoBack">
-            返回
-          </div>
+          <div class="button pointer index-center-middle">保存</div>
+          <div class="button pointer index-center-middle">预览</div>
+          <div class="button-primary index-center-middle" @click="onGoBack">返回</div>
         </div>
       </template>
     </PublicHeader>
@@ -58,62 +52,62 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, reactive, ref, unref } from 'vue'
-import { useRouter } from 'vue-router'
-import actionArea from './src/actionArea/index.vue'
-import toolArea from './src/toolArea/index.vue'
-import viewArea from './src/viewArea/index.vue'
-import service from '/@/api/page-manage/form-page'
-import { pointStore } from '/@/store/modules/point'
-import pointLinked from './utils/pointLinked'
-import useViewSize from './utils/useViewSize'
+import { computed, defineComponent, onBeforeUnmount, reactive, ref, unref } from 'vue';
+import { useRouter } from 'vue-router';
+import actionArea from './src/actionArea/index.vue';
+import toolArea from './src/toolArea/index.vue';
+import viewArea from './src/viewArea/index.vue';
+import service from '/@/api/page-manage/form-page';
+import { pointStore } from '/@/store/modules/point';
+import pointLinked from './utils/pointLinked';
+import useViewSize from './utils/useViewSize';
 
 export default defineComponent({
   components: { actionArea, toolArea, viewArea },
   setup() {
-    const pageOptions = computed(() => pointStore.getPageOptionsState)
+    const pageOptions = computed(() => pointStore.getPageOptionsState);
 
-    const { currentRoute, back } = useRouter()
+    const { currentRoute, back } = useRouter();
 
-    const inputRef = ref<HTMLElement | null>(null)
+    const inputRef = ref<HTMLElement | null>(null);
 
-    const inputState = ref<boolean>(false)
+    const inputState = ref<boolean>(false);
 
-    const actionItem = reactive<{ visible: boolean }>({ visible: false })
+    const actionItem = reactive<{ visible: boolean }>({ visible: false });
     // 处理点击编辑
-    const onClickEdit = () => inputRef.value?.focus()
+    const onClickEdit = () => inputRef.value?.focus();
     // 处理页面返回
-    const onGoBack = () => back()
+    const onGoBack = () => back();
     // 处理输入框获取焦点
-    const onInputFocus = () => (inputState.value = true)
+    const onInputFocus = () => (inputState.value = true);
     // 处理输入框失去焦点
-    const onInputBlur = () => (inputState.value = false)
+    const onInputBlur = () => (inputState.value = false);
     // 处理输入内容
     function onInputChange(e: Event) {
-      const value = (e.target as unknown as { value: string }).value
-      pointStore.commitUpdatePageOptionsState({ key: 'name', value })
+      const value = (e.target as unknown as { value: string }).value;
+      pointStore.commitUpdatePageOptionsState({ key: 'name', value });
     }
 
     // 使用链表
-    const linked = pointLinked()
+    const linked = pointLinked();
 
     // 视图大小
-    useViewSize()
+    useViewSize();
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
-      const { data } = await service.getItemById(id)
-      pointStore.commitSetPageOptionsState(data)
+      const { data } = await service.getItemById(id);
+      pointStore.commitSetPageOptionsState(data);
     }
 
     // 点击 point
     function handleClickPoint() {
-      actionItem.visible = false
+      actionItem.visible = false;
     }
 
-    onBeforeUnmount(() => pointStore.commitEmptyState())
+    onBeforeUnmount(() => pointStore.commitEmptyState());
 
-    onLoadDataById(+unref(currentRoute).params.id)
+    onLoadDataById(+unref(currentRoute).params.id);
 
     return {
       actionItem,
@@ -127,9 +121,9 @@ export default defineComponent({
       onGoBack,
       ...linked,
       handleClickPoint
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

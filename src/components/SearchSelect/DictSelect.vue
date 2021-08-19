@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import { message } from 'ant-design-vue'
-import SelectSearch from './SelectSearch.vue'
-import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail'
+import { defineComponent, ref, watch } from 'vue';
+import { message } from 'ant-design-vue';
+import SelectSearch from './SelectSearch.vue';
+import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 
 export default defineComponent({
   components: { SelectSearch },
@@ -32,37 +32,37 @@ export default defineComponent({
   emits: ['update:value'],
   setup(props, { emit }) {
     // 选中的数据
-    const selectData = ref<string | undefined>(undefined)
+    const selectData = ref<string | undefined>(undefined);
 
     // 数据集合
-    const options = ref<DictionaryDetail[]>([])
+    const options = ref<DictionaryDetail[]>([]);
 
     // 加载数据
     async function loadData(query: string) {
       try {
-        const { data } = await service.fecthListByType(query)
-        options.value = data
+        const { data } = await service.fecthListByType(query);
+        options.value = data;
       } catch (err) {
-        message.error('加载数据失败')
+        message.error('加载数据失败');
       }
     }
 
     // 更新数据
     function handleChange(val: string) {
-      emit('update:value', val)
+      emit('update:value', val);
     }
 
     watch(
       () => props.value,
       (val) => (selectData.value = val),
       { immediate: true }
-    )
+    );
 
-    loadData(props.type)
+    loadData(props.type);
 
-    return { selectData, options, handleChange }
+    return { selectData, options, handleChange };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

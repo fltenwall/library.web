@@ -1,17 +1,17 @@
-import type { App } from 'vue'
-import { createStore } from 'vuex'
-import { config } from 'vuex-module-decorators'
-import { isDevMode } from '/@/lib/env'
-config.rawError = true
+import type { App } from 'vue';
+import { createStore } from 'vuex';
+import { config } from 'vuex-module-decorators';
+import { isDevMode } from '/@/lib/env';
+config.rawError = true;
 
-const isDev = isDevMode()
+const isDev = isDevMode();
 const store = createStore({
   modules: {},
   strict: isDev
-})
+});
 
 export function setupStore(app: App<Element>): void {
-  app.use(store)
+  app.use(store);
 }
 
-export default store
+export default store;

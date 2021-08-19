@@ -33,13 +33,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, computed } from 'vue'
-import { templateList } from '../../components/tools/template'
-import { pointStore } from '/@/store/modules/point'
-import { pointConfigs } from '../../components/tools/index'
-import { QuestionCircleOutlined } from '@ant-design/icons-vue'
-import toolAttribute from '../../components/tool-attribute.vue'
-import formPoint from '../../components/form-point.vue'
+import { defineComponent, ref, watch, computed } from 'vue';
+import { templateList } from '../../components/tools/template';
+import { pointStore } from '/@/store/modules/point';
+import { pointConfigs } from '../../components/tools/index';
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
+import toolAttribute from '../../components/tool-attribute.vue';
+import formPoint from '../../components/form-point.vue';
 
 export default defineComponent({
   components: { ...templateList, toolAttribute, formPoint, QuestionCircleOutlined },
@@ -51,24 +51,24 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const pointInfo = computed(() => pointStore.getPointInfo)
+    const pointInfo = computed(() => pointStore.getPointInfo);
 
     // 折叠面板
-    const visible = ref<boolean>(props.value)
+    const visible = ref<boolean>(props.value);
 
     watch(
       () => visible.value,
       (val) => emit('update:value', val)
-    )
+    );
 
     watch(
       () => props.value,
       (val) => (visible.value = val)
-    )
+    );
 
-    return { visible, pointConfigs, pointInfo }
+    return { visible, pointConfigs, pointInfo };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

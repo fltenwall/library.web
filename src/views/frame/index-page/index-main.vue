@@ -12,26 +12,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { PageEnum } from '/@/enums/pageEnum'
-import { useGo } from '/@/hooks/web/usePage'
-import { InputSearch } from '/@/lib/UI/'
+import { defineComponent } from 'vue';
+import { PageEnum } from '/@/enums/pageEnum';
+import { useGo } from '/@/hooks/web/usePage';
+import { InputSearch } from '/@/lib/UI/';
 
 export default defineComponent({
   components: { InputSearch },
   setup() {
-    const go = useGo()
+    const go = useGo();
 
     // 处理用户按下 enter
     function handleEnter(val: string) {
-      val && go({ name: PageEnum.SEARCH_PAGE, query: { q: val } })
+      val && go({ name: PageEnum.SEARCH_PAGE, query: { q: val } });
     }
 
     return {
       handleEnter
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -11,22 +11,22 @@
 </template>
 
 <script lang="ts">
-import type { InputSchema } from './schema'
-import { defineComponent, reactive } from 'vue'
-import { templateInit } from '../../utils'
-import uiInput from '/@/lib/UI/src/input/index'
+import type { InputSchema } from './schema';
+import { defineComponent, reactive } from 'vue';
+import { templateInit } from '../../utils';
+import uiInput from '/@/lib/UI/src/input/index';
 
 export default defineComponent({
   components: { uiInput },
   setup() {
     // 数据集合
-    const dataItem = reactive<Partial<InputSchema>>({})
+    const dataItem = reactive<Partial<InputSchema>>({});
 
-    templateInit<Partial<InputSchema>>(dataItem)
+    templateInit<Partial<InputSchema>>(dataItem);
 
-    return { dataItem }
+    return { dataItem };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * 服务器回复数据
  */
 export interface Result<T = any> {
-  code: number
-  msg: string
-  data: T
+  code: number;
+  msg: string;
+  data: T;
 }
 
 /**
@@ -12,10 +13,10 @@ export interface Result<T = any> {
  * sort=firstname&srot=lastname,desc表示按firstname正序排序排列基础上按lastname倒序排列
  */
 export interface PagerQueryData {
-  page: number
-  size: number
-  sort: string
-  [prop: string]: any
+  page: number;
+  size: number;
+  sort: string;
+  [prop: string]: any;
 }
 
 /**
@@ -23,23 +24,23 @@ export interface PagerQueryData {
  */
 export interface ResponseData<T = any> {
   // 数据
-  content: Array<T>
+  content: Array<T>;
   // 总个数
-  totalElements: number
+  totalElements: number;
   // 总页数
-  totalPages: number
+  totalPages: number;
 }
 
 /**
  * 服务器回复错误
  */
 export interface ResponseError {
-  code: number
-  msg: string
-  headers?: any
+  code: number;
+  msg: string;
+  headers?: any;
 }
 
 /**
  * 分页数据结果
  */
-export interface PagerResponseData<T> extends Result<ResponseData<T>> {}
+export type PagerResponseData<T> = Result<ResponseData<T>>;

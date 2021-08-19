@@ -38,9 +38,7 @@
 
     <!-- 操作 -->
     <template #footer-block>
-      <a-button v-if="!readonly" @click="onRestPage">
-        重置
-      </a-button>
+      <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
       <a-button v-if="readonly" v-show-by-auth="'ROLE:UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
@@ -52,52 +50,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import { dataPageMix } from '/@/lib/idata/data-page/'
-import { formRules } from './data-page'
-import { assign } from 'lodash-es'
-import service, { RoleManage } from '/@/api/system-manage/role-mange'
-import treeMenu from './components/tree-menu.vue'
+import { defineComponent, reactive, toRefs } from 'vue';
+import { dataPageMix } from '/@/lib/idata/data-page/';
+import { formRules } from './data-page';
+import { assign } from 'lodash-es';
+import service, { RoleManage } from '/@/api/system-manage/role-mange';
+import treeMenu from './components/tree-menu.vue';
 
 export default defineComponent({
   components: { treeMenu },
   setup() {
-    const dataItem = reactive<RoleManage>({ isDefault: 0 })
-    const rules = reactive(formRules)
-    const onServerMethods = { onNewData, onSaveData, onLoadDataById }
-    const parameter = { rules, dataItem, onServerMethods }
-    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<RoleManage>(parameter)
-    const { mode, readonly } = toRefs(pageInfo)
+    const dataItem = reactive<RoleManage>({ isDefault: 0 });
+    const rules = reactive(formRules);
+    const onServerMethods = { onNewData, onSaveData, onLoadDataById };
+    const parameter = { rules, dataItem, onServerMethods };
+    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<RoleManage>(parameter);
+    const { mode, readonly } = toRefs(pageInfo);
 
     const selectOption = [
       { value: 1, label: '是' },
       { value: 0, label: '否' }
-    ]
+    ];
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
-      const { data } = await service.getItemById(id)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.getItemById(id);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 保存数据
     async function onSaveData(id: number, contrast: RoleManage) {
-      const { data } = await service.updateItem(id, contrast)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.updateItem(id, contrast);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 新增数据
     async function onNewData() {
-      const { data } = await service.saveNewItem(dataItem)
-      assign(dataItem, data)
-      changeDataType()
+      const { data } = await service.saveNewItem(dataItem);
+      assign(dataItem, data);
+      changeDataType();
     }
 
     // 改变数据类型
     function changeDataType() {
-      dataItem.isDefault = dataItem.isDefault ? 1 : 0
+      dataItem.isDefault = dataItem.isDefault ? 1 : 0;
     }
 
     return {
@@ -108,9 +106,9 @@ export default defineComponent({
       selectOption,
       validateInfos,
       ...onDataMethods
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

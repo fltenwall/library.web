@@ -1,5 +1,5 @@
-import type { FromRules } from '/@/lib/interface/From'
-import type { TableColumn } from '/@/lib/props/TableList'
+import type { FromRules } from '/@/lib/interface/From';
+import type { TableColumn } from '/@/lib/props/TableList';
 
 export const formRules: FromRules = {
   name: [
@@ -16,12 +16,12 @@ export const formRules: FromRules = {
       message: '不允许为空'
     }
   ]
-}
+};
 
 export const selectOption = [
   { value: 1, label: '正常' },
   { value: 0, label: '停用' }
-]
+];
 
 export const dataTypeColumn: TableColumn[] = [
   {
@@ -63,7 +63,7 @@ export const dataTypeColumn: TableColumn[] = [
     dataIndex: 'operation',
     slots: { customRender: 'operation' }
   }
-]
+];
 
 export const dictDetailRules: FromRules = {
   label: [
@@ -80,4 +80,4 @@ export const dictDetailRules: FromRules = {
       message: '不允许为空'
     }
   ]
-}
+};

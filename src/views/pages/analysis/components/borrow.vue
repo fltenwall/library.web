@@ -2,17 +2,11 @@
   <div class="borrow-wrap">
     <div class="borrow-header">
       <div>
-        <div class="borrow-header-title">
-          借书量
-        </div>
-        <div class="borrow-header-content">
-          0
-        </div>
+        <div class="borrow-header-title">借书量</div>
+        <div class="borrow-header-content">0</div>
       </div>
       <div>
-        <a-tag color="#faad14" class="index-no-margin">
-          周
-        </a-tag>
+        <a-tag color="#faad14" class="index-no-margin"> 周 </a-tag>
       </div>
     </div>
     <div class="borrow-main index-middle">
@@ -35,15 +29,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons-vue'
+import { defineComponent } from 'vue';
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
   components: { CaretUpOutlined, CaretDownOutlined },
   setup() {
-    return {}
+    return {};
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -1,7 +1,7 @@
-import { defineComponent } from 'vue'
-import config from '/@/config/'
-import { PageEnum } from '/@/enums/pageEnum'
-import { useGo } from '/@/hooks/web/usePage'
+import { defineComponent } from 'vue';
+import config from '/@/config/';
+import { PageEnum } from '/@/enums/pageEnum';
+import { useGo } from '/@/hooks/web/usePage';
 
 export default defineComponent({
   props: {
@@ -11,9 +11,9 @@ export default defineComponent({
     }
   },
   setup(props, { attrs }) {
-    const go = useGo()
+    const go = useGo();
 
-    const onTitleClick = () => go({ name: PageEnum.INDEX_PAGE })
+    const onTitleClick = () => go({ name: PageEnum.INDEX_PAGE });
 
     return () => (
       <header class={[attrs.class, 'index-middle', 'pbulic-header']}>
@@ -24,6 +24,6 @@ export default defineComponent({
           </div>
         </div>
       </header>
-    )
+    );
   }
-})
+});

@@ -34,8 +34,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import { validData } from '/@/utils/regExp'
+import { defineComponent, reactive } from 'vue';
+import { validData } from '/@/utils/regExp';
 
 export default defineComponent({
   emits: ['on-change'],
@@ -43,31 +43,31 @@ export default defineComponent({
     const formData = reactive({
       phone: '',
       code: ''
-    })
+    });
     // 错误信息
     const error = reactive({
       code: false,
       phone: false
-    })
-    const onChange = () => emit('on-change', 'phone')
+    });
+    const onChange = () => emit('on-change', 'phone');
 
     // 按下 Enter
     const onEnter = () => {
       // console.log(formData)
-    }
+    };
 
     // 输入电话失去焦点
     const onPhoneBlur = () => {
       if (!formData.phone || validData({ data: formData.phone, rule: 'telephone' })) {
-        error.phone = false
+        error.phone = false;
       } else {
-        error.phone = true
+        error.phone = true;
       }
-    }
+    };
 
-    return { formData, error, validData, onEnter, onChange, onPhoneBlur }
+    return { formData, error, validData, onEnter, onChange, onPhoneBlur };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

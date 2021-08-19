@@ -1,9 +1,7 @@
 <template>
   <div class="register-page-wrap">
     <div class="register-page">
-      <div class="register-page-header">
-        创建您的 {{ MixinConfig.shortTitle }} 帐号
-      </div>
+      <div class="register-page-header">创建您的 {{ MixinConfig.shortTitle }} 帐号</div>
       <div class="flex register-page-content">
         <div class="content-left">
           <GlobalInput
@@ -66,12 +64,17 @@
           <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }">
             登录现有帐号
           </router-link>
-          <GlobalButton ref="buttonInstance" :size="1" :disabled="disabled" @on-click="onButtonClick">
+          <GlobalButton
+            ref="buttonInstance"
+            :size="1"
+            :disabled="disabled"
+            @on-click="onButtonClick"
+          >
             注 册
           </GlobalButton>
         </div>
         <div class="pt-15 index-middle flex-item flex-column">
-          <img :src="accountImage" class="account-image">
+          <img :src="accountImage" class="account-image" />
           <div class="account-content">
             只需一个帐号，您便可以使用 {{ MixinConfig.shortTitle }} 的所有产品和服务。
           </div>
@@ -82,88 +85,88 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref } from 'vue'
-import { Instance } from '/@/lib/interface/GlobalButton'
-import { Register } from '/@/api/security'
-import { validDataContent } from './index-page'
-import { rules } from '/@/utils/regExp'
-import accountImage from '/@/assets/svg/account.svg'
-import useToast from '/@/components/Toast'
-import service from '/@/api/security'
-import { useGo } from '/@/hooks/web/usePage'
-import { PageEnum } from '/@/enums/pageEnum'
-import md5 from '/@/utils/encryption/md5'
+import { defineComponent, reactive, computed, ref } from 'vue';
+import { Instance } from '/@/lib/interface/GlobalButton';
+import { Register } from '/@/api/security';
+import { validDataContent } from './index-page';
+import { rules } from '/@/utils/regExp';
+import accountImage from '/@/assets/svg/account.svg';
+import useToast from '/@/components/Toast';
+import service from '/@/api/security';
+import { useGo } from '/@/hooks/web/usePage';
+import { PageEnum } from '/@/enums/pageEnum';
+import md5 from '/@/utils/encryption/md5';
 
 export default defineComponent({
   setup() {
     // 注册方式 true: 邮箱 ,false: 电话
-    const content = reactive({ mode: true, loading: false })
+    const content = reactive({ mode: true, loading: false });
     //  错误提示
-    const errorTip = reactive<Register>({})
+    const errorTip = reactive<Register>({});
     // 注册内容
-    const dataItem = reactive<Register>({})
+    const dataItem = reactive<Register>({});
     // 使用检查数据方法
-    const handleDataContent = validDataContent(dataItem, errorTip)
+    const handleDataContent = validDataContent(dataItem, errorTip);
     // 实例
-    const buttonInstance = ref<Instance | null>(null)
+    const buttonInstance = ref<Instance | null>(null);
     // 切换注册方式
-    const onChangeMode = () => (content.mode = !content.mode)
+    const onChangeMode = () => (content.mode = !content.mode);
     // 页面跳转
-    const go = useGo()
+    const go = useGo();
 
     // 禁用
     const disabled = computed(() => {
       // 用户名
-      if (!dataItem.username || !!errorTip.username) return true
+      if (!dataItem.username || !!errorTip.username) return true;
 
       if (content.mode) {
         // 邮箱
         if (!!errorTip.email || !dataItem.email || !rules.email.test(dataItem.email)) {
-          return true
+          return true;
         }
       } else {
         // 电话
         if (!!errorTip.mobile || !dataItem.mobile || !rules.telephone.test(dataItem.mobile)) {
-          return true
+          return true;
         }
       }
       // 密码
-      if (!dataItem.password) return true
+      if (!dataItem.password) return true;
       // 确认密码
-      if (!dataItem.repeat) return true
+      if (!dataItem.repeat) return true;
       // 密码相等
-      if (dataItem.password !== dataItem.repeat) return true
+      if (dataItem.password !== dataItem.repeat) return true;
 
-      return false
-    })
+      return false;
+    });
 
-    const onButtonClick = (event: MouseEvent) => handleUserRegister(event.offsetX, event.offsetY)
+    const onButtonClick = (event: MouseEvent) => handleUserRegister(event.offsetX, event.offsetY);
 
     // 处理用户注册
     async function handleUserRegister(x?: number, y?: number) {
-      if (content.loading) return
-      buttonInstance.value?.startAnimation(x, y)
+      if (content.loading) return;
+      buttonInstance.value?.startAnimation(x, y);
       try {
-        const data = { ...dataItem }
+        const data = { ...dataItem };
         // 根据方式发送数据
-        delete data.repeat
-        content.mode ? delete data.mobile : delete data.email
+        delete data.repeat;
+        content.mode ? delete data.mobile : delete data.email;
         // 加密
-        data.password = md5(data.password!)
-        await service.registerApi(data)
+        data.password = md5(data.password!);
+        await service.registerApi(data);
         // 注册成功跳转登录页面
-        go({ name: PageEnum.BASE_LOGIN })
+        go({ name: PageEnum.BASE_LOGIN });
       } catch (err) {
         if (err.code === -1) {
-          errorTip.username = err.msg
+          errorTip.username = err.msg;
         } else if (err.code === -2) {
-          errorTip.email = err.msg
+          errorTip.email = err.msg;
         } else if (err.code === -3) {
-          errorTip.mobile = err.msg
+          errorTip.mobile = err.msg;
         }
-        useToast.error(`注册失败：${err.msg}`)
+        useToast.error(`注册失败：${err.msg}`);
       } finally {
-        buttonInstance.value?.stopAnimation()
+        buttonInstance.value?.stopAnimation();
       }
     }
 
@@ -177,9 +180,9 @@ export default defineComponent({
       onChangeMode,
       onButtonClick,
       handleDataContent
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

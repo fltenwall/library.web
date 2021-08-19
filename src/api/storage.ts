@@ -1,16 +1,16 @@
-import type { Result } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { Result } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 interface ValidUpload {
-  name: string
+  name: string;
 
-  hash: string
+  hash: string;
 
-  length: number
+  length: number;
 
-  size: number
+  size: number;
 
-  type: string
+  type: string;
 }
 
 export default class Service {
@@ -20,6 +20,6 @@ export default class Service {
       url: '/epi/storage/valid',
       method: 'get',
       params: query
-    })
+    });
   }
 }

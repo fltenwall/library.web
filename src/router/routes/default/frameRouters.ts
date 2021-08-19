@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '/@/router/types'
+import type { AppRouteRecordRaw } from '/@/router/types';
 
 export const FrameRouters: AppRouteRecordRaw[] = [
   {
@@ -78,4 +78,4 @@ export const FrameRouters: AppRouteRecordRaw[] = [
       title: '注册'
     }
   }
-]
+];

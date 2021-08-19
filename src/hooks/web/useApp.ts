@@ -1,17 +1,17 @@
-import { isUnDef, isNull } from '/@/utils/is'
+import { isUnDef, isNull } from '/@/utils/is';
 
 interface ConfigProvide {
-  transformCellText: ({ text }: { text: string }) => string
+  transformCellText: ({ text }: { text: string }) => string;
 }
 
 export function useConfigProvider(): ConfigProvide {
   function transformCellText({ text }: { text: string }) {
     if (isNull(text) || isUnDef(text)) {
-      return '-'
+      return '-';
     }
-    return text
+    return text;
   }
   return {
     transformCellText
-  }
+  };
 }

@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import Bar from './bar'
+import { defineComponent, ref } from 'vue';
+import Bar from './bar';
 
 export default defineComponent({
   components: { Bar },
@@ -23,14 +23,14 @@ export default defineComponent({
     }
   },
   setup() {
-    const sizeWidth = ref<string>('0')
-    const sizeHeight = ref<string>('0')
-    const wrap = ref<Element | null>(null)
-    const resize = ref<HTMLElement | null>(null)
+    const sizeWidth = ref<string>('0');
+    const sizeHeight = ref<string>('0');
+    const wrap = ref<Element | null>(null);
+    const resize = ref<HTMLElement | null>(null);
 
-    return { wrap, resize, sizeHeight, sizeWidth }
+    return { wrap, resize, sizeHeight, sizeWidth };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

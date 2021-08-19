@@ -1,21 +1,21 @@
-import { createApp } from 'vue'
-import { setupRouter } from './router'
-import { setupStore } from './store'
-import App from './App.vue'
-import PluginsIniter from './plugins/plugins-initer'
+import { createApp } from 'vue';
+import { setupRouter } from './router';
+import { setupStore } from './store';
+import App from './App.vue';
+import PluginsIniter from './plugins/plugins-initer';
 
 // 导入自定义 ui
-import '/@/assets/styles/index.less'
+import '/@/assets/styles/index.less';
 
-const app = createApp(App)
+const app = createApp(App);
 
 // 设置路由
-setupRouter(app)
+setupRouter(app);
 
 // 设置 vuex
-setupStore(app)
+setupStore(app);
 
 // 设置插件
-PluginsIniter.init(app)
+PluginsIniter.init(app);
 
-app.mount('#app')
+app.mount('#app');

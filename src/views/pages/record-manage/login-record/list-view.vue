@@ -34,35 +34,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { tableColumns } from './data-list'
-import { LoginRecord } from '/@/api/record-manage/login-record'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
-import { useFromatlll } from '/@/utils/dateFormat'
-import { usePagination } from '/@/hooks/web/usePagination'
+import { defineComponent, ref } from 'vue';
+import { tableColumns } from './data-list';
+import { LoginRecord } from '/@/api/record-manage/login-record';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
+import { useFromatlll } from '/@/utils/dateFormat';
+import { usePagination } from '/@/hooks/web/usePagination';
 
 export default defineComponent({
   emits: ['on-page-change', 'on-refresh'],
   setup(_props, { emit }) {
     // 数据源
-    const dataSource = ref<LoginRecord[]>([])
+    const dataSource = ref<LoginRecord[]>([]);
 
     // 总数据
-    const totalElements = ref<number>(0)
+    const totalElements = ref<number>(0);
 
     // 页面方法
-    const listPage = injectListPage<LoginRecord>()
+    const listPage = injectListPage<LoginRecord>();
 
     // 数据加载
-    const loading = listPage.loading
+    const loading = listPage.loading;
 
-    const { current, setPagination, getPagination } = usePagination()
+    const { current, setPagination, getPagination } = usePagination();
 
     // 页面发生变化
-    const onPageChange = () => emit('on-page-change')
+    const onPageChange = () => emit('on-page-change');
 
     // 处理刷新
-    const onRefresh = () => emit('on-refresh')
+    const onRefresh = () => emit('on-refresh');
 
     return {
       loading,
@@ -75,16 +75,16 @@ export default defineComponent({
       useFromatlll,
       onPageChange,
       onRefresh
-    }
+    };
   },
   methods: {
     // 设置数据源
     setDataSource(data: LoginRecord[], total: number) {
-      this.dataSource = data
-      this.totalElements = total
+      this.dataSource = data;
+      this.totalElements = total;
     }
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

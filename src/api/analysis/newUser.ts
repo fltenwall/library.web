@@ -1,11 +1,11 @@
-import type { Result } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { Result } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 export interface NewUser {
   // 新用户
-  newCount?: number
+  newCount?: number;
   // 总用户
-  userCount?: number
+  userCount?: number;
 }
 
 export default class Service {
@@ -15,6 +15,6 @@ export default class Service {
       url: '/epi/user/count',
       method: 'get',
       params: query
-    })
+    });
   }
 }

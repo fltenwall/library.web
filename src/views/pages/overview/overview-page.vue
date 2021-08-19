@@ -1,8 +1,6 @@
 <template>
   <div class="overview-header">
-    <div class="overview-header-title">
-      工作台
-    </div>
+    <div class="overview-header-title">工作台</div>
     <div class="flex mt-4">
       <div class="index-middle">
         <a-avatar :size="60">
@@ -34,24 +32,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import quickEntry from './components/quickEntry.vue'
-import messageNotify from './components/messageNotify.vue'
-import { useBlessing } from '/@/utils/dateFormat'
-import { userStore } from '/@/store/modules/user'
+import { defineComponent } from 'vue';
+import quickEntry from './components/quickEntry.vue';
+import messageNotify from './components/messageNotify.vue';
+import { useBlessing } from '/@/utils/dateFormat';
+import { userStore } from '/@/store/modules/user';
 
 export default defineComponent({
   components: { quickEntry, messageNotify },
   setup() {
     //
-    const userInfo = userStore.getUserInfoState
+    const userInfo = userStore.getUserInfoState;
 
     // 祝福语
-    const blessing = useBlessing()
+    const blessing = useBlessing();
 
-    return { blessing, userInfo }
+    return { blessing, userInfo };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

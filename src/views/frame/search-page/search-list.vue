@@ -20,7 +20,10 @@
         </div>
         <div class="main-box">
           <span class="box-title">描述</span>
-          <span class="box-content" v-html="highlight(item.description || '没有找到任何描述信息')" />
+          <span
+            class="box-content"
+            v-html="highlight(item.description || '没有找到任何描述信息')"
+          />
         </div>
       </div>
     </div>
@@ -28,10 +31,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Search } from '/@/api/search'
-import xss from 'xss'
-import { isString } from '/@/utils/is'
+import { defineComponent, PropType } from 'vue';
+import { Search } from '/@/api/search';
+import xss from 'xss';
+import { isString } from '/@/utils/is';
 
 export default defineComponent({
   props: {
@@ -47,15 +50,15 @@ export default defineComponent({
   setup() {
     // 高亮
     function highlight(value: string) {
-      if (!isString(value)) return
-      let result = xss(value, { whiteList: {} })
+      if (!isString(value)) return;
+      let result = xss(value, { whiteList: {} });
 
-      return result.replace(/&lt;em data="([^"]+)"&gt;&lt;\/em&gt;/g, '<em>$1</em>')
+      return result.replace(/&lt;em data="([^"]+)"&gt;&lt;\/em&gt;/g, '<em>$1</em>');
     }
 
-    return { highlight }
+    return { highlight };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

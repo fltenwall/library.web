@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup(_props, { slots }) {
@@ -7,6 +7,6 @@ export default defineComponent({
         <div>{slots.left && slots.left()}</div>
         <div>{slots.right && slots.right()}</div>
       </div>
-    )
+    );
   }
-})
+});

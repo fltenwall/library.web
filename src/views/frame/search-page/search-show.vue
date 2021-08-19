@@ -2,7 +2,7 @@
   <PublicHeader class="search-page-show-header">
     <template #left>
       <router-link to="/" class="index-middle ml-15">
-        <img :src="MixinConfig.logo" class="w-6 mr-4">
+        <img :src="MixinConfig.logo" class="w-6 mr-4" />
         <div class="header-title index-theme">
           {{ MixinConfig.title }}
         </div>
@@ -11,7 +11,12 @@
   </PublicHeader>
   <div class="search-page-show-middle">
     <div class="content index-middle">
-      <Icon icon="ion:arrow-back-outline" size="22" class="icon index-center-middle" @click="back" />
+      <Icon
+        icon="ion:arrow-back-outline"
+        size="22"
+        class="icon index-center-middle"
+        @click="back"
+      />
       <span class="title">资源检索</span>
     </div>
   </div>
@@ -63,21 +68,11 @@
       :columns="holdInfoColumns"
     >
       <template #status="{ text }">
-        <a-tag v-if="text === 'IN_LIBRARY'" color="success">
-          未借阅
-        </a-tag>
-        <a-tag v-else-if="text === 'OUT_LIBRARY'" color="processing">
-          被借阅
-        </a-tag>
-        <a-tag v-else-if="text === 'LOST'" color="error">
-          丢失
-        </a-tag>
-        <a-tag v-else-if="text === 'OVERDUE'" color="warning">
-          逾期
-        </a-tag>
-        <a-tag v-else-if="text === 'SUBSCRIBE'" color="purple">
-          被预约
-        </a-tag>
+        <a-tag v-if="text === 'IN_LIBRARY'" color="success"> 未借阅 </a-tag>
+        <a-tag v-else-if="text === 'OUT_LIBRARY'" color="processing"> 被借阅 </a-tag>
+        <a-tag v-else-if="text === 'LOST'" color="error"> 丢失 </a-tag>
+        <a-tag v-else-if="text === 'OVERDUE'" color="warning"> 逾期 </a-tag>
+        <a-tag v-else-if="text === 'SUBSCRIBE'" color="purple"> 被预约 </a-tag>
       </template>
       <template #operation="{ record }">
         <div class="index-operation">
@@ -89,70 +84,70 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, unref, computed } from 'vue'
-import { holdInfoColumns } from './search-show'
-import { userStore } from '/@/store/modules/user'
-import { useRouter } from 'vue-router'
-import { isNull } from '/@/utils/is'
-import { message } from 'ant-design-vue'
-import { useGo } from '/@/hooks/web/usePage'
-import { PageEnum } from '/@/enums/pageEnum'
+import { defineComponent, ref, unref, computed } from 'vue';
+import { holdInfoColumns } from './search-show';
+import { userStore } from '/@/store/modules/user';
+import { useRouter } from 'vue-router';
+import { isNull } from '/@/utils/is';
+import { message } from 'ant-design-vue';
+import { useGo } from '/@/hooks/web/usePage';
+import { PageEnum } from '/@/enums/pageEnum';
 
 export default defineComponent({
   setup() {
-    const { currentRoute, back } = useRouter()
+    const { currentRoute, back } = useRouter();
 
-    const bookInfo = ref({})
+    const bookInfo = ref({});
 
-    const bookDetail = ref([])
+    const bookDetail = ref([]);
 
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(false);
 
-    const go = useGo()
+    const go = useGo();
 
     // 获取服务器数据
     async function fetchDataByService() {
       try {
-        loading.value = true
+        loading.value = true;
         // const { params } = unref(currentRoute)
         // const id = parseInt(params.id as string)
         // const { data } = await service.fecthBookByAny(id)
         // bookInfo.value = data.book
         // bookDetail.value = data.detail
       } catch (err) {
-        message.error(`获取资源失败: ${err.msg}`)
+        message.error(`获取资源失败: ${err.msg}`);
       } finally {
-        loading.value = false
+        loading.value = false;
       }
     }
 
     // 用户是否登录
     const userIsLogin = computed(() => {
-      return !isNull(userStore.getUserInfoState?.id)
-    })
+      return !isNull(userStore.getUserInfoState?.id);
+    });
 
     // 借阅书籍
     async function handleBorrow() {
       // 未登录
-      if (!validUserState()) return
+      if (!validUserState()) return;
     }
 
     // 判断用户登录
     function validUserState() {
-      if (unref(userIsLogin)) return true
+      if (unref(userIsLogin)) return true;
 
       // 登录完成再重定向回来
-      const redirect = unref(currentRoute).fullPath
-      go({ name: PageEnum.BASE_LOGIN, query: { redirect } })
+      const redirect = unref(currentRoute).fullPath;
+      go({ name: PageEnum.BASE_LOGIN, query: { redirect } });
 
-      return false
+      return false;
     }
 
-    fetchDataByService()
+    fetchDataByService();
 
-    return { loading, bookInfo, bookDetail, holdInfoColumns, back, handleBorrow }
+    return { loading, bookInfo, bookDetail, holdInfoColumns, back, handleBorrow };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

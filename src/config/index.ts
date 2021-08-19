@@ -1,34 +1,34 @@
-import logo from '/@/assets/svg/logo.svg'
-import { useSetting } from '/@/hooks/core/useSetting'
+import logo from '/@/assets/svg/logo.svg';
+import { useSetting } from '/@/hooks/core/useSetting';
 
-const { title, publicPath, shortTitle, auth } = useSetting()
+const { title, publicPath, shortTitle, auth } = useSetting();
 
 /**
  *  系统配置文件可用于设置使用系统运行的参数
  **/
 
 interface Config {
-  title: string
+  title: string;
 
-  shortTitle: string
+  shortTitle: string;
 
-  logo: string
+  logo: string;
 
-  publicPath: string
+  publicPath: string;
 
-  theme: 'dark' | 'light' | undefined
+  theme: 'dark' | 'light' | undefined;
 
-  menuWidth: number
+  menuWidth: number;
 
-  collapsed: boolean
+  collapsed: boolean;
 
-  collapsedWidth: number
+  collapsedWidth: number;
 
-  max: number
+  max: number;
 
-  auth: boolean
+  auth: boolean;
 
-  preview: string
+  preview: string;
 }
 
 const config: Config = {
@@ -64,6 +64,6 @@ const config: Config = {
 
   // 预览前缀
   preview: '/epi/storage/preview/'
-}
+};
 
-export default config
+export default config;

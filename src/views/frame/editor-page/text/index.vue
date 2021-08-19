@@ -2,7 +2,7 @@
   <div class="editor-wrap">
     <PublicHeader class="editor-header p-3">
       <template #left>
-        <input class="title-input" placeholder="输入标题..." maxlength="80">
+        <input class="title-input" placeholder="输入标题..." maxlength="80" />
       </template>
     </PublicHeader>
     <public-editor
@@ -31,9 +31,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import masterState from './components/masterState.vue'
-import wordCount from '/@/utils/wordCount'
+import { defineComponent, reactive, ref } from 'vue';
+import masterState from './components/masterState.vue';
+import wordCount from '/@/utils/wordCount';
 
 export default defineComponent({
   components: { masterState },
@@ -52,15 +52,15 @@ export default defineComponent({
         codeSyntaxHighlighting: true
       },
       placeholder: '开始描述您的问题'
-    })
+    });
 
-    const lineCount = ref<number>(0)
+    const lineCount = ref<number>(0);
 
-    const handbook = ref<string>('')
+    const handbook = ref<string>('');
 
-    return { configs, lineCount, handbook, wordCount }
+    return { configs, lineCount, handbook, wordCount };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

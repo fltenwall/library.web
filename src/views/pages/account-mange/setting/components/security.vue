@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { userStore } from '/@/store/modules/user'
+import { defineComponent } from 'vue';
+import { userStore } from '/@/store/modules/user';
 
 export default defineComponent({
   setup() {
@@ -32,11 +32,11 @@ export default defineComponent({
         content: `已绑定邮箱：${userStore.getUserInfoState?.email}`,
         action: '修改'
       }
-    ]
+    ];
 
-    return { listData }
+    return { listData };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

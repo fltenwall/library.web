@@ -9,45 +9,45 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, unref } from 'vue'
+import { computed, defineComponent, ref, unref } from 'vue';
 
-import { useGo } from '/@/hooks/web/usePage'
-import MenuSelect from '/@/components/MenuSelect.vue'
+import { useGo } from '/@/hooks/web/usePage';
+import MenuSelect from '/@/components/MenuSelect.vue';
 
 export default defineComponent({
   components: { MenuSelect },
   setup() {
-    const isSearch = ref<boolean>(false)
+    const isSearch = ref<boolean>(false);
 
-    const go = useGo()
+    const go = useGo();
 
     // 被选中时调用，参数为选中项的 value (或 key) 值
     function handleSelect(value: string) {
-      go({ name: value })
+      go({ name: value });
     }
 
     // 处理菜单点击
     function handleSearchClick() {
-      isSearch.value = true
+      isSearch.value = true;
     }
 
     // 处理失去焦点
     function handleBlur() {
-      isSearch.value = false
+      isSearch.value = false;
     }
 
     const selectStyle = computed(() => {
-      return { width: unref(isSearch) ? '200px' : '0px' }
-    })
+      return { width: unref(isSearch) ? '200px' : '0px' };
+    });
 
     return {
       selectStyle,
       handleBlur,
       handleSelect,
       handleSearchClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

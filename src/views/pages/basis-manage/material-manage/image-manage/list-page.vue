@@ -10,25 +10,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { Classify } from '/@/api/basis-manage/material-manage/image-manage'
-import listView from './list-view.vue'
-import classifyPanle from './classify-panle.vue'
+import { defineComponent, ref } from 'vue';
+import { Classify } from '/@/api/basis-manage/material-manage/image-manage';
+import listView from './list-view.vue';
+import classifyPanle from './classify-panle.vue';
 
 export default defineComponent({
   components: { listView, classifyPanle },
   setup() {
     // 选中数据
-    const selectData = ref<Classify>({})
+    const selectData = ref<Classify>({});
 
     // 处理选中数据
     function handleSelect(record: Classify) {
-      selectData.value = record
+      selectData.value = record;
     }
 
-    return { selectData, handleSelect }
+    return { selectData, handleSelect };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

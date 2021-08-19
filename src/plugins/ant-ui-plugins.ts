@@ -1,4 +1,4 @@
-import type { App } from 'vue'
+import type { App } from 'vue';
 
 import {
   Button,
@@ -33,7 +33,7 @@ import {
   Collapse,
   Spin,
   Image
-} from 'ant-design-vue'
+} from 'ant-design-vue';
 
 // 导入 Icon
 import {
@@ -44,26 +44,26 @@ import {
   LoadingOutlined,
   SearchOutlined,
   UserOutlined
-} from '@ant-design/icons-vue'
+} from '@ant-design/icons-vue';
 
 // 设置 通知提醒框
-notification.config({ placement: 'topRight', duration: 3 })
+notification.config({ placement: 'topRight', duration: 3 });
 
-message.config({ duration: 3 })
+message.config({ duration: 3 });
 
 export default class AntUiPlugins {
   static init(app: App<Element>): void {
-    app.use(Button).use(Divider).use(Form).use(Input).use(Modal).use(Pagination).use(Select)
-    app.use(Row).use(Col).use(Checkbox).use(Popover).use(Popconfirm).use(Menu).use(Dropdown)
-    app.use(Progress).use(DatePicker).use(InputNumber).use(Tag).use(Upload).use(Tooltip).use(Spin)
-    app.use(Tree).use(Affix).use(Layout).use(Drawer).use(Avatar).use(Tabs).use(Radio).use(Collapse)
-    app.use(Image)
-    app.component('PlusOutlined', PlusOutlined)
-    app.component('DownOutlined', DownOutlined)
-    app.component('SettingOutlined', SettingOutlined)
-    app.component('InfoCircleFilled', InfoCircleFilled)
-    app.component('LoadingOutlined', LoadingOutlined)
-    app.component('SearchOutlined', SearchOutlined)
-    app.component('UserOutlined', UserOutlined)
+    app.use(Button).use(Divider).use(Form).use(Input).use(Modal).use(Pagination).use(Select);
+    app.use(Row).use(Col).use(Checkbox).use(Popover).use(Popconfirm).use(Menu).use(Dropdown);
+    app.use(Progress).use(DatePicker).use(InputNumber).use(Tag).use(Upload).use(Tooltip).use(Spin);
+    app.use(Tree).use(Affix).use(Layout).use(Drawer).use(Avatar).use(Tabs).use(Radio).use(Collapse);
+    app.use(Image);
+    app.component('PlusOutlined', PlusOutlined);
+    app.component('DownOutlined', DownOutlined);
+    app.component('SettingOutlined', SettingOutlined);
+    app.component('InfoCircleFilled', InfoCircleFilled);
+    app.component('LoadingOutlined', LoadingOutlined);
+    app.component('SearchOutlined', SearchOutlined);
+    app.component('UserOutlined', UserOutlined);
   }
 }

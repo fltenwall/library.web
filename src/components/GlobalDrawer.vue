@@ -1,14 +1,21 @@
 <template>
   <div ref="wrapRef" class="global-drawer-wrap" :style="wrapStyle">
     <slot />
-    <div :class="['hide-panel index-center-middle', `hide-panel-${placement}`]" @click="handleSwitchHide">
-      <Icon color="#A1A6B3" class="hide-panel-icon" :icon="`ant-design:caret-${visible ? 'right' : 'left'}-outlined`" />
+    <div
+      :class="['hide-panel index-center-middle', `hide-panel-${placement}`]"
+      @click="handleSwitchHide"
+    >
+      <Icon
+        color="#A1A6B3"
+        class="hide-panel-icon"
+        :icon="`ant-design:caret-${visible ? 'right' : 'left'}-outlined`"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { CSSProperties, defineComponent, PropType, reactive, ref, watch } from 'vue'
+import { CSSProperties, defineComponent, PropType, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
   props: {
@@ -24,38 +31,38 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const wrapRef = ref<HTMLElement | null>(null)
+    const wrapRef = ref<HTMLElement | null>(null);
 
-    const wrapStyle = reactive<CSSProperties>({})
+    const wrapStyle = reactive<CSSProperties>({});
 
-    const visible = ref<boolean>(false)
+    const visible = ref<boolean>(false);
 
-    const stateMap = { left: '-', right: '' }
+    const stateMap = { left: '-', right: '' };
 
     // 切换隐藏面板
     function handleSwitchHide() {
-      visible.value = !visible.value
-      emit('update:value', visible.value)
+      visible.value = !visible.value;
+      emit('update:value', visible.value);
     }
 
     watch(
       () => props.value,
       (val) => {
         // 设置数据
-        visible.value = val
+        visible.value = val;
         // 面板切换
         if (visible.value) {
-          wrapStyle.transform = `translateX(${stateMap[props.placement]}100%)`
+          wrapStyle.transform = `translateX(${stateMap[props.placement]}100%)`;
         } else {
-          wrapStyle.transform = ''
+          wrapStyle.transform = '';
         }
       },
       { immediate: true }
-    )
+    );
 
-    return { wrapRef, visible, wrapStyle, handleSwitchHide }
+    return { wrapRef, visible, wrapStyle, handleSwitchHide };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

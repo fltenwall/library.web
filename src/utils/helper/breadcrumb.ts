@@ -10,14 +10,14 @@ export enum PageMode {
   new
 }
 
-export type Mode = 'view' | 'edit' | 'new'
+export type Mode = 'view' | 'edit' | 'new';
 
 // 模块对应的中文名称
-export const pageModeName = ['查看', '编辑', '新增']
+export const pageModeName = ['查看', '编辑', '新增'];
 
 export interface ParsePageModeFromString {
-  mode: number
-  modeName: string
+  mode: number;
+  modeName: string;
 }
 
 /**
@@ -25,14 +25,14 @@ export interface ParsePageModeFromString {
  * @param mode 模式字串
  */
 export function parsePageModeFromString(mode: string): ParsePageModeFromString {
-  const list: Array<PageMode> = [PageMode.view, PageMode.edit, PageMode.new]
+  const list: Array<PageMode> = [PageMode.view, PageMode.edit, PageMode.new];
 
   for (let i = 0; i < list.length; i++) {
-    const item = list[i]
+    const item = list[i];
     if (PageMode[item] === mode) {
-      return { modeName: pageModeName[i], mode: i }
+      return { modeName: pageModeName[i], mode: i };
     }
   }
 
-  return { modeName: '错误', mode: PageMode.error }
+  return { modeName: '错误', mode: PageMode.error };
 }

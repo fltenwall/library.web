@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend'
+import { defineComponent } from 'vue';
+import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
 
 export default defineComponent({
   props: {
@@ -14,14 +14,14 @@ export default defineComponent({
     }
   },
   setup() {
-    const listPage = injectListPage()
+    const listPage = injectListPage();
 
     // 回车时间
-    const handleEnterEvent = () => listPage.onFetchData()
+    const handleEnterEvent = () => listPage.onFetchData();
 
-    return { handleEnterEvent }
+    return { handleEnterEvent };
   }
-})
+});
 </script>
 
 <style lang="less" scoped></style>

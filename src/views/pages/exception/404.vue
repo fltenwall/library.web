@@ -1,31 +1,25 @@
 <template>
   <div class="exception index-center-middle">
-    <img :src="image_404" alt="404" class="exception-image">
+    <img :src="image_404" alt="404" class="exception-image" />
     <div>
-      <div class="exception-title">
-        404
-      </div>
-      <div class="exception-tip">
-        抱歉，你访问的页面不存在
-      </div>
-      <a-button type="primary" size="large" href="/">
-        返回首页
-      </a-button>
+      <div class="exception-title">404</div>
+      <div class="exception-tip">抱歉，你访问的页面不存在</div>
+      <a-button type="primary" size="large" href="/"> 返回首页 </a-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import image_404 from '/@/assets/svg/404.svg'
+import { defineComponent } from 'vue';
+import image_404 from '/@/assets/svg/404.svg';
 
 export default defineComponent({
   setup() {
     //
 
-    return { image_404 }
+    return { image_404 };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

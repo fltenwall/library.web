@@ -2,7 +2,7 @@
   <a-layout class="help-wrap">
     <PublicHeader class="help-header">
       <template #left>
-        <img :src="config.logo" class="config-logo" @click="handleTitleClick">
+        <img :src="config.logo" class="config-logo" @click="handleTitleClick" />
         <div>
           <span class="config-title index-theme" @click="handleTitleClick">
             {{ config.title }}
@@ -39,64 +39,64 @@
 </template>
 
 <script lang="ts">
-import type { ProblemManage } from '/@/api/basis-manage/problem-manage'
-import { MenuOutlined } from '@ant-design/icons-vue'
-import { computed, defineComponent, ref, unref } from 'vue'
-import config from '/@/config'
-import { PageEnum } from '/@/enums/pageEnum'
-import { useGo } from '/@/hooks/web/usePage'
-import indexSider from './index-sider.vue'
-import indexContent from './index-content.vue'
-import service from '/@/api/anonymous'
+import type { ProblemManage } from '/@/api/basis-manage/problem-manage';
+import { MenuOutlined } from '@ant-design/icons-vue';
+import { computed, defineComponent, ref, unref } from 'vue';
+import config from '/@/config';
+import { PageEnum } from '/@/enums/pageEnum';
+import { useGo } from '/@/hooks/web/usePage';
+import indexSider from './index-sider.vue';
+import indexContent from './index-content.vue';
+import service from '/@/api/anonymous';
 
 export default defineComponent({
   components: { indexSider, indexContent, MenuOutlined },
   setup() {
-    const go = useGo()
+    const go = useGo();
 
-    const dataSource = ref<ProblemManage[]>([])
+    const dataSource = ref<ProblemManage[]>([]);
 
-    const selectId = ref<number>()
+    const selectId = ref<number>();
 
-    const drawerVisible = ref<boolean>(false)
+    const drawerVisible = ref<boolean>(false);
 
-    const collapsedState = ref<boolean>(false)
+    const collapsedState = ref<boolean>(false);
 
     // 处理选中
-    const onSelect = (id: number) => ((selectId.value = id), (drawerVisible.value = false))
+    const onSelect = (id: number) => ((selectId.value = id), (drawerVisible.value = false));
 
     // 选中内容
     const selectContent = computed(() => {
-      let content: undefined | string = ''
+      let content: undefined | string = '';
       if (unref(dataSource) && unref(selectId)) {
-        content = unref(dataSource).find((el) => el.id === unref(selectId))?.text
+        content = unref(dataSource).find((el) => el.id === unref(selectId))?.text;
       }
-      return content
-    })
+      return content;
+    });
 
     // 点击文字页面跳转
-    const handleTitleClick = () => go({ name: PageEnum.INDEX_PAGE })
+    const handleTitleClick = () => go({ name: PageEnum.INDEX_PAGE });
 
     // 从服务器取得数据 设置列表数据
     async function fetchDataFromServer() {
-      const query = { sort: 'sortValue,desc' }
-      const { data } = await service.fecthProblemByAny(query)
-      const [value] = data.content
-      value && go({ query: { id: value.id } }, true)
-      dataSource.value = data.content
+      const query = { sort: 'sortValue,desc' };
+      const { data } = await service.fecthProblemByAny(query);
+      const [value] = data.content;
+      value && go({ query: { id: value.id } }, true);
+      dataSource.value = data.content;
     }
 
     // 展开-收起时的回调函数
     function handelCollapse(collapsed: boolean) {
-      collapsedState.value = collapsed
+      collapsedState.value = collapsed;
     }
 
     // 处理点击悬浮球
     function handleClickBall() {
-      drawerVisible.value = true
+      drawerVisible.value = true;
     }
 
-    fetchDataFromServer()
+    fetchDataFromServer();
 
     return {
       config,
@@ -108,9 +108,9 @@ export default defineComponent({
       handelCollapse,
       handleClickBall,
       handleTitleClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -1,11 +1,11 @@
-import { defineComponent } from 'vue'
-import { Layout, Avatar } from 'ant-design-vue'
-import LayoutBreadcrumb from './LayoutBreadcrumb'
-import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons-vue'
-import { menuStore } from '/@/store/modules/menu'
-import DropMenu from '/@/components/PublicHeader/dropMenu.vue'
-import { userStore } from '/@/store/modules/user'
-import MenuSearch from '/@/components/MenuSearch.vue'
+import { defineComponent } from 'vue';
+import { Layout, Avatar } from 'ant-design-vue';
+import LayoutBreadcrumb from './LayoutBreadcrumb';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons-vue';
+import { menuStore } from '/@/store/modules/menu';
+import DropMenu from '/@/components/PublicHeader/dropMenu.vue';
+import { userStore } from '/@/store/modules/user';
+import MenuSearch from '/@/components/MenuSearch.vue';
 
 export default defineComponent({
   name: 'DefaultLayoutHeader',
@@ -13,9 +13,9 @@ export default defineComponent({
     // 处理点击折叠
     function handleTriggerClick() {
       if (menuStore.getCollapsedState) {
-        menuStore.commitCollapsedState(false)
+        menuStore.commitCollapsedState(false);
       } else {
-        menuStore.commitCollapsedState(true)
+        menuStore.commitCollapsedState(true);
       }
     }
 
@@ -50,6 +50,6 @@ export default defineComponent({
           </div>
         )}
       </Layout.Header>
-    )
+    );
   }
-})
+});

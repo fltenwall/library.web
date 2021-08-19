@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, provide } from 'vue'
+import { defineComponent, PropType, provide } from 'vue';
 
 export default defineComponent({
   props: {
@@ -15,9 +15,9 @@ export default defineComponent({
     }
   },
   setup(props) {
-    provide('breadcrumb', props)
+    provide('breadcrumb', props);
   }
-})
+});
 </script>
 
 <style></style>

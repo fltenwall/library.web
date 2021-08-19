@@ -4,17 +4,15 @@
       <slot />
     </div>
     <div class="index-footer-block">
-      <a-button @click="onClosePage">
-        返回
-      </a-button>
+      <a-button @click="onClosePage"> 返回 </a-button>
       <slot v-if="mode !== -1" name="footer-block" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, PropType } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   props: {
@@ -24,16 +22,16 @@ export default defineComponent({
     }
   },
   setup() {
-    const { back } = useRouter()
+    const { back } = useRouter();
 
     /**
      * 页面点击关闭触发函数
      */
-    const onClosePage = () => back()
+    const onClosePage = () => back();
 
-    return { onClosePage }
+    return { onClosePage };
   }
-})
+});
 </script>
 
 <style lang="less">

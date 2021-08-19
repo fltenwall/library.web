@@ -16,21 +16,19 @@
           </router-link>
         </drop-menu>
       </div>
-      <Button v-else type="primary" @click="onLoginButton">
-        登 录
-      </Button>
+      <Button v-else type="primary" @click="onLoginButton"> 登 录 </Button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { Button } from '/@/lib/UI/index'
-import { useGo } from '/@/hooks/web/usePage'
-import { PageEnum } from '/@/enums/pageEnum'
-import { userStore } from '/@/store/modules/user'
-import { isDef } from '/@/utils/is'
-import dropMenu from './dropMenu.vue'
+import { defineComponent, computed } from 'vue';
+import { Button } from '/@/lib/UI/index';
+import { useGo } from '/@/hooks/web/usePage';
+import { PageEnum } from '/@/enums/pageEnum';
+import { userStore } from '/@/store/modules/user';
+import { isDef } from '/@/utils/is';
+import dropMenu from './dropMenu.vue';
 
 export default defineComponent({
   components: { Button, dropMenu },
@@ -41,26 +39,26 @@ export default defineComponent({
     }
   },
   setup() {
-    const go = useGo()
+    const go = useGo();
 
     // 页面跳转
     function onLoginButton() {
-      go({ name: PageEnum.BASE_LOGIN })
+      go({ name: PageEnum.BASE_LOGIN });
     }
 
     // 用户是否登录
     const userIsLogin = computed(() => {
-      return isDef(userStore.getUserInfoState?.id)
-    })
+      return isDef(userStore.getUserInfoState?.id);
+    });
 
     // 用户信息
     const userInfo = computed(() => {
-      return userStore.getUserInfoState
-    })
+      return userStore.getUserInfoState;
+    });
 
-    return { PageEnum, userIsLogin, userInfo, onLoginButton }
+    return { PageEnum, userIsLogin, userInfo, onLoginButton };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

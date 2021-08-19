@@ -1,6 +1,6 @@
 export interface UseMouse {
   // 鼠标按下
-  startEvent: () => void
+  startEvent: () => void;
 }
 
 export function useMouse(): void {

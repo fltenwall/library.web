@@ -6,20 +6,20 @@ module.exports = {
     'selector-pseudo-class-no-unknown': [
       true,
       {
-        ignorePseudoClasses: ['global'],
-      },
+        ignorePseudoClasses: ['global']
+      }
     ],
-    "selector-pseudo-element-no-unknown": [
+    'selector-pseudo-element-no-unknown': [
       true,
       {
-        ignorePseudoElements: ["v-deep"]
+        ignorePseudoElements: ['v-deep']
       }
     ],
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin'],
-      },
+        ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin']
+      }
     ],
     'no-empty-source': null,
     'unicode-bom': 'never',
@@ -31,8 +31,8 @@ module.exports = {
     'rule-empty-line-before': [
       'always',
       {
-        ignore: ['after-comment', 'first-nested'],
-      },
+        ignore: ['after-comment', 'first-nested']
+      }
     ],
     // 指定声明块内属性的字母顺序
     'order/properties-order': [
@@ -181,7 +181,7 @@ module.exports = {
       'page',
       'set-link-source',
       'unicode-bidi',
-      'speak',
-    ],
-  },
+      'speak'
+    ]
+  }
 };

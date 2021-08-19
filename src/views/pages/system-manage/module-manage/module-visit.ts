@@ -1,4 +1,4 @@
-import type { TableColumn } from '/@/lib/props/TableList'
+import type { TableColumn } from '/@/lib/props/TableList';
 
 export const tableColumns: TableColumn[] = [
   {
@@ -19,4 +19,4 @@ export const tableColumns: TableColumn[] = [
     dataIndex: 'operation',
     slots: { customRender: 'operation' }
   }
-]
+];

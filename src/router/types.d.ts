@@ -1,91 +1,91 @@
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router';
 
 export interface RouteMeta {
   // 标题
-  title?: string
+  title?: string;
 
   // 忽略身份验证
-  ignoreAuth?: boolean
+  ignoreAuth?: boolean;
 
   // 权限
-  auth?: string[] | Auth
+  auth?: string[] | Auth;
 
   // 缓存页面
-  keepAlive?: boolean
+  keepAlive?: boolean;
 
   // 忽略标签缓存
-  ignoreTabKeepAlive?: boolean
+  ignoreTabKeepAlive?: boolean;
 
   // 菜单隐藏
-  hideInMenu?: boolean
+  hideInMenu?: boolean;
 
   // 隐藏标签
-  hideInTab?: boolean
+  hideInTab?: boolean;
 
   // 页面重定向
-  redirect?: string
+  redirect?: string;
 
   // 图标
-  icon?: string
+  icon?: string;
 
   // 固定标签
-  affix?: boolean
+  affix?: boolean;
 
   // 忽略标签
-  ignoreTab?: boolean
+  ignoreTab?: boolean;
 
   // 允许 子路由为空,
-  allowChildNull?: boolean
+  allowChildNull?: boolean;
 }
 
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'name' | 'redirect'> {
-  name: string
+  name: string;
 
-  meta: RouteMeta
+  meta: RouteMeta;
 
-  children?: AppRouteRecordRaw[]
+  children?: AppRouteRecordRaw[];
 
-  redirect?: { name: string }
+  redirect?: { name: string };
 
-  props?: unknown
+  props?: unknown;
 }
 
 export interface AppRouteModule {
-  layout: AppRouteRecordRaw
+  layout: AppRouteRecordRaw;
 
-  routes: AppRouteRecordRaw[]
+  routes: AppRouteRecordRaw[];
 
-  sortValue: number
+  sortValue: number;
 }
 
 export interface Menu extends RouteMeta {
-  name?: string | symbol
+  name?: string | symbol;
 
-  title?: string
+  title?: string;
 
-  path: string
+  path: string;
 
-  disabled?: boolean
+  disabled?: boolean;
 
-  children?: Menu[]
+  children?: Menu[];
 
-  orderNo?: number
+  orderNo?: number;
 
-  roles?: RoleEnum[]
+  roles?: RoleEnum[];
 }
 
 export interface FlatMenu {
-  path: string
+  path: string;
 
-  name: string
+  name: string;
 
-  meta?: RouteMeta
+  meta?: RouteMeta;
 }
 
 export interface Auth {
-  new?: string[]
+  new?: string[];
 
-  edit?: string[]
+  edit?: string[];
 
-  view?: string[]
+  view?: string[];
 }

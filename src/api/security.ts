@@ -1,73 +1,73 @@
-import type { Result } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
-import { ContentTypeEnum } from '/@/enums/httpEnum'
+import type { Result } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
+import { ContentTypeEnum } from '/@/enums/httpEnum';
 
 export interface UserInfo {
   // 主键
-  id?: number
+  id?: number;
 
   // 账户名称
-  username?: string
+  username?: string;
 
   // 昵称
-  nickname?: string
+  nickname?: string;
 
   // 角色权限
-  authorities: string[]
+  authorities: string[];
 
   // 电话
-  mobile?: string
+  mobile?: string;
 
   // 邮件
-  email?: string
+  email?: string;
 
   // 性别
-  sex?: string
+  sex?: string;
 
   // 是否超级管理员
-  superAdmin?: boolean
+  superAdmin?: boolean;
 
   // 描述
-  description?: string
+  description?: string;
 
   // 是否禁用
-  enabled?: boolean
+  enabled?: boolean;
 }
 
 export interface Register {
   // 账户
-  username?: string
+  username?: string;
 
   // 密码
-  password?: string
+  password?: string;
 
   // 电话
-  mobile?: string
+  mobile?: string;
 
   // 邮箱
-  email?: string
+  email?: string;
 
   // 重复
-  repeat?: string
+  repeat?: string;
 }
 
 export interface CSRF {
   // 用户标识符
-  token: string
+  token: string;
 
   // 请求头名称
-  headerName: string
+  headerName: string;
 }
 
 export interface Security {
-  user: UserInfo
-  _csrf: CSRF
+  user: UserInfo;
+  _csrf: CSRF;
 }
 
 export interface LoginParams {
-  password: string
+  password: string;
 
-  account: string
+  account: string;
 }
 
 export default class Service {
@@ -76,7 +76,7 @@ export default class Service {
     return request<Result<Security>>({
       url: '/epi/user/me',
       method: 'get'
-    })
+    });
   }
 
   // 登录
@@ -88,7 +88,7 @@ export default class Service {
       headers: {
         'Content-Type': ContentTypeEnum.FORM_URLENCODED
       }
-    })
+    });
   }
 
   // 退出
@@ -96,7 +96,7 @@ export default class Service {
     return request<Result<null>>({
       url: '/epi/user/logout',
       method: 'post'
-    })
+    });
   }
 
   // 注册
@@ -105,6 +105,6 @@ export default class Service {
       url: '/epi/user/register',
       method: 'post',
       data: data
-    })
+    });
   }
 }

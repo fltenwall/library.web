@@ -14,17 +14,17 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
-import moment, { Moment } from 'moment'
-import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue'
-import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
+import type { Ref } from 'vue';
+import moment, { Moment } from 'moment';
+import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue';
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean>) => {
   return computed(() => {
-    const dataPage = injectDatapage()
-    return readonly.value || dataPage.readonly?.value
-  })
-}
+    const dataPage = injectDatapage();
+    return readonly.value || dataPage.readonly?.value;
+  });
+};
 
 export default defineComponent({
   props: {
@@ -51,39 +51,39 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const inputValue = ref<string>('')
-    const { readonly } = toRefs(props)
+    const inputValue = ref<string>('');
+    const { readonly } = toRefs(props);
 
     // 内容发送变化触发
-    const onChange = () => emit('update:value', inputValue.value)
+    const onChange = () => emit('update:value', inputValue.value);
 
-    const inputReadonly = useinputReadonly(readonly)
+    const inputReadonly = useinputReadonly(readonly);
 
     watch(
       () => props.value,
-      (newValue) => {
-        if (unref(inputValue) === newValue) return
-        inputValue.value = newValue
+      (newValue: string) => {
+        if (unref(inputValue) === newValue) return;
+        inputValue.value = newValue;
       },
       { immediate: true }
-    )
+    );
 
     // 禁用时间
     function disabledDate(currentDate: Moment) {
-      if (!currentDate) return false
+      if (!currentDate) return false;
 
       // 有结束时间
-      if (props.endDate) return moment(props.endDate, 'YYYY年MM月DD日').isBefore(currentDate)
+      if (props.endDate) return moment(props.endDate, 'YYYY年MM月DD日').isBefore(currentDate);
 
       // 有开始时间
-      if (props.startDate) return moment(props.startDate, 'YYYY年MM月DD日').isAfter(currentDate)
+      if (props.startDate) return moment(props.startDate, 'YYYY年MM月DD日').isAfter(currentDate);
 
-      return false
+      return false;
     }
 
-    return { inputValue, inputReadonly, onChange, disabledDate }
+    return { inputValue, inputReadonly, onChange, disabledDate };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

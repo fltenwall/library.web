@@ -4,32 +4,24 @@
       <div class="operation-left">
         <div class="index-middle operation-box">
           <UserOutlined class="operation-icon" />
-          <div class="operation-title">
-            创建者
-          </div>
+          <div class="operation-title">创建者</div>
           <div>{{ data.createBy }}</div>
         </div>
         <div class="index-middle operation-box">
           <UserOutlined class="operation-icon" />
-          <div class="operation-title">
-            更新者
-          </div>
+          <div class="operation-title">更新者</div>
           <div>{{ data.updateBy }}</div>
         </div>
       </div>
       <div class="operation-right">
         <div class="index-middle operation-box">
           <CalendarOutlined class="operation-icon" />
-          <div class="operation-title">
-            创建时间
-          </div>
+          <div class="operation-title">创建时间</div>
           <div>{{ useMoment(data.createTime) }}</div>
         </div>
         <div class="index-middle operation-box">
           <CalendarOutlined class="operation-icon" />
-          <div class="operation-title">
-            更新时间
-          </div>
+          <div class="operation-title">更新时间</div>
           <div>{{ useMoment(data.updateTime) }}</div>
         </div>
       </div>
@@ -38,9 +30,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { UserOutlined, CalendarOutlined } from '@ant-design/icons-vue'
-import { useMoment } from '/@/utils/dateFormat'
+import { defineComponent } from 'vue';
+import { UserOutlined, CalendarOutlined } from '@ant-design/icons-vue';
+import { useMoment } from '/@/utils/dateFormat';
 
 export default defineComponent({
   components: { UserOutlined, CalendarOutlined },
@@ -52,14 +44,14 @@ export default defineComponent({
     data: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     }
   },
   setup() {
-    return { useMoment }
+    return { useMoment };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

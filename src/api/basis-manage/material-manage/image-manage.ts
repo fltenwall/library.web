@@ -1,46 +1,46 @@
-import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
-import { ContentTypeEnum } from '/@/enums/httpEnum'
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
+import { ContentTypeEnum } from '/@/enums/httpEnum';
 
 export interface ImageManage {
   //  主键
-  id?: number
+  id?: number;
 
   // 名称
-  name?: string
+  name?: string;
 
   // 哈希
-  hash?: string
+  hash?: string;
 
   // 状态
-  status?: boolean
+  status?: boolean;
 
   // 分组 id
-  classifyId?: string
+  classifyId?: string;
 
   // 创建者
-  createBy?: string
+  createBy?: string;
 
   // 更新者
-  updateBy?: string
+  updateBy?: string;
 
   // 创建时间
-  createTime?: string
+  createTime?: string;
 
   // 更新时间
-  updateTime?: string
+  updateTime?: string;
 }
 
 export interface Classify {
-  id?: string
+  id?: string;
 
-  name?: string
+  name?: string;
 }
 
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<ImageManage>
+export type DataPager = PagerResponseData<ImageManage>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
@@ -49,7 +49,7 @@ export default class Service {
       url: '/epi/material/image/classify',
       method: 'get',
       params: query
-    })
+    });
   }
 
   // 向服务查询数据并分页返回结果
@@ -58,7 +58,7 @@ export default class Service {
       url: '/epi/material/image',
       method: 'get',
       params: query
-    })
+    });
   }
 
   // 保存数据到远程服务器
@@ -67,7 +67,7 @@ export default class Service {
       url: '/epi/material/image/classify',
       method: 'post',
       data: item
-    })
+    });
   }
 
   // 更新数据到远程服务器
@@ -76,7 +76,7 @@ export default class Service {
       url: '/epi/material/image/classify/' + id,
       method: 'put',
       data: item
-    })
+    });
   }
 
   // 更新数据到远程服务器
@@ -85,7 +85,7 @@ export default class Service {
       url: '/epi/material/image/' + id,
       method: 'put',
       data: item
-    })
+    });
   }
 
   // 删除指定ID的数据
@@ -93,7 +93,7 @@ export default class Service {
     return request<Result<null>>({
       url: '/epi/material/image/' + id,
       method: 'delete'
-    })
+    });
   }
 
   // 删除指定ID的数据
@@ -101,7 +101,7 @@ export default class Service {
     return request<Result<null>>({
       url: '/epi/material/image/classify/' + id,
       method: 'delete'
-    })
+    });
   }
 
   // 上传照片
@@ -111,7 +111,7 @@ export default class Service {
       method: 'post',
       data: item,
       headers: { 'Content-Type': ContentTypeEnum.FORM_DATA }
-    })
+    });
   }
 
   // 合并分片
@@ -120,6 +120,6 @@ export default class Service {
       url: '/epi/material/image/merge-chunk',
       data: item,
       method: 'post'
-    })
+    });
   }
 }

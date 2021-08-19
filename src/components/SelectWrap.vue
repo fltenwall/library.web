@@ -11,16 +11,16 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
-import { defineComponent, PropType, computed, toRefs } from 'vue'
-import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend'
+import type { Ref } from 'vue';
+import { defineComponent, PropType, computed, toRefs } from 'vue';
+import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean>, isReadonly: Ref<boolean>) => {
   return computed(() => {
-    const dataPage = injectDatapage()
-    return readonly.value || (isReadonly.value && dataPage.readonly?.value)
-  })
-}
+    const dataPage = injectDatapage();
+    return readonly.value || (isReadonly.value && dataPage.readonly?.value);
+  });
+};
 
 export default defineComponent({
   props: {
@@ -43,14 +43,14 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const { readonly, isReadonly } = toRefs(props)
+    const { readonly, isReadonly } = toRefs(props);
 
-    const inputReadonly = useinputReadonly(readonly, isReadonly)
+    const inputReadonly = useinputReadonly(readonly, isReadonly);
 
-    const onSelect = (value: unknown) => emit('update:value', value)
-    return { inputReadonly, onSelect }
+    const onSelect = (value: unknown) => emit('update:value', value);
+    return { inputReadonly, onSelect };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

@@ -1,7 +1,12 @@
 <template>
   <div class="wrap pt-4 pb-4 pr-4 default-shadow">
     <div class="left">
-      <a-menu v-model:selectedKeys="selectedKeys" class="left-menu" mode="inline" @click="handleClick">
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        class="left-menu"
+        mode="inline"
+        @click="handleClick"
+      >
         <a-menu-item v-for="(item, key) in menuList" :key="key">
           {{ item }}
         </a-menu-item>
@@ -17,40 +22,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useGo } from '/@/hooks/web/usePage'
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useGo } from '/@/hooks/web/usePage';
 
-const INDEX_NAME = 'account-manage-setting'
+const INDEX_NAME = 'account-manage-setting';
 
 export default defineComponent({
   setup() {
-    const selectedKeys = ref<string[]>()
-    const { currentRoute } = useRouter()
-    const currentName = currentRoute.value.name as string
-    const go = useGo()
+    const selectedKeys = ref<string[]>();
+    const { currentRoute } = useRouter();
+    const currentName = currentRoute.value.name as string;
+    const go = useGo();
 
     const menuList = {
       base: '基本设置',
       security: '安全设置',
       custom: '个性化设置',
       binding: '账户绑定'
-    }
-    selectedKeys.value = [currentName.replace(new RegExp(`${INDEX_NAME}-`), '')]
+    };
+    selectedKeys.value = [currentName.replace(new RegExp(`${INDEX_NAME}-`), '')];
 
     // 处理菜单点击
     function handleClick({ keyPath }: { keyPath: string[] }) {
-      selectedKeys.value = keyPath
-      go({ name: `${INDEX_NAME}-${keyPath[0]}` })
+      selectedKeys.value = keyPath;
+      go({ name: `${INDEX_NAME}-${keyPath[0]}` });
     }
 
     return {
       menuList,
       selectedKeys,
       handleClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style lang="less" scoped>

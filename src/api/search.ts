@@ -1,59 +1,59 @@
-import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types'
-import request from '/@/lib/http/axios/'
+import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
+import request from '/@/lib/http/axios/';
 
 export interface Search {
   // 主键
-  id?: number
+  id?: number;
 
   // 编码
-  code?: string
+  code?: string;
 
   // 书名
-  name?: string
+  name?: string;
 
   // 国际标准书号(ISBN)
-  isbn?: string
+  isbn?: string;
 
   // 作者
-  author?: string
+  author?: string;
 
   // 出版社
-  publisher?: string
+  publisher?: string;
 
   // 描述
-  description?: string
+  description?: string;
 
   // 价格
-  price?: number
+  price?: number;
 
   // 出版时间
-  publicationTime?: string
+  publicationTime?: string;
 
   // 创建者
-  createBy?: string
+  createBy?: string;
 
   // 更新者
-  updateBy?: string
+  updateBy?: string;
 
   // 创建时间
-  createTime?: string
+  createTime?: string;
 
   // 更新时间
-  updateTime?: string
+  updateTime?: string;
 }
 
 export interface Hot {
   // 数量
-  count?: number
+  count?: number;
 
   // 名称
-  name?: string
+  name?: string;
 }
 
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<Search>
+export type DataPager = PagerResponseData<Search>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
@@ -62,7 +62,7 @@ export default class Service {
       url: '/epi/search',
       method: 'get',
       params: query
-    })
+    });
   }
 
   // 向服务查询数据并分页返回结果
@@ -70,7 +70,7 @@ export default class Service {
     return request<Result<Hot[]>>({
       url: '/epi/record/search',
       method: 'get'
-    })
+    });
   }
 
   // 向服务查询数据并分页返回结果
@@ -79,6 +79,6 @@ export default class Service {
       url: '/api/search/tip',
       method: 'get',
       params: query
-    })
+    });
   }
 }
