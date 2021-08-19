@@ -53,11 +53,18 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
 
     build: {
       target: 'es2015',
-      // terser options
+      assetsDir: 'static/img/',
       terserOptions: {
         compress: {
           keep_infinity: true,
           drop_console: VITE_DROP_CONSOLE
+        }
+      },
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'static/js/[name]-[hash].js',
+          entryFileNames: 'static/js/[name]-[hash].js',
+          assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
         }
       }
     },
