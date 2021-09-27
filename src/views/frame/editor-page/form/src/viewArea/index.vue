@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointList } from '../../components/tools/index';
@@ -63,12 +63,10 @@ import { buildShortUUID } from '/@/utils/uuid';
 import { Draggable } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
 import { schemaList } from '../../components/tools/schema';
-import markLine from '../../components/mark-line.vue';
+import markLine from './markLine.vue';
 import { assign, cloneDeep } from 'lodash-es';
-import { handleStore, limitRules, viewResize } from './utils';
+import { handleStore, limitRules, viewResize, pointDataModify } from './utils';
 import usePointPos from '../../utils/usePointPos';
-
-type Position = Pick<PointInfo, 'x' | 'y' | 'width' | 'height'>;
 
 interface DataItem {
   // 选择鼠标指针浮动在其上的元素
@@ -82,9 +80,9 @@ interface DataItem {
   // 位置
   pos: {
     // 布局位置
-    layout?: Required<Position>;
+    layout?: BaseSchema;
     // 移动位置
-    move?: Required<Position>;
+    move?: BaseSchema;
   };
 }
 
@@ -139,12 +137,13 @@ export default defineComponent({
     function handleMove({ uuid, x, y, type }: Move) {
       const mapState = {
         mouse: () => {
+          console.warn(x, y);
           // 计算位置
           const pos = limit.limitPosition({ x, y }, uuid);
           // 记录位置
           dataItem.pos = pos;
           // 更新数据
-          // pointDataModify(pos)
+          pointDataModify(pos);
           // 设置样式
           setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
         },
@@ -281,7 +280,7 @@ export default defineComponent({
         schema.width = width;
         schema.height = height;
         // 计算位置
-        const { x, y } = usePointPos('top', schema as Required<PointInfo>);
+        const { x, y } = usePointPos({ type: 'top', schema: schema as Required<PointInfo> });
         schema.x = x;
         schema.y = y;
         // 初始化样式
@@ -345,7 +344,7 @@ export default defineComponent({
   align-items: center;
   height: 100%;
   padding: 70px 0 70px;
-  margin: 0 300px 0 240px;
+  margin: 0 300px 0 0;
 
   &-panel {
     width: 90%;
@@ -356,7 +355,7 @@ export default defineComponent({
 
   .view-item {
     z-index: 2;
-    border: 2px solid transparent;
+    border: 2px solid #333;
     box-sizing: border-box;
     transition: all 0.2s ease;
 

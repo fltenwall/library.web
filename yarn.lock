@@ -1019,10 +1019,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.2.tgz?cache=0&sync_timestamp=1626010521814&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.2.2.tgz#197388583c4e0b8ccd9c50ed19831ede27c2b919"
-  integrity sha1-GXOIWDxOC4zNnFDtGYMe3ifCuRk=
+ant-design-vue@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.nlark.com/ant-design-vue/download/ant-design-vue-2.2.6.tgz#2acf45ea8bb2bb8a0e48a83fa9c6a827fef5236f"
+  integrity sha1-Ks9F6ouyu4oOSKg/qcaoJ/71I28=
   dependencies:
     "@ant-design/icons-vue" "^6.0.0"
     "@babel/runtime" "^7.10.5"
@@ -1035,6 +1035,7 @@ ant-design-vue@^2.2.2:
     lodash-es "^4.17.15"
     moment "^2.27.0"
     omit.js "^2.0.0"
+    resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.25"
     shallow-equal "^1.0.0"
     vue-types "^3.0.0"
@@ -3673,6 +3674,11 @@ require-main-filename@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/require-main-filename/download/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha1-0LMp7MfMD2Fkn2IhW+aa9UqomJs=
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 resolve-from@^4.0.0:
   version "4.0.0"

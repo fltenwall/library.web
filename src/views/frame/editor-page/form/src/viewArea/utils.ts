@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ref, computed, unref, onMounted, onBeforeUnmount, inject } from 'vue';
-import { PointInfo } from '/@/lib/interface/PointInfo';
+import { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { pointStore } from '/@/store/modules/point';
 import { isNumber } from '/@/utils/is';
-// import usePointPos from '../../utils/usePointPos'
+import usePointPos from '../../utils/usePointPos';
 
 interface Store {
   uuid: string;
@@ -53,6 +53,8 @@ export function limitRules(): LimitRules {
   const { getViewSize } = inject('viewSize') as {
     getViewSize: () => { width: number; height: number };
   };
+  // 表单配置
+  const pageOptions = computed(() => pointStore.getPageOptionsState);
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState);
 
@@ -82,8 +84,22 @@ export function limitRules(): LimitRules {
     const move = { x: pos.x + (point?.x || 0), y: pos.y + (point?.y || 0), width, height, uuid };
     const x = move.x > CW - width! ? CW - width! : move.x <= 0 ? 0 : move.x;
     const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y;
+    let layout = { x, y, width, height, uuid };
+    // 弹性布局
+    if (pageOptions.value.layoutType === 2) {
+      // layout
+      const cb = (el: BaseSchema): false => {
+        if (el.y > move.y) {
+        }
+        return false;
+      };
 
-    return { layout: { x, y, width, height, uuid }, move };
+      const offset = usePointPos({ type: 'smart', schema: move, uuids: [uuid], cb });
+      layout = { ...layout, ...offset };
+      console.log({ x, y }, offset);
+    }
+
+    return { layout, move };
   }
 
   return { limitSize, limitPosition };
@@ -112,49 +128,24 @@ export function viewResize(panelRef: Ref<HTMLElement | null>): void {
  * @param pos 计算后放下位置
  * @returns
  */
-export function pointDataModify(point: Required<Place>, pos: Place): void {
-  // 差异
-  const diff = 3;
+export function pointDataModify({ move, layout }: Position): void {
   // 表单样式配置
   const pageOptions = pointStore.getPageOptionsState;
   // 组件
   const pointData = computed(() => pointStore.getPointDataState);
-  // 弹性布局
+  // 非弹性布局
   if (pageOptions.layoutType !== 2) return;
+  // 当前移动位置
+  const cover = { [layout.uuid]: layout };
+  // 遍历所有组件
+  for (const schema of unref(pointData)) {
+    if (move.uuid === schema.uuid) continue;
+    const uuids = [schema.uuid];
 
-  for (const el of unref(pointData)) {
-    // 相等跳出
-    if (el.uuid === point.uuid) continue;
-    const lo = Math.max(point.x, el.x);
-    const hi = Math.min(point.x + point.width, el.x + el.width);
-    // 求区间交际
-    if (lo > hi) continue;
-    // 判断 拖动 point 再当前 el 上面
-    // if (point.y +)
+    const { x, y } = usePointPos({ type: 'top', schema, uuids, cover });
 
-    if (point.y <= el.y + diff && point.y >= el.y - diff) {
-      const y = pos.y!;
-      // 更新 el 位置
-      updatePointStyle(el.x, y, el.uuid);
-      // point 顶部 el 底部 表示向上移动
-      pos.y = y + el.height;
-      // 更新点位置
-      console.log(point.x, el.y, point.uuid);
-    }
-
-    // updatePointStyle(point.x, el.y, point.uuid)
-
-    // if (el.uuid !== point.uuid) {
-    //   const place = usePointPos(el, el.uuid, point.uuid)
-    //   updatePointStyle(place.x, place.y, el.uuid)
-    // }
+    updatePointStyle(x, y, schema.uuid);
   }
-  // for (const el of unref(pointData)) {
-  //   // 相等跳出
-  //   if (el.uuid === point.uuid) continue
-  //   const place = usePointPos(el, el.uuid)
-  //   updatePointStyle(place.x, place.y, el.uuid)
-  // }
 }
 
 // 样式更新
