@@ -1,7 +1,7 @@
 <template>
   <div class="panel-search-wrap">
-    <div class="panel-search-title">搜索</div>
-    <a-input class="panel-search">
+    <div class="panel-search-title">基础</div>
+    <a-input class="panel-search" placeholder="搜索">
       <template #prefix>
         <SearchOutlined />
       </template>
@@ -94,7 +94,7 @@ export default defineComponent({
 
   &-title {
     flex-shrink: 0;
-    width: 70px;
+    width: 60px;
     margin: 0 5px 0 0;
     font-weight: 600;
     text-align: center;

@@ -137,7 +137,6 @@ export default defineComponent({
     function handleMove({ uuid, x, y, type }: Move) {
       const mapState = {
         mouse: () => {
-          console.warn(x, y);
           // 计算位置
           const pos = limit.limitPosition({ x, y }, uuid);
           // 记录位置
@@ -355,7 +354,7 @@ export default defineComponent({
 
   .view-item {
     z-index: 2;
-    border: 2px solid #333;
+    border: 2px solid transparent;
     box-sizing: border-box;
     transition: all 0.2s ease;
 

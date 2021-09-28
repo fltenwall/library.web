@@ -84,19 +84,26 @@ export function limitRules(): LimitRules {
     const move = { x: pos.x + (point?.x || 0), y: pos.y + (point?.y || 0), width, height, uuid };
     const x = move.x > CW - width! ? CW - width! : move.x <= 0 ? 0 : move.x;
     const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y;
-    let layout = { x, y, width, height, uuid };
+    const layout = { x, y, width, height, uuid };
     // 弹性布局
     if (pageOptions.value.layoutType === 2) {
-      // layout
-      const cb = (el: BaseSchema): false => {
-        if (el.y > move.y) {
+      const cb = (el: BaseSchema): false | BaseSchema => {
+        if (el.y + el.height > move.y + move.height) {
+          return el.y >= layout.y ? false : layout;
         }
-        return false;
+        // 拖拽块高度 大于 当前块
+        if (el.y >= move.y && move.y + move.height > el.y + el.height) {
+          return false;
+        }
+        // 判断是否在可视区移动
+        if (move.x > CW - width || move.x <= 0) {
+          return layout;
+        }
+        return move;
       };
 
       const offset = usePointPos({ type: 'smart', schema: move, uuids: [uuid], cb });
-      layout = { ...layout, ...offset };
-      console.log({ x, y }, offset);
+      layout.y = offset.y;
     }
 
     return { layout, move };
@@ -141,7 +148,6 @@ export function pointDataModify({ move, layout }: Position): void {
   for (const schema of unref(pointData)) {
     if (move.uuid === schema.uuid) continue;
     const uuids = [schema.uuid];
-
     const { x, y } = usePointPos({ type: 'top', schema, uuids, cover });
 
     updatePointStyle(x, y, schema.uuid);
