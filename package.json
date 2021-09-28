@@ -29,7 +29,7 @@
     "@antv/g2": "^4.1.12",
     "@iconify/iconify": "^2.0.3",
     "ant-design-vue": "^2.2.6",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "crypto-es": "^1.2.7",
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",

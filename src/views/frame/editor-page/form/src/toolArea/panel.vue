@@ -1,7 +1,7 @@
 <template>
   <div class="panel-search-wrap">
-    <div class="panel-search-title">基础</div>
-    <a-input class="panel-search" placeholder="搜索">
+    <div class="panel-search-title">搜索</div>
+    <a-input class="panel-search" placeholder="搜索您想要的组件">
       <template #prefix>
         <SearchOutlined />
       </template>

@@ -123,6 +123,14 @@ export default class Point extends VuexModule {
     this.pointStyleState = {};
     this.pageOptionsState = {};
   }
+
+  // 清空数据
+  @Mutation
+  commitResetData(): void {
+    this.pointUUIDState = '';
+    this.pointDataState = [];
+    this.pointStyleState = {};
+  }
 }
 
 export { Point };

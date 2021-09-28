@@ -3,19 +3,24 @@
     <a-tabs tab-position="left" @change="handleTabChange">
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
-          <Icon :icon="pointConfigs.icon[menu]" size="18" />
-          <div class="pt-1">{{ pointConfigs.name[menu] }}</div>
+          <a-tooltip placement="right">
+            <template #title>{{ pointConfigs.name[menu] }}</template>
+            <Icon :icon="pointConfigs.icon[menu]" size="20" />
+          </a-tooltip>
         </template>
       </a-tab-pane>
+
       <a-tab-pane>
         <template #tab>
-          <Icon icon="ant-design:user-outlined" size="18" />
-          <div class="pt-1">我的</div>
+          <a-tooltip placement="right">
+            <template #title>我的</template>
+            <Icon icon="ant-design:user-outlined" size="20" />
+          </a-tooltip>
         </template>
       </a-tab-pane>
     </a-tabs>
     <div class="folding">
-      <Icon icon="ant-design:double-left-outlined" size="18" />
+      <Icon icon="ant-design:double-left-outlined" size="20" />
     </div>
   </div>
 </template>

@@ -77,7 +77,6 @@ export default defineComponent({
 
       &:focus {
         cursor: text;
-        // border-bottom-color: @primary-color;
       }
     }
   }

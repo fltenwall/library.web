@@ -33,7 +33,7 @@ export const pointConfigs: PointConfigs = {
     form: '页面配置'
   },
   icon: {
-    base: 'ant-design:highlight-outlined'
+    base: 'ant-design:appstore-outlined'
   }
 };
 

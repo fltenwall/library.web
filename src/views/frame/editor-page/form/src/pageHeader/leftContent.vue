@@ -1,34 +1,57 @@
 <template>
-  <div class="index-theme header-left index-middle index-hidden-newline">
-    <div>表单样式设计</div>
+  <div class="header-left index-middle index-hidden-newline">
+    <div class="index-theme header-left-title">表单样式设计</div>
+
     <div class="button index-center-middle ml-10 mr-4">
-      <div class="button-reset">一键还原</div>
-      <Icon
-        icon="ion:arrow-undo-sharp"
-        class="point-history mr-4 ml-4"
-        :disable="!linkedState.undo"
-        @click="handleUndo"
-      />
-      <Icon
-        icon="ion:arrow-redo-sharp"
-        class="point-history"
-        :disable="!linkedState.redo"
-        @click="handleRedo"
-      />
+      <a-tooltip placement="bottom">
+        <template #title>一键还原</template>
+        <Icon
+          icon="icons8:refresh"
+          class="point-history"
+          :disable="!resetState"
+          @click="handleReset"
+        />
+      </a-tooltip>
+      <a-tooltip placement="bottom">
+        <template #title>撤销</template>
+        <Icon
+          icon="la:undo"
+          class="point-history mr-4 ml-4"
+          :disable="!linkedState.undo"
+          @click="handleUndo"
+        />
+      </a-tooltip>
+      <a-tooltip placement="bottom">
+        <template #title>重做</template>
+        <Icon
+          icon="la:redo"
+          class="point-history"
+          :disable="!linkedState.redo"
+          @click="handleRedo"
+        />
+      </a-tooltip>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import pointLinked from '../../utils/pointLinked';
+import { pointStore } from '/@/store/modules/point';
+import { isEmptyArray } from '/@/utils/is';
 
 export default defineComponent({
   setup() {
+    const resetState = computed(() => isEmptyArray(pointStore.getPointDataState));
     // 使用链表
     const linked = pointLinked();
+    // 一键还原
+    function handleReset() {
+      // 还原数据
+      resetState.value && pointStore.commitResetData();
+    }
 
-    return { ...linked };
+    return { ...linked, handleReset, resetState };
   }
 });
 </script>
@@ -38,8 +61,11 @@ export default defineComponent({
   &-left {
     height: 100%;
     font-size: 18px;
-    font-weight: bold;
     color: @primary-color;
+
+    &-title {
+      font-weight: bold;
+    }
   }
 }
 
@@ -82,10 +108,13 @@ export default defineComponent({
   }
 
   &-reset {
-    font-family: BlinkMacSystemFont;
     font-size: 14px;
-    color: #dadde6;
-    cursor: default;
+    cursor: pointer;
+
+    &[disabled='false'] {
+      color: #dadde6;
+      cursor: default;
+    }
   }
 }
 </style>
