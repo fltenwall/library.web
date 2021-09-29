@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { viewList, pointConfigs } from '../../components/tools/index';
+import { viewList, pointConfigs } from '../../../components/tools/index';
 
 export default defineComponent({
   setup() {

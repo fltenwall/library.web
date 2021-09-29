@@ -15,8 +15,8 @@ import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from '
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean>) => {
+  const dataPage = injectDatapage();
   return computed(() => {
-    const dataPage = injectDatapage();
     return readonly.value || dataPage.readonly?.value;
   });
 };

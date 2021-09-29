@@ -1,13 +1,21 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
-    <div class="index-theme header-left-title">表单样式设计</div>
+    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}</div>
+
+    <div class="index-center-middle simulator-item actived ml-10">
+      <Icon icon="fluent:phone-20-regular" size="20" />
+    </div>
+
+    <div class="index-center-middle simulator-item ml-1">
+      <Icon icon="clarity:computer-line" size="16" />
+    </div>
 
     <div class="button index-center-middle ml-10 mr-4">
       <a-tooltip placement="bottom">
         <template #title>一键还原</template>
         <Icon
           icon="icons8:refresh"
-          class="point-history"
+          class="point-button"
           :disable="!resetState"
           @click="handleReset"
         />
@@ -16,7 +24,7 @@
         <template #title>撤销</template>
         <Icon
           icon="la:undo"
-          class="point-history mr-4 ml-4"
+          class="point-button mr-4 ml-4"
           :disable="!linkedState.undo"
           @click="handleUndo"
         />
@@ -25,7 +33,7 @@
         <template #title>重做</template>
         <Icon
           icon="la:redo"
-          class="point-history"
+          class="point-button"
           :disable="!linkedState.redo"
           @click="handleRedo"
         />
@@ -61,15 +69,15 @@ export default defineComponent({
   &-left {
     height: 100%;
     font-size: 18px;
-    color: @primary-color;
 
     &-title {
       font-weight: bold;
+      color: @primary-color;
     }
   }
 }
 
-.point-history {
+.point-button {
   font-size: 18px;
   cursor: pointer;
 
@@ -103,10 +111,6 @@ export default defineComponent({
     color: #2c63ff;
   }
 
-  &:not(:last-of-type) {
-    margin: 0 24px 0 0;
-  }
-
   &-reset {
     font-size: 14px;
     cursor: pointer;
@@ -115,6 +119,17 @@ export default defineComponent({
       color: #dadde6;
       cursor: default;
     }
+  }
+}
+
+.simulator-item {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &.actived {
+    background: #f2f2f2;
   }
 }
 </style>

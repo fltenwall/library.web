@@ -47,21 +47,23 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
     // 修改数据
     const mapState = {
       width: () => {
-        const width =
-          unref(pointInfo).x! + value > CW ? CW - unref(pointInfo).x! : value < 10 ? 10 : value;
+        const x = unref(pointInfo).x || 0;
+        const width = x + value > CW ? CW - x : value < 10 ? 10 : value;
         updateBaseContent('width', 'width', width, `${width}px`);
       },
       height: () => {
-        const height =
-          unref(pointInfo).y! + value > CH ? CH - unref(pointInfo).y! : value < 10 ? 10 : value;
+        const y = unref(pointInfo).y || 0;
+        const height = y + value > CH ? CH - y : value < 10 ? 10 : value;
         updateBaseContent('height', 'height', height, `${height}px`);
       },
       x: () => {
-        const x = value + unref(pointInfo).width! > CW ? CW - unref(pointInfo).width! : value;
+        const width = unref(pointInfo).width || 0;
+        const x = value + width > CW ? CW - width : value;
         updateBaseContent('x', 'transform', x, `translate(${x}px,${unref(pointInfo).y}px`);
       },
       y: () => {
-        const y = value + unref(pointInfo).height! > CH ? CH - unref(pointInfo).height! : value;
+        const height = unref(pointInfo).height || 0;
+        const y = value + height > CH ? CH - height : value;
         updateBaseContent('y', 'transform', y, `translate(${unref(pointInfo).x}px,${y}px`);
       },
       other: () => {

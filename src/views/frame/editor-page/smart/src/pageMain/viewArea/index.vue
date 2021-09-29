@@ -58,15 +58,15 @@
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
-import { pointList } from '../../components/tools/index';
+import { pointList } from '../../../components/tools/index';
 import { buildShortUUID } from '/@/utils/uuid';
 import { Draggable } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
-import { schemaList } from '../../components/tools/schema';
+import { schemaList } from '../../../components/tools/schema';
 import markLine from './markLine.vue';
 import { assign, cloneDeep } from 'lodash-es';
 import { handleStore, limitRules, viewResize, pointDataModify } from './utils';
-import usePointPos from '../../utils/usePointPos';
+import usePointPos from '../../../utils/usePointPos';
 
 interface DataItem {
   // 选择鼠标指针浮动在其上的元素

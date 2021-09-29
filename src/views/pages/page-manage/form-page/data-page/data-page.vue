@@ -35,6 +35,7 @@
 
     <!-- 操作 -->
     <template #footer-block>
+      <a-button @click="onComposePage"> 排版 </a-button>
       <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
       <a-button v-if="readonly" type="primary" @click="onEditPage"> 编辑 </a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
@@ -49,6 +50,8 @@ import { defineComponent, reactive, toRefs } from 'vue';
 import { dataPageMix } from '/@/lib/idata/data-page/';
 import { formRules, selectOption, selectUnitOption } from './data-page';
 import service, { FormManage } from '/@/api/page-manage/form-page';
+import { useGo } from '/@/hooks/web/usePage';
+import { PageEnum } from '/@/enums/pageEnum';
 import { assign } from 'lodash-es';
 
 export default defineComponent({
@@ -59,6 +62,8 @@ export default defineComponent({
     const parameter = { rules, dataItem, onServerMethods };
     const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<FormManage>(parameter);
     const { mode, readonly } = toRefs(pageInfo);
+    // 页面跳转
+    const go = useGo();
 
     // 通过ID加载数据
     async function onLoadDataById(id: number) {
@@ -85,6 +90,10 @@ export default defineComponent({
     function changeDataType() {
       dataItem.state = dataItem.state ? 1 : 0;
     }
+    // 排版页面
+    function onComposePage() {
+      go({ name: PageEnum.EDITOR_FORM, params: { id: pageInfo.query.id! } });
+    }
 
     return {
       mode,
@@ -94,6 +103,7 @@ export default defineComponent({
       selectOption,
       selectUnitOption,
       validateInfos,
+      onComposePage,
       ...onDataMethods
     };
   }

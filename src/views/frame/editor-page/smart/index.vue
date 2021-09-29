@@ -14,9 +14,9 @@
 <script lang="ts">
 import { defineComponent, onBeforeUnmount, reactive, unref } from 'vue';
 import { useRouter } from 'vue-router';
-import actionArea from './src/actionArea/index.vue';
-import toolArea from './src/toolArea/index.vue';
-import viewArea from './src/viewArea/index.vue';
+import actionArea from './src/pageMain/actionArea/index.vue';
+import toolArea from './src/pageMain/toolArea/index.vue';
+import viewArea from './src/pageMain/viewArea/index.vue';
 import pageHeader from './src/pageHeader/index.vue';
 import service from '/@/api/page-manage/form-page';
 import { pointStore } from '/@/store/modules/point';

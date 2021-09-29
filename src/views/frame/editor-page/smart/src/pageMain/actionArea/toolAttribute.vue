@@ -7,11 +7,11 @@
   <div class="flex">
     <div class="flex-item mr-3 index-middle">
       <div class="flex-shrink-0 w-6">w</div>
-      <ui-input v-model:value="dataItem.width" prop="width" type="number" />
+      <ui-input v-model:value="dataItem.width" prop="width" type="number" :min="10" />
     </div>
     <div class="flex-item index-middle">
       <div class="flex-shrink-0 w-6">h</div>
-      <ui-input v-model:value="dataItem.height" prop="height" type="number" />
+      <ui-input v-model:value="dataItem.height" prop="height" type="number" :min="10" />
     </div>
   </div>
   <div class="flex mt-4">
@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { templateInit } from './tools/utils';
+import { templateInit } from '../../../components/tools/utils';
 import { PointInfo } from '/@/lib/interface/PointInfo';
 import uiInput from '/@/lib/UI/src/input/index';
 

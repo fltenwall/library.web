@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from 'vue';
-import { templateList } from '../../components/tools/template';
+import { templateList } from '../../../components/tools/template';
 import { pointStore } from '/@/store/modules/point';
-import { pointConfigs } from '../../components/tools/index';
+import { pointConfigs } from '../../../components/tools/index';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
-import toolAttribute from '../../components/tool-attribute.vue';
-import formPoint from '../../components/form-point.vue';
+import toolAttribute from './toolAttribute.vue';
+import formPoint from './formPoint.vue';
 
 export default defineComponent({
   components: { ...templateList, toolAttribute, formPoint, QuestionCircleOutlined },

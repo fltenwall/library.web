@@ -22,10 +22,10 @@ import type { Ref } from 'vue';
 import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
-const useinputReadonly = (readonly: Ref<boolean>, isReadonly: Ref<boolean>) => {
+const useinputReadonly = (readonly: Ref<boolean | undefined>, isReadonly: Ref<boolean>) => {
+  const dataPage = injectDatapage();
   return computed(() => {
-    const dataPage = injectDatapage();
-    return readonly.value || (isReadonly.value && dataPage.readonly?.value);
+    return readonly.value ?? (isReadonly.value && dataPage.readonly?.value);
   });
 };
 
