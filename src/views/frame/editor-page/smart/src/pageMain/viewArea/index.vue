@@ -58,11 +58,11 @@
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { defineComponent, computed, reactive, CSSProperties, ref } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
-import { pointList } from '../../../components/tools/index';
+import { pointList } from '../../../tools/index';
 import { buildShortUUID } from '/@/utils/uuid';
 import { Draggable } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
-import { schemaList } from '../../../components/tools/schema';
+import { schemaList } from '../../../tools/schema';
 import markLine from './markLine.vue';
 import { assign, cloneDeep } from 'lodash-es';
 import { handleStore, limitRules, viewResize, pointDataModify } from './utils';
@@ -141,35 +141,49 @@ export default defineComponent({
           const pos = limit.limitPosition({ x, y }, uuid);
           // 记录位置
           dataItem.pos = pos;
-          // 更新数据
-          pointDataModify(pos);
-          // 设置样式
-          setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
+
+          return () => {
+            // 设置样式
+            setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
+          };
         },
         ew: () => {
           const layout = limit.limitSize({ x }, uuid);
           // 记录位置
           dataItem.pos.layout = layout;
-          // 设置样式
-          setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
+
+          return () => {
+            // 设置样式
+            setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
+          };
         },
         ns: () => {
           const layout = limit.limitSize({ y }, uuid);
           // 记录位置
           dataItem.pos.layout = layout;
-          // 设置样式
-          setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+
+          return () => {
+            // 设置样式
+            setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+          };
         },
         se: () => {
           const layout = limit.limitSize({ y, x }, uuid);
           // 记录位置
           dataItem.pos.layout = layout;
-          // 设置样式
-          setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
-          setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+
+          return () => {
+            // 设置样式
+            setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
+            setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+          };
         }
       };
-      mapState[type]();
+      const result = mapState[type]();
+      // 更新数据
+      pointDataModify(dataItem.pos.layout!);
+      // 延迟执行
+      result();
       // 设置状态
       dataItem.state = 'move';
     }
@@ -338,6 +352,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .view-area {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -346,8 +361,8 @@ export default defineComponent({
   margin: 0 300px 0 0;
 
   &-panel {
-    width: 90%;
-    min-height: 100%;
+    width: 60vw;
+    min-height: 70vh;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
   }

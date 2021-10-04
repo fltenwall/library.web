@@ -15,6 +15,7 @@ interface UpdatePointState {
   // 值
   value: never;
 }
+
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class Point extends VuexModule {
   // 组件数据
@@ -28,6 +29,9 @@ export default class Point extends VuexModule {
 
   // 页面配置
   private pageOptionsState: FormManage = {};
+
+  // 标签状态
+  private tabState = 'base';
 
   // 获取组件数据
   get getPointDataState(): Required<PointInfo>[] {
@@ -47,6 +51,10 @@ export default class Point extends VuexModule {
   // 获取页面配置
   get getPageOptionsState(): FormManage {
     return this.pageOptionsState;
+  }
+
+  get getTabState(): string {
+    return this.tabState;
   }
 
   // 获取数据
@@ -130,6 +138,12 @@ export default class Point extends VuexModule {
     this.pointUUIDState = '';
     this.pointDataState = [];
     this.pointStyleState = {};
+  }
+
+  // 修改状态
+  @Mutation
+  commitTabState(state: string): void {
+    this.tabState = state;
   }
 }
 

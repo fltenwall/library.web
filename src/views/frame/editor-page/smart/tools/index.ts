@@ -1,4 +1,5 @@
-import { isArray } from '/@/utils/is';
+import { isArray, isUnDef } from '/@/utils/is';
+import PinYin from 'word-pinyin';
 
 interface ViewList {
   [prop: string]: string[];
@@ -12,6 +13,8 @@ interface PointConfigs {
   name: { [prop: string]: string };
 
   icon: { [prop: string]: string };
+
+  pinyin: { [prop: string]: string };
 }
 
 // 视图工具
@@ -19,6 +22,9 @@ const viewTools = import.meta.globEager('./**/index.vue');
 
 // 模型工具
 const schemaTools = import.meta.globEager('./**/schema.ts');
+
+// 拼音
+export const pinyin = (text: string): string => PinYin.getPinyin(text).replace(/\s+/g, '');
 
 // 工具列表
 export const viewList: ViewList = {};
@@ -30,11 +36,14 @@ export const pointList: PointList = {};
 export const pointConfigs: PointConfigs = {
   name: {
     base: '基础',
-    form: '页面配置'
+    form: '页面配置',
+    media: '媒体组件'
   },
   icon: {
-    base: 'ant-design:appstore-outlined'
-  }
+    base: 'ant-design:appstore-outlined',
+    media: 'cil:media-play'
+  },
+  pinyin: {}
 };
 
 Object.keys(viewTools).forEach((key) => {
@@ -51,9 +60,12 @@ Object.keys(viewTools).forEach((key) => {
 Object.keys(schemaTools).forEach((key) => {
   // 读取文件名称
   const [, name] = key.replace(/\.\/|.schema.ts/g, '').split('/');
+  // 判断为空跳过
+  if (isUnDef(name)) return;
   // 添加名称
-  pointConfigs.name[name] = schemaTools[key].name as string;
-
+  pointConfigs.name[name] = schemaTools[key].name;
   // 添加名称
-  pointConfigs.icon[name] = schemaTools[key].icon as string;
+  pointConfigs.icon[name] = schemaTools[key].icon;
+  // 添加拼音
+  pointConfigs.pinyin[name] = pinyin(schemaTools[key].name);
 });

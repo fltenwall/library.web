@@ -11,7 +11,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
+import { debounce } from 'lodash-es';
 import Bar from './bar';
 
 export default defineComponent({
@@ -20,13 +21,54 @@ export default defineComponent({
     tag: {
       type: String,
       default: 'div'
+    },
+    scrollTop: {
+      type: Number,
+      default: 0
     }
   },
-  setup() {
+  emits: ['on-scroll', 'update:scrollTop'],
+  setup(props, { emit }) {
     const sizeWidth = ref<string>('0');
     const sizeHeight = ref<string>('0');
     const wrap = ref<Element | null>(null);
     const resize = ref<HTMLElement | null>(null);
+
+    watch(
+      () => props.scrollTop,
+      (top) => {
+        wrap.value?.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    );
+    // 移除滚动, 利用 防抖
+    const removeScroll = debounce(() => {
+      wrap.value?.removeEventListener('scroll', handleScroll, false);
+    }, 1000);
+
+    //
+    function handleScroll() {
+      emit('on-scroll', wrap.value?.scrollTop);
+      emit('update:scrollTop', wrap.value?.scrollTop);
+    }
+
+    // 鼠标滑动, 开始监听滚动
+    function handleWheel() {
+      wrap.value?.addEventListener('scroll', handleScroll, false);
+
+      removeScroll();
+    }
+
+    onMounted(() => {
+      wrap.value?.addEventListener('mousewheel', handleWheel, false);
+      // 火狐浏览器
+      wrap.value?.addEventListener('DOMMouseScroll', handleWheel);
+    });
+
+    onUnmounted(() => {
+      wrap.value?.removeEventListener('mousewheel', handleWheel);
+      // 火狐浏览器
+      wrap.value?.removeEventListener('DOMMouseScroll', handleWheel);
+    });
 
     return { wrap, resize, sizeHeight, sizeWidth };
   }

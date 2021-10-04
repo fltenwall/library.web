@@ -1,21 +1,19 @@
 <template>
   <div class="tool-area-switch">
-    <a-tabs tab-position="left" @change="handleTabChange">
+    <a-tabs v-model:activeKey="activeKey" tab-position="left">
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
-          <a-tooltip placement="right">
-            <template #title>{{ pointConfigs.name[menu] }}</template>
+          <div>
             <Icon :icon="pointConfigs.icon[menu]" size="20" />
-          </a-tooltip>
+          </div>
         </template>
       </a-tab-pane>
 
       <a-tab-pane>
         <template #tab>
-          <a-tooltip placement="right">
-            <template #title>我的</template>
+          <div>
             <Icon icon="ant-design:user-outlined" size="20" />
-          </a-tooltip>
+          </div>
         </template>
       </a-tab-pane>
     </a-tabs>
@@ -27,18 +25,19 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { viewList, pointConfigs } from '../../../components/tools/index';
+import { viewList, pointConfigs } from '../../../tools/index';
+import { pointStore } from '/@/store/modules/point';
 
 export default defineComponent({
   setup() {
-    // 处理标签切换
-    function handleTabChange() {
-      // s
-    }
+    const activeKey = computed({
+      get: () => pointStore.getTabState,
+      set: (state) => pointStore.commitTabState(state)
+    });
 
     const sidebarMenus = computed(() => Object.keys(viewList));
 
-    return { pointConfigs, sidebarMenus, handleTabChange };
+    return { pointConfigs, sidebarMenus, activeKey };
   }
 });
 </script>
@@ -62,7 +61,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 8px 0;
+      padding: 20px 0;
     }
 
     .ant-tabs-ink-bar {

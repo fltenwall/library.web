@@ -1,12 +1,12 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
-    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}</div>
+    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}编辑</div>
 
-    <div class="index-center-middle simulator-item actived ml-10">
-      <Icon icon="fluent:phone-20-regular" size="20" />
+    <div class="index-center-middle simulator-item ml-10">
+      <Icon icon="clarity:mobile-line" />
     </div>
 
-    <div class="index-center-middle simulator-item ml-1">
+    <div class="index-center-middle simulator-item actived ml-1">
       <Icon icon="clarity:computer-line" size="16" />
     </div>
 

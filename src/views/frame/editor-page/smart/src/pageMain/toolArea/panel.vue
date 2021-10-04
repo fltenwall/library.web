@@ -1,48 +1,119 @@
 <template>
   <div class="panel-search-wrap">
-    <div class="panel-search-title">搜索</div>
-    <a-input class="panel-search" placeholder="搜索您想要的组件">
+    <a-input v-model:value="inputSearch" class="panel-search" placeholder="搜索您想要的组件">
       <template #prefix>
         <SearchOutlined />
       </template>
     </a-input>
   </div>
-  <div v-for="(item, key) in viewList" :key="key" class="panel-content">
-    <div
-      v-for="(el, index) in item"
-      :key="index"
-      class="panel-box"
-      draggable="true"
-      @dragstart="handleDragstart($event, el)"
-    >
-      <div class="index-center-middle flex-item">
-        <Icon :icon="pointConfigs.icon[el]" size="20" />
-      </div>
-      <div class="panel-box-title">{{ pointConfigs.name[el] }}</div>
+  <Scrollbar v-model:scroll-top="scrollTop" class="panel-main" @on-scroll="handleScroll">
+    <!-- 搜索工具列表 -->
+    <div v-if="isArray(tools)" class="panel-content">
+      <panel-box v-for="name in tools" :key="name" :name="name" />
     </div>
-  </div>
+
+    <!-- 默认工具列表 -->
+    <template v-else>
+      <div v-for="(names, key) in tools" :key="key">
+        <div class="panel-title">{{ pointConfigs.name[key] }}</div>
+        <div class="panel-content">
+          <panel-box v-for="name in names" :key="name" :name="name" />
+        </div>
+      </div>
+      <!-- 占位 -->
+      <div :style="placeholderStyle" />
+    </template>
+  </Scrollbar>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { viewList, pointConfigs } from '../../../components/tools/index';
+import { computed, defineComponent, ref, unref, watch, CSSProperties } from 'vue';
+import { viewList, pointConfigs, pinyin } from '../../../tools/index';
+import { isEmpty, isArray, isNull } from '/@/utils/is';
+import { Scrollbar } from '/@/components/Scrollbar';
+import { pointStore } from '/@/store/modules/point';
+import panelBox from './panelBox.vue';
 
 export default defineComponent({
+  components: { panelBox, Scrollbar },
   setup() {
-    // 处理拖拽开始
-    function handleDragstart(event: DragEvent, name: string) {
-      // 获取鼠标点击位置
-      const { offsetX, offsetY, target } = event;
+    const inputSearch = ref<string>('');
 
-      const { clientHeight: height, clientWidth: width } = target as HTMLElement;
+    const scrollTop = ref<number>(0);
+    // 标签状态
+    const tabState = computed(() => pointStore.getTabState);
+    // 距离顶部高度集合
+    const toolsTop: { [prop: string]: number } = {};
+    // 占位符样式
+    const placeholderStyle = ref<CSSProperties>({});
 
-      const tool = { name, offset: { x: width / 2 - offsetX, y: height / 2 - offsetY } };
+    const isValueUpdateFromInner = ref<boolean>(false);
 
-      // 数据传递
-      event.dataTransfer?.setData('tool', JSON.stringify(tool));
+    const tools = computed(() => {
+      let result: { [prop: string]: string[] } | string[] = viewList;
+      // 判断不是否为空
+      if (isEmpty(unref(inputSearch))) {
+        const input = pinyin(unref(inputSearch));
+        // 全部组件
+        const cts = Object.keys(pointConfigs.pinyin);
+        // 拼音筛选出组件
+        const pinyinSelect = cts.filter((key) => pointConfigs.pinyin[key].includes(input));
+        // key筛选出组件
+        const keySelect = cts.filter((key) => key.includes(input));
+
+        result = [...pinyinSelect, ...keySelect];
+      }
+
+      return result;
+    });
+
+    watch(
+      () => tabState.value,
+      (val) => {
+        if (isValueUpdateFromInner.value) {
+          isValueUpdateFromInner.value = false;
+        } else {
+          // 判断不是否为空
+          if (isEmpty(unref(inputSearch)) || isNull(val)) return;
+
+          scrollTop.value = toolsTop[val] || 0;
+        }
+      }
+    );
+
+    (function () {
+      let sum = 0;
+      let list = Object.keys(viewList);
+      for (let i = 0; i < list.length; i++) {
+        const distance = Math.ceil(viewList[list[i]].length / 2) * 115 + 42;
+
+        if (list.length - 1 === i) {
+          placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
+        }
+
+        toolsTop[list[i]] = sum;
+
+        sum += distance;
+      }
+
+      toolsTop['infinite'] = Infinity;
+    })();
+
+    // 处理滚动条滚动
+    function handleScroll(top: number) {
+      let tops = Object.keys(toolsTop);
+      for (let i = 0; i < tops.length; i++) {
+        if (toolsTop[tops[i + 1]] > top) {
+          tabState.value !== tops[i] && (isValueUpdateFromInner.value = true);
+
+          pointStore.commitTabState(tops[i]);
+
+          break;
+        }
+      }
     }
 
-    return { viewList, pointConfigs, handleDragstart };
+    return { tools, scrollTop, pointConfigs, inputSearch, placeholderStyle, isArray, handleScroll };
   }
 });
 </script>
@@ -52,34 +123,14 @@ export default defineComponent({
   &-content {
     display: flex;
     flex-wrap: wrap;
+    padding: 0 10px;
   }
 
-  &-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70px;
-    height: 70px;
-    margin: 5px;
-    cursor: move;
-    border: 2px solid hsla(0, 0%, 62%, 0.24);
-    border-radius: 8px;
-    transition: all 0.3s;
-
-    &:hover {
-      color: @primary-color;
-      border: 2px solid @primary-color;
-
-      .panel-box-title {
-        color: @primary-color;
-      }
-    }
-
-    &-title {
-      font-size: 12px;
-      color: #767676;
-      text-align: center;
-    }
+  &-title {
+    margin: 20px 10px 0;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 700;
+    color: #292b33;
   }
 }
 
@@ -89,15 +140,12 @@ export default defineComponent({
   &-wrap {
     display: flex;
     align-items: center;
-    padding: 20px 5px 10px;
+    padding: 20px 10px 0;
+    margin: 0 0 20px;
   }
+}
 
-  &-title {
-    flex-shrink: 0;
-    width: 60px;
-    margin: 0 5px 0 0;
-    font-weight: 600;
-    text-align: center;
-  }
+.panel-main {
+  height: 100%;
 }
 </style>

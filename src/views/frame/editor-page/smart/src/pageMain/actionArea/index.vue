@@ -34,9 +34,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from 'vue';
-import { templateList } from '../../../components/tools/template';
+import { templateList } from '../../../tools/template';
 import { pointStore } from '/@/store/modules/point';
-import { pointConfigs } from '../../../components/tools/index';
+import { pointConfigs } from '../../../tools/index';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import toolAttribute from './toolAttribute.vue';
 import formPoint from './formPoint.vue';

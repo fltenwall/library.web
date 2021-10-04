@@ -1,5 +1,7 @@
 // 组件数据
 export interface BaseSchema {
+  // 唯一值
+  uuid: string;
   // 距离左边位置
   x: number;
 
@@ -14,9 +16,6 @@ export interface BaseSchema {
 }
 
 export interface PointInfo extends Partial<BaseSchema> {
-  // 唯一值
-  uuid?: string;
-
   // 工具名称
   name?: string;
 

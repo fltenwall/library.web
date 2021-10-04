@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { templateInit } from '../../../components/tools/utils';
+import { templateInit } from '../../../tools/utils';
 import { PointInfo } from '/@/lib/interface/PointInfo';
 import uiInput from '/@/lib/UI/src/input/index';
 

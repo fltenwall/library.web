@@ -13,16 +13,14 @@ interface Store {
   value: PointInfo[keyof PointInfo];
 }
 
-type Place = Required<Pick<PointInfo, 'x' | 'y' | 'width' | 'height' | 'uuid'>>;
-
 interface Position {
-  layout: Place;
+  layout: BaseSchema;
 
-  move: Place;
+  move: BaseSchema;
 }
 
 interface LimitRules {
-  limitSize: (pos: { x?: number; y?: number }, uuid: string) => Place;
+  limitSize: (pos: { x?: number; y?: number }, uuid: string) => BaseSchema;
 
   limitPosition: (pos: { x: number; y: number }, uuid: string) => Position;
 }
@@ -135,7 +133,7 @@ export function viewResize(panelRef: Ref<HTMLElement | null>): void {
  * @param pos 计算后放下位置
  * @returns
  */
-export function pointDataModify({ move, layout }: Position): void {
+export function pointDataModify(layout: BaseSchema): void {
   // 表单样式配置
   const pageOptions = pointStore.getPageOptionsState;
   // 组件
@@ -146,7 +144,7 @@ export function pointDataModify({ move, layout }: Position): void {
   const cover = { [layout.uuid]: layout };
   // 遍历所有组件
   for (const schema of unref(pointData)) {
-    if (move.uuid === schema.uuid) continue;
+    if (layout.uuid === schema.uuid) continue;
     const uuids = [schema.uuid];
     const { x, y } = usePointPos({ type: 'top', schema, uuids, cover });
 
