@@ -31,23 +31,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
+<script setup lang="ts">
+import type { PointInfo } from '/@/lib/interface/PointInfo';
+import { reactive } from 'vue';
 import { templateInit } from '../../../tools/utils';
-import { PointInfo } from '/@/lib/interface/PointInfo';
 import uiInput from '/@/lib/UI/src/input/index';
 
-export default defineComponent({
-  components: { uiInput },
-  setup() {
-    // 数据集合
-    const dataItem = reactive<PointInfo>({});
+// 数据集合
+const dataItem = reactive<PointInfo>({});
 
-    templateInit(dataItem);
-
-    return { dataItem };
-  }
-});
+templateInit(dataItem);
 </script>
 
 <style lang="less" scoped></style>

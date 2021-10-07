@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue';
+import type { Ref, PropType } from 'vue';
 import moment, { Moment } from 'moment';
-import { defineComponent, PropType, ref, unref, watch, computed, toRefs } from 'vue';
+import { defineComponent, ref, unref, watch, computed, toRefs } from 'vue';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean>) => {

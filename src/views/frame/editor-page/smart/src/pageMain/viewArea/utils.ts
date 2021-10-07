@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { Ref, computed, unref, onMounted, onBeforeUnmount, inject } from 'vue';
-import { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { pointStore } from '/@/store/modules/point';
 import { isNumber } from '/@/utils/is';
 import usePointPos from '../../../utils/usePointPos';

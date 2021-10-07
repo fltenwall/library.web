@@ -43,7 +43,7 @@ export default defineComponent({
     // 移除滚动, 利用 防抖
     const removeScroll = debounce(() => {
       wrap.value?.removeEventListener('scroll', handleScroll, false);
-    }, 1000);
+    }, 300);
 
     //
     function handleScroll() {

@@ -12,15 +12,10 @@
   </PublicHeader>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import leftContent from './leftContent.vue';
 import mainContent from './mainContent.vue';
 import rightContent from './rightContent.vue';
-
-export default defineComponent({
-  components: { leftContent, mainContent, rightContent }
-});
 </script>
 
 <style lang="less" scoped></style>

@@ -7,8 +7,9 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
 import type { ProblemManage } from '/@/api/basis-manage/problem-manage';
-import { defineComponent, PropType, ref, unref, watch } from 'vue';
+import { defineComponent, ref, unref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGo } from '/@/hooks/web/usePage';
 

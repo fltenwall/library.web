@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref } from 'vue';
+import type { Ref, PropType } from 'vue';
 import { debounce } from 'lodash-es';
-import { defineComponent, PropType, computed, toRefs } from 'vue';
+import { defineComponent, computed, toRefs, ref } from 'vue';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
 

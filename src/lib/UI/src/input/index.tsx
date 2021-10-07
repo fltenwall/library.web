@@ -1,4 +1,5 @@
-import { defineComponent, inject, PropType, ref, watch } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, inject, ref, watch } from 'vue';
 import { Input } from 'ant-design-vue';
 import { EditorForm } from '/@/lib/interface/EditorForm';
 

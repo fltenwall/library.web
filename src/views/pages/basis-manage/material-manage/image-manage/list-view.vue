@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, ref } from 'vue';
 import imageList from './components/image-list.vue';
 import { Classify } from '/@/api/basis-manage/material-manage/image-manage';
 import { imageUploader } from './data-list';

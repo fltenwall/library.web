@@ -17,10 +17,11 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
 import type { PagerQueryData } from '/@/lib/http/axios/types';
 import { message } from 'ant-design-vue';
 import { assign } from 'lodash-es';
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import service, { RoleManage } from '/@/api/system-manage/role-mange';
 import SelectSearch from './SelectSearch.vue';
 

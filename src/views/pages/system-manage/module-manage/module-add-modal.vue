@@ -32,7 +32,7 @@ import { message, Form } from 'ant-design-vue';
 import { defineComponent, reactive, ref } from 'vue';
 import { formRules, DataItem } from './module-add-modal';
 import service, { ModuleManage } from '/@/api/system-manage/module-manage';
-import PinYin from 'word-pinyin';
+import PinYin from 'pinyin';
 
 const useForm = Form.useForm;
 
@@ -86,10 +86,15 @@ export default defineComponent({
 
     const onCentel = () => resetFields();
 
+    // 拼音
+    const pinyin = (text: string): string => {
+      return PinYin(text, { style: PinYin.STYLE_NORMAL }).flat().join('');
+    };
+
     // 是否根据输入项进行筛选
     function handleFilterSelect(inputValue: string, option: { key: string }) {
-      const value = PinYin.getPinyin(inputValue).replace(/\s+/g, '');
-      const target = PinYin.getPinyin(option.key).replace(/\s+/g, '');
+      const value = pinyin(inputValue);
+      const target = pinyin(option.key);
       return new RegExp(value).test(target);
     }
 

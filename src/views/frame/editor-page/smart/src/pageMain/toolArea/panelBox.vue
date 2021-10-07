@@ -3,42 +3,38 @@
     <div class="index-center-middle flex-item">
       <Icon :icon="pointConfigs.icon[name]" size="20" />
     </div>
-    <div class="panel-box-title">{{ pointConfigs.name[name] }}</div>
+    <div class="panel-box-title">{{ pointConfigs.label[name] }}</div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
+import type { PropType } from 'vue';
+import { defineProps } from 'vue';
 import { pointConfigs } from '../../../tools/index';
 
-export default defineComponent({
-  props: {
-    name: {
-      type: String as PropType<string>,
-      default: ''
-    }
-  },
-  setup(props) {
-    // 处理拖拽开始
-    function handleDragstart(event: DragEvent) {
-      // 获取鼠标点击位置
-      const { offsetX, offsetY, target } = event;
-
-      const { clientHeight: height, clientWidth: width } = target as HTMLElement;
-
-      const name = props.name;
-
-      const offset = { x: width / 2 - offsetX, y: height / 2 - offsetY };
-
-      const tool = { name, offset };
-
-      // 数据传递
-      event.dataTransfer?.setData('tool', JSON.stringify(tool));
-    }
-
-    return { pointConfigs, handleDragstart };
+const props = defineProps({
+  name: {
+    type: String as PropType<string>,
+    default: ''
   }
 });
+
+// 处理拖拽开始
+function handleDragstart(event: DragEvent) {
+  // 获取鼠标点击位置
+  const { offsetX, offsetY, target } = event;
+
+  const { clientHeight: height, clientWidth: width } = target as HTMLElement;
+
+  const name = props.name;
+
+  const offset = { x: width / 2 - offsetX, y: height / 2 - offsetY };
+
+  const tool = { name, offset };
+
+  // 数据传递
+  event.dataTransfer?.setData('tool', JSON.stringify(tool));
+}
 </script>
 
 <style lang="less" scoped>

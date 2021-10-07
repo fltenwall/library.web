@@ -3,7 +3,7 @@
     <GlobalDrawer v-model:value="visible" placement="right">
       <div class="action-area-header index-middle index-space-between">
         <div>
-          {{ pointConfigs.name[pointInfo.name || 'form'] }}
+          {{ pointConfigs.label[pointInfo.name || 'form'] }}
         </div>
         <div>
           <QuestionCircleOutlined />
@@ -24,7 +24,7 @@
       <a-tabs v-show="!pointInfo.name" size="small">
         <a-tab-pane key="3" tab="配置">
           <a-form class="action-area-main" label-align="left">
-            <form-point />
+            <default-point />
           </a-form>
         </a-tab-pane>
       </a-tabs>
@@ -39,10 +39,10 @@ import { pointStore } from '/@/store/modules/point';
 import { pointConfigs } from '../../../tools/index';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import toolAttribute from './toolAttribute.vue';
-import formPoint from './formPoint.vue';
+import defaultPoint from './defaultPoint.vue';
 
 export default defineComponent({
-  components: { ...templateList, toolAttribute, formPoint, QuestionCircleOutlined },
+  components: { ...templateList, toolAttribute, defaultPoint, QuestionCircleOutlined },
   props: {
     value: {
       type: Boolean,
@@ -52,20 +52,16 @@ export default defineComponent({
   emits: ['update:value'],
   setup(props, { emit }) {
     const pointInfo = computed(() => pointStore.getPointInfo);
-
     // 折叠面板
     const visible = ref<boolean>(props.value);
-
     watch(
       () => visible.value,
       (val) => emit('update:value', val)
     );
-
     watch(
       () => props.value,
       (val) => (visible.value = val)
     );
-
     return { visible, pointConfigs, pointInfo };
   }
 });

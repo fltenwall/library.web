@@ -1,6 +1,6 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
-    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}编辑</div>
+    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}</div>
 
     <div class="index-center-middle simulator-item ml-10">
       <Icon icon="clarity:mobile-line" />
@@ -25,8 +25,8 @@
         <Icon
           icon="la:undo"
           class="point-button mr-4 ml-4"
-          :disable="!linkedState.undo"
-          @click="handleUndo"
+          :disable="!linked.linkedState.undo"
+          @click="linked.handleUndo"
         />
       </a-tooltip>
       <a-tooltip placement="bottom">
@@ -34,34 +34,28 @@
         <Icon
           icon="la:redo"
           class="point-button"
-          :disable="!linkedState.redo"
-          @click="handleRedo"
+          :disable="!linked.linkedState.redo"
+          @click="linked.handleRedo"
         />
       </a-tooltip>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import pointLinked from '../../utils/pointLinked';
 import { pointStore } from '/@/store/modules/point';
 import { isEmptyArray } from '/@/utils/is';
 
-export default defineComponent({
-  setup() {
-    const resetState = computed(() => isEmptyArray(pointStore.getPointDataState));
-    // 使用链表
-    const linked = pointLinked();
-    // 一键还原
-    function handleReset() {
-      // 还原数据
-      resetState.value && pointStore.commitResetData();
-    }
-
-    return { ...linked, handleReset, resetState };
-  }
-});
+const resetState = computed(() => isEmptyArray(pointStore.getPointDataState));
+// 使用链表
+const linked = pointLinked();
+// 一键还原
+function handleReset() {
+  // 还原数据
+  resetState.value && pointStore.commitResetData();
+}
 </script>
 
 <style lang="less" scoped>

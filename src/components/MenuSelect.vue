@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getFilterIconFlatMenus } from '/@/utils/helper/menu';
-import PinYin from 'word-pinyin';
+import PinYin from 'pinyin';
 
 export default defineComponent({
   emits: ['on-select', 'on-blur'],
@@ -32,10 +32,15 @@ export default defineComponent({
 
     const onBlur = () => emit('on-blur');
 
+    // 拼音
+    const pinyin = (text: string): string => {
+      return PinYin(text, { style: PinYin.STYLE_NORMAL }).flat().join('');
+    };
+
     // 是否根据输入项进行筛选
     function handleFilterSelect(inputValue: string, option: { title: string }) {
-      const value = PinYin.getPinyin(inputValue).replace(/\s+/g, '');
-      const target = PinYin.getPinyin(option.title).replace(/\s+/g, '');
+      const value = pinyin(inputValue);
+      const target = pinyin(option.title);
       return new RegExp(value).test(target);
     }
 

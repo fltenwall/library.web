@@ -45,7 +45,7 @@ export function isFunction(val: unknown): boolean {
   return typeof val === 'function';
 }
 
-export function isArray(val: any): boolean {
+export function isArray<T>(val: any): val is Array<T> {
   return val && Array.isArray(val);
 }
 

@@ -4,18 +4,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { InputSchema } from './schema';
-import { defineComponent, reactive, toRefs } from 'vue';
+<script setup lang="ts">
+import type { Schema } from './schema';
+import { reactive, toRefs, useAttrs } from 'vue';
 
-export default defineComponent({
-  inheritAttrs: false,
-  setup(_props, { attrs }) {
-    const { label } = toRefs(reactive<InputSchema>(attrs as InputSchema));
+const attrs = useAttrs();
 
-    return { label };
-  }
-});
+const { label } = toRefs(reactive<Schema>(attrs as Schema));
 </script>
 
 <style lang="less" scoped></style>

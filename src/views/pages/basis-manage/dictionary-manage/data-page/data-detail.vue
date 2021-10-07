@@ -55,7 +55,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, ref } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { dataTypeColumn } from './data-page';
 import { PageMode } from '/@/utils/helper/breadcrumb';
 import { usePagination } from '/@/hooks/web/usePagination';

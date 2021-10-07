@@ -26,7 +26,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { Hot } from '/@/api/search';
 
 export default defineComponent({

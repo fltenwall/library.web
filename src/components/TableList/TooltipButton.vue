@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   props: {

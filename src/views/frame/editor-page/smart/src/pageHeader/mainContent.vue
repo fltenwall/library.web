@@ -14,40 +14,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 
-export default defineComponent({
-  setup() {
-    const inputRef = ref<HTMLElement | null>(null);
-    //
-    const inputState = ref<boolean>(false);
-    //
-    const pageOptions = computed(() => pointStore.getPageOptionsState);
-    // 处理输入框获取焦点
-    const onInputFocus = () => (inputState.value = true);
-    // 处理输入框失去焦点
-    const onInputBlur = () => (inputState.value = false);
-    // 处理点击编辑
-    const onClickEdit = () => inputRef.value?.focus();
-    // 处理输入内容
-    function onInputChange(e: Event) {
-      const value = (e.target as unknown as { value: string }).value;
-      pointStore.commitUpdatePageOptionsState({ key: 'name', value });
-    }
-
-    return {
-      inputRef,
-      pageOptions,
-      inputState,
-      onInputChange,
-      onInputFocus,
-      onInputBlur,
-      onClickEdit
-    };
-  }
-});
+const inputRef = ref<HTMLElement | null>(null);
+//
+const inputState = ref<boolean>(false);
+//
+const pageOptions = computed(() => pointStore.getPageOptionsState);
+// 处理输入框获取焦点
+const onInputFocus = () => (inputState.value = true);
+// 处理输入框失去焦点
+const onInputBlur = () => (inputState.value = false);
+// 处理点击编辑
+const onClickEdit = () => inputRef.value?.focus();
+// 处理输入内容
+function onInputChange(e: Event) {
+  const value = (e.target as unknown as { value: string }).value;
+  pointStore.commitUpdatePageOptionsState({ key: 'name', value });
+}
 </script>
 
 <style lang="less" scoped>

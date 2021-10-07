@@ -6,20 +6,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-export default defineComponent({
-  setup() {
-    const { back } = useRouter();
+const { back } = useRouter();
 
-    // 处理页面返回
-    const onGoBack = () => back();
-
-    return { onGoBack };
-  }
-});
+// 处理页面返回
+const onGoBack = () => back();
 </script>
 
 <style lang="less" scoped>

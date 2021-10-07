@@ -15,7 +15,8 @@
 </template>
 
 <script lang="ts">
-import { CSSProperties, defineComponent, PropType, reactive, ref, watch } from 'vue';
+import type { PropType, CSSProperties } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
   props: {

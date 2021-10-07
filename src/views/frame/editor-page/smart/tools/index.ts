@@ -1,16 +1,17 @@
+import type { Component } from 'vue';
 import { isArray, isUnDef } from '/@/utils/is';
-import PinYin from 'word-pinyin';
+import PinYin from 'pinyin';
 
 interface ViewList {
   [prop: string]: string[];
 }
 
 interface PointList {
-  [prop: string]: unknown;
+  [prop: string]: Component;
 }
 
 interface PointConfigs {
-  name: { [prop: string]: string };
+  label: { [prop: string]: string };
 
   icon: { [prop: string]: string };
 
@@ -22,9 +23,10 @@ const viewTools = import.meta.globEager('./**/index.vue');
 
 // 模型工具
 const schemaTools = import.meta.globEager('./**/schema.ts');
-
 // 拼音
-export const pinyin = (text: string): string => PinYin.getPinyin(text).replace(/\s+/g, '');
+export const pinyin = (text: string): string => {
+  return PinYin(text, { style: PinYin.STYLE_NORMAL }).flat().join('');
+};
 
 // 工具列表
 export const viewList: ViewList = {};
@@ -34,14 +36,16 @@ export const pointList: PointList = {};
 
 // 分类 中文 和 图标
 export const pointConfigs: PointConfigs = {
-  name: {
-    base: '基础',
+  label: {
+    base: '基础组件',
     form: '页面配置',
-    media: '媒体组件'
+    media: '媒体组件',
+    chart: '可视化组件'
   },
   icon: {
     base: 'ant-design:appstore-outlined',
-    media: 'cil:media-play'
+    media: 'cil:media-play',
+    chart: 'ant-design:pie-chart-outlined'
   },
   pinyin: {}
 };
@@ -62,10 +66,12 @@ Object.keys(schemaTools).forEach((key) => {
   const [, name] = key.replace(/\.\/|.schema.ts/g, '').split('/');
   // 判断为空跳过
   if (isUnDef(name)) return;
+  // 关键字
+  const label = schemaTools[key].label;
   // 添加名称
-  pointConfigs.name[name] = schemaTools[key].name;
+  pointConfigs.label[name] = label;
   // 添加名称
   pointConfigs.icon[name] = schemaTools[key].icon;
   // 添加拼音
-  pointConfigs.pinyin[name] = pinyin(schemaTools[key].name);
+  pointConfigs.pinyin[name] = pinyin(label);
 });

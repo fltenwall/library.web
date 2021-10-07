@@ -1,6 +1,6 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 
-export interface InputSchema extends PointInfo {
+export interface Schema extends PointInfo {
   label: string;
 
   placeholder: string;
@@ -10,12 +10,12 @@ export interface InputSchema extends PointInfo {
   allowClear: boolean;
 }
 
-export const schema: InputSchema = {
+export const schema: Schema = {
   height: 32,
 
   width: 200,
 
-  label: 'input',
+  label: 'video',
 
   placeholder: '',
 
@@ -24,6 +24,6 @@ export const schema: InputSchema = {
   allowClear: false
 };
 
-export const name = '视频组件';
+export const label = '视频组件';
 
 export const icon = 'dashicons:editor-video';

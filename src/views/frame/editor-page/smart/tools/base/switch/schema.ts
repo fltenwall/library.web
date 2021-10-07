@@ -6,6 +6,6 @@ export const schema: PointInfo = {
   width: 300
 };
 
-export const name = '开关';
+export const label = '开关';
 
 export const icon = 'radix-icons:switch';

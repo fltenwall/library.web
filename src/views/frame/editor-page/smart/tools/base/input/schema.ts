@@ -1,6 +1,6 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 
-export interface InputSchema extends PointInfo {
+export interface Schema extends PointInfo {
   label: string;
 
   placeholder: string;
@@ -10,7 +10,7 @@ export interface InputSchema extends PointInfo {
   allowClear: boolean;
 }
 
-export const schema: InputSchema = {
+export const schema: Schema = {
   height: 32,
 
   width: 200,
@@ -24,6 +24,6 @@ export const schema: InputSchema = {
   allowClear: false
 };
 
-export const name = '输入框';
+export const label = '输入框';
 
 export const icon = 'ant-design:edit-outlined';

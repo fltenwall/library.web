@@ -23,23 +23,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { viewList, pointConfigs } from '../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
-export default defineComponent({
-  setup() {
-    const activeKey = computed({
-      get: () => pointStore.getTabState,
-      set: (state) => pointStore.commitTabState(state)
-    });
-
-    const sidebarMenus = computed(() => Object.keys(viewList));
-
-    return { pointConfigs, sidebarMenus, activeKey };
-  }
+const activeKey = computed({
+  get: () => pointStore.getTabState,
+  set: (state) => pointStore.commitTabState(state)
 });
+
+const sidebarMenus = computed(() => Object.keys(viewList));
 </script>
 
 <style lang="less" scoped>

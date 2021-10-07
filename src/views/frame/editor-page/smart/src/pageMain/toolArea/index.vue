@@ -7,17 +7,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import sidebarArea from './sidebar.vue';
 import panelArea from './panel.vue';
-
-export default defineComponent({
-  components: { sidebarArea, panelArea },
-  setup() {
-    return {};
-  }
-});
 </script>
 
 <style lang="less" scoped>

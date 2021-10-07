@@ -32,8 +32,9 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
 import { assign } from 'lodash-es';
-import { defineComponent, reactive, ref, watch, PropType } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 import service, { Quick } from '/@/api/quick';
 import { resetDataItem } from '/@/hooks/web/useForm';
 import MenuSelect from '/@/components/MenuSelect.vue';

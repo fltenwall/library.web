@@ -1,4 +1,4 @@
-import { CSSProperties } from 'vue';
+import type { CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';

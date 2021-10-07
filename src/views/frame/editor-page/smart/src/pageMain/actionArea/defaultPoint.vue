@@ -34,30 +34,23 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, inject, computed } from 'vue';
+<script setup lang="ts">
+import type { FormManage } from '/@/api/page-manage/form-page';
+import { inject, computed } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
 import { pointStore } from '/@/store/modules/point';
-import { FormManage } from '/@/api/page-manage/form-page';
 
-export default defineComponent({
-  components: { uiInput },
-  setup() {
-    const { getViewSize } = inject('viewSize') as {
-      getViewSize: () => { width: number; height: number };
-    };
-    // 视图区
-    const viewSize = computed(() => getViewSize());
-    // 数据
-    const pageOptions = computed(() => pointStore.getPageOptionsState);
+const { getViewSize } = inject('viewSize') as {
+  getViewSize: () => { width: number; height: number };
+};
+// 视图区
+const viewSize = computed(() => getViewSize());
+// 数据
+const pageOptions = computed(() => pointStore.getPageOptionsState);
 
-    // 处理布局切换
-    function handleChange(e: Event, key: keyof FormManage) {
-      const value = (e.target as unknown as { value: number }).value;
-      pointStore.commitUpdatePageOptionsState({ key, value: value });
-    }
-
-    return { pageOptions, viewSize, handleChange };
-  }
-});
+// 处理布局切换
+function handleChange(e: Event, key: keyof FormManage) {
+  const value = (e.target as unknown as { value: number }).value;
+  pointStore.commitUpdatePageOptionsState({ key, value: value });
+}
 </script>

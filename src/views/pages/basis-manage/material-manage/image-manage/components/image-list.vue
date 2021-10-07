@@ -39,7 +39,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, unref, PropType, toRefs, reactive } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, watch, ref, unref, toRefs, reactive } from 'vue';
 import { usePagination } from '/@/hooks/web/usePagination';
 import { useMoment } from '/@/utils/dateFormat';
 import { tableColumns } from './image-list';

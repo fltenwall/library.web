@@ -10,23 +10,16 @@
   </a-form-item>
 </template>
 
-<script lang="ts">
-import type { InputSchema } from './schema';
-import { defineComponent, reactive } from 'vue';
+<script setup lang="ts">
+import type { Schema } from './schema';
+import { reactive } from 'vue';
 import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 
-export default defineComponent({
-  components: { uiInput },
-  setup() {
-    // 数据集合
-    const dataItem = reactive<Partial<InputSchema>>({});
+// 数据集合
+const dataItem = reactive<Partial<Schema>>({});
 
-    templateInit<Partial<InputSchema>>(dataItem);
-
-    return { dataItem };
-  }
-});
+templateInit<Partial<Schema>>(dataItem);
 </script>
 
 <style lang="less" scoped></style>

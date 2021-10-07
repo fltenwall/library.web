@@ -1,4 +1,4 @@
-import { CSSProperties } from 'vue';
+import type { CSSProperties } from 'vue';
 import type { BarMap, BarMapItem } from './types';
 
 export const BAR_MAP: BarMap = {

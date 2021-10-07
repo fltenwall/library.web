@@ -1,5 +1,5 @@
 <template>
-  <div class="draggable" @mousedown.stop.prevent="startMove($event, 'mouse')">
+  <div class="ui-draggable" @mousedown.stop.prevent="startMove($event, 'mouse')">
     <slot />
     <div v-if="isSize" class="ew absolute size" @mousedown.stop.prevent="startMove($event, 'ew')" />
     <div v-if="isSize" class="ns absolute size" @mousedown.stop.prevent="startMove($event, 'ns')" />
@@ -35,11 +35,9 @@ export default defineComponent({
 
     let eventType: Type;
     // 鼠标按下
-    function startMove(event: Mouse, name: Type) {
+    function startMove(event: MouseEvent, name: Type) {
       // 判断鼠标按键
       if (event.button !== 0) return;
-      // 鼠标按下
-      // this.isMove = true
       // 设置开始位置
       startX = event.pageX;
       startY = event.pageY;
@@ -55,7 +53,7 @@ export default defineComponent({
     }
 
     // 拖拽移动事件
-    function moving(event: Mouse) {
+    function moving(event: MouseEvent) {
       // 获取移动 时 x, y 位置
       const currentX = event.pageX;
       const currentY = event.pageY;
@@ -86,35 +84,35 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
-.draggable {
+<style lang="less">
+.ui-draggable {
   position: absolute;
-}
 
-.ew {
-  top: 50%;
-  right: 0;
-  cursor: ew-resize;
-  transform: translateY(-50%) rotate(315deg);
-}
+  .ew {
+    top: 50%;
+    right: 0;
+    cursor: ew-resize;
+    transform: translateY(-50%) rotate(315deg);
+  }
 
-.ns {
-  bottom: 0;
-  left: 50%;
-  cursor: ns-resize;
-  transform: translateX(-50%) rotate(45deg);
-}
+  .ns {
+    bottom: 0;
+    left: 50%;
+    cursor: ns-resize;
+    transform: translateX(-50%) rotate(45deg);
+  }
 
-.se {
-  right: 0;
-  bottom: 0;
-  cursor: se-resize;
-}
+  .se {
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
+  }
 
-.size {
-  width: 5px;
-  height: 5px;
-  border-right: 2px solid rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  .size {
+    width: 5px;
+    height: 5px;
+    border-right: 2px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  }
 }
 </style>

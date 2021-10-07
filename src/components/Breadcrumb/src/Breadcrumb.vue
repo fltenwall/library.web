@@ -5,7 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, provide } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, provide } from 'vue';
 
 export default defineComponent({
   props: {
