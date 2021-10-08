@@ -1,5 +1,5 @@
 <template>
-  <Scrollbar class="tree-menu">
+  <scrollbar class="tree-menu">
     <a-directory-tree
       v-model:checkedKeys="checkedKeys"
       checkable
@@ -9,7 +9,7 @@
       :tree-data="treeData"
       :show-icon="false"
     />
-  </Scrollbar>
+  </scrollbar>
 </template>
 
 <script lang="ts">

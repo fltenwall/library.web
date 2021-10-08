@@ -1,9 +1,9 @@
 <template>
-  <PublicHeader>
+  <public-header>
     <template #right>
       <div class="header-setting">设置</div>
     </template>
-  </PublicHeader>
+  </public-header>
   <index-main />
   <index-footer />
 </template>

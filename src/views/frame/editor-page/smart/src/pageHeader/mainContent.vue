@@ -9,7 +9,7 @@
       @input="onInputChange"
     />
     <div class="edit-icon-wrap index-center-middle">
-      <Icon v-show="!inputState" icon="entypo:edit" class="pointer" @click="onClickEdit" />
+      <icon v-show="!inputState" icon="entypo:edit" class="pointer" @click="onClickEdit" />
     </div>
   </div>
 </template>

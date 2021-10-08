@@ -1,10 +1,10 @@
 <template>
-  <GlobalCard title="字典数据">
+  <global-card title="字典数据">
     <a-form :label-col="{ flex: '100px' }" :wrapper-col="{ flex: 'auto' }">
       <a-row>
         <a-col :xs="24" :lg="8" class="pl-4 pr-4">
           <a-form-item label="数据标签">
-            <InputWrap v-model:value="queryData.label" :is-readonly="false" />
+            <input-wrap v-model:value="queryData.label" :is-readonly="false" />
           </a-form-item>
         </a-col>
         <a-col :xs="24" :lg="8" class="pl-4 pr-4" />
@@ -24,7 +24,7 @@
       </a-row>
     </a-form>
     <!-- 表格 -->
-    <GlobalTable :loading="loading" :columns="dataTypeColumn" :data-source="dataSource">
+    <global-table :loading="loading" :columns="dataTypeColumn" :data-source="dataSource">
       <template #state="{ record }">
         <div>{{ record.state ? '正常' : '停用' }}</div>
       </template>
@@ -34,10 +34,10 @@
           <span @click="onDeleteDataItem(record)">删除</span>
         </div>
       </template>
-    </GlobalTable>
+    </global-table>
 
     <!-- 分页 -->
-    <PaginationWrap
+    <pagination-wrap
       v-model:current="current"
       class="index-right pr-4 pt-5"
       :total="totalElements"
@@ -51,7 +51,7 @@
       :title="modal.title"
       @on-success="onModalSuccess"
     />
-  </GlobalCard>
+  </global-card>
 </template>
 
 <script lang="ts">

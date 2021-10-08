@@ -5,7 +5,7 @@
     </template>
 
     <div :style="{ height: browserSize.height - 252 + 'px' }">
-      <GlobalTable
+      <global-table
         v-click-away="onClickTableAway"
         :columns="columns"
         :row-key="rowKey"
@@ -17,7 +17,7 @@
         <template v-for="item in Object.keys($slots)" #[item]="data">
           <slot :name="item" v-bind="data" />
         </template>
-      </GlobalTable>
+      </global-table>
     </div>
 
     <template #footer>

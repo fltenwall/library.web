@@ -1,14 +1,14 @@
 <template>
   <div class="pb-4 pr-4 pl-4 module-manage">
-    <Scrollbar class="bg-white br-2 default-shadow">
+    <scrollbar class="bg-white br-2 default-shadow">
       <module-tree class="tree-menu" @on-select="handleSelect" />
-    </Scrollbar>
+    </scrollbar>
     <div class="flex-item pl-4 index-column">
       <div class="bg-white br-2 p-4 default-shadow">
         <div class="fw-b fs-4 pb-4">
           {{ selectMenu.meta.title }}
         </div>
-        <GlobalTable
+        <global-table
           bordered
           :columns="tableColumns"
           :data-source="[selectMenu]"

@@ -6,9 +6,9 @@
     :arrow-point-at-center="true"
     :get-popup-container="(trigger) => trigger.parentNode"
   >
-    <TooltipButton title="列设置">
-      <SettingOutlined />
-    </TooltipButton>
+    <tooltip-button title="列设置">
+      <setting-outlined />
+    </tooltip-button>
 
     <template #title>
       <div class="pt-1 pb-1">

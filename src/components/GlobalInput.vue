@@ -24,18 +24,18 @@
       {{ codeContent.tip }}
     </div>
     <!-- 密码显示 -->
-    <EyeInvisibleOutlined
+    <eye-invisible-outlined
       v-if="type === 'password' && passwordType"
       class="global-input-password"
       @click="handleSwitch(false)"
     />
-    <EyeOutlined
+    <eye-outlined
       v-else-if="type === 'password' && !passwordType"
       class="global-input-password"
       @click="handleSwitch(true)"
     />
     <!-- 加载中 -->
-    <LoadingOutlined v-if="loading" />
+    <loading-outlined v-if="loading" />
   </div>
 </template>
 

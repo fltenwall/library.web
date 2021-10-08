@@ -24,7 +24,7 @@
       <a-button class="quick-entry-item" type="primary" size="small" @click="handleNewEntry">
         添加
       </a-button>
-      <LoadingOutlined v-if="loading" class="load-icon" />
+      <loading-outlined v-if="loading" class="load-icon" />
     </div>
   </div>
 

@@ -373,7 +373,7 @@ viewResize(panelRef);
   margin: 0 300px 0 0;
 
   &-panel {
-    width: 60vw;
+    width: 90%;
     min-height: 70vh;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);

@@ -3,7 +3,7 @@
     <a-row type="flex" justify="end">
       <a-col :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="日期名称">
-          <InputSearch v-model:value="queryData.name" />
+          <input-search v-model:value="queryData.name" />
         </a-form-item>
       </a-col>
       <a-col :xs="24" :lg="8" class="index-table-search-col" />

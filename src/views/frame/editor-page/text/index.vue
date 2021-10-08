@@ -1,10 +1,10 @@
 <template>
   <div class="editor-wrap">
-    <PublicHeader class="editor-header p-3">
+    <public-header class="editor-header p-3">
       <template #left>
         <input class="title-input" placeholder="输入标题..." maxlength="80" />
       </template>
-    </PublicHeader>
+    </public-header>
     <public-editor
       v-model:value="handbook"
       v-model:lineCount="lineCount"

@@ -1,11 +1,11 @@
 <template>
   <div class="index-content">
-    <GlobalCard title="图片管理" class="flex-item flex flex-column default-shadow h0">
+    <global-card title="图片管理" class="flex-item flex flex-column default-shadow h0">
       <div class="flex-item flex h0">
         <classify-panle class="folder-panle-wrap mr-4" @on-select="handleSelect" />
         <list-view ref="listInstance" class="flex-item" :classify="selectData" />
       </div>
-    </GlobalCard>
+    </global-card>
   </div>
 </template>
 

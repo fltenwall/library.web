@@ -4,7 +4,7 @@
       <div>分组名称</div>
       <div>操作</div>
     </div>
-    <Scrollbar class="classify-panle-main">
+    <scrollbar class="classify-panle-main">
       <a-spin :spinning="loading">
         <a-menu v-model:selectedKeys="selectedKeys" class="main-menu" @select="handleSelect">
           <a-menu-item key="">
@@ -35,7 +35,7 @@
           </a-menu-item>
         </a-menu>
       </a-spin>
-    </Scrollbar>
+    </scrollbar>
     <div class="classify-panle-footer index-center-middle pb-2 pt-2">
       <a-button @click="handleNewGroup"> 新建分组 </a-button>
     </div>

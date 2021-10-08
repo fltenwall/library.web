@@ -3,17 +3,17 @@
     <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}</div>
 
     <div class="index-center-middle simulator-item ml-10">
-      <Icon icon="clarity:mobile-line" />
+      <icon icon="clarity:mobile-line" />
     </div>
 
     <div class="index-center-middle simulator-item actived ml-1">
-      <Icon icon="clarity:computer-line" size="16" />
+      <icon icon="clarity:computer-line" size="16" />
     </div>
 
     <div class="button index-center-middle ml-10 mr-4">
       <a-tooltip placement="bottom">
         <template #title>一键还原</template>
-        <Icon
+        <icon
           icon="icons8:refresh"
           class="point-button"
           :disable="!resetState"
@@ -22,7 +22,7 @@
       </a-tooltip>
       <a-tooltip placement="bottom">
         <template #title>撤销</template>
-        <Icon
+        <icon
           icon="la:undo"
           class="point-button mr-4 ml-4"
           :disable="!linked.linkedState.undo"
@@ -31,7 +31,7 @@
       </a-tooltip>
       <a-tooltip placement="bottom">
         <template #title>重做</template>
-        <Icon
+        <icon
           icon="la:redo"
           class="point-button"
           :disable="!linked.linkedState.redo"

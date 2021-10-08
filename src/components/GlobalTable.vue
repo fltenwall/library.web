@@ -1,5 +1,5 @@
 <template>
-  <Table
+  <a-table
     class="global-table"
     bordered
     :loading="loading"
@@ -13,18 +13,18 @@
     <template v-for="item in Object.keys($slots)" #[item]="data">
       <slot :name="item" v-bind="data" />
     </template>
-  </Table>
+  </a-table>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, toRefs, unref } from 'vue';
-import { Table } from 'ant-design-vue';
+import { Table as aTable } from 'ant-design-vue';
 import { tableProps } from '/@/lib/props/TableList';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 import { cloneDeep } from 'lodash-es';
 
 export default defineComponent({
-  components: { Table },
+  components: { aTable },
   props: tableProps,
   setup(props) {
     const { columns } = toRefs(props);

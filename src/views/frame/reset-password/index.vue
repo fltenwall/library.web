@@ -9,7 +9,7 @@
             <div class="m-title mb-1">输入{{ shortTitle }}账号</div>
             <div class="m-tip">输入注册{{ shortTitle }}帐号的手机号或邮件地址</div>
           </div>
-          <GlobalInput
+          <global-input
             class="input-account"
             type="text"
             placeholder="手机号/邮件地址/图书馆账号"

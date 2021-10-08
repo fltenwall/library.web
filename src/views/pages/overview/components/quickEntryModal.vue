@@ -14,7 +14,7 @@
         <a-input v-model:value="dataItem.name" placeholder="名称" />
       </a-form-item>
       <a-form-item>
-        <MenuSelect v-model:value="dataItem.link" placeholder="链接" />
+        <menu-select v-model:value="dataItem.link" placeholder="链接" />
       </a-form-item>
     </a-form>
     <div class="index-right modal-footer">

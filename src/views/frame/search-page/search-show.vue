@@ -1,5 +1,5 @@
 <template>
-  <PublicHeader class="search-page-show-header">
+  <public-header class="search-page-show-header">
     <template #left>
       <router-link to="/" class="index-middle ml-15">
         <img :src="MixinConfig.logo" class="w-6 mr-4" />
@@ -8,10 +8,10 @@
         </div>
       </router-link>
     </template>
-  </PublicHeader>
+  </public-header>
   <div class="search-page-show-middle">
     <div class="content index-middle">
-      <Icon
+      <icon
         icon="ion:arrow-back-outline"
         size="22"
         class="icon index-center-middle"
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <GlobalTable
+    <global-table
       bordered
       class="mt-10 default-shadow"
       :loading="loading"
@@ -79,7 +79,7 @@
           <span v-if="record.status === 'IN_LIBRARY'" @click="handleBorrow(record)">借阅</span>
         </div>
       </template>
-    </GlobalTable>
+    </global-table>
   </div>
 </template>
 

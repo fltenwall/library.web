@@ -1,42 +1,42 @@
 <template>
-  <GlobalDataPage :mode="mode">
+  <global-data-page :mode="mode">
     <a-form :label-col="{ flex: '100px' }" :wrapper-col="{ flex: 'auto' }">
       <!-- 基本信息 -->
-      <GlobalCard title="基本信息">
+      <global-card title="基本信息">
         <a-row>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="标题" v-bind="validateInfos.title">
-              <InputWrap v-model:value="dataItem.title" />
+              <input-wrap v-model:value="dataItem.title" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="状态" v-bind="validateInfos.state">
-              <SelectWrap v-model:value="dataItem.state" :options="selectOption" />
+              <select-wrap v-model:value="dataItem.state" :options="selectOption" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="排序值" v-bind="validateInfos.sortValue">
-              <InputNumberWrap v-model:value="dataItem.sortValue" />
+              <input-number-wrap v-model:value="dataItem.sortValue" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="图标" v-bind="validateInfos.icon">
-              <InputWrap v-model:value="dataItem.icon" />
+              <input-wrap v-model:value="dataItem.icon" />
             </a-form-item>
           </a-col>
         </a-row>
-      </GlobalCard>
+      </global-card>
 
-      <GlobalCard title="问题描述">
+      <global-card title="问题描述">
         <div class="editor-content">
-          <PreviewMode v-if="readonly" :value="dataItem.text" />
-          <PublicEditor v-else v-model:value="dataItem.text" :configs="editorConfigs" />
+          <preview-mode v-if="readonly" :value="dataItem.text" />
+          <public-editor v-else v-model:value="dataItem.text" :configs="editorConfigs" />
         </div>
-      </GlobalCard>
+      </global-card>
     </a-form>
 
     <!-- 修改信息 -->
-    <OperationInfoPanel v-if="dataItem.id" :data="dataItem" />
+    <operation-info-panel v-if="dataItem.id" :data="dataItem" />
 
     <!-- 操作 -->
     <template #footer-block>
@@ -46,7 +46,7 @@
         保存
       </a-button>
     </template>
-  </GlobalDataPage>
+  </global-data-page>
 </template>
 
 <script lang="ts">

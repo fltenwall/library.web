@@ -4,16 +4,16 @@
     <template #overlay>
       <a-menu @click="handlemenuClick">
         <a-menu-item key="center">
-          <UserOutlined />
+          <user-outlined />
           <span>个人中心</span>
         </a-menu-item>
         <a-menu-item key="setting">
-          <SettingOutlined />
+          <setting-outlined />
           <span>个人设置</span>
         </a-menu-item>
         <a-menu-divider />
         <a-menu-item key="logout">
-          <LogoutOutlined />
+          <logout-outlined />
           <span>退出登录</span>
         </a-menu-item>
       </a-menu>

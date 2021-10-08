@@ -1,32 +1,32 @@
 <template>
-  <GlobalCard :title="title">
+  <global-card :title="title">
     <div class="operation">
       <div class="operation-left">
         <div class="index-middle operation-box">
-          <UserOutlined class="operation-icon" />
+          <user-outlined class="operation-icon" />
           <div class="operation-title">创建者</div>
           <div>{{ data.createBy }}</div>
         </div>
         <div class="index-middle operation-box">
-          <UserOutlined class="operation-icon" />
+          <user-outlined class="operation-icon" />
           <div class="operation-title">更新者</div>
           <div>{{ data.updateBy }}</div>
         </div>
       </div>
       <div class="operation-right">
         <div class="index-middle operation-box">
-          <CalendarOutlined class="operation-icon" />
+          <calendar-outlined class="operation-icon" />
           <div class="operation-title">创建时间</div>
           <div>{{ useMoment(data.createTime) }}</div>
         </div>
         <div class="index-middle operation-box">
-          <CalendarOutlined class="operation-icon" />
+          <calendar-outlined class="operation-icon" />
           <div class="operation-title">更新时间</div>
           <div>{{ useMoment(data.updateTime) }}</div>
         </div>
       </div>
     </div>
-  </GlobalCard>
+  </global-card>
 </template>
 
 <script lang="ts">

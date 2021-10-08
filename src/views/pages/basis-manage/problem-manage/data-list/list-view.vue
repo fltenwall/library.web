@@ -1,5 +1,5 @@
 <template>
-  <TableList
+  <table-list
     title="问题列表"
     :loading="loading"
     :columns="tableColumns"
@@ -16,7 +16,7 @@
     </template>
 
     <template #icon="{ record }">
-      <Icon v-if="record.icon" :icon="record.icon" />
+      <icon v-if="record.icon" :icon="record.icon" />
     </template>
 
     <template #updateTime="{ record }">
@@ -32,9 +32,9 @@
     </template>
 
     <template #footer-right>
-      <PaginationWrap v-model:current="current" :total="totalElements" @change="onPageChange" />
+      <pagination-wrap v-model:current="current" :total="totalElements" @change="onPageChange" />
     </template>
-  </TableList>
+  </table-list>
 </template>
 
 <script lang="ts">

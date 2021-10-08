@@ -2,18 +2,18 @@
   <div class="login-account">
     <div v-show="error.is" class="index-msg-error">
       <div class="index-msg-error-error-div index-middle">
-        <InfoCircleFilled class="index-msg-error-error-div-icon" />
+        <info-circle-filled class="index-msg-error-error-div-icon" />
         <span>{{ error.msg }}</span>
       </div>
     </div>
-    <GlobalInput
+    <global-input
       v-model:value="formData.account"
       v-model:errorBorder="error.is"
       type="text"
       :placeholder="`手机号/邮件地址/${MixinConfig.shortTitle}账号`"
       @on-enter="onEnter"
     />
-    <GlobalInput
+    <global-input
       v-model:value="formData.password"
       v-model:errorBorder="error.is"
       class="login-account-password"
@@ -22,7 +22,7 @@
       @on-enter="onEnter"
     />
     <span class="login-account-change-link" @click="onChange"> 短信验证码登录 </span>
-    <GlobalButton
+    <global-button
       ref="buttonInstance"
       class="login-account-button"
       :size="1"
@@ -30,7 +30,7 @@
       @on-click="onButtonClick"
     >
       登 录
-    </GlobalButton>
+    </global-button>
     <div class="login-account-link">
       <router-link :to="{ name: PageEnum.BASE_REGISTER }"> 注册 </router-link>
       <a-divider type="vertical" />

@@ -1,5 +1,5 @@
 <template>
-  <PublicHeader class="editor-form-header" :is-show-user-info="false">
+  <public-header class="editor-form-header" :is-show-user-info="false">
     <template #left>
       <left-content />
     </template>
@@ -9,7 +9,7 @@
     <template #right>
       <right-content />
     </template>
-  </PublicHeader>
+  </public-header>
 </template>
 
 <script setup lang="ts">

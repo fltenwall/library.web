@@ -8,7 +8,7 @@
     }"
   >
     <div class="ui-input-search" :style="{ height: `${height}px` }" @click="handleSearchClick">
-      <SearchOutlined v-if="prefix" class="ui-input-prefix mr-4" />
+      <search-outlined v-if="prefix" class="ui-input-prefix mr-4" />
       <input
         ref="inputInstance"
         v-model="inputValue"
@@ -30,7 +30,7 @@
         :class="{ 'row-select': selectIndex === index }"
         @click="handleBoxClick(title)"
       >
-        <SearchOutlined />
+        <search-outlined />
         <span class="row-content index-hidden-newline flex-item">{{ title }}</span>
       </div>
     </div>

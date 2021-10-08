@@ -8,19 +8,19 @@
   >
     <a-form :label-col="{ flex: '90px' }" :wrapper-col="{ flex: 'auto' }">
       <a-form-item label="字典类型" v-bind="validateInfos.type">
-        <InputWrap v-model:value="dataItem.type" readonly />
+        <input-wrap v-model:value="dataItem.type" readonly />
       </a-form-item>
       <a-form-item label="数据标签" v-bind="validateInfos.label">
-        <InputWrap v-model:value="dataItem.label" />
+        <input-wrap v-model:value="dataItem.label" />
       </a-form-item>
       <a-form-item label="数据键值" v-bind="validateInfos.value">
-        <InputWrap v-model:value="dataItem.value" />
+        <input-wrap v-model:value="dataItem.value" />
       </a-form-item>
       <a-form-item label="状态" v-bind="validateInfos.state">
-        <SelectWrap v-model:value="dataItem.state" :options="selectOption" />
+        <select-wrap v-model:value="dataItem.state" :options="selectOption" />
       </a-form-item>
       <a-form-item label="描述" v-bind="validateInfos.description">
-        <TextareaWrap v-model:value="dataItem.description" :maxlength="260" />
+        <textarea-wrap v-model:value="dataItem.description" :maxlength="260" />
       </a-form-item>
     </a-form>
   </a-modal>

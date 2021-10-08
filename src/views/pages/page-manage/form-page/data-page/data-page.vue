@@ -1,24 +1,24 @@
 <template>
-  <GlobalDataPage :mode="mode">
+  <global-data-page :mode="mode">
     <a-form :label-col="{ flex: '110px' }" :wrapper-col="{ flex: 'auto' }">
       <!-- 基本信息 -->
-      <GlobalCard title="基本信息">
+      <global-card title="基本信息">
         <a-row>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="名称" v-bind="validateInfos.name">
-              <InputWrap v-model:value="dataItem.name" />
+              <input-wrap v-model:value="dataItem.name" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="状态" v-bind="validateInfos.state">
-              <SelectWrap v-model:value="dataItem.state" :options="selectOption" />
+              <select-wrap v-model:value="dataItem.state" :options="selectOption" />
             </a-form-item>
           </a-col>
         </a-row>
         <a-row>
           <a-col :xs="24" :lg="18" class="pl-4 pr-4">
             <a-form-item label="描述">
-              <TextareaWrap
+              <textarea-wrap
                 v-model:value="dataItem.description"
                 show-count
                 :maxlength="260"
@@ -27,11 +27,11 @@
             </a-form-item>
           </a-col>
         </a-row>
-      </GlobalCard>
+      </global-card>
     </a-form>
 
     <!-- 修改信息 -->
-    <OperationInfoPanel v-if="dataItem.id" :data="dataItem" />
+    <operation-info-panel v-if="dataItem.id" :data="dataItem" />
 
     <!-- 操作 -->
     <template #footer-block>
@@ -42,7 +42,7 @@
         保存
       </a-button>
     </template>
-  </GlobalDataPage>
+  </global-data-page>
 </template>
 
 <script lang="ts">

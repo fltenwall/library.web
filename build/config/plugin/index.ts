@@ -21,7 +21,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild));
 
   if (isBuild) {
-    vitePlugins.push(viteCompression({ deleteOriginFile: true }));
+    vitePlugins.push(viteCompression({ deleteOriginFile: false }));
   }
 
   return vitePlugins;

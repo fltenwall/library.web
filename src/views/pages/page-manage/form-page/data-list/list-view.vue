@@ -1,5 +1,5 @@
 <template>
-  <TableList
+  <table-list
     title="表单列表"
     :loading="loading"
     :columns="tableColumns"
@@ -24,9 +24,9 @@
     </template>
 
     <template #footer-right>
-      <PaginationWrap v-model:current="current" :total="totalElements" @change="onPageChange" />
+      <pagination-wrap v-model:current="current" :total="totalElements" @change="onPageChange" />
     </template>
-  </TableList>
+  </table-list>
 </template>
 
 <script lang="ts">

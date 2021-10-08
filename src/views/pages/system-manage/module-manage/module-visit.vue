@@ -6,7 +6,7 @@
         新增
       </a-button>
     </div>
-    <GlobalTable
+    <global-table
       :scroll="scroll"
       :columns="tableColumns"
       :data-source="dataSource"
@@ -22,7 +22,7 @@
           删除
         </a-button>
       </template>
-    </GlobalTable>
+    </global-table>
     <module-add-modal
       v-if="MixinShowByAuth('MODULAR:CREATE')"
       v-model:visible="visible"

@@ -1,5 +1,5 @@
 <template>
-  <PublicHeader class="search-page-header">
+  <public-header class="search-page-header">
     <template #left>
       <router-link to="/">
         <img :src="MixinConfig.logo" class="w-8 mr-4" />
@@ -16,7 +16,7 @@
     <template #right>
       <div class="header-setting">设置</div>
     </template>
-  </PublicHeader>
+  </public-header>
   <div class="flex search-page-content">
     <div class="search-page-content-left">
       <div v-if="searchList.length">

@@ -1,5 +1,5 @@
 <template>
-  <Preview class="index-content" :value="selectContent" />
+  <preview class="index-content" :value="selectContent" />
 </template>
 
 <script lang="ts">

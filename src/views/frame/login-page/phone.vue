@@ -2,12 +2,12 @@
   <div class="login-phone">
     <div v-show="error.phone" class="index-msg-error">
       <div class="index-msg-error-error-div index-middle">
-        <InfoCircleFilled class="index-msg-error-error-div-icon" />
+        <info-circle-filled class="index-msg-error-error-div-icon" />
         <span v-if="error.code">帐号或者短信验证码错误，请重新输入</span>
         <span v-else-if="error.phone">手机号格式不正确 </span>
       </div>
     </div>
-    <GlobalInput
+    <global-input
       v-model:value="formData.phone"
       v-model:errorBorder="error.phone"
       type="phone"
@@ -16,7 +16,7 @@
       @on-enter="onEnter"
       @on-blur="onPhoneBlur"
     />
-    <GlobalInput
+    <global-input
       v-model:value="formData.code"
       v-model:errorBorder="error.code"
       class="login-phone-code"
@@ -27,9 +27,9 @@
       @on-enter="onEnter"
     />
     <span class="login-phone-change-link" @click="onChange"> 密码登录 </span>
-    <GlobalButton class="login-phone-button" :disabled="!(!!formData.phone && !!formData.code)">
+    <global-button class="login-phone-button" :disabled="!(!!formData.phone && !!formData.code)">
       登 录
-    </GlobalButton>
+    </global-button>
   </div>
 </template>
 

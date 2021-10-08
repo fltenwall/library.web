@@ -3,27 +3,27 @@
     <a-row type="flex" justify="end">
       <a-col :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="登录账户">
-          <InputSearch v-model:value="queryData.username" />
+          <input-search v-model:value="queryData.username" />
         </a-form-item>
       </a-col>
       <a-col :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="邮件地址">
-          <InputSearch v-model:value="queryData.email" />
+          <input-search v-model:value="queryData.email" />
         </a-form-item>
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="手机号码">
-          <InputSearch v-model:value="queryData.mobile" />
+          <input-search v-model:value="queryData.mobile" />
         </a-form-item>
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="用户名称">
-          <InputSearch v-model:value="queryData.email" />
+          <input-search v-model:value="queryData.email" />
         </a-form-item>
       </a-col>
       <a-col v-show="isOpen" :xs="24" :lg="8" class="index-table-search-col">
         <a-form-item label="性别">
-          <DictSelect v-model:value="queryData.sex" type="sys_user_sex" />
+          <dict-select v-model:value="queryData.sex" type="sys_user_sex" />
         </a-form-item>
       </a-col>
 
@@ -31,7 +31,7 @@
         <div class="index-button-right">
           <a-button type="primary" @click="onSearchData"> 查询 </a-button>
           <a-button @click="onResetData"> 重置 </a-button>
-          <DownOutButton :is-open="isOpen" @click="onOpen" />
+          <down-out-button :is-open="isOpen" @click="onOpen" />
         </div>
       </a-col>
     </a-row>

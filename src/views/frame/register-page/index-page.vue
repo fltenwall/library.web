@@ -4,7 +4,7 @@
       <div class="register-page-header">创建您的 {{ MixinConfig.shortTitle }} 帐号</div>
       <div class="flex register-page-content">
         <div class="content-left">
-          <GlobalInput
+          <global-input
             v-model:value="dataItem.username"
             placeholder="登录账户"
             :error-border="!!errorTip.username"
@@ -13,7 +13,7 @@
           <div class="error-tip">
             {{ errorTip.username }}
           </div>
-          <GlobalInput
+          <global-input
             v-show="content.mode"
             v-model:value="dataItem.email"
             placeholder="邮件地址"
@@ -24,7 +24,7 @@
           <div v-show="content.mode" class="error-tip">
             {{ errorTip.email }}
           </div>
-          <GlobalInput
+          <global-input
             v-show="!content.mode"
             v-model:value="dataItem.mobile"
             type="phone"
@@ -39,7 +39,7 @@
           <div class="button" @click="onChangeMode">
             使用我的{{ content.mode ? '手机号码' : '邮件地址' }}注册
           </div>
-          <GlobalInput
+          <global-input
             v-model:value="dataItem.password"
             placeholder="密码"
             type="password"
@@ -50,7 +50,7 @@
           <div class="error-tip">
             {{ errorTip.password }}
           </div>
-          <GlobalInput
+          <global-input
             v-model:value="dataItem.repeat"
             placeholder="确认密码"
             type="password"
@@ -64,14 +64,14 @@
           <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }">
             登录现有帐号
           </router-link>
-          <GlobalButton
+          <global-button
             ref="buttonInstance"
             :size="1"
             :disabled="disabled"
             @on-click="onButtonClick"
           >
             注 册
-          </GlobalButton>
+          </global-button>
         </div>
         <div class="pt-15 index-middle flex-item flex-column">
           <img :src="accountImage" class="account-image" />

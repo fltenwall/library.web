@@ -41,7 +41,8 @@ export function isEmptyObject(val: any): boolean {
   return isObject(val) && isEmptyArray(Object.keys(val));
 }
 
-export function isFunction(val: unknown): boolean {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(val: unknown): val is Function {
   return typeof val === 'function';
 }
 

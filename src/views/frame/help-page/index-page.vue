@@ -1,6 +1,6 @@
 <template>
   <a-layout class="help-wrap">
-    <PublicHeader class="help-header">
+    <public-header class="help-header">
       <template #left>
         <img :src="config.logo" class="config-logo" @click="handleTitleClick" />
         <div>
@@ -9,7 +9,7 @@
           </span>
         </div>
       </template>
-    </PublicHeader>
+    </public-header>
     <a-layout class="help-main">
       <a-layout-sider
         width="260"
@@ -34,7 +34,7 @@
     class="index-center-middle levitated-ball default-shadow"
     @click="handleClickBall"
   >
-    <MenuOutlined />
+    <menu-outlined />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div ref="visitRef" class="image-list flex flex-column">
-    <GlobalTable
+    <global-table
       :scroll="scroll"
       :columns="tableColumns"
       :loading="loading"
@@ -30,10 +30,10 @@
           <span @click="onDeleteDataItem(record)">删除</span>
         </div>
       </template>
-    </GlobalTable>
+    </global-table>
 
     <div class="image-list-footer">
-      <PaginationWrap :total="totalElements" />
+      <pagination-wrap :total="totalElements" />
     </div>
   </div>
 </template>

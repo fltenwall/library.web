@@ -1,7 +1,7 @@
 <template>
   <a-button type="link">
     {{ isOpen ? '收起 ' : '展开' }}
-    <DownOutlined
+    <down-outlined
       :class="['index-table-search-close']"
       :style="['transition: all 0.3s ease 0s;', `transform: rotate(${isOpen ? '0.5' : '0'}turn)`]"
     />

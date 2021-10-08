@@ -1,5 +1,5 @@
 <template>
-  <Search />
+  <search />
 </template>
 
 <script lang="ts" setup>

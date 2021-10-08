@@ -5,7 +5,7 @@
       <template #right>
         <a-tooltip placement="top">
           <template #title> 查看更多 </template>
-          <EllipsisOutlined class="pointer" />
+          <ellipsis-outlined class="pointer" />
         </a-tooltip>
       </template>
     </card-header>

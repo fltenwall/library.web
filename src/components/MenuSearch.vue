@@ -1,6 +1,6 @@
 <template>
-  <SearchOutlined class="pr-2" @click="handleSearchClick" />
-  <MenuSelect
+  <search-outlined class="pr-2" @click="handleSearchClick" />
+  <menu-select
     :style="selectStyle"
     class="no-border menu-search-select"
     @on-select="handleSelect"

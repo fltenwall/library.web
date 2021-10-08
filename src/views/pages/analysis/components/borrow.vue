@@ -13,12 +13,12 @@
       <div>
         日同比
         <span class="ml-1 mr-1">0%</span>
-        <CaretUpOutlined style="color: #f5222d;" />
+        <caret-up-outlined style="color: #f5222d;" />
       </div>
       <div>
         周同比
         <span class="ml-1 mr-1">0%</span>
-        <CaretDownOutlined style="color: #52c41a;" />
+        <caret-down-outlined style="color: #52c41a;" />
       </div>
     </div>
     <div class="borrow-footer">

@@ -7,7 +7,7 @@
           <router-link :to="{ name: PageEnum.BASE_HOME }" class="index-middle pointer c000">
             <a-avatar :size="25">
               <template #icon>
-                <UserOutlined />
+                <user-outlined />
               </template>
             </a-avatar>
             <div class="ml-3">
@@ -16,14 +16,14 @@
           </router-link>
         </drop-menu>
       </div>
-      <Button v-else type="primary" @click="onLoginButton"> 登 录 </Button>
+      <a-button v-else type="primary" @click="onLoginButton">登 录</a-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { Button } from '/@/lib/UI/index';
+import { Button as aButton } from '/@/lib/UI/index';
 import { useGo } from '/@/hooks/web/usePage';
 import { PageEnum } from '/@/enums/pageEnum';
 import { userStore } from '/@/store/modules/user';
@@ -31,7 +31,7 @@ import { isDef } from '/@/utils/is';
 import dropMenu from './dropMenu.vue';
 
 export default defineComponent({
-  components: { Button, dropMenu },
+  components: { aButton, dropMenu },
   props: {
     isShowUserInfo: {
       type: Boolean,
@@ -53,7 +53,7 @@ export default defineComponent({
 
     // 用户信息
     const userInfo = computed(() => {
-      return userStore.getUserInfoState;
+      return userStore.getUserInfoState!;
     });
 
     return { PageEnum, userIsLogin, userInfo, onLoginButton };

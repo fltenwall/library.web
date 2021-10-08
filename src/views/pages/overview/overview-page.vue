@@ -5,7 +5,7 @@
       <div class="index-middle">
         <a-avatar :size="60">
           <template #icon>
-            <UserOutlined />
+            <user-outlined />
           </template>
         </a-avatar>
         <div class="ml-4">

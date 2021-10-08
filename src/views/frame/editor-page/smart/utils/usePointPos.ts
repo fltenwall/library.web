@@ -59,8 +59,12 @@ export default function (options: Options): { x: number; y: number } {
   let reduceY = schema.y;
   const X = schema.x;
   const pointData = cloneDeep(pointStore.getPointDataState);
-  // 排序 重小到大
-  pointData.sort((A, B) => (A.y > B.y ? 1 : -1));
+  // 排序 从小到大
+  pointData.sort((A, B) => {
+    if (A.y !== B.y) return A.y > B.y ? 1 : -1;
+
+    return A.y + A.height > B.y + B.height ? 1 : -1;
+  });
 
   for (const el of pointData) {
     // 忽略 uuid

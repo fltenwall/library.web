@@ -11,8 +11,8 @@
     @focus="onFocus"
   >
     <template #suffixIcon>
-      <LoadingOutlined v-if="loading" />
-      <SearchOutlined v-else />
+      <loading-outlined v-if="loading" />
+      <search-outlined v-else />
     </template>
     <slot />
   </a-select>

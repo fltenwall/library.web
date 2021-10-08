@@ -12,22 +12,22 @@
         <slot name="header-left" />
         <a-divider v-if="Object.keys($slots).includes('header-left')" type="vertical" />
         <slot name="header-right" />
-        <listSetting />
-        <TooltipButton v-if="download" title="下载导入模板">
+        <list-setting />
+        <tooltip-button v-if="download" title="下载导入模板">
           <a :href="templateLink" class="default-color">
-            <VerticalAlignBottomOutlined />
+            <vertical-align-bottom-outlined />
           </a>
-        </TooltipButton>
-        <TooltipButton title="刷新">
-          <SyncOutlined @click="onRefresh" />
-        </TooltipButton>
-        <TooltipButton :title="fullScreen ? '退出全屏' : '全屏'" @on-click="onFullScreen">
-          <CompressOutlined v-if="fullScreen" />
-          <ExpandOutlined v-else />
-        </TooltipButton>
+        </tooltip-button>
+        <tooltip-button title="刷新">
+          <sync-outlined @click="onRefresh" />
+        </tooltip-button>
+        <tooltip-button :title="fullScreen ? '退出全屏' : '全屏'" @on-click="onFullScreen">
+          <compress-outlined v-if="fullScreen" />
+          <expand-outlined v-else />
+        </tooltip-button>
       </div>
     </div>
-    <GlobalTable
+    <global-table
       :loading="loading"
       :columns="getTableColumns"
       :data-source="dataSource"
@@ -36,7 +36,7 @@
       <template v-for="item in Object.keys($slots)" #[item]="data">
         <slot :name="item" v-bind="data" />
       </template>
-    </GlobalTable>
+    </global-table>
     <div class="index-space-between footer">
       <div>
         <slot name="footer-left" />

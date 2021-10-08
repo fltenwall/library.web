@@ -5,7 +5,7 @@
       :class="['hide-panel index-center-middle', `hide-panel-${placement}`]"
       @click="handleSwitchHide"
     >
-      <Icon
+      <icon
         color="#A1A6B3"
         class="hide-panel-icon"
         :icon="`ant-design:caret-${visible ? 'right' : 'left'}-outlined`"
