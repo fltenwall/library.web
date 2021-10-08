@@ -2,7 +2,7 @@
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { Ref, computed, unref, onMounted, onBeforeUnmount, inject } from 'vue';
 import { pointStore } from '/@/store/modules/point';
-import { isNumber } from '/@/utils/is';
+import { isNumber, isFunction } from '/@/utils/is';
 import usePointPos from '../../../utils/usePointPos';
 
 interface Store {
@@ -100,7 +100,7 @@ export function limitRules(): LimitRules {
         return move;
       };
 
-      const offset = usePointPos({ type: 'smart', schema: move, uuids: [uuid], cb });
+      const offset = usePointPos({ type: 'custom', schema: move, uuids: [uuid], cb });
       layout.y = offset.y;
     }
 
@@ -129,11 +129,12 @@ export function viewResize(panelRef: Ref<HTMLElement | null>): void {
 
 // 修改全部组件位置
 /**
- * @param point 鼠标拖动位置
- * @param pos 计算后放下位置
+ *
+ * @param layout
+ * @param custom
  * @returns
  */
-export function pointDataModify(layout: BaseSchema): void {
+export function pointDataModify(layout: BaseSchema, custom?: (el: BaseSchema) => false): void {
   // 表单样式配置
   const pageOptions = pointStore.getPageOptionsState;
   // 组件
@@ -145,10 +146,18 @@ export function pointDataModify(layout: BaseSchema): void {
   // 遍历所有组件
   for (const schema of unref(pointData)) {
     if (layout.uuid === schema.uuid) continue;
-    const uuids = [schema.uuid];
-    const { x, y } = usePointPos({ type: 'top', schema, uuids, cover });
 
-    updatePointStyle(x, y, schema.uuid);
+    const uuids = [schema.uuid];
+    // 计算后的位置
+    let pos;
+    // 判断使用的方法
+    if (isFunction(custom)) {
+      pos = usePointPos({ type: 'custom', schema, uuids, cover, cb: custom });
+    } else {
+      pos = usePointPos({ type: 'top', schema, uuids, cover });
+    }
+
+    updatePointStyle(pos.x, pos.y, schema.uuid);
   }
 }
 

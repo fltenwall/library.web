@@ -2,11 +2,11 @@
   <div class="panel-search-wrap">
     <a-input v-model:value="inputSearch" class="panel-search" placeholder="搜索您想要的组件">
       <template #prefix>
-        <SearchOutlined />
+        <search-outlined />
       </template>
     </a-input>
   </div>
-  <Scrollbar v-model:scroll-top="scrollTop" class="panel-main" @on-scroll="handleScroll">
+  <scrollbar v-model:scroll-top="scrollTop" class="panel-main" @on-scroll="handleScroll">
     <!-- 搜索工具列表 -->
     <div v-if="isArray(tools)" class="panel-content">
       <panel-box v-for="name in tools" :key="name" :name="name" />
@@ -23,7 +23,7 @@
       <!-- 占位 -->
       <div :style="placeholderStyle" />
     </template>
-  </Scrollbar>
+  </scrollbar>
 </template>
 
 <script setup lang="ts">

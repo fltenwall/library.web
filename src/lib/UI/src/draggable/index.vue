@@ -67,9 +67,7 @@ export default defineComponent({
     // 拖拽结束事件
     function endMove() {
       // 没有移动不更新
-      if (distanceX !== 0 || distanceX !== 0) {
-        emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
-      }
+      emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
 
       // 清空数据
       distanceX = distanceY = 0;

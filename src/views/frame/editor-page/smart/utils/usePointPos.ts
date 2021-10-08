@@ -4,7 +4,7 @@ import { BaseSchema } from '/@/lib/interface/PointInfo';
 import { cloneDeep } from 'lodash-es';
 
 interface Options {
-  type: Type;
+  type: 'bottom' | 'top' | 'custom';
 
   schema: BaseSchema;
 
@@ -17,9 +17,38 @@ interface Options {
   cb?: (el: BaseSchema) => BaseSchema | false;
 }
 
-type Type = 'top' | 'bottom' | 'smart';
+interface BaseOptions {
+  type: 'bottom' | 'top';
+
+  schema: BaseSchema;
+
+  uuids?: string[];
+
+  cover?: {
+    [key: string]: BaseSchema;
+  };
+}
+
+interface CustomOptions {
+  type: 'custom';
+
+  schema: BaseSchema;
+
+  uuids?: string[];
+
+  cover?: {
+    [key: string]: BaseSchema;
+  };
+
+  cb: (el: BaseSchema) => BaseSchema | false;
+}
 
 // 计算位置
+
+export default function (options: BaseOptions): { x: number; y: number };
+
+export default function (options: CustomOptions): { x: number; y: number };
+
 export default function (options: Options): { x: number; y: number } {
   const { type, schema, uuids, cover, cb } = options;
   const pageOptions = pointStore.getPageOptionsState;
@@ -27,8 +56,8 @@ export default function (options: Options): { x: number; y: number } {
   if (pageOptions.layoutType !== 2) return { x: schema.x, y: schema.y };
   // 差值
   let Y = 0;
-  const X = schema.x;
   let reduceY = schema.y;
+  const X = schema.x;
   const pointData = cloneDeep(pointStore.getPointDataState);
   // 排序 重小到大
   pointData.sort((A, B) => (A.y > B.y ? 1 : -1));
@@ -49,7 +78,7 @@ export default function (options: Options): { x: number; y: number } {
     // 以底部计算
     if (type === 'bottom' && y + height > target.y + target.height) continue;
     // 根据回调函数判断
-    if (type === 'smart' && isFunction(cb)) {
+    if (type === 'custom' && isFunction(cb)) {
       const result = cb(el);
 
       if (isBoolean(result)) continue;

@@ -1,5 +1,5 @@
 <template>
-  <Scrollbar>
+  <scrollbar>
     <div class="view-area">
       <div
         ref="panelRef"
@@ -62,13 +62,13 @@
         </div>
       </div>
     </div>
-  </Scrollbar>
+  </scrollbar>
 </template>
 
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
-import { defineEmits, computed, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { Draggable } from '/@/lib/UI/';
@@ -154,49 +154,42 @@ function handleMove({ uuid, x, y, type }: Move) {
       const pos = limit.limitPosition({ x, y }, uuid);
       // 记录位置
       dataItem.pos = pos;
-
-      return () => {
-        // 设置样式
-        setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
-      };
+      // 更新数据
+      pointDataModify(dataItem.pos.layout!);
+      // 设置样式
+      setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
     },
     ew: () => {
       const layout = limit.limitSize({ x }, uuid);
       // 记录位置
       dataItem.pos.layout = layout;
-
-      return () => {
-        // 设置样式
-        setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
-      };
+      // 更新数据
+      pointDataModify(dataItem.pos.layout!);
+      // 设置样式
+      setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
     },
     ns: () => {
       const layout = limit.limitSize({ y }, uuid);
       // 记录位置
       dataItem.pos.layout = layout;
-
-      return () => {
-        // 设置样式
-        setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
-      };
+      // 更新数据
+      pointDataModify(dataItem.pos.layout!);
+      // 设置样式
+      setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
     },
     se: () => {
       const layout = limit.limitSize({ y, x }, uuid);
       // 记录位置
       dataItem.pos.layout = layout;
-
-      return () => {
-        // 设置样式
-        setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
-        setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
-      };
+      // 更新数据
+      pointDataModify(dataItem.pos.layout!);
+      // 设置样式
+      setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
+      setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
     }
   };
-  const result = mapState[type]();
-  // 更新数据
-  pointDataModify(dataItem.pos.layout!);
-  // 延迟执行
-  result();
+  mapState[type]();
+
   // 设置状态
   dataItem.state = 'move';
 }
@@ -207,6 +200,9 @@ function handleMoveEnd({ uuid, x, y, type }: Move) {
   dataItem.state = 'end';
   dataItem.isMove = false;
   dataItem.uuid = '';
+
+  // 没有变化不更新数据
+  if (x === 0 && y === 0) return;
 
   const mapState = {
     mouse: () => {
@@ -315,6 +311,8 @@ const dragEvent = {
     setSelectPoint(uuid);
     // 添加数据
     pointStore.commitAddPointData(schema as Required<PointInfo>);
+    // 更新数据
+    pointDataModify(schema as Required<PointInfo>);
     // 隐藏菜单
     hanldeClickDragAway();
   },
@@ -378,10 +376,6 @@ viewResize(panelRef);
     width: 60vw;
     min-height: 70vh;
     background: #fff;
-    background-image: linear-gradient(45deg, #eee 25%, transparent 0, transparent 75%, #eee 0, #eee),
-      linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
-    background-position: 0 0, 10px 10px;
-    background-size: 20px 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     user-select: none;
   }
@@ -431,7 +425,7 @@ viewResize(panelRef);
   background: #fff;
   border-radius: 4px;
   opacity: 0.94;
-  box-shadow: 2px 8px 16px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 2px 8px #00000026;
   user-select: none;
 
   &-item {

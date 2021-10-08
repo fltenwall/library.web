@@ -4,7 +4,7 @@
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
           <div>
-            <Icon :icon="pointConfigs.icon[menu]" size="20" />
+            <icon :icon="pointConfigs.icon[menu]" size="20" />
           </div>
         </template>
       </a-tab-pane>
@@ -12,13 +12,13 @@
       <a-tab-pane>
         <template #tab>
           <div>
-            <Icon icon="ant-design:user-outlined" size="20" />
+            <icon icon="ant-design:user-outlined" size="20" />
           </div>
         </template>
       </a-tab-pane>
     </a-tabs>
     <div class="folding">
-      <Icon icon="ant-design:double-left-outlined" size="20" />
+      <icon icon="ant-design:double-left-outlined" size="20" />
     </div>
   </div>
 </template>

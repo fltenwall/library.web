@@ -1,12 +1,12 @@
 <template>
   <div class="action-area absolute">
-    <GlobalDrawer v-model:value="visible" placement="right">
+    <global-drawer v-model:value="visible" placement="right">
       <div class="action-area-header index-middle index-space-between">
         <div>
           {{ pointConfigs.label[pointInfo.name || 'form'] }}
         </div>
         <div>
-          <QuestionCircleOutlined />
+          <question-circle-outlined />
         </div>
       </div>
       <a-tabs v-show="pointInfo.name" size="small">
@@ -28,7 +28,7 @@
           </a-form>
         </a-tab-pane>
       </a-tabs>
-    </GlobalDrawer>
+    </global-drawer>
   </div>
 </template>
 

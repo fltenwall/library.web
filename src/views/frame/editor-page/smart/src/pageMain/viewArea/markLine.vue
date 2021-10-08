@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import type { PropType, CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
-import { defineProps, defineEmits, ref, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { throttle } from 'lodash-es';
 
