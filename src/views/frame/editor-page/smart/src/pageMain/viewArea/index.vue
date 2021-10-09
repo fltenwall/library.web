@@ -44,7 +44,7 @@
           @on-suck="handlePointSuck"
         />
 
-        <!-- 拖拽显示 -->
+        <!-- 拖拽中才显示, 松开鼠标实际位置 -->
         <div
           v-show="dataItem.state === 'move'"
           class="resize-item"
@@ -156,7 +156,7 @@ function handleMove({ uuid, x, y, type }: Move) {
       dataItem.pos = pos;
       // 更新数据
       pointDataModify(dataItem.pos.layout!);
-      // 设置样式
+      // 更新位置
       setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
     },
     ew: () => {
@@ -167,6 +167,8 @@ function handleMove({ uuid, x, y, type }: Move) {
       pointDataModify(dataItem.pos.layout!);
       // 设置样式
       setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
+      // 更新位置
+      setPointTransform({ uuid, x: layout.x, y: layout.y });
     },
     ns: () => {
       const layout = limit.limitSize({ y }, uuid);
@@ -216,11 +218,15 @@ function handleMoveEnd({ uuid, x, y, type }: Move) {
       const { width } = limit.limitSize({ x }, uuid);
       // 检查大小
       validSize({ key: 'width', value: width! });
+      // 位置更新
+      mapState['mouse']();
     },
     ns: () => {
       const { height } = limit.limitSize({ y }, uuid);
       // 检查大小
       validSize({ key: 'height', value: height! });
+      // 位置更新
+      mapState['mouse']();
     },
     se: () => {
       mapState['ns']();

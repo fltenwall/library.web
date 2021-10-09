@@ -53,6 +53,8 @@ export function limitRules(): LimitRules {
   };
   // 表单配置
   const pageOptions = computed(() => pointStore.getPageOptionsState);
+  // 是否是弹性布局
+  const isElasticLayout = computed(() => unref(pageOptions).layoutType === 2);
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState);
 
@@ -70,7 +72,12 @@ export function limitRules(): LimitRules {
     if (isNumber(pos.x)) {
       width = x + width + pos.x > CW ? CW - x : width + pos.x;
     }
-    return { x, y, height, width, uuid };
+    const layout = { x, y, height, width, uuid };
+
+    // 弹性布局
+    unref(isElasticLayout) && (layout.y = elasticLayout(layout, layout, CW));
+
+    return layout;
   }
 
   // 位置信息处理
@@ -84,27 +91,31 @@ export function limitRules(): LimitRules {
     const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y;
     const layout = { x, y, width, height, uuid };
     // 弹性布局
-    if (pageOptions.value.layoutType === 2) {
-      const cb = (el: BaseSchema): false | BaseSchema => {
-        if (el.y + el.height > move.y + move.height) {
-          return el.y >= layout.y ? false : layout;
-        }
-        // 拖拽块高度 大于 当前块
-        if (el.y >= move.y && move.y + move.height > el.y + el.height) {
-          return false;
-        }
-        // 判断是否在可视区移动
-        if (move.x > CW - width || move.x <= 0) {
-          return layout;
-        }
-        return move;
-      };
-
-      const offset = usePointPos({ type: 'custom', schema: move, uuids: [uuid], cb });
-      layout.y = offset.y;
-    }
+    unref(isElasticLayout) && (layout.y = elasticLayout(move, layout, CW));
 
     return { layout, move };
+  }
+
+  // 弹性布局处理
+  function elasticLayout(move: BaseSchema, layout: BaseSchema, CW: number): number {
+    const cb = (el: BaseSchema): false | BaseSchema => {
+      if (el.y + el.height > move.y + move.height) {
+        return el.y >= layout.y ? false : layout;
+      }
+      // 拖拽块高度 大于 当前块
+      if (el.y >= move.y && move.y + move.height > el.y + el.height) {
+        return false;
+      }
+      // 判断是否在可视区移动
+      if (move.x > CW - layout.width || move.x <= 0) {
+        return layout;
+      }
+      return move;
+    };
+
+    const offset = usePointPos({ type: 'custom', schema: move, uuids: [layout.uuid], cb });
+
+    return offset.y;
   }
 
   return { limitSize, limitPosition };
