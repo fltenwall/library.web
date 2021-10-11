@@ -1,6 +1,9 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
-    <div class="index-theme header-left-title">{{ MixinConfig.shortTitle }}</div>
+    <div class="index-theme header-left-title index-middle">
+      <img class="header-left-title-logo" :src="MixinConfig.logo" />
+      <span>{{ MixinConfig.shortTitle }}</span>
+    </div>
 
     <div class="index-center-middle simulator-item ml-10">
       <icon icon="clarity:mobile-line" />
@@ -67,6 +70,11 @@ function handleReset() {
     &-title {
       font-weight: bold;
       color: @primary-color;
+
+      &-logo {
+        width: 20px;
+        margin: 0 10px 0;
+      }
     }
   }
 }

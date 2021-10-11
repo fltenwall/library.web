@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-draggable" @mousedown.stop.prevent="startMove($event, 'mouse')">
+  <div class="ui-draggable-offset" @mousedown.stop.prevent="startMove($event, 'mouse')">
     <slot />
     <div v-if="isSize" class="ew absolute size" @mousedown.stop.prevent="startMove($event, 'ew')" />
     <div v-if="isSize" class="ns absolute size" @mousedown.stop.prevent="startMove($event, 'ns')" />
@@ -14,14 +14,14 @@ type Type = 'mouse' | 'ew' | 'ns' | 'se';
 
 export default defineComponent({
   props: {
-    uuid: {
-      type: String,
-      default: ''
-    },
     isSize: {
       // 是否可以改变大小
       type: Boolean,
-      default: true
+      default: false
+    },
+    record: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ['on-move', 'on-end', 'on-start', 'on-resize'],
@@ -43,13 +43,11 @@ export default defineComponent({
       startY = event.pageY;
       // 事件类型
       eventType = name;
-      // 记录开始滚动条位置
-      // this.startTop = this.screenTop
       // 设置移动事件 鼠标抬起事件
       document.addEventListener('mousemove', moving, false);
       document.addEventListener('mouseup', endMove, false);
 
-      emit('on-start', { uuid: props.uuid, type: eventType });
+      emit('on-start', { record: props.record, type: eventType });
     }
 
     // 拖拽移动事件
@@ -61,13 +59,13 @@ export default defineComponent({
       distanceX = currentX - startX;
       distanceY = currentY - startY;
 
-      emit('on-move', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
+      emit('on-move', { record: props.record, x: distanceX, y: distanceY, type: eventType });
     }
 
     // 拖拽结束事件
     function endMove() {
       // 没有移动不更新
-      emit('on-end', { uuid: props.uuid, x: distanceX, y: distanceY, type: eventType });
+      emit('on-end', { record: props.record, x: distanceX, y: distanceY, type: eventType });
 
       // 清空数据
       distanceX = distanceY = 0;
@@ -83,7 +81,7 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.ui-draggable {
+.ui-draggable-offset {
   position: absolute;
 
   .ew {

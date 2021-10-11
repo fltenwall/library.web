@@ -44,7 +44,7 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
     const value = (dataItem as any)[key] as never;
     isValueUpdateFromInner.value = true;
 
-    // 修改数据
+    // 修改默认视图数据
     const mapState = {
       width: () => {
         const x = unref(pointInfo).x || 0;

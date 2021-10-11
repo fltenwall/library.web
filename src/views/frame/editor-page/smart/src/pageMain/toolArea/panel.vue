@@ -86,7 +86,7 @@ watch(
     const distance = Math.ceil(viewList[list[i]].length / 2) * 115 + 42;
 
     if (list.length - 1 === i) {
-      placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
+      placeholderStyle.value = { height: `calc(100% - ${distance - 1}px)` };
     }
 
     toolsTop[list[i]] = sum;
@@ -101,7 +101,7 @@ watch(
 function handleScroll(top: number) {
   let tops = Object.keys(toolsTop);
   for (let i = 0; i < tops.length; i++) {
-    if (toolsTop[tops[i + 1]] > top) {
+    if (toolsTop[tops[i + 1]] >= top) {
       tabState.value !== tops[i] && (isValueUpdateFromInner.value = true);
 
       pointStore.commitTabState(tops[i]);
@@ -121,6 +121,7 @@ function handleScroll(top: number) {
   }
 
   &-title {
+    height: 22px;
     margin: 20px 10px 0;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 700;

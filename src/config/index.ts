@@ -7,7 +7,7 @@ const { title, publicPath, shortTitle, auth } = useSetting();
  *  系统配置文件可用于设置使用系统运行的参数
  **/
 
-interface Config {
+export interface Config {
   title: string;
 
   shortTitle: string;

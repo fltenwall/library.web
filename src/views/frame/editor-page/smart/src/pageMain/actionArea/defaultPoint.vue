@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-space-between index-middle">
+  <div class="default-point-item">
     <div>宽度</div>
     <ui-input class="w-100" :value="viewSize.width" readonly />
   </div>
-  <div class="flex flex-space-between index-middle mt-2">
+  <div class="default-point-item">
     <div>高度</div>
     <ui-input class="w-100" :value="viewSize.height" readonly />
   </div>
   <a-divider />
-  <div class="flex flex-space-between index-middle">
+  <div class="default-point-item">
     <div class="c333">布局类型</div>
     <a-radio-group
       :value="pageOptions.layoutType"
@@ -20,7 +20,7 @@
     </a-radio-group>
   </div>
   <a-divider />
-  <div class="flex flex-space-between index-middle">
+  <div class="default-point-item">
     <div class="c333">内间距</div>
     <a-radio-group
       :value="pageOptions.margin"
@@ -31,6 +31,11 @@
       <a-radio-button :value="10"> 10px </a-radio-button>
       <a-radio-button :value="20"> 20px </a-radio-button>
     </a-radio-group>
+  </div>
+  <a-divider />
+  <div class="default-point-item">
+    <div class="c333">背景颜色</div>
+    <color-picker />
   </div>
 </template>
 
@@ -54,3 +59,15 @@ function handleChange(e: Event, key: keyof FormManage) {
   pointStore.commitUpdatePageOptionsState({ key, value: value });
 }
 </script>
+
+<style lang="less" scoped>
+.default-point-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & + .default-point-item {
+    margin-top: 10px;
+  }
+}
+</style>

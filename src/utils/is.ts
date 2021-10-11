@@ -33,7 +33,7 @@ export function isStrNum(val: string): boolean {
   return /^[0-9]+$/.test(val);
 }
 
-export function isObject(val: unknown): boolean {
+export function isObject(val: unknown): val is Record<any, any> {
   return val !== null && is(val, 'Object');
 }
 

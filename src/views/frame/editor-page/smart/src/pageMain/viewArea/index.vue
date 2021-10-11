@@ -12,12 +12,13 @@
         @contextmenu.prevent="handleCancelSelect"
       >
         <!-- 拖拽组件 -->
-        <draggable
+        <draggable-offset
           v-for="item in pointData"
           :key="item.uuid"
           v-click-away="hanldeClickDragAway"
           class="view-item"
-          :uuid="item.uuid"
+          :record="item"
+          :is-size="true"
           :class="panelStyle.opacity !== 1 && 'stop-events'"
           :style="pointStyle[item.uuid]"
           :move="!!dataItem.isMove"
@@ -29,20 +30,8 @@
           @mouseenter="mouseEvent.mouseenter(item.uuid)"
           @mouseleave="mouseEvent.mouseleave"
         >
-          <view-content
-            v-bind="item"
-            @on-contextmenu="handleContextmenu"
-            @on-right-select="handleRightSelect"
-          />
-        </draggable>
-
-        <!-- 标线 -->
-        <mark-line
-          :uuid="dataItem.uuid"
-          :move="dataItem.pos.move"
-          :is-move="dataItem.state === 'move'"
-          @on-suck="handlePointSuck"
-        />
+          <view-content v-bind="item" @on-contextmenu="handleContextmenu" />
+        </draggable-offset>
 
         <!-- 拖拽中才显示, 松开鼠标实际位置 -->
         <div
@@ -56,10 +45,7 @@
         />
 
         <!-- 右键菜单 -->
-        <div class="point-view-menu" :style="menuStyle">
-          <div class="point-view-menu-item">复制</div>
-          <div class="point-view-menu-item">删除</div>
-        </div>
+        <panel-menu :style="menuStyle" :uuid="pointUUID" @on-delete="handleDeletePoint" />
       </div>
     </div>
   </scrollbar>
@@ -68,45 +54,19 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
+import type { Cover } from '../../../utils/usePointPos';
+import type { DataItem, Move } from './utils/interface';
 import { computed, reactive, ref } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
-import { Draggable } from '/@/lib/UI/';
+import { DraggableOffset } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
 import { schemaList } from '../../../tools/schema';
-import markLine from './markLine.vue';
 import { assign, cloneDeep } from 'lodash-es';
-import { handleStore, limitRules, viewResize, pointDataModify } from './utils';
+import { handleStore, limitRules, viewResize, pointDataModify, rangeHighest } from './utils/index';
+import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
-import viewContent from './viewContent.vue';
-
-interface DataItem {
-  // 选择鼠标指针浮动在其上的元素
-  hover?: string;
-  // 是否移动
-  isMove?: boolean;
-  // 状态
-  state?: 'start' | 'end' | 'move';
-  // 唯一值
-  uuid?: string;
-  // 位置
-  pos: {
-    // 布局位置
-    layout?: BaseSchema;
-    // 移动位置
-    move?: BaseSchema;
-  };
-}
-
-interface Move {
-  // 唯一值
-  uuid: string;
-  // 类型
-  type: 'mouse' | 'ew' | 'ns' | 'se';
-  // 相对位移
-  x: number;
-  y: number;
-}
+import viewContent from './src/viewContent.vue';
 
 const emit = defineEmits(['on-click-point']);
 
@@ -147,57 +107,58 @@ function initPointStyle(uuid: string, { x, y, width, height }: PointInfo) {
 }
 
 // 处理移动
-function handleMove({ uuid, x, y, type }: Move) {
+function handleMove({ record, x, y, type }: Move) {
   const mapState = {
     mouse: () => {
       // 计算位置
-      const pos = limit.limitPosition({ x, y }, uuid);
+      const pos = limit.limitPosition({ x, y }, record);
       // 记录位置
       dataItem.pos = pos;
-      // 更新数据
+      // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
-      // 更新位置
-      setPointTransform({ uuid, x: pos.move.x, y: pos.move.y });
+      // 更新 x, y
+      setPointTransform({ uuid: record.uuid, x: pos.move.x, y: pos.move.y });
     },
     ew: () => {
-      const layout = limit.limitSize({ x }, uuid);
+      const layout = limit.limitSize({ x }, record);
       // 记录位置
       dataItem.pos.layout = layout;
-      // 更新数据
+      // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
-      // 设置样式
-      setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
-      // 更新位置
-      setPointTransform({ uuid, x: layout.x, y: layout.y });
+      // 更新宽度
+      setPointStyle({ uuid: record.uuid, key: 'width', value: `${layout.width}px` });
+      // 更新 x, y
+      setPointTransform({ uuid: record.uuid, x: layout.x, y: layout.y });
     },
     ns: () => {
-      const layout = limit.limitSize({ y }, uuid);
+      const layout = limit.limitSize({ y }, record);
       // 记录位置
       dataItem.pos.layout = layout;
-      // 更新数据
+      // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
-      // 设置样式
-      setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+      // 更新高度
+      setPointStyle({ uuid: record.uuid, key: 'height', value: `${layout.height}px` });
     },
     se: () => {
-      const layout = limit.limitSize({ y, x }, uuid);
+      const layout = limit.limitSize({ y, x }, record);
       // 记录位置
       dataItem.pos.layout = layout;
-      // 更新数据
+      // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
       // 设置样式
-      setPointStyle({ uuid, key: 'width', value: `${layout.width}px` });
-      setPointStyle({ uuid, key: 'height', value: `${layout.height}px` });
+      setPointStyle({ uuid: record.uuid, key: 'width', value: `${layout.width}px` });
+      setPointStyle({ uuid: record.uuid, key: 'height', value: `${layout.height}px` });
     }
   };
   mapState[type]();
 
+  setPanelHeight({ [dataItem.uuid!]: dataItem.pos!.layout! });
   // 设置状态
   dataItem.state = 'move';
 }
 
 // 处理移动结束
-function handleMoveEnd({ uuid, x, y, type }: Move) {
+function handleMoveEnd({ record, x, y, type }: Move) {
   // 设置鼠标弹起
   dataItem.state = 'end';
   dataItem.isMove = false;
@@ -205,6 +166,8 @@ function handleMoveEnd({ uuid, x, y, type }: Move) {
 
   // 没有变化不更新数据
   if (x === 0 && y === 0) return;
+
+  const uuid = record.uuid;
 
   const mapState = {
     mouse: () => {
@@ -215,18 +178,16 @@ function handleMoveEnd({ uuid, x, y, type }: Move) {
       setPointTransform({ uuid, x: dataItem.pos.layout!.x, y: dataItem.pos.layout!.y });
     },
     ew: () => {
-      const { width } = limit.limitSize({ x }, uuid);
+      const { width } = limit.limitSize({ x }, record);
       // 检查大小
       validSize({ key: 'width', value: width! });
       // 位置更新
       mapState['mouse']();
     },
     ns: () => {
-      const { height } = limit.limitSize({ y }, uuid);
+      const { height } = limit.limitSize({ y }, record);
       // 检查大小
       validSize({ key: 'height', value: height! });
-      // 位置更新
-      mapState['mouse']();
     },
     se: () => {
       mapState['ns']();
@@ -245,19 +206,19 @@ function handleMoveEnd({ uuid, x, y, type }: Move) {
     }
   }
   mapState[type]();
+
+  setPanelHeight();
 }
 
 // 处理移动开始
-function handleMoveStart({ uuid }: { uuid: string; type: string }) {
+function handleMoveStart({ record }: { record: BaseSchema; type: string }) {
   // 设置鼠标按下
   dataItem.state = 'start';
   dataItem.isMove = true;
-  // 判断移动的类型
-  dataItem.uuid = uuid;
+  dataItem.uuid = record.uuid;
   // 传递数据
-  setSelectPoint(uuid);
+  setSelectPoint(record.uuid);
 }
-
 // 设置样式
 function setPointStyle(options: { uuid: string; key: string; value: string }) {
   pointStore.commitUpdatePointStyle(options);
@@ -268,12 +229,6 @@ function setPointTransform({ uuid, x, y }: { uuid: string; x: number; y: number 
   const key = 'transform';
   const value = `translate(${x}px,${y}px)`;
   setPointStyle({ uuid, key, value });
-}
-
-// 处理 组件吸附
-function handlePointSuck({}: { uuid: string; x: number; y: number }) {
-  // dataItem.pos!.x = x <= 0 ? 0 : x
-  // dataItem.pos!.y = y <= 0 ? 0 : y
 }
 
 const mouseEvent = {
@@ -319,6 +274,8 @@ const dragEvent = {
     pointStore.commitAddPointData(schema as Required<PointInfo>);
     // 更新数据
     pointDataModify(schema as Required<PointInfo>);
+    // 设置面板高度
+    setPanelHeight();
     // 隐藏菜单
     hanldeClickDragAway();
   },
@@ -358,12 +315,17 @@ function handleContextmenu({ x, y }: { x: number; y: number }) {
 function hanldeClickDragAway() {
   menuStyle.value = { display: 'none' };
 }
-
-// 处理右键选中
-function handleRightSelect(uuid: string) {
-  setSelectPoint(uuid);
+// 设置面板高度
+function setPanelHeight(cover?: Cover) {
+  panelStyle.height = `${rangeHighest(cover) + 100}px`;
 }
 
+// 处理删除 point
+function handleDeletePoint() {
+  handleCancelSelect();
+
+  pointDataModify();
+}
 // 监听视图变化
 viewResize(panelRef);
 </script>
@@ -374,13 +336,12 @@ viewResize(panelRef);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   padding: 70px 0 70px;
   margin: 0 300px 0 0;
 
   &-panel {
     width: 90%;
-    min-height: 70vh;
+    min-height: calc(100vh - 194px);
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     user-select: none;
@@ -417,35 +378,6 @@ viewResize(panelRef);
     z-index: 1;
     background: #ffccc7;
     opacity: 0.6;
-  }
-}
-
-.point-view-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  width: 150px;
-  padding: 0 16px;
-  background: #fff;
-  border-radius: 4px;
-  opacity: 0.94;
-  box-shadow: 0 2px 8px #00000026;
-  user-select: none;
-
-  &-item {
-    height: 40px;
-    line-height: 40px;
-
-    &:not(:last-of-type) {
-      border-bottom: 1px solid #f1f2f7;
-    }
-
-    &:hover {
-      color: #2c63ff;
-      cursor: pointer;
-    }
   }
 }
 </style>

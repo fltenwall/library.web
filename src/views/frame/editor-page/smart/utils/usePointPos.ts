@@ -3,6 +3,10 @@ import { pointStore } from '/@/store/modules/point';
 import { BaseSchema } from '/@/lib/interface/PointInfo';
 import { cloneDeep } from 'lodash-es';
 
+export interface Cover {
+  [key: string]: BaseSchema;
+}
+
 interface Options {
   type: 'bottom' | 'top' | 'custom';
 
@@ -10,9 +14,7 @@ interface Options {
 
   uuids?: string[];
 
-  cover?: {
-    [key: string]: BaseSchema;
-  };
+  cover?: Cover;
 
   cb?: (el: BaseSchema) => BaseSchema | false;
 }
@@ -24,9 +26,7 @@ interface BaseOptions {
 
   uuids?: string[];
 
-  cover?: {
-    [key: string]: BaseSchema;
-  };
+  cover?: Cover;
 }
 
 interface CustomOptions {
@@ -36,9 +36,7 @@ interface CustomOptions {
 
   uuids?: string[];
 
-  cover?: {
-    [key: string]: BaseSchema;
-  };
+  cover?: Cover;
 
   cb: (el: BaseSchema) => BaseSchema | false;
 }

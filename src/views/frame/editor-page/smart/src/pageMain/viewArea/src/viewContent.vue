@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { pointList } from '../../../tools/index';
+import { pointList } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 export default defineComponent({

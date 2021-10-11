@@ -34,7 +34,7 @@ export default defineComponent({
     },
     role: {
       type: Object as PropType<RoleManage>,
-      default: undefined
+      default: () => ({})
     },
     placeholder: {
       type: String,
@@ -85,7 +85,7 @@ export default defineComponent({
     watch(
       () => props.role,
       (value) => {
-        selectData.value = value.id;
+        selectData.value = value?.id;
         options.value = [value];
       }
     );
