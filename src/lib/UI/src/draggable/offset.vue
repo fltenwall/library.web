@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { throttle } from 'lodash-es';
 
 type Type = 'mouse' | 'ew' | 'ns' | 'se';
 
@@ -32,8 +33,13 @@ export default defineComponent({
     let distanceX = 0;
     let distanceY = 0;
     // 事件名称
-
     let eventType: Type;
+    // 开始移动 节流
+    const startThrottle = throttle((data) => emit('on-start', data), 20);
+    // 移动中 节流
+    const moveThrottle = throttle((data) => emit('on-move', data), 20);
+    // 开始移动 节流
+    const endThrottle = throttle((data) => emit('on-end', data), 20);
     // 鼠标按下
     function startMove(event: MouseEvent, name: Type) {
       // 判断鼠标按键
@@ -47,7 +53,7 @@ export default defineComponent({
       document.addEventListener('mousemove', moving, false);
       document.addEventListener('mouseup', endMove, false);
 
-      emit('on-start', { record: props.record, type: eventType });
+      startThrottle({ record: props.record, type: eventType });
     }
 
     // 拖拽移动事件
@@ -59,13 +65,13 @@ export default defineComponent({
       distanceX = currentX - startX;
       distanceY = currentY - startY;
 
-      emit('on-move', { record: props.record, x: distanceX, y: distanceY, type: eventType });
+      moveThrottle({ record: props.record, x: distanceX, y: distanceY, type: eventType });
     }
 
     // 拖拽结束事件
     function endMove() {
       // 没有移动不更新
-      emit('on-end', { record: props.record, x: distanceX, y: distanceY, type: eventType });
+      endThrottle({ record: props.record, x: distanceX, y: distanceY, type: eventType });
 
       // 清空数据
       distanceX = distanceY = 0;

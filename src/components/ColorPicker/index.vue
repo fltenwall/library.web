@@ -1,7 +1,7 @@
 <template>
-  <popup trigger="click">
+  <popup v-model:visible="visible" trigger="click">
     <div class="color-picker-trigger">
-      <div class="color-picker-color"></div>
+      <div class="color-picker-color" :style="{ background: currentColor }" />
     </div>
 
     <!-- 弹出层 -->
@@ -10,6 +10,7 @@
         <!-- 中间 -->
         <div class="color-main">
           <draggable-place
+            ref="svpanel"
             class="color-main-svpanel"
             :style="{ background: bgColor }"
             @on-start="handleCursorMove"
@@ -17,22 +18,23 @@
           >
             <div class="color-main-svpanel-white" />
             <div class="color-main-svpanel-black" />
-            <div class="color-main-svpanel-cursor" :style="cursorStyle">
+            <div ref="cursor" class="color-main-svpanel-cursor" :style="cursorStyle">
               <div />
             </div>
           </draggable-place>
 
           <draggable-place
+            ref="slider"
             class="color-main-slider"
             @on-start="handleThumbMove"
             @on-move="handleThumbMove"
           >
-            <div class="color-main-slider-thumb" :style="thumbStyle" />
+            <div ref="thumb" class="color-main-slider-thumb" :style="thumbStyle" />
           </draggable-place>
         </div>
         <!-- 底部 -->
         <div class="color-footer">
-          <a-input v-model:value="inputHex" prefix="#" class="color-footer-input" />
+          <a-input v-model:value="inputColor" class="color-footer-input" @blur="handleInputBlur" />
           <a-button class="color-footer-button">确定</a-button>
         </div>
       </div>
@@ -43,15 +45,15 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import { DraggablePlace, Popup } from '/@/lib/UI/';
-import { reactive, computed, ref } from 'vue';
+import { reactive, computed, ref, watch, nextTick } from 'vue';
+import { isUnDef } from '/@/utils/is';
 import { clamp } from 'lodash';
-import { colord } from 'colord';
+import propsOptions from './props';
+import tinycolor from 'tinycolor2';
 
 interface Move {
   x: number;
-
   y: number;
-
   container: { height: number; width: number };
 }
 
@@ -62,38 +64,144 @@ interface Hsla {
   a: number;
 }
 
-const inputHex = ref<string>('');
+const emits = defineEmits(['update:value', 'change']);
+
+const props = defineProps(propsOptions);
+
+const inputColor = ref<string>('#000000');
+
+const currentColor = ref<string>('#000000');
+
+const slider = ref<{ $el: HTMLElement } | null>(null);
+
+const svpanel = ref<{ $el: HTMLElement } | null>(null);
+
+const thumb = ref<HTMLNULL>(null);
+
+const cursor = ref<HTMLNULL>(null);
 
 const cursorStyle = reactive<CSSProperties>({});
 
 const thumbStyle = reactive<CSSProperties>({});
 
-const hsla = reactive<Hsla>({ h: 0, s: 0, v: 100, a: 1 });
+const visible = ref<boolean>(false);
 
-const bgColor = computed(() => `hsl(${hsla.h}, 100%, 50%)`);
+const isValueUpdateFromInner = ref<boolean>(false);
 
-// 移动中
+const hsva = ref<Hsla>({ h: 0, s: 0, v: 0, a: 1 });
+
+const bgColor = computed(() => `hsl(${hsva.value.h}, 100%, 50%)`);
+
+watch(
+  () => visible.value,
+  (val) => {
+    val && nextTick(update);
+  }
+);
+
+watch(
+  () => currentColor.value,
+  (color) => {
+    isValueUpdateFromInner.value = true;
+
+    // emits('update:value', color);
+    emits('change', color);
+
+    inputColor.value = color;
+  }
+);
+
+watch(
+  () => props.value,
+  (color) => {
+    if (isValueUpdateFromInner.value) {
+      isValueUpdateFromInner.value = false;
+    } else {
+      updateColor(color);
+    }
+  }
+);
+
+// 颜色更新
+function updateColor(color: Hsla | string) {
+  const value = tinycolor(color).isValid() ? color : '#000000';
+
+  currentColor.value = tinycolor(value).toHexString();
+}
+
+// 获取 饱和度, 明度
 function handleCursorMove({ x, y, container: { height, width } }: Move) {
   // 设置偏移
   cursorStyle.left = `${x}px`;
   cursorStyle.top = `${y}px`;
 
-  hsla.s = (x / width) * 100;
-  hsla.v = clamp(-(y / height) + 1, 0, 1) * 100;
+  hsva.value.s = x / width;
+  hsva.value.v = clamp(-(y / height) + 1, 0, 1);
 
-  inputHex.value = colord(hsla).toHex().replace(/^#/, '');
+  updateColor(hsva.value);
 }
 
+// 获取 色相
 function handleThumbMove({ y, container: { height } }: Move) {
   thumbStyle.top = `${y}px`;
 
   if (y < 0) {
-    hsla.h = 360;
+    hsva.value.h = 360;
   } else if (y > height) {
-    hsla.h = 0;
+    hsva.value.h = 0;
   } else {
-    hsla.h = 360 * (y / height);
+    hsva.value.h = (y / height) * 360;
   }
+
+  updateColor(hsva.value);
+}
+
+// 输入失去的值
+function handleInputBlur() {
+  updateColor(inputColor.value);
+
+  const { h, s, v } = tinycolor(currentColor.value).toHsv();
+
+  hsva.value = { h, s, v, a: 1 };
+
+  update();
+}
+
+function update() {
+  cursorStyle.top = `${getCursorTop()}px`;
+  cursorStyle.left = `${getCursorLeft()}px`;
+
+  thumbStyle.top = `${getThumbTop()}px`;
+}
+
+function getCursorLeft() {
+  const el = svpanel.value?.$el;
+
+  if (isUnDef(el)) return 0;
+
+  return el.offsetWidth * hsva.value.s;
+}
+
+function getCursorTop() {
+  const el = svpanel.value?.$el;
+
+  if (isUnDef(el)) return 0;
+
+  return (hsva.value.v - 1) * el.offsetHeight * -1;
+}
+
+function getThumbTop() {
+  const el = slider.value?.$el;
+
+  if (isUnDef(el)) return 0;
+
+  if (hsva.value.h === 0) {
+    return el.offsetHeight;
+  } else if (hsva.value.h === 360) {
+    return 0;
+  }
+
+  return (hsva.value.h / 360) * el.offsetHeight - thumb.value!.offsetHeight / 2;
 }
 </script>
 
@@ -197,11 +305,13 @@ function handleThumbMove({ y, container: { height } }: Move) {
   &-input {
     width: 160px;
     height: 28px;
+    font-size: 12px;
   }
 
   &-button {
     height: 28px;
     padding: 0 7px;
+    font-size: 12px;
   }
 }
 </style>

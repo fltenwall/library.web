@@ -15,8 +15,8 @@
       class="flex-end flex"
       @change="handleChange($event, 'layoutType')"
     >
-      <a-radio-button :value="1"> 自由布局 </a-radio-button>
-      <a-radio-button :value="2"> 弹性布局 </a-radio-button>
+      <a-radio-button :value="1">自由布局</a-radio-button>
+      <a-radio-button :value="2">弹性布局</a-radio-button>
     </a-radio-group>
   </div>
   <a-divider />
@@ -27,15 +27,15 @@
       class="flex-end flex"
       @change="handleChange($event, 'margin')"
     >
-      <a-radio-button :value="0"> 无间距 </a-radio-button>
-      <a-radio-button :value="10"> 10px </a-radio-button>
-      <a-radio-button :value="20"> 20px </a-radio-button>
+      <a-radio-button :value="0">无间距</a-radio-button>
+      <a-radio-button :value="10">10px</a-radio-button>
+      <a-radio-button :value="20">20px</a-radio-button>
     </a-radio-group>
   </div>
   <a-divider />
   <div class="default-point-item">
     <div class="c333">背景颜色</div>
-    <color-picker />
+    <color-picker :value="pageOptions.bgColor" @change="handleUpdateData($event, 'bgColor')" />
   </div>
 </template>
 
@@ -56,7 +56,11 @@ const pageOptions = computed(() => pointStore.getPageOptionsState);
 // 处理布局切换
 function handleChange(e: Event, key: keyof FormManage) {
   const value = (e.target as unknown as { value: number }).value;
-  pointStore.commitUpdatePageOptionsState({ key, value: value });
+  handleUpdateData(value, key);
+}
+// 处理数据内容发生变化
+function handleUpdateData(value: FormManage[keyof FormManage], key: keyof FormManage) {
+  pointStore.commitUpdatePageOptionsState({ key, value });
 }
 </script>
 

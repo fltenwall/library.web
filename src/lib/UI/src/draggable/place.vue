@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { clamp } from 'lodash';
+import { clamp, throttle } from 'lodash-es';
 
 export default defineComponent({
   props: {
@@ -23,6 +23,13 @@ export default defineComponent({
   emits: ['on-move', 'on-end', 'on-start', 'on-resize'],
   setup(props, { emit }) {
     const container = ref<Element>();
+    // 开始移动 节流
+    const startThrottle = throttle((data) => emit('on-start', data), 0);
+    // 移动中 节流
+    const moveThrottle = throttle((data) => emit('on-move', data), 0);
+    // 开始移动 节流
+    const endThrottle = throttle((data) => emit('on-end', data), 0);
+
     // 鼠标按下
     function startMove(event: MouseEvent) {
       // 判断鼠标按键
@@ -33,21 +40,21 @@ export default defineComponent({
       document.addEventListener('mousemove', moving, false);
       document.addEventListener('mouseup', endMove, false);
 
-      emit('on-start', { record: props.record, ...result });
+      startThrottle({ record: props.record, ...result });
     }
 
     // 拖拽移动事件
     function moving(event: MouseEvent) {
       const result = spotting(event.pageX, event.pageY);
 
-      emit('on-move', { record: props.record, ...result });
+      moveThrottle({ record: props.record, ...result });
     }
 
     // 拖拽结束事件
     function endMove(event: MouseEvent) {
       const result = spotting(event.pageX, event.pageY);
 
-      emit('on-end', { record: props.record, ...result });
+      endThrottle({ record: props.record, ...result });
 
       // 移除移动事件 鼠标抬起事件
       document.removeEventListener('mousemove', moving);

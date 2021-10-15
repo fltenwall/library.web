@@ -15,12 +15,10 @@ export interface BaseSchema {
   height: number;
 }
 
-export interface PointInfo extends Partial<BaseSchema> {
+export interface PointInfo extends Partial<BaseSchema>, Indexable {
   // 工具名称
   name?: string;
 
   // 层级
   zIndex?: number;
-
-  [key: string]: unknown;
 }

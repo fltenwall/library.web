@@ -3,7 +3,7 @@ import type { PointInfo } from '/@/lib/interface/PointInfo';
 // 模型工具
 const schemaTools = import.meta.globEager('./**/schema.ts');
 
-export const schemaList: { [prop: string]: PointInfo } = {};
+export const schemaList: Indexable<PointInfo> = {};
 
 Object.keys(schemaTools).forEach((key) => {
   // 读取文件名称

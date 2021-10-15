@@ -1,45 +1,69 @@
 <template>
-  <div class="popup-wrap">
+  <div v-click-away="hanldeClickDragAway" class="popup-wrap">
     <div ref="container" @click="openOverlay">
       <slot />
     </div>
 
-    <transition name="drop">
-      <div v-show="visible" class="popup-overlay">
-        <slot name="overlay" />
-      </div>
-    </transition>
+    <teleport to="body">
+      <transition name="drop">
+        <div v-show="visible" ref="popper" class="popup-overlay" @click.stop>
+          <slot name="overlay" />
+        </div>
+      </transition>
+    </teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
+import Popper from './popper';
+import propsOptions from './props';
 
-const container = ref<HTMLElement>();
+const container = ref<HTMLElement | null>(null);
 
-const visible = ref<boolean>(false);
+const popper = ref<HTMLElement | null>(null);
+
+const props = defineProps(propsOptions);
+
+const emits = defineEmits(['update:visible']);
+
+const visible = computed({
+  set: (val) => emits('update:visible', val),
+  get: () => props.visible
+});
+
+let popperJS: Popper;
+
+onMounted(() => updatePopper());
+
+onBeforeUnmount(() => popperJS.destroy());
+
+watch(
+  () => visible.value,
+  (val) => val && updatePopper()
+);
 
 function openOverlay() {
   visible.value = !visible.value;
+}
+
+function updatePopper() {
+  if (popperJS) {
+    popperJS.update();
+  } else {
+    popperJS = new Popper(container, popper);
+  }
+}
+
+// 点击以外的地方
+function hanldeClickDragAway() {
+  visible.value && (visible.value = false);
 }
 </script>
 
 <style lang="less">
 .popup-overlay {
-  position: fixed;
-  right: 16px;
   z-index: 1000;
   margin: 10px 0 0;
-}
-
-.drop-enter-active,
-.drop-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-
-.drop-enter,
-.drop-leave-to {
-  opacity: 0;
-  transform: scale(1, 0);
 }
 </style>

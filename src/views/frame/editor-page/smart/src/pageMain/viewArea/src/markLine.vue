@@ -37,7 +37,7 @@ const diff = 3;
 // 分别对应三条横线和三条竖线
 const lines = ref<string[]>(['x', 'y']);
 // 线条状态
-const lineStatus = ref<{ [key: string]: CSSProperties }>({ x: {}, y: {} });
+const lineStatus = ref<Indexable<CSSProperties>>({ x: {}, y: {} });
 // 拖拽数据信息
 const pointData = computed(() => pointStore.getPointDataState);
 

@@ -48,6 +48,4 @@ interface RulesOptions {
   trigger?: 'blur' | 'change';
 }
 
-export interface FromRules {
-  [key: string]: RulesOptions[];
-}
+export type FromRules = Indexable<RulesOptions[]>;

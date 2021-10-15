@@ -17,6 +17,9 @@ export interface FormManage {
   // 布局类型
   layoutType?: 1 | 2;
 
+  // 背景颜色
+  bgColor?: string;
+
   // 描述
   description?: string;
 

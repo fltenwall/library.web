@@ -3,9 +3,7 @@ import { pointStore } from '/@/store/modules/point';
 import { BaseSchema } from '/@/lib/interface/PointInfo';
 import { cloneDeep } from 'lodash-es';
 
-export interface Cover {
-  [key: string]: BaseSchema;
-}
+export type Cover = Indexable<BaseSchema>;
 
 interface Options {
   type: 'bottom' | 'top' | 'custom';

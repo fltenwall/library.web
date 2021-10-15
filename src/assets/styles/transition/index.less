@@ -1,1 +1,29 @@
-@import './breadcrumb.less';
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.24s;
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.breadcrumb-move {
+  transition: all 0.38s;
+}
+
+.drop-enter-active,
+.drop-leave-active {
+  opacity: 1;
+  transform: scaleY(1);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  transform-origin: center top;
+}
+
+.drop-enter-from,
+.drop-leave-active {
+  opacity: 0;
+  transform: scaleY(0);
+}
