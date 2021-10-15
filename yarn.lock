@@ -523,10 +523,10 @@
   dependencies:
     cross-fetch "^3.0.6"
 
-"@iconify/json@^1.1.412":
-  version "1.1.412"
-  resolved "https://registry.npmmirror.com/@iconify/json/download/@iconify/json-1.1.412.tgz#ee5d0533b48383c6a9302f84a6d53c4c09ed6d36"
-  integrity sha1-7l0FM7SDg8apMC+EptU8TAntbTY=
+"@iconify/json@^1.1.415":
+  version "1.1.415"
+  resolved "https://registry.npmmirror.com/@iconify/json/download/@iconify/json-1.1.415.tgz#2f5943d2075920e591ea30520cf7824bc139a619"
+  integrity sha1-L1lD0gdZIOWR6jBSDPeCS8E5phk=
 
 "@mapbox/node-pre-gyp@^1.0.4":
   version "1.0.5"
@@ -763,6 +763,11 @@
   resolved "https://registry.nlark.com/@types/spark-md5/download/@types/spark-md5-3.0.2.tgz#da2e8a778a20335fc4f40b6471c4b0d86b70da55"
   integrity sha1-2i6Kd4ogM1/E9AtkccSw2Gtw2lU=
 
+"@types/tinycolor2@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.nlark.com/@types/tinycolor2/download/@types/tinycolor2-1.4.3.tgz?cache=0&sync_timestamp=1629709494923&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Ftinycolor2%2Fdownload%2F%40types%2Ftinycolor2-1.4.3.tgz#ed4a0901f954b126e6a914b4839c77462d56e706"
+  integrity sha1-7UoJAflUsSbmqRS0g5x3Ri1W5wY=
+
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.6"
   resolved "https://registry.nlark.com/@types/unist/download/@types/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
@@ -893,7 +898,7 @@
     "@vue/compiler-core" "3.2.20"
     "@vue/shared" "3.2.20"
 
-"@vue/compiler-sfc@3.2.20", "@vue/compiler-sfc@^3.2.19":
+"@vue/compiler-sfc@3.2.20", "@vue/compiler-sfc@^3.2.20":
   version "3.2.20"
   resolved "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.20.tgz#2d7668e76f066c566dd7c09c15c9acce4e876e0a"
   integrity sha1-LXZo528GbFZt18CcFcmszk6Hbgo=
@@ -917,7 +922,7 @@
     "@vue/compiler-dom" "3.2.20"
     "@vue/shared" "3.2.20"
 
-"@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.14":
+"@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.18":
   version "6.0.0-beta.19"
   resolved "https://registry.npmmirror.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.19.tgz#f8e88059daa424515992426a0c7ea5cde07e99bf"
   integrity sha1-+OiAWdqkJFFZkkJqDH6lzeB+mb8=
@@ -1074,7 +1079,7 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.2.6:
+ant-design-vue@^2.2.8:
   version "2.2.8"
   resolved "https://registry.npmmirror.com/ant-design-vue/download/ant-design-vue-2.2.8.tgz?cache=0&sync_timestamp=1633658431217&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.2.8.tgz#fa87cf6842d8ee9a0d8af393ff4099ecc4072f2b"
   integrity sha1-+ofPaELY7poNivOT/0CZ7MQHLys=
@@ -1475,11 +1480,6 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.nlark.com/color-name/download/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha1-wqCah6y95pVD3m9j+jmVyCbFNqI=
-
-colord@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.npmmirror.com/colord/download/colord-2.8.0.tgz?cache=0&sync_timestamp=1632420899303&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcolord%2Fdownload%2Fcolord-2.8.0.tgz#64fb7aa03de7652b5a39eee50271a104c2783b12"
-  integrity sha1-ZPt6oD3nZStaOe7lAnGhBMJ4OxI=
 
 colorette@^1.4.0:
   version "1.4.0"
@@ -4471,6 +4471,11 @@ through@^2.3.8:
   resolved "https://registry.npm.taobao.org/through/download/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
+tinycolor2@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
+  integrity sha1-P2pNEHGtB2dtf6Ry4frECnGdiAM=
+
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/to-fast-properties/download/to-fast-properties-2.0.0.tgz?cache=0&sync_timestamp=1628418893613&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fto-fast-properties%2Fdownload%2Fto-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
@@ -4751,12 +4756,12 @@ vue-json-pretty@^1.8.1:
   resolved "https://registry.nlark.com/vue-json-pretty/download/vue-json-pretty-1.8.1.tgz?cache=0&sync_timestamp=1629253034511&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-json-pretty%2Fdownload%2Fvue-json-pretty-1.8.1.tgz#538bb57fc718544152105aef659b4c88475365ee"
   integrity sha1-U4u1f8cYVEFSEFrvZZtMiEdTZe4=
 
-vue-router@^4.0.11:
-  version "4.0.11"
-  resolved "https://registry.nlark.com/vue-router/download/vue-router-4.0.11.tgz?cache=0&sync_timestamp=1628495505697&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-router%2Fdownload%2Fvue-router-4.0.11.tgz#cd649a0941c635281763a20965b599643ddc68ed"
-  integrity sha1-zWSaCUHGNSgXY6IJZbWZZD3caO0=
+vue-router@^4.0.12:
+  version "4.0.12"
+  resolved "https://registry.npmmirror.com/vue-router/download/vue-router-4.0.12.tgz?cache=0&sync_timestamp=1634228935856&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvue-router%2Fdownload%2Fvue-router-4.0.12.tgz#8dc792cddf5bb1abcc3908f9064136de7e13c460"
+  integrity sha1-jceSzd9bsavMOQj5BkE23n4TxGA=
   dependencies:
-    "@vue/devtools-api" "^6.0.0-beta.14"
+    "@vue/devtools-api" "^6.0.0-beta.18"
 
 vue-toastification@2.0.0-rc.1:
   version "2.0.0-rc.1"
@@ -4775,7 +4780,7 @@ vue3-click-away@^1.2.1:
   resolved "https://registry.nlark.com/vue3-click-away/download/vue3-click-away-1.2.1.tgz#3645b2671db152d53c95b936540f7e449616f5d4"
   integrity sha1-NkWyZx2xUtU8lbk2VA9+RJYW9dQ=
 
-vue@^3.2.19:
+vue@^3.2.20:
   version "3.2.20"
   resolved "https://registry.npmmirror.com/vue/download/vue-3.2.20.tgz?cache=0&sync_timestamp=1633712555314&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvue%2Fdownload%2Fvue-3.2.20.tgz#940f8aa8bf3e3be78243ca582bad41fcd45ae3e6"
   integrity sha1-lA+KqL8+O+eCQ8pYK61B/NRa4+Y=
