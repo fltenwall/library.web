@@ -24,11 +24,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const container = ref<Element>();
     // 开始移动 节流
-    const startThrottle = throttle((data) => emit('on-start', data), 0);
+    const startThrottle = throttle((data) => emit('on-start', data), 20);
     // 移动中 节流
-    const moveThrottle = throttle((data) => emit('on-move', data), 0);
+    const moveThrottle = throttle((data) => emit('on-move', data), 20);
     // 开始移动 节流
-    const endThrottle = throttle((data) => emit('on-end', data), 0);
+    const endThrottle = throttle((data) => emit('on-end', data), 20);
 
     // 鼠标按下
     function startMove(event: MouseEvent) {

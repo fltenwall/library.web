@@ -35,11 +35,11 @@ export default defineComponent({
     // 事件名称
     let eventType: Type;
     // 开始移动 节流
-    const startThrottle = throttle((data) => emit('on-start', data), 20);
+    const startThrottle = throttle((data) => emit('on-start', data), 0);
     // 移动中 节流
-    const moveThrottle = throttle((data) => emit('on-move', data), 20);
+    const moveThrottle = throttle((data) => emit('on-move', data), 0);
     // 开始移动 节流
-    const endThrottle = throttle((data) => emit('on-end', data), 20);
+    const endThrottle = throttle((data) => emit('on-end', data), 0);
     // 鼠标按下
     function startMove(event: MouseEvent, name: Type) {
       // 判断鼠标按键
