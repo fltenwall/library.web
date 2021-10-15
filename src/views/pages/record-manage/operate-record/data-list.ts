@@ -61,9 +61,10 @@ export const tableColumns: TableColumn[] = [
   },
   {
     title: '操作',
-    dataIndex: 'action',
+    dataIndex: 'operation',
     align: 'center',
     ellipsis: true,
-    slots: { customRender: 'action' }
+    fixed: 'right',
+    slots: { customRender: 'operation' }
   }
 ];

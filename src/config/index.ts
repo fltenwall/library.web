@@ -45,7 +45,7 @@ const config: Config = {
   publicPath: publicPath,
 
   // 主题
-  theme: 'dark',
+  theme: 'light',
 
   // 菜单宽度
   menuWidth: 230,

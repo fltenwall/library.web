@@ -16,6 +16,7 @@ export const tableColumns: TableColumn[] = [
     title: '操作',
     align: 'center',
     width: 80,
+    fixed: 'right',
     dataIndex: 'operation',
     slots: { customRender: 'operation' }
   }

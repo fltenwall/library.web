@@ -23,7 +23,7 @@
       </div>
     </template>
 
-    <template #action="{ record }">
+    <template #operation="{ record }">
       <div class="index-operation">
         <span @click="onDetailsDataItem(record)">详情</span>
       </div>

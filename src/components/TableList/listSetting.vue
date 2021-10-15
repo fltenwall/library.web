@@ -4,7 +4,7 @@
     placement="bottomRight"
     overlay-class-name="table-list-popover"
     :arrow-point-at-center="true"
-    :get-popup-container="(trigger) => trigger.parentNode"
+    :get-popup-container="(trigger: HTMLElement) => trigger.parentNode"
   >
     <tooltip-button title="列设置">
       <setting-outlined />

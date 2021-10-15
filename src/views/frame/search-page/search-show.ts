@@ -41,6 +41,7 @@ export const holdInfoColumns: TableColumn[] = [
   // },
   {
     title: '操作',
+    fixed: 'right',
     dataIndex: 'operation',
     align: 'center',
     ellipsis: true,

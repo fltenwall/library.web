@@ -59,6 +59,7 @@ export const dataTypeColumn: TableColumn[] = [
     title: '操作',
     align: 'center',
     width: 170,
+    fixed: 'right',
     ellipsis: true,
     dataIndex: 'operation',
     slots: { customRender: 'operation' }

@@ -122,7 +122,7 @@ export default defineComponent({
         <Menu
           mode={mode}
           theme={config.theme!}
-          inlineCollapsed={menuStore.getCollapsedState}
+          collapsed={menuStore.getCollapsedState}
           onOpenChange={handleOpenChange}
           onClick={handleMenuClick}
           forceSubMenuRender={isAppMenu}
@@ -157,7 +157,6 @@ export default defineComponent({
                 <RouterLink to={{ name: PageEnum.INDEX_PAGE }} class="index-center-middle-inline">
                   {() => (
                     <>
-                      <img src={config.logo} class="layout-sider-header-logo" />
                       <div
                         class={[
                           'layout-sider-header-title',
