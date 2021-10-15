@@ -41,5 +41,5 @@ jobs:
         pass: ${{ secrets.ACCESS_PASS }}
         connect_timeout: 10s
         local: './dist/*'
-        remote: /${{secrets.REMOTE_USER}}/library/library.web
+        remote: /${{secrets.REMOTE_USER}}/library/library.web/dist
 
