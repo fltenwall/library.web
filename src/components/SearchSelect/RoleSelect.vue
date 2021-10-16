@@ -87,7 +87,8 @@ export default defineComponent({
       (value) => {
         selectData.value = value?.id;
         options.value = [value];
-      }
+      },
+      { immediate: true }
     );
 
     return { options, selectData, onFocus, handleSearch, handleChange };
