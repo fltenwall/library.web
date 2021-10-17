@@ -1,5 +1,5 @@
 <template>
-  <div class="view-content" @contextmenu.prevent.stop="onContextmenu">
+  <div class="view-content" @contextmenu.prevent="onContextmenu">
     <component :is="`${name}-point`" v-bind="$attrs" />
   </div>
 </template>
@@ -25,7 +25,6 @@ export default defineComponent({
       const { layerX, layerY } = event as unknown as { layerX: number; layerY: number };
 
       const options = { x: layerX + 5, y: layerY + 5 };
-
       // 非当前选中的弹出
       if (attrs.uuid !== pointStore.getPointUUIDState) {
         emit('on-right-select', attrs.uuid);

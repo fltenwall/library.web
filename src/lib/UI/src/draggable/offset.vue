@@ -1,15 +1,14 @@
 <template>
-  <div class="ui-draggable-offset" @mousedown.stop.prevent="startMove($event, 'mouse')">
+  <div class="ui-draggable-offset" @mousedown="startMove($event, 'mouse')">
     <slot />
-    <div v-if="isSize" class="ew absolute size" @mousedown.stop.prevent="startMove($event, 'ew')" />
-    <div v-if="isSize" class="ns absolute size" @mousedown.stop.prevent="startMove($event, 'ns')" />
-    <div v-if="isSize" class="se absolute size" @mousedown.stop.prevent="startMove($event, 'se')" />
+    <div v-if="isSize" class="ew absolute size" @mousedown.prevent="startMove($event, 'ew')" />
+    <div v-if="isSize" class="ns absolute size" @mousedown.prevent="startMove($event, 'ns')" />
+    <div v-if="isSize" class="se absolute size" @mousedown.prevent="startMove($event, 'se')" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { throttle } from 'lodash-es';
 
 type Type = 'mouse' | 'ew' | 'ns' | 'se';
 
@@ -34,12 +33,6 @@ export default defineComponent({
     let distanceY = 0;
     // 事件名称
     let eventType: Type;
-    // 开始移动 节流
-    const startThrottle = throttle((data) => emit('on-start', data), 0);
-    // 移动中 节流
-    const moveThrottle = throttle((data) => emit('on-move', data), 0);
-    // 开始移动 节流
-    const endThrottle = throttle((data) => emit('on-end', data), 0);
     // 鼠标按下
     function startMove(event: MouseEvent, name: Type) {
       // 判断鼠标按键
@@ -53,7 +46,7 @@ export default defineComponent({
       document.addEventListener('mousemove', moving, false);
       document.addEventListener('mouseup', endMove, false);
 
-      startThrottle({ record: props.record, type: eventType });
+      emit('on-start', { record: props.record, type: eventType });
     }
 
     // 拖拽移动事件
@@ -65,13 +58,13 @@ export default defineComponent({
       distanceX = currentX - startX;
       distanceY = currentY - startY;
 
-      moveThrottle({ record: props.record, x: distanceX, y: distanceY, type: eventType });
+      emit('on-move', { record: props.record, x: distanceX, y: distanceY, type: eventType });
     }
 
     // 拖拽结束事件
     function endMove() {
       // 没有移动不更新
-      endThrottle({ record: props.record, x: distanceX, y: distanceY, type: eventType });
+      emit('on-end', { record: props.record, x: distanceX, y: distanceY, type: eventType });
 
       // 清空数据
       distanceX = distanceY = 0;

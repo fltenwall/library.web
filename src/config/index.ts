@@ -7,31 +7,7 @@ const { title, publicPath, shortTitle, auth } = useSetting();
  *  系统配置文件可用于设置使用系统运行的参数
  **/
 
-export interface Config {
-  title: string;
-
-  shortTitle: string;
-
-  logo: string;
-
-  publicPath: string;
-
-  theme: 'dark' | 'light' | undefined;
-
-  menuWidth: number;
-
-  collapsed: boolean;
-
-  collapsedWidth: number;
-
-  max: number;
-
-  auth: boolean;
-
-  preview: string;
-}
-
-const config: Config = {
+const config: SystemConfig = {
   // 系统名称
   title: title,
 

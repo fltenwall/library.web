@@ -1,5 +1,5 @@
 <template>
-  <popup v-model:visible="visible" trigger="click">
+  <popup v-model:visible="visible">
     <div class="color-picker-trigger">
       <div class="color-picker-color" :style="{ background: currentColor }" />
     </div>

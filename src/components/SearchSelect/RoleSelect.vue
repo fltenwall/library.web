@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <select-search
-      v-model:value="selectData"
-      :filter-option="false"
-      :not-found-content="null"
-      :placeholder="placeholder"
-      @on-change="handleChange"
-      @on-search="handleSearch"
-      @on-focus="onFocus"
-    >
-      <a-select-option v-for="item in options" :key="item.id" :value="item.id">
-        {{ item.name }}
-      </a-select-option>
-    </select-search>
-  </div>
+  <select-search
+    v-model:value="selectData"
+    :filter-option="false"
+    :not-found-content="null"
+    :placeholder="placeholder"
+    @on-change="handleChange"
+    @on-search="handleSearch"
+    @on-focus="onFocus"
+  >
+    <a-select-option v-for="item in options" :key="item.id" :value="item.id">
+      {{ item.name }}
+    </a-select-option>
+  </select-search>
 </template>
 
 <script lang="ts">
@@ -74,13 +72,6 @@ export default defineComponent({
     function handleChange(value: number[]) {
       emit('update:value', value);
     }
-
-    watch(
-      () => props.value,
-      (value) => {
-        !value && (selectData.value = undefined);
-      }
-    );
 
     watch(
       () => props.role,

@@ -5,15 +5,8 @@ export const tableColumns: TableColumn[] = [
     title: '登录账户',
     dataIndex: 'username',
     align: 'center',
-    ellipsis: true
-  },
-  {
-    title: '超级管理员',
-    dataIndex: 'superAdmin',
-    align: 'center',
-    width: 100,
     ellipsis: true,
-    slots: { customRender: 'superAdmin' }
+    slots: { customRender: 'username' }
   },
   {
     title: '用户状态',

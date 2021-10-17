@@ -15,7 +15,6 @@
         <draggable-offset
           v-for="item in pointData"
           :key="item.uuid"
-          v-click-away="hanldeClickDragAway"
           class="view-item"
           :record="item"
           :is-size="true"
@@ -30,7 +29,12 @@
           @mouseenter="mouseEvent.mouseenter(item.uuid)"
           @mouseleave="mouseEvent.mouseleave"
         >
-          <view-content v-bind="item" @on-contextmenu="handleContextmenu" />
+          <view-content
+            v-click-away="hanldeClickDragAway"
+            v-bind="item"
+            @on-contextmenu="handleContextmenu"
+            @on-right-select="setSelectPoint"
+          />
         </draggable-offset>
 
         <!-- 拖拽中才显示, 松开鼠标实际位置 -->
@@ -67,6 +71,7 @@ import { handleStore, limitRules, viewResize, pointDataModify, rangeHighest } fr
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
+import { isUnDef } from '/@/utils/is';
 
 const emit = defineEmits(['on-click-point']);
 
@@ -300,10 +305,14 @@ function setSelectPoint(uuid: string) {
 }
 
 // 右键
-function handleCancelSelect() {
-  setSelectPoint('');
-  // 隐藏
-  hanldeClickDragAway();
+function handleCancelSelect(e?: MouseEvent) {
+  // 点击空白区域隐藏
+  if (panelRef.value === e?.target || isUnDef(e)) {
+    // 设置为空
+    setSelectPoint('');
+    // 隐藏菜单
+    hanldeClickDragAway();
+  }
 }
 
 // 处理右键点击

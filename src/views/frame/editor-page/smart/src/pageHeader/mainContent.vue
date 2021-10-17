@@ -48,7 +48,6 @@ function onInputChange(e: Event) {
     transform: translate(-50%, -50%);
 
     .name-input {
-      position: relative;
       width: 120px;
       margin: 0 10px 0 0;
       overflow: hidden;
@@ -56,8 +55,7 @@ function onInputChange(e: Event) {
       text-align: center;
       text-overflow: ellipsis;
       cursor: pointer;
-      border: 0 solid transparent;
-      border-bottom: 1px solid transparent;
+      border-width: 0;
       outline: none;
       caret-color: @primary-color;
 

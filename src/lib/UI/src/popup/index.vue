@@ -6,7 +6,7 @@
 
     <teleport to="body">
       <transition name="drop">
-        <div v-show="visible" ref="popper" class="popup-overlay" @click.stop>
+        <div v-show="visible" ref="popper" class="popup-overlay">
           <slot name="overlay" />
         </div>
       </transition>

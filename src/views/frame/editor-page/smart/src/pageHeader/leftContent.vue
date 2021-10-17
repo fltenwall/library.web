@@ -1,7 +1,6 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
     <div class="index-theme header-left-title index-middle">
-      <img class="header-left-title-logo" :src="MixinConfig.logo" />
       <span>{{ MixinConfig.shortTitle }}</span>
     </div>
 

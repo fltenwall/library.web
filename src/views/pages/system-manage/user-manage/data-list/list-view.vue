@@ -15,14 +15,15 @@
         <div>{{ text ? '使用中' : '禁用中' }}</div>
       </div>
     </template>
-    <template #superAdmin="{ text }">
-      {{ text ? '是' : '否' }}
+    <template #username="{ text }">
+      {{ text }}
     </template>
     <template #operation="{ record }">
       <div class="index-operation">
         <span @click="onViewDataItem(record)">查看</span>
         <span v-show-by-auth="'USER:UPDATE'" @click="onEditDataItem(record)">编辑</span>
         <span v-show-by-auth="'USER:DELETE'" @click="onDeleteDataItem(record)">删除</span>
+        <span>{{ record.enabled ? '禁用' : '使用' }}</span>
         <span v-show-by-auth="'USERPASSWORD:UPDATE'" @click="onEditPassword(record)">重置密码</span>
       </div>
     </template>

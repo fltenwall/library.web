@@ -157,14 +157,8 @@ export default defineComponent({
                 <RouterLink to={{ name: PageEnum.INDEX_PAGE }} class="index-center-middle-inline">
                   {() => (
                     <>
-                      <div
-                        class={[
-                          'layout-sider-header-title',
-                          getCollapsedState && 'index-hidden',
-                          'index-theme'
-                        ]}
-                      >
-                        {config.title}
+                      <div class={['layout-sider-header-title', 'index-theme']}>
+                        {getCollapsedState ? config.shortTitle : config.title}
                       </div>
                     </>
                   )}

@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="ui-draggable-place" @mousedown.stop.prevent="startMove($event)">
+  <div ref="container" class="ui-draggable-place" @mousedown.prevent="startMove($event)">
     <slot />
   </div>
 </template>
