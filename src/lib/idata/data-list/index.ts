@@ -49,7 +49,7 @@ export function listPageMix<T>(options: Options<T>): onFetchData {
       loading.value = true;
       await fetchDataFromServer();
     } catch (err) {
-      message.error(`数据获取失败: ${err.msg}`);
+      message.error(`数据获取失败: ${(err as { msg: string }).msg}`);
     } finally {
       loading.value = false;
     }

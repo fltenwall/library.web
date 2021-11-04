@@ -1,7 +1,7 @@
 import { Auth } from '/@/router/types';
 import { userStore } from '/@/store/modules/user';
 import { Mode } from '/@/utils/helper/breadcrumb';
-import { isString, isArray } from '/@/utils/is';
+import { isArray } from '/@/utils/is';
 import config from '/@/config/';
 
 // 判断是否有权限
@@ -19,7 +19,8 @@ export function useAuthorities(val: string[] | Auth = [], mode?: Mode): boolean 
     : true;
 }
 
-export function showByAuth(auth: string): boolean {
-  if (!auth || !isString(auth)) return true;
-  return useAuthorities([auth]);
+export function showByAuth(auth: string | string[]): boolean {
+  if (!auth) return true;
+
+  return useAuthorities(isArray(auth) ? auth : [auth]);
 }

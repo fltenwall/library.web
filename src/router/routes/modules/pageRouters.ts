@@ -18,8 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'form-page-list-page',
       name: 'form-page-list-page',
-      component: (): unknown =>
-        import('/@/views/pages/page-manage/form-page/data-list/list-page.vue'),
+      component: (): unknown => import('/@/views/pages/page-manage/form-page/data-list/index.vue'),
       meta: {
         title: '表单页面'
       }

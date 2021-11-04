@@ -172,7 +172,7 @@ export default defineComponent({
           onChange={handleChange}
           onEdit={handleEdit}
         >
-          {{ default: () => renderTabs(), tabBarExtraContent: () => readerDropdown() }}
+          {{ default: () => renderTabs(), rightExtra: () => readerDropdown() }}
         </Tabs>
       </div>
     );

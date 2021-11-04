@@ -10,7 +10,7 @@
     padding: 0 50px 0 0;
     line-height: @header-height;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    border-bottom: 1px solid #e8eaec;
 
     .header-trigger {
       height: @header-height;
@@ -49,6 +49,7 @@
       height: @header-height;
       overflow: hidden;
       line-height: @header-height;
+      border-bottom: 1px solid #e8eaec;
 
       &-title {
         font-size: 20px;
@@ -74,81 +75,28 @@
   .default-tabs {
     border-left: 1px solid #e6e9ef;
 
-    .ant-tabs-bar {
-      margin: 0 10px;
+    .ant-tabs-nav {
+      margin: 6px;
     }
 
-    .ant-tabs-tab-prev,
-    .ant-tabs-tab-next {
-      &.ant-tabs-tab-arrow-show {
-        width: @tabHeight;
-        height: @tabHeight;
-        font-weight: bold;
+    .ant-tabs-extra-content {
+      width: 32px;
+      height: @tabHeight;
+      font-size: 0;
+      cursor: pointer;
+      background: #fff;
+      border-radius: 4px;
+
+      .default-dropdown-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
         color: #000;
-      }
-    }
 
-    .ant-tabs.ant-tabs-card {
-      padding: 6px 0;
-
-      .ant-tabs-card-bar {
-        .ant-tabs-nav-container {
-          height: @tabHeight;
-        }
-
-        .ant-tabs-tab {
-          height: @tabHeight;
-          line-height: @tabHeight - 2px;
-          background: #fff;
-          border-radius: 3px;
-
-          .anticon {
-            width: 0;
-            margin-bottom: 1px;
-          }
-
-          &:hover {
-            .anticon {
-              width: 12px;
-            }
-          }
-        }
-
-        .ant-tabs-tab-active {
-          color: #fff;
-          background: @primary-color;
-          border-color: transparent;
-
-          .anticon {
-            width: 12px;
-            color: #fff;
-
-            &:hover {
-              color: #333;
-            }
-          }
-        }
-      }
-
-      .ant-tabs-extra-content {
-        width: 32px;
-        height: @tabHeight;
-        font-size: 0;
-        cursor: pointer;
-        background: #fff;
-        border-radius: 4px;
-
-        .default-dropdown-icon {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-          color: #000;
-
-          &:hover {
-            color: #1890ff;
-          }
+        &:hover {
+          color: #1890ff;
         }
       }
     }

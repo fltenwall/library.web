@@ -115,7 +115,7 @@ export default defineComponent({
       //   selectIndex.value = -1
       //   originData.value = unref(inputValue)
       // } catch (err) {
-      //   message.error(`数据获取失败: ${err.msg}`)
+      //   message.error(`数据获取失败: ${(err as { msg: string }).msg}`)
       // }
     }
 

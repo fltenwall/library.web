@@ -1,12 +1,15 @@
 <template>
-  <a-pagination
-    :current="current"
-    :page-size="pageSize"
-    :show-total="(total) => `共 ${total} 条`"
-    :total="total"
-    @change="onPageChange"
-    @showSizeChange="onSizeChange"
-  />
+  <div class="pagination-wrap">
+    <a-pagination
+      :current="current"
+      :page-size="pageSize"
+      :show-total="(total: number) => `共 ${total} 条`"
+      :total="total"
+      :show-size-changer="false"
+      @change="onPageChange"
+      @showSizeChange="onSizeChange"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,5 +55,10 @@ export default defineComponent({
 .input-wrap[disabled] {
   color: rgba(0, 0, 0, 0.65);
   cursor: default;
+}
+
+.pagination-wrap {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

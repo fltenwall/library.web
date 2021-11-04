@@ -16,6 +16,11 @@ interface UpdatePointState {
   value: never;
 }
 
+interface UpdatePageOption {
+  key: keyof FormManage;
+  value: FormManage[keyof FormManage];
+}
+
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class Point extends VuexModule {
   // 组件数据
@@ -109,7 +114,7 @@ export default class Point extends VuexModule {
 
   // 更新页面配置
   @Mutation
-  commitUpdatePageOptionsState({ key, value }: { key: keyof FormManage; value: unknown }): void {
+  commitUpdatePageOptionsState({ key, value }: UpdatePageOption): void {
     this.pageOptionsState[key] = value as undefined;
   }
 

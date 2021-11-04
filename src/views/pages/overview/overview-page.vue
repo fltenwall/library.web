@@ -60,7 +60,6 @@ export default defineComponent({
 
   &-header {
     padding: 20px;
-    margin: 6px 0 0;
     background: var(--theme-background);
 
     &-title {

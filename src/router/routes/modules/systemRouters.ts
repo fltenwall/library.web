@@ -19,7 +19,7 @@ const routers: AppRouteModule = {
       path: 'user-manage-list-page',
       name: 'user-manage-list-page',
       component: (): unknown =>
-        import('/@/views/pages/system-manage/user-manage/data-list/list-page.vue'),
+        import('/@/views/pages/system-manage/user-manage/data-list/index.vue'),
       meta: {
         title: '用户管理',
         auth: ['USER:GET']
@@ -45,7 +45,7 @@ const routers: AppRouteModule = {
       path: 'role-manage-list-page',
       name: 'role-manage-list-page',
       component: (): unknown =>
-        import('/@/views/pages/system-manage/role-manage/data-list/list-page.vue'),
+        import('/@/views/pages/system-manage/role-manage/data-list/index.vue'),
       meta: {
         title: '角色管理',
         auth: ['ROLE:GET']

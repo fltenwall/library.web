@@ -3,7 +3,7 @@
     v-model:value="inputValue"
     class="date-picker-wrap"
     :disabled="inputReadonly"
-    :get-calendar-container="(triggerNode) => triggerNode.parentNode"
+    :get-calendar-container="(triggerNode:Node) => triggerNode.parentNode"
     :placeholder="inputReadonly ? '' : placeholder"
     :value-format="'YYYY年MM月DD日'"
     :format="'YYYY年MM月DD日'"
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import type { Ref, PropType } from 'vue';
-import moment, { Moment } from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 import { defineComponent, ref, unref, watch, computed, toRefs } from 'vue';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
@@ -69,14 +69,14 @@ export default defineComponent({
     );
 
     // 禁用时间
-    function disabledDate(currentDate: Moment) {
+    function disabledDate(currentDate: Dayjs) {
       if (!currentDate) return false;
 
       // 有结束时间
-      if (props.endDate) return moment(props.endDate, 'YYYY年MM月DD日').isBefore(currentDate);
+      if (props.endDate) return dayjs(props.endDate, 'YYYY年MM月DD日').isBefore(currentDate);
 
       // 有开始时间
-      if (props.startDate) return moment(props.startDate, 'YYYY年MM月DD日').isAfter(currentDate);
+      if (props.startDate) return dayjs(props.startDate, 'YYYY年MM月DD日').isAfter(currentDate);
 
       return false;
     }

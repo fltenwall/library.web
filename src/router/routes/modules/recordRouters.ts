@@ -18,7 +18,7 @@ const routers: AppRouteModule = {
     {
       path: 'login-record-list-page',
       name: 'login-record-list-page',
-      component: (): unknown => import('/@/views/pages/record-manage/login-record/list-page.vue'),
+      component: (): unknown => import('/@/views/pages/record-manage/login-record/index.vue'),
       meta: {
         title: '登录日志',
         auth: ['RECORDLOGIN:GET']
@@ -27,7 +27,7 @@ const routers: AppRouteModule = {
     {
       path: 'operate-record-list-page',
       name: 'operate-record-list-page',
-      component: (): unknown => import('/@/views/pages/record-manage/operate-record/list-page.vue'),
+      component: (): unknown => import('/@/views/pages/record-manage/operate-record/index.vue'),
       meta: {
         title: '操作日志',
         auth: ['RECORDOPERATOR:GET']
@@ -36,7 +36,7 @@ const routers: AppRouteModule = {
     {
       path: 'access-record-list-page',
       name: 'access-record-list-page',
-      component: (): unknown => import('/@/views/pages/record-manage/access-record/list-page.vue'),
+      component: (): unknown => import('/@/views/pages/record-manage/access-record/index.vue'),
       meta: {
         title: '访问日志',
         auth: ['RECORDACCESS:GET']

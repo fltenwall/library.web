@@ -1,12 +1,13 @@
 <template>
-  <div class="pb-4 pr-4 pl-4 module-manage">
-    <scrollbar class="bg-white br-2 default-shadow">
+  <div></div>
+  <!-- <div class="pb-4 pr-4 pl-4 module-manage">
+    <scrollbar class="bg-white default-shadow flex-shrink-0">
       <module-tree class="tree-menu" @on-select="handleSelect" />
     </scrollbar>
     <div class="flex-item pl-4 index-column">
-      <div class="bg-white br-2 p-4 default-shadow">
+      <div class="bg-white p-4 default-shadow">
         <div class="fw-b fs-4 pb-4">
-          {{ selectMenu.meta.title }}
+          {{ selectMenu!.meta!.title }}
         </div>
         <global-table
           bordered
@@ -15,23 +16,23 @@
           :row-key="'name'"
         />
       </div>
-      <module-visit :identifier="selectMenu.name" />
+      <module-visit :identifier="selectMenu!.name" />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 import type { FlatMenu } from '/@/router/types';
 import { defineComponent, ref } from 'vue';
-import { Scrollbar } from '/@/components/Scrollbar';
+// import { Scrollbar } from '/@/components/Scrollbar';
 import { getFlatMenus } from '/@/utils/helper/menu';
 import { PageEnum } from '/@/enums/pageEnum';
-import moduleTree from './module-tree.vue';
-import moduleVisit from './module-visit.vue';
+// import moduleTree from './module-tree.vue';
+// import moduleVisit from './module-visit.vue';
 import { tableColumns } from './index';
 
 export default defineComponent({
-  components: { moduleTree, Scrollbar, moduleVisit },
+  // components: { moduleTree, Scrollbar, moduleVisit },
   setup() {
     // 查找菜单
     const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name === key);
@@ -59,10 +60,11 @@ export default defineComponent({
 
   .tree-menu {
     flex: 1;
+    flex-shrink: 0;
     width: 280px;
     height: 0;
     padding: 16px 16px 16px 8px;
-    border-radius: 8px;
+    border-radius: var(--public-order-radius);
   }
 }
 </style>

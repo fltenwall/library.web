@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useInject as injectPageLayout } from '/@/components/PageLayout/useDepend';
 import { injectListPage } from '/@/lib/idata/data-list/methods/useDepend';
 
 export default defineComponent({
@@ -16,8 +17,14 @@ export default defineComponent({
   setup() {
     const listPage = injectListPage();
 
+    const pageLayout = injectPageLayout();
+
     // 回车时间
-    const handleEnterEvent = () => listPage.onFetchData();
+    const handleEnterEvent = () => {
+      listPage?.onFetchData?.();
+
+      pageLayout?.onSearchData?.();
+    };
 
     return { handleEnterEvent };
   }

@@ -1,10 +1,8 @@
 import { ref, Ref } from 'vue';
 
-export interface GetPagination {
-  page: number;
+export type SetPagination = (page?: number, size?: number) => void;
 
-  size: number;
-}
+export type GetPagination = () => { page: number; size: number };
 
 interface Pagination {
   // 当前页数
@@ -14,10 +12,10 @@ interface Pagination {
   pageSize: Ref<number>;
 
   // 设置
-  setPagination: (page: number) => void;
+  setPagination: SetPagination;
 
   // 获取
-  getPagination: () => GetPagination;
+  getPagination: GetPagination;
 }
 
 export function usePagination(page = 1, size = 10): Pagination {

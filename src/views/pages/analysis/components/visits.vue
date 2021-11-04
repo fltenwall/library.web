@@ -26,7 +26,7 @@ import { menuStore } from '/@/store/modules/menu';
 import { Chart } from '@antv/g2';
 import { message } from 'ant-design-vue';
 import service, { Visits } from '/@/api/analysis/visits';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export default defineComponent({
   setup() {
@@ -47,9 +47,9 @@ export default defineComponent({
     // 加载数据
     async function loadData() {
       try {
-        const newDate = moment().format('YYYY-MM-DD');
-        const startTime = moment().subtract(7, 'day').format('YYYY-MM-DD');
-        const endTime = moment().add(1, 'days').format('YYYY-MM-DD');
+        const newDate = dayjs().format('YYYY-MM-DD');
+        const startTime = dayjs().subtract(7, 'day').format('YYYY-MM-DD');
+        const endTime = dayjs().add(1, 'days').format('YYYY-MM-DD');
         const { data } = await service.fetchUserVisit({ startTime, endTime });
         visitData.value = data;
         newCount.value = data.visit?.find((el) => el.time === newDate)?.count;

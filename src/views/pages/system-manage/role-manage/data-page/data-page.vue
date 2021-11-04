@@ -114,6 +114,6 @@ export default defineComponent({
 <style lang="less" scoped>
 .tree-menu {
   width: 280px;
-  margin: 6px 0 16px 16px;
+  margin: 0 0 16px 16px;
 }
 </style>

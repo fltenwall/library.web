@@ -1,9 +1,8 @@
-import type { ColumnProps } from 'ant-design-vue/lib/table/interface';
 import type { PropType } from 'vue';
 
 export const tableProps = {
   columns: {
-    type: [Array] as PropType<ColumnProps[]>,
+    type: [Array] as PropType<TableColumn[]>,
     default: null
   },
   dataSource: {
@@ -29,6 +28,10 @@ export const tableProps = {
   pagination: {
     type: [Boolean, Object],
     default: false
+  },
+  bordered: {
+    type: Boolean,
+    default: false
   }
 };
 
@@ -48,10 +51,20 @@ export const tableListProps = {
   }
 };
 
-export interface TableColumn extends ColumnProps {
-  dataIndex: string;
+export interface TableColumn {
+  dataIndex: string[] | string;
 
-  // slots?: Indexable;
+  key?: string;
+
+  title: string;
+
+  width?: number;
+
+  align?: 'left' | 'right' | 'center';
+
+  ellipsis?: boolean | { showTitle?: boolean };
+
+  fixed?: boolean | string;
 }
 
 export interface Options {

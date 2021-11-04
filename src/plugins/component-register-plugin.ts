@@ -7,6 +7,7 @@ import PublicEditor from '/@/components/PublicEditor/index';
 import RoleSearchSelect from '/@/components/SearchSelect/RoleSelect.vue';
 import DictSelect from '/@/components/SearchSelect/DictSelect.vue';
 import ColorPicker from '/@/components/ColorPicker/index.vue';
+import PageLayout from '/@/components/PageLayout/index.vue';
 
 const modules = import.meta.globEager('../components/**.vue');
 
@@ -23,6 +24,7 @@ export default class ComponentRegisterPlugin {
     app.component('ColorPicker', ColorPicker);
     app.component('PublicEditor', PublicEditor);
     app.component('PublicHeader', PublicHeader);
+    app.component('PageLayout', PageLayout);
     app.component('RoleSearchSelect', RoleSearchSelect);
   }
 }

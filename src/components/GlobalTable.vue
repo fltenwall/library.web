@@ -1,7 +1,7 @@
 <template>
   <a-table
     class="global-table"
-    bordered
+    :bordered="bordered"
     :loading="loading"
     :row-key="rowKey"
     :columns="tableColumns"
@@ -10,8 +10,8 @@
     :scroll="scroll"
     :row-selection="rowSelection"
   >
-    <template v-for="item in Object.keys($slots)" #[item]="data">
-      <slot :name="item" v-bind="data" />
+    <template #bodyCell="data">
+      <slot name="bodyCell" v-bind="data" />
     </template>
   </a-table>
 </template>
@@ -42,24 +42,13 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-::v-deep(.ant-table-tbody) {
-  & > tr:first-of-type > td {
-    border-top: 1px solid #f0f0f0;
-  }
-}
-
 ::v-deep(.ant-table-thead) {
   & > tr > th {
-    font-weight: bold;
-    border-bottom-width: 0;
-  }
+    font-weight: 600;
 
-  & > tr:only-child > th:last-child {
-    border-right-color: #f0f0f0 !important;
+    &::before {
+      background-color: transparent !important;
+    }
   }
-}
-
-::v-deep(.ant-table-header) {
-  margin-bottom: -17px !important;
 }
 </style>

@@ -2,7 +2,7 @@ import { createVNode } from 'vue';
 import { message, Modal } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 
-export function useDeleteModal(callback: () => Promise<void>): void {
+export function useDeleteModal(callback?: () => Promise<void>): void {
   Modal.confirm({
     icon: createVNode(ExclamationCircleOutlined),
     title: '删除数据',
@@ -13,9 +13,9 @@ export function useDeleteModal(callback: () => Promise<void>): void {
     onOk() {
       return new Promise(async (resolve) => {
         try {
-          await callback();
+          await callback?.();
         } catch (err) {
-          message.error(`数据删除失败: ${err.msg}`);
+          message.error(`数据删除失败: ${(err as { msg: string }).msg}`);
         } finally {
           resolve(true);
         }

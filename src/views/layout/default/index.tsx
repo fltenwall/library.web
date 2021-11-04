@@ -4,7 +4,7 @@ import { Layout } from 'ant-design-vue';
 import LayoutHeader from './LayoutHeader';
 import LayoutSider from './LayoutSider';
 import LayoutContent from './LayoutContent';
-import LayoutTabs from './LayoutTabs';
+// import LayoutTabs from './LayoutTabs';
 
 import './index.less';
 
@@ -24,7 +24,7 @@ export default defineComponent({
                 {() => (
                   <>
                     <LayoutHeader />
-                    <LayoutTabs />
+                    {/* <LayoutTabs /> */}
                     <LayoutContent />
                   </>
                 )}

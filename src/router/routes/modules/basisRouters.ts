@@ -19,7 +19,7 @@ const routers: AppRouteModule = {
       path: 'date-manage-list-page',
       name: 'date-manage-list-page',
       component: (): unknown =>
-        import('/@/views/pages/basis-manage/date-manage/data-list/list-page.vue'),
+        import('/@/views/pages/basis-manage/date-manage/data-list/index.vue'),
       meta: {
         title: '日期管理'
       }
@@ -39,7 +39,7 @@ const routers: AppRouteModule = {
       path: 'dictionary-manage-list-page',
       name: 'dictionary-manage-list-page',
       component: (): unknown =>
-        import('/@/views/pages/basis-manage/dictionary-manage/data-list/list-page.vue'),
+        import('/@/views/pages/basis-manage/dictionary-manage/data-list/index.vue'),
       meta: {
         title: '字典管理'
       }
@@ -59,7 +59,7 @@ const routers: AppRouteModule = {
       path: 'problem-manage-list-page',
       name: 'problem-manage-list-page',
       component: (): unknown =>
-        import('/@/views/pages/basis-manage/problem-manage/data-list/list-page.vue'),
+        import('/@/views/pages/basis-manage/problem-manage/data-list/index.vue'),
       meta: {
         title: '问题管理'
       }
@@ -86,7 +86,7 @@ const routers: AppRouteModule = {
           path: 'images-manage',
           name: 'images-manage',
           component: (): unknown =>
-            import('/@/views/pages/basis-manage/material-manage/image-manage/list-page.vue'),
+            import('/@/views/pages/basis-manage/material-manage/image-manage/index.vue'),
           meta: {
             title: '图片管理'
           }

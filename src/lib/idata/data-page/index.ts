@@ -19,7 +19,7 @@ import { isUnDef } from '/@/utils/is';
 
 const useForm = Form.useForm;
 
-interface DataPageMix {
+interface DataPageMix<T> {
   // 页面底部方法
   onDataMethods: {
     // 重置触发
@@ -35,7 +35,7 @@ interface DataPageMix {
   pageInfo: PageInfo;
 
   // 检测消息
-  validateInfos: unknown;
+  validateInfos: T;
 
   // 检测
   validate: () => void;
@@ -44,7 +44,7 @@ interface DataPageMix {
   loading: Ref<boolean>;
 }
 
-interface DataPageMixParameter<T> {
+interface Parameter<T> {
   // 数据
   dataItem: T;
 
@@ -120,9 +120,7 @@ export function dataItemInit<T>(dataItem: T, rules: FromRules): void {
   });
 }
 
-export function dataPageMix<T extends { id?: number }>(
-  parameter: DataPageMixParameter<T>
-): DataPageMix {
+export function dataPageMix<T extends { id?: number }>(parameter: Parameter<T>): DataPageMix<T> {
   // 参数解构
   const { dataItem, rules, onServerMethods } = parameter;
 
@@ -173,7 +171,7 @@ export function dataPageMix<T extends { id?: number }>(
       await onServerMethods.onLoadDataById(parseInt(pageInfo.query.id!));
       setCacheData();
     } catch (err) {
-      useToast.error(err.msg);
+      useToast.error((err as { msg: string }).msg);
     }
   };
 
@@ -248,7 +246,7 @@ export function dataPageMix<T extends { id?: number }>(
       useToast.success('数据保存成功');
       setCacheData();
     } catch (err) {
-      useToast.error(err.msg);
+      useToast.error((err as { msg: string }).msg);
     } finally {
       loading.value = false;
     }
@@ -282,5 +280,5 @@ export function dataPageMix<T extends { id?: number }>(
     onSavePage
   };
 
-  return { onDataMethods, pageInfo, validate, validateInfos, loading };
+  return { onDataMethods, pageInfo, validate, validateInfos: validateInfos as T, loading };
 }

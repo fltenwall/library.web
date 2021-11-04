@@ -40,3 +40,5 @@ declare interface SystemConfig {
 declare const MixinConfig: SystemConfig;
 
 declare function MixinShowByAuth(auth: string) {};
+
+declare function MixinUseMoment(date: string, value?: string) {};

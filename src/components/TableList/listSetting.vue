@@ -34,11 +34,9 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { State, Options } from '/@/lib/props/TableList';
-import TooltipButton from './TooltipButton.vue';
 import { injectTable } from './useDepend';
 
 export default defineComponent({
-  components: { TooltipButton },
   setup() {
     // 获取向上传递方法和数据g
     const table = injectTable();

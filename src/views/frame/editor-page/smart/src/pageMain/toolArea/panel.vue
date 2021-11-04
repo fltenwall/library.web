@@ -15,7 +15,7 @@
     <!-- 默认工具列表 -->
     <template v-else>
       <div v-for="(names, key) in tools" :key="key">
-        <div class="panel-title">{{ pointConfigs.label[key] }}</div>
+        <div class="panel-title" @dragstart.prevent>{{ pointConfigs.label[key] }}</div>
         <div class="panel-content">
           <panel-box v-for="name in names" :key="name" :name="name" />
         </div>

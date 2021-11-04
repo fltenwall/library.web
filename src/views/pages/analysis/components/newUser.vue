@@ -23,7 +23,7 @@
 import { defineComponent, ref } from 'vue';
 import service, { NewUser } from '/@/api/analysis/newUser';
 import { message } from 'ant-design-vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export default defineComponent({
   setup() {
@@ -33,8 +33,8 @@ export default defineComponent({
 
     async function loadData() {
       try {
-        const startTime = moment().format('YYYY-MM-01');
-        const endTime = moment().add(1, 'days').format('YYYY-MM-DD');
+        const startTime = dayjs().format('YYYY-MM-01');
+        const endTime = dayjs().add(1, 'days').format('YYYY-MM-DD');
         const { data } = await service.fetchUserCount({ startTime, endTime });
         dataItem.value = data;
       } catch (err) {

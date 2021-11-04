@@ -1,6 +1,8 @@
 <template>
-  <div class="ui-draggable-offset" @mousedown="startMove($event, 'mouse')">
-    <slot />
+  <div class="ui-draggable-offset">
+    <div class="move-area-view" @mousedown="startMove($event, 'mouse')">
+      <slot />
+    </div>
     <div v-if="isSize" class="ew absolute size" @mousedown.prevent="startMove($event, 'ew')" />
     <div v-if="isSize" class="ns absolute size" @mousedown.prevent="startMove($event, 'ns')" />
     <div v-if="isSize" class="se absolute size" @mousedown.prevent="startMove($event, 'se')" />
@@ -108,6 +110,11 @@ export default defineComponent({
     height: 5px;
     border-right: 2px solid rgba(0, 0, 0, 0.4);
     border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .move-area-view {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

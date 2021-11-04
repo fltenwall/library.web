@@ -48,7 +48,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { dataPageMix } from '/@/lib/idata/data-page/';
-import { formRules, selectOption, selectUnitOption } from './data-page';
+import { formRules, selectOption } from './data-page';
 import service, { FormManage } from '/@/api/page-manage/form-page';
 import { useGo } from '/@/hooks/web/usePage';
 import { PageEnum } from '/@/enums/pageEnum';
@@ -101,7 +101,6 @@ export default defineComponent({
       dataItem,
       loading,
       selectOption,
-      selectUnitOption,
       validateInfos,
       onComposePage,
       ...onDataMethods

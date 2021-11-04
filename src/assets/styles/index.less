@@ -55,17 +55,25 @@
   }
 
   &-operation {
-    span:not(:last-of-type) {
-      margin: 0 10px 0 0;
-    }
-
     span {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 28px;
+      min-width: 62px;
+      padding: 0 10px 0;
       color: @selectBefore;
       cursor: pointer;
+      border-radius: 1px;
     }
 
     span:hover {
       color: @selectAfter;
+      background-color: rgb(242 243 245);
+    }
+
+    span:active {
+      background-color: rgb(229 230 235);
     }
 
     div[disabled='disabled'] {

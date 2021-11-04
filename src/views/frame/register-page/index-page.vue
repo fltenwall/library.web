@@ -8,7 +8,7 @@
             v-model:value="dataItem.username"
             placeholder="登录账户"
             :error-border="!!errorTip.username"
-            @on-input="handleDataContent('username')"
+            @on-input="handleDataContent('username', 'blur')"
           />
           <div class="error-tip">
             {{ errorTip.username }}

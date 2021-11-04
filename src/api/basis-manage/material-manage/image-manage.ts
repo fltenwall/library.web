@@ -9,8 +9,14 @@ export interface ImageManage {
   // 名称
   name?: string;
 
+  // 类型
+  type?: string;
+
   // 哈希
   hash?: string;
+
+  // 大小
+  size?: number;
 
   // 状态
   status?: boolean;
@@ -32,20 +38,28 @@ export interface ImageManage {
 }
 
 export interface Classify {
+  //  主键
   id?: string;
 
-  name?: string;
+  // 标题
+  title?: string;
+
+  // 创建时间
+  createTime?: string;
+
+  // 更新时间
+  updateTime?: string;
 }
 
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<ImageManage>;
+export type DataPager = PagerResponseData<Required<ImageManage>>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
-  static fecthClassifyList(query?: PagerQueryData): Promise<Result<Classify[]>> {
-    return request<Result<Classify[]>>({
+  static fecthClassifyList(query?: PagerQueryData): Promise<Result<Required<Classify>[]>> {
+    return request<Result<Required<Classify>[]>>({
       url: '/epi/material/image/classify',
       method: 'get',
       params: query
