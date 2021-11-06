@@ -18,9 +18,9 @@
           :option-filter-prop="'key'"
           :filter-option="handleFilterSelect"
         >
-          <a-select-option v-for="(value, key) in authorityList" :key="value" :value="key">
-            {{ value }}
-          </a-select-option>
+          <a-select-option v-for="(value, key) in authorityList" :key="value" :value="key">{{
+            value
+          }}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { message, Form } from 'ant-design-vue';
 import { defineComponent, reactive, ref } from 'vue';
-import { formRules, DataItem } from './module-add-modal';
+import { formRules, DataItem } from './moduleAddModal';
 import service, { ModuleManage } from '/@/api/system-manage/module-manage';
 import PinYin from 'pinyin';
 
@@ -77,7 +77,7 @@ export default defineComponent({
         await service.saveNewItem(params);
         resetFields();
       } catch (err) {
-        message.error(`模块权限添加失败: ${err.msg}`);
+        message.error((err as { msg: string }).msg);
       } finally {
         confirmLoading.value = false;
         emit('on-success');

@@ -5,32 +5,32 @@
       <div class="flex">
         <a-input placeholder="查询" />
         <a-button class="mr-3 ml-3">查询</a-button>
-        <upload :disabled="!!selected.id" @on-change="handleFileChange">
+        <upload :disabled="!selected.id" @on-change="handleFileChange">
           <a-button>上传</a-button>
         </upload>
       </div>
     </div>
+    <!-- 图片 -->
     <scrollbar class="image-main">
-      <div
-        v-for="(item, index) in dataSource"
-        :key="item.id"
-        class="image-item"
-        :style="{ marginRight: (index + 1) % colSize === 0 ? '' : '15px' }"
-      >
-        <a-image :src="`${MixinConfig.preview}${item.hash}`" class="preview-image" />
-        <div class="image-item-content">
-          <div class="index-hidden-newline">名称：{{ item.name }}</div>
-          <div>类型：{{ item.type }}</div>
-          <div>大小：{{ fileSize(item.size) }}</div>
-          <div class="index-middle flex-space-between">
-            <div>创建于：{{ useMoment(item.createTime, 'YYYY年MM月DD日') }}</div>
-            <div class="index-operation item-operation">
-              <span @click="handleimageItemEdit(item)">编辑</span>
-              <span>删除</span>
+      <div class="image-item-list">
+        <div v-for="item in dataSource" :key="item.id" class="image-item-card">
+          <a-image :src="`${MixinConfig.preview}${item.hash}`" class="preview-image" />
+          <div class="image-item-card-content">
+            <div class="index-hidden-newline">名称：{{ item.name }}</div>
+            <div>类型：{{ item.type }}</div>
+            <div>大小：{{ fileSize(item.size) }}</div>
+            <div class="index-middle flex-space-between">
+              <div>创建于：{{ useMoment(item.createTime, 'YYYY年MM月DD日') }}</div>
+              <div class="index-operation item-operation">
+                <span @click="handleimageItemEdit(item)">编辑</span>
+                <span @click="handleimageItemDelete(item)">删除</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- 空数据 -->
+      <a-empty v-if="!dataSource.length && !loading" />
     </scrollbar>
 
     <pagination-wrap class="pt-4" v-model:current="current" :total="totalElements" />
@@ -57,10 +57,11 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { ref, onMounted, computed, reactive, watch } from 'vue';
+import { ref, computed, reactive, watch } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { usePagination } from '/@/hooks/web/usePagination';
 import service, { Classify, ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
+import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
 import { useMoment } from '/@/utils/dateFormat';
 import { message, Form } from 'ant-design-vue';
 import { imageUploader } from './data-list';
@@ -81,14 +82,12 @@ const props = defineProps({
   }
 });
 const imageView = ref<HTMLNULL>(null);
-// 个数
-const colSize = ref<number>(0);
 // 数据源
 const dataSource = ref<Required<ImageManage>[]>([]);
 // 总数
 const totalElements = ref<number>(0);
 // 加载
-const loading = ref<boolean>(false);
+const loading = ref<boolean>(true);
 // 对话框是否显示
 const visible = ref<boolean>(false);
 // 保存加载
@@ -174,15 +173,22 @@ async function handleSaveItem() {
   }
 }
 
+// 处理删除图片
+function handleimageItemDelete(record: ImageManage) {
+  useDeleteModal(async () => {
+    try {
+      await service.deleteImageById(record.id!);
+      fetchDataFromServer();
+    } catch (err) {
+      message.error((err as { msg: string }).msg);
+    }
+  });
+}
+
 watch(
   () => props.selected.id,
   () => fetchDataFromServer()
 );
-
-// 初始化
-onMounted(() => {
-  colSize.value = ((imageView.value?.offsetWidth || 0) / 425) | 0;
-});
 
 fetchDataFromServer();
 </script>
@@ -209,7 +215,13 @@ fetchDataFromServer();
   height: 0;
 }
 
-.image-item {
+.image-item-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.image-item-card {
   display: inline-flex;
   width: 425px;
   height: 150px;
