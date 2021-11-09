@@ -2,7 +2,7 @@
 import type { Ref, CSSProperties } from 'vue';
 import { isNumber } from '/@/utils/is';
 
-export const elementOffset = (el: HTMLElement | null): { top: number; left: number } => {
+export const elementOffset = (el: HTMLNULL): { top: number; left: number } => {
   const offset = { top: 0, left: 0 };
   if (el === null) return offset;
   offset.top = el.offsetTop;

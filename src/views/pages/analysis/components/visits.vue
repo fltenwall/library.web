@@ -30,9 +30,9 @@ import dayjs from 'dayjs';
 
 export default defineComponent({
   setup() {
-    const wrap = ref<HTMLElement | null>(null);
+    const wrap = ref<HTMLNULL>(null);
 
-    const containerRef = ref<HTMLElement | null>(null);
+    const containerRef = ref<HTMLNULL>(null);
 
     const visitData = ref<Visits>({});
 

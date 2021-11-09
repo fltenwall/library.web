@@ -19,7 +19,7 @@ export default defineComponent({
     }
   },
   setup(props, { attrs }) {
-    const elRef = ref<HTMLElement | null>(null);
+    const elRef = ref<HTMLNULL>(null);
 
     const update = async () => {
       const el = unref(elRef);

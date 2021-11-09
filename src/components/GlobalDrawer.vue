@@ -32,7 +32,7 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const wrapRef = ref<HTMLElement | null>(null);
+    const wrapRef = ref<HTMLNULL>(null);
 
     const wrapStyle = reactive<CSSProperties>({});
 

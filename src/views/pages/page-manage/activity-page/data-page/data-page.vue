@@ -16,11 +16,12 @@
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="模式" v-bind="validateInfos.mode">
-              <select-wrap
-                v-model:value="dataItem.mode"
-                :options="modeSelectOption"
-                :readonly="MixinPageMode.edit === mode"
-              />
+              <select-wrap v-model:value="dataItem.state" :options="modeSelectOption" />
+            </a-form-item>
+          </a-col>
+          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+            <a-form-item label="页面布局" v-bind="validateInfos.mode">
+              <select-wrap v-model:value="dataItem.mode" :options="layoutSelectOption" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -57,19 +58,20 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { dataPageMix } from '/@/lib/idata/data-page/';
-import { formRules, stateSelectOption, modeSelectOption } from './data-page';
-import service, { FormManage } from '/@/api/page-manage/form-page';
+import { formRules, stateSelectOption, modeSelectOption, layoutSelectOption } from './data-page';
+import service, { ActivityManage } from '/@/api/page-manage/activity-page';
 import { useGo } from '/@/hooks/web/usePage';
 import { PageEnum } from '/@/enums/pageEnum';
 import { assign } from 'lodash-es';
 
 export default defineComponent({
   setup() {
-    const dataItem = reactive<FormManage>({ state: 1, mode: 1 });
+    const dataItem = reactive<ActivityManage>({ state: 1, mode: 1 });
     const rules = reactive(formRules);
     const onServerMethods = { onNewData, onSaveData, onLoadDataById };
     const parameter = { rules, dataItem, onServerMethods };
-    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<FormManage>(parameter);
+    const { pageInfo, onDataMethods, validateInfos, loading } =
+      dataPageMix<ActivityManage>(parameter);
     const { mode, readonly } = toRefs(pageInfo);
     // 页面跳转
     const go = useGo();
@@ -82,7 +84,7 @@ export default defineComponent({
     }
 
     // 保存数据
-    async function onSaveData(id: number, contrast: FormManage) {
+    async function onSaveData(id: number, contrast: ActivityManage) {
       const { data } = await service.updateItem(id, contrast);
       assign(dataItem, data);
       changeDataType();
@@ -111,6 +113,7 @@ export default defineComponent({
       loading,
       modeSelectOption,
       stateSelectOption,
+      layoutSelectOption,
       validateInfos,
       onComposePage,
       ...onDataMethods

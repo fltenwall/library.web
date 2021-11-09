@@ -28,6 +28,10 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
           // /@/xxxx  =>  src/xxx
           find: /^\/@\//,
           replacement: pathResolve('src') + '/'
+        },
+        {
+          find: /^\/@smart\//,
+          replacement: pathResolve('src/views/frame/editor-page/smart') + '/'
         }
       ]
     },

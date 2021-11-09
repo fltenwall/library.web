@@ -1,6 +1,7 @@
 <template>
   <div class="module-manage">
-    <div class="module-tree">
+    <!-- 菜单列表 -->
+    <scrollbar class="module-tree">
       <a-directory-tree
         :selected-keys="selectedKeys"
         :tree-data="menuItem"
@@ -8,8 +9,9 @@
         :field-names="{ key: 'name' }"
         @select="handleSelectMenu"
       />
-    </div>
+    </scrollbar>
 
+    <!-- 模块权限设置 -->
     <div class="module-visit">
       <div class="module-visit-header">
         <div class="pb-4 fs-5">模块权限设置</div>
@@ -18,23 +20,30 @@
           <div class="flex-item">模块唯一值：{{ selected?.name }}</div>
         </div>
       </div>
+      <!-- 操作 -->
       <div class="module-visit-main">
-        <div class="flex flex-end">
+        <div class="flex flex-end pb-4">
           <a-button @click="onClickNewItem">新增</a-button>
         </div>
-        <div class="flex">
-          <div v-for="item in dataSource" :key="item.id" class="module-auth-item">
-            <div>名称：{{ item.name }}</div>
-            <div class="mb-3 mt-3">
-              权限项：
-              <a-tag v-for="auth in item.authorities" :key="auth">{{ authorityList[auth] }}</a-tag>
-            </div>
-            <div class="index-operation flex flex-end">
-              <!-- <span>编辑</span> -->
-              <span @click="onDeleteAuth(item)">删除</span>
+        <scrollbar class="flex-item h-0">
+          <div class="module-auth-list">
+            <div v-for="item in dataSource" :key="item.id" class="module-auth-item">
+              <div>名称：{{ item.name }}</div>
+              <div class="mb-3 mt-3">
+                权限项：
+                <a-tag v-for="auth in item.authorities" :key="auth">{{
+                  authorityList[auth]
+                }}</a-tag>
+              </div>
+              <div class="index-operation flex flex-end">
+                <!-- <span>编辑</span> -->
+                <span @click="onDeleteAuth(item)">删除</span>
+              </div>
             </div>
           </div>
-        </div>
+        </scrollbar>
+
+        <pagination-wrap v-model:current="current" class="pt-4" :total="totalElements" />
 
         <module-add-modal
           v-model:visible="visible"
@@ -53,7 +62,9 @@ import { reactive, ref } from 'vue';
 import service, { ModuleManage, Authority } from '/@/api/system-manage/module-manage';
 import { getMenus, getFlatMenus } from '/@/utils/helper/menu';
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import { usePagination } from '/@/hooks/web/usePagination';
 import { queryRoleAuthority } from '/@/enums/roleEnum';
+import { Scrollbar } from '/@/components/Scrollbar';
 import moduleAddModal from './moduleAddModal.vue';
 import { PageEnum } from '/@/enums/pageEnum';
 import { isString } from '/@/utils/is';
@@ -78,7 +89,7 @@ const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name =
 // 选中的模块
 const selectedKeys = ref<string[]>([PageEnum.BASE_HOME]);
 // 选中的节点
-const selected = ref(findMenu('record-manage-access-record-list-page'));
+const selected = ref(findMenu(PageEnum.BASE_HOME));
 // 加载中
 const loading = ref<boolean>(false);
 // 数据
@@ -89,6 +100,10 @@ const visible = ref<boolean>(false);
 const authorityList = ref<Authority>({});
 // 新增数据
 const onClickNewItem = () => (visible.value = true);
+// 分页
+const { current } = usePagination();
+// 总数
+const totalElements = ref<number>(0);
 
 function initTreeData(source: TreeData[]): TreeData[] {
   return source.map(({ title, children, name, path }) => {
@@ -131,6 +146,7 @@ async function fetchDataFromServer() {
     const query = { identifier: selected.value?.name };
     const { data } = await service.fecthList(query);
     dataSource.value = dataParse(data.content);
+    totalElements.value = data.totalElements;
   } catch (err) {
     message.error((err as { msg: string }).msg);
   } finally {
@@ -185,20 +201,31 @@ fetchAuthFromServer();
   }
 
   &-main {
+    display: flex;
+    height: 0;
     padding: 16px;
     margin: 16px 0 0;
     background: #fff;
     flex: 1;
+    flex-direction: column;
   }
 }
 
+.module-auth-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .module-auth-item {
-  width: calc(33.333% - 20px);
+  flex-shrink: 0;
+  width: calc(33.333333% - 10.8px);
   padding: 10px;
+  margin: 0 0 16px;
   border: 1px solid #e5e6eb;
 
   &:nth-of-type(3n + 2) {
-    margin: 0 10px;
+    margin: 0 16px 16px;
   }
 }
 </style>

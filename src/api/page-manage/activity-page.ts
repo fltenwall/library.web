@@ -1,7 +1,7 @@
 import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
 import request from '/@/lib/http/axios/';
 
-export interface FormManage {
+export interface ActivityManage {
   //  主键
   id?: number;
 
@@ -14,11 +14,14 @@ export interface FormManage {
   // 状态
   state?: boolean | 1 | 0;
 
+  // 布局类型
+  layoutType?: 1 | 2;
+
   // 移动端
   mode?: 1 | 2;
 
   // 背景颜色
-  backgroundColor?: string;
+  bgColor?: string;
 
   // 描述
   description?: string;
@@ -39,39 +42,39 @@ export interface FormManage {
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<FormManage>;
+export type DataPager = PagerResponseData<ActivityManage>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
-      url: '/epi/form',
+      url: '/epi/activity',
       method: 'get',
       params: query
     });
   }
 
   // 保存数据到远程服务器
-  static saveNewItem(item: FormManage): Promise<Result<FormManage>> {
-    return request<Result<FormManage>>({
-      url: '/epi/form',
+  static saveNewItem(item: ActivityManage): Promise<Result<ActivityManage>> {
+    return request<Result<ActivityManage>>({
+      url: '/epi/activity',
       method: 'post',
       data: item
     });
   }
 
   // 通过ID取得数据
-  static getItemById(id: number): Promise<Result<FormManage>> {
-    return request<Result<FormManage>>({
-      url: '/epi/form/' + id,
+  static getItemById(id: number): Promise<Result<ActivityManage>> {
+    return request<Result<ActivityManage>>({
+      url: '/epi/activity/' + id,
       method: 'get'
     });
   }
 
   // 更新数据到远程服务器
-  static updateItem(id: number, item: FormManage): Promise<Result<FormManage>> {
-    return request<Result<FormManage>>({
-      url: '/epi/form/' + id,
+  static updateItem(id: number, item: ActivityManage): Promise<Result<ActivityManage>> {
+    return request<Result<ActivityManage>>({
+      url: '/epi/activity/' + id,
       method: 'put',
       data: item
     });
@@ -80,7 +83,7 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/epi/form/' + id,
+      url: '/epi/activity/' + id,
       method: 'delete'
     });
   }

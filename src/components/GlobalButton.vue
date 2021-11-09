@@ -26,7 +26,7 @@ export default defineComponent({
   },
   emits: ['on-click'],
   setup(props, { emit }) {
-    const button = ref<HTMLElement | null>(null);
+    const button = ref<HTMLNULL>(null);
     const ripples: HTMLElement[] = [];
 
     // 处理动画

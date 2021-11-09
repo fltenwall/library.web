@@ -40,6 +40,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding-top: 16px;
 
   .content {
     flex: 1;

@@ -32,7 +32,7 @@ export default defineComponent({
     const sizeWidth = ref<string>('0');
     const sizeHeight = ref<string>('0');
     const wrap = ref<Element | null>(null);
-    const resize = ref<HTMLElement | null>(null);
+    const resize = ref<HTMLNULL>(null);
 
     watch(
       () => props.scrollTop,

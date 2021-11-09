@@ -21,22 +21,30 @@
       placeholder="密码"
       @on-enter="onEnter"
     />
-    <span class="login-account-change-link" @click="onChange"> 短信验证码登录 </span>
+    <span class="login-account-change-link" @click="onChange">短信验证码登录</span>
     <global-button
       ref="buttonInstance"
       class="login-account-button"
       :size="1"
       :disabled="!(!!formData.account && !!formData.password)"
       @on-click="onButtonClick"
+      >登 录</global-button
     >
-      登 录
-    </global-button>
     <div class="login-account-link">
-      <router-link :to="{ name: PageEnum.BASE_REGISTER }"> 注册 </router-link>
+      <router-link :to="{ name: PageEnum.BASE_REGISTER }">注册</router-link>
       <a-divider type="vertical" />
-      <router-link :to="{ name: 'reset-password' }"> 忘记密码 </router-link>
+      <router-link :to="{ name: 'reset-password' }">忘记密码</router-link>
       <a-divider type="vertical" />
-      <router-link :to="{ name: 'help' }"> 帮助中心 </router-link>
+      <router-link :to="{ name: 'help' }">帮助中心</router-link>
+    </div>
+
+    <div class="login-sign-in-way">
+      <a :href="PageEnum.GITEE_LOGIN_LINK">
+        <icon icon="simple-icons:gitee" />
+      </a>
+      <a href="javascript:void(0)">
+        <icon icon="simple-icons:github" />
+      </a>
     </div>
   </div>
 </template>
@@ -79,7 +87,7 @@ export default defineComponent({
         emit('on-success', userInfo);
       } catch (err) {
         error.is = true;
-        error.msg = err.msg;
+        error.msg = (err as { msg: string }).msg;
         buttonInstance.value?.stopAnimation();
       } finally {
         loading.value = false;
@@ -130,6 +138,23 @@ export default defineComponent({
 
   &-button {
     margin: 32px 0 0;
+  }
+}
+
+.login-sign-in-way {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0;
+
+  a {
+    margin: 0 20px;
+    font-size: 25px;
+    color: #888;
+    cursor: pointer;
+
+    &:hover {
+      color: #0960bd;
+    }
   }
 }
 </style>

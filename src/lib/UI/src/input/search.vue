@@ -71,7 +71,7 @@ export default defineComponent({
     // 按下方向键下标
     const selectIndex = ref<number>(-1);
     // 输入框焦点
-    const inputInstance = ref<HTMLElement | null>(null);
+    const inputInstance = ref<HTMLNULL>(null);
     // 获取焦点显示阴影
     const queryBoxFoucs = ref<boolean>(false);
     // 处理输入

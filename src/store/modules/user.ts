@@ -2,6 +2,7 @@ import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule, Action } from 'vuex-module-decorators';
 import Service, { UserInfo, LoginParams, Security, CSRF } from '/@/api/security';
 import { isNull } from '/@/utils/is';
+import { getCurRouteParam } from '/@/utils/route';
 
 const NAME = 'user';
 
@@ -69,7 +70,10 @@ export default class User extends VuexModule {
   async getAccountInfoAction(): Promise<Security> {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data: accountInfo } = await Service.getAccountInfo();
+        // 查询当前 code, 如果有那么是第三方登录
+        const code = getCurRouteParam('code');
+
+        const { data: accountInfo } = await Service.getAccountInfo({ code });
         const { user, _csrf } = accountInfo;
         this.commitUserInfoState(user);
         this.commitTokenState(_csrf);

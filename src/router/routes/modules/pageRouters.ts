@@ -7,7 +7,7 @@ const routers: AppRouteModule = {
     path: 'page-manage',
     name: 'page-manage',
     component: PAGE_LAYOUT_COMPONENT,
-    // redirect: { name: 'book-category-list-page' },
+    redirect: { name: 'form-page-list-page' },
     meta: {
       title: '智能页面',
       icon: 'ant-design:file-text-outlined'
@@ -30,6 +30,26 @@ const routers: AppRouteModule = {
         import('/@/views/pages/page-manage/form-page/data-page/data-page.vue'),
       meta: {
         title: '表单页面详情',
+        hideInMenu: true,
+        ignoreTabKeepAlive: true
+      }
+    },
+    {
+      path: 'activity-page-list-page',
+      name: 'activity-page-list-page',
+      component: (): unknown =>
+        import('/@/views/pages/page-manage/activity-page/data-list/index.vue'),
+      meta: {
+        title: '活动页面'
+      }
+    },
+    {
+      path: 'activity-page-data-page',
+      name: 'activity-page-data-page',
+      component: (): unknown =>
+        import('/@/views/pages/page-manage/activity-page/data-page/data-page.vue'),
+      meta: {
+        title: '活动页面详情',
         hideInMenu: true,
         ignoreTabKeepAlive: true
       }

@@ -14,7 +14,7 @@ module.exports = defineConfig({
     sourceType: 'module',
     jsxPragma: 'React',
     ecmaFeatures: {
-      jsx: trueyarn
+      jsx: true
     }
   },
   extends: [

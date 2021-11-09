@@ -20,14 +20,14 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '/@/lib/props/TableList';
-import service, { FormManage } from '/@/api/page-manage/form-page';
+import service, { ActivityManage } from '/@/api/page-manage/activity-page';
 import { SearchOptions } from '/@/components/PageLayout/SearchLayout/interface';
 import { PagerQueryData } from '/@/lib/http/axios/types';
 import { useFromatlll } from '/@/utils/dateFormat';
 import { PageEnum } from '/@/enums/pageEnum';
 import { useGo } from '/@/hooks/web/usePage';
 
-const DATA_PAGE_NAME = 'page-manage-form-page-data-page';
+const DATA_PAGE_NAME = 'page-manage-activity-page-data-page';
 
 const go = useGo();
 
@@ -54,9 +54,9 @@ async function deleteDataFromServer(id: number) {
 }
 
 // 处理操作点击
-function handleClickAction(key: string, record: Required<FormManage>) {
+function handleClickAction(key: string, record: Required<ActivityManage>) {
   if (key === 'compose') {
-    go({ name: PageEnum.EDITOR_FORM, params: { id: record.id } });
+    go({ name: PageEnum.EDITOR_ACTIVITY, params: { id: record.id } });
   }
 }
 

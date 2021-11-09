@@ -25,9 +25,9 @@ import { Chart } from '@antv/g2';
 
 export default defineComponent({
   setup() {
-    const wrap = ref<HTMLElement | null>(null);
+    const wrap = ref<HTMLNULL>(null);
 
-    const containerRef = ref<HTMLElement | null>(null);
+    const containerRef = ref<HTMLNULL>(null);
 
     const data = [
       { time: '2020-02-27', count: 30 },

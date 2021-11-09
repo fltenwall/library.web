@@ -80,7 +80,7 @@ export default defineComponent({
     // table 滚动条高度
     const scroll = reactive<{ y?: number | true; x?: number | true }>({ x: true });
     // 标签
-    const tableRef = ref<HTMLElement | null>(null);
+    const tableRef = ref<HTMLNULL>(null);
     // 视图大小
     let browserSize: { width?: number; height?: number } = {};
     // 偏移量

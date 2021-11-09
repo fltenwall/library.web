@@ -10,9 +10,7 @@
             :error-border="!!errorTip.username"
             @on-input="handleDataContent('username', 'blur')"
           />
-          <div class="error-tip">
-            {{ errorTip.username }}
-          </div>
+          <div class="error-tip">{{ errorTip.username }}</div>
           <global-input
             v-show="content.mode"
             v-model:value="dataItem.email"
@@ -21,9 +19,7 @@
             @on-input="handleDataContent('email', 'input')"
             @on-blur="handleDataContent('email', 'blur')"
           />
-          <div v-show="content.mode" class="error-tip">
-            {{ errorTip.email }}
-          </div>
+          <div v-show="content.mode" class="error-tip">{{ errorTip.email }}</div>
           <global-input
             v-show="!content.mode"
             v-model:value="dataItem.mobile"
@@ -33,9 +29,7 @@
             @on-input="handleDataContent('mobile', 'input')"
             @on-blur="handleDataContent('mobile', 'blur')"
           />
-          <div v-show="!content.mode" class="error-tip">
-            {{ errorTip.mobile }}
-          </div>
+          <div v-show="!content.mode" class="error-tip">{{ errorTip.mobile }}</div>
           <div class="button" @click="onChangeMode">
             使用我的{{ content.mode ? '手机号码' : '邮件地址' }}注册
           </div>
@@ -47,9 +41,7 @@
             @on-input="handleDataContent('password', 'input')"
             @on-blur="handleDataContent('password', 'blur')"
           />
-          <div class="error-tip">
-            {{ errorTip.password }}
-          </div>
+          <div class="error-tip">{{ errorTip.password }}</div>
           <global-input
             v-model:value="dataItem.repeat"
             placeholder="确认密码"
@@ -58,20 +50,17 @@
             @on-input="handleDataContent('repeat', 'input')"
             @on-blur="handleDataContent('repeat', 'blur')"
           />
-          <div class="error-tip">
-            {{ errorTip.repeat }}
-          </div>
-          <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }">
-            登录现有帐号
-          </router-link>
+          <div class="error-tip">{{ errorTip.repeat }}</div>
+          <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }"
+            >登录现有帐号</router-link
+          >
           <global-button
             ref="buttonInstance"
             :size="1"
             :disabled="disabled"
             @on-click="onButtonClick"
+            >注 册</global-button
           >
-            注 册
-          </global-button>
         </div>
         <div class="pt-15 index-middle flex-item flex-column">
           <img :src="accountImage" class="account-image" />
@@ -157,14 +146,17 @@ export default defineComponent({
         // 注册成功跳转登录页面
         go({ name: PageEnum.BASE_LOGIN });
       } catch (err) {
-        if (err.code === -1) {
-          errorTip.username = err.msg;
-        } else if (err.code === -2) {
-          errorTip.email = err.msg;
-        } else if (err.code === -3) {
-          errorTip.mobile = err.msg;
+        const msg = (err as { msg: string }).msg;
+        const code = (err as { code: number }).code;
+
+        if (code === -1) {
+          errorTip.username = msg;
+        } else if (code === -2) {
+          errorTip.email = msg;
+        } else if (code === -3) {
+          errorTip.mobile = msg;
         }
-        useToast.error(`注册失败：${err.msg}`);
+        useToast.error(`注册失败：${msg}`);
       } finally {
         buttonInstance.value?.stopAnimation();
       }

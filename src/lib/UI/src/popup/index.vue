@@ -19,9 +19,9 @@ import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
 import Popper from './popper';
 import propsOptions from './props';
 
-const container = ref<HTMLElement | null>(null);
+const container = ref<HTMLNULL>(null);
 
-const popper = ref<HTMLElement | null>(null);
+const popper = ref<HTMLNULL>(null);
 
 const props = defineProps(propsOptions);
 

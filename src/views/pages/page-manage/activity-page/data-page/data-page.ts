@@ -20,6 +20,11 @@ export const modeSelectOption = [
   { value: 2, label: 'PC端' }
 ];
 
+export const layoutSelectOption = [
+  { value: 1, label: '自由布局' },
+  { value: 2, label: '弹性布局' }
+];
+
 export const selectUnitOption = [
   { value: 1, label: '年' },
   { value: 2, label: '季' },
