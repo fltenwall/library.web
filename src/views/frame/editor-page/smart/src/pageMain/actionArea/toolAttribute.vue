@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-space-between index-middle">
     <div>唯一标识</div>
-    <ui-input v-model:value="dataItem.uuid" readonly prop="zIndex" type="number" class="w-200" />
+    <ui-input v-model:value="dataItem.id" readonly prop="zIndex" type="number" class="w-200" />
   </div>
   <a-divider />
   <div class="flex">

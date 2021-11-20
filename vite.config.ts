@@ -30,8 +30,8 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
           replacement: pathResolve('src') + '/'
         },
         {
-          find: /^\/@smart\//,
-          replacement: pathResolve('src/views/frame/editor-page/smart') + '/'
+          find: /^\/@components\//,
+          replacement: pathResolve('src/components/') + '/'
         }
       ]
     },

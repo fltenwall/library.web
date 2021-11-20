@@ -22,11 +22,7 @@
   <a-divider />
   <div class="default-point-item">
     <div class="c333">内间距</div>
-    <a-radio-group
-      :value="pageOptions.margin"
-      class="flex-end flex"
-      @change="handleChange($event, 'margin')"
-    >
+    <a-radio-group :value="pageOptions.margin" class="flex-end flex" @change="handleChange($event, 'margin')">
       <a-radio-button :value="0">无间距</a-radio-button>
       <a-radio-button :value="10">10px</a-radio-button>
       <a-radio-button :value="20">20px</a-radio-button>
@@ -35,12 +31,15 @@
   <a-divider />
   <div class="default-point-item">
     <div class="c333">背景颜色</div>
-    <color-picker :value="pageOptions.bgColor" @change="handleUpdateData($event, 'bgColor')" />
+    <color-picker
+      :value="pageOptions.backgroundColor"
+      @change="handleUpdateData($event, 'backgroundColor')"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormManage } from '/@/api/page-manage/form-page';
+import type { ActivityManage } from '/@/api/page-manage/activity-page';
 import { inject, computed } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
 import { pointStore } from '/@/store/modules/point';
@@ -54,12 +53,12 @@ const viewSize = computed(() => getViewSize());
 const pageOptions = computed(() => pointStore.getPageOptionsState);
 
 // 处理布局切换
-function handleChange(e: Event, key: keyof FormManage) {
+function handleChange(e: Event, key: keyof ActivityManage) {
   const value = (e.target as unknown as { value: number }).value;
   handleUpdateData(value, key);
 }
 // 处理数据内容发生变化
-function handleUpdateData(value: FormManage[keyof FormManage], key: keyof FormManage) {
+function handleUpdateData(value: ActivityManage[keyof ActivityManage], key: keyof ActivityManage) {
   pointStore.commitUpdatePageOptionsState({ key, value });
 }
 </script>

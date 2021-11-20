@@ -40,12 +40,7 @@
       </template>
     </global-table>
 
-    <pagination-wrap
-      class="p-4"
-      v-model:current="current"
-      :total="totalElements"
-      @change="onPageChange"
-    />
+    <pagination-wrap v-model:current="current" class="p-4" :total="totalElements" @change="onPageChange" />
   </div>
 </template>
 

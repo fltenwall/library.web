@@ -1,10 +1,7 @@
 <template>
   <div ref="wrapRef" class="global-drawer-wrap" :style="wrapStyle">
     <slot />
-    <div
-      :class="['hide-panel index-center-middle', `hide-panel-${placement}`]"
-      @click="handleSwitchHide"
-    >
+    <div :class="['hide-panel index-center-middle', `hide-panel-${placement}`]" @click="handleSwitchHide">
       <icon
         color="#A1A6B3"
         class="hide-panel-icon"
@@ -28,6 +25,10 @@ export default defineComponent({
     value: {
       type: Boolean,
       default: true
+    },
+    width: {
+      type: Number,
+      default: 300
     }
   },
   emits: ['update:value'],
@@ -53,9 +54,11 @@ export default defineComponent({
         visible.value = val;
         // 面板切换
         if (visible.value) {
-          wrapStyle.transform = `translateX(${stateMap[props.placement]}100%)`;
-        } else {
           wrapStyle.transform = '';
+          wrapStyle.width = `${props.width}px`;
+        } else {
+          wrapStyle.transform = `translateX(${stateMap[props.placement]}100%)`;
+          wrapStyle.width = '0';
         }
       },
       { immediate: true }
@@ -69,8 +72,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .global-drawer {
   &-wrap {
-    position: absolute;
-    width: 100%;
+    position: relative;
     min-height: 100%;
     background: #fff;
     box-shadow: 0 2px 8px 0 #dbdbdb99;

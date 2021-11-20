@@ -20,7 +20,7 @@ const props = defineProps({
     type: Object as PropType<Pick<PointInfo, 'x' | 'y' | 'width' | 'height'>>,
     default: () => ({})
   },
-  uuid: {
+  id: {
     type: String,
     default: ''
   },
@@ -47,10 +47,10 @@ function handleShow() {
   // 隐藏线条
   handleHide();
   // 不能为空
-  if (!props.uuid) return;
+  if (!props.id) return;
 
   pointData.value.forEach((el) => {
-    if (el.uuid === props.uuid) return;
+    if (el.id === props.id) return;
     const { height, width, x, y } = el;
 
     if (isNearly(x!, current.x!)) {
@@ -125,9 +125,9 @@ function handelShowStyle(line: 'x' | 'y', move: number, vlaue: number) {
   lineStatus.value[line].display = 'inline';
   lineStatus.value[line].transform = `translate${state[line]}(${move}px)`;
   if (line === 'y') {
-    emit('on-suck', { uuid: props.uuid, x: vlaue, y: move });
+    emit('on-suck', { id: props.id, x: vlaue, y: move });
   } else {
-    emit('on-suck', { uuid: props.uuid, y: vlaue, x: move });
+    emit('on-suck', { id: props.id, y: vlaue, x: move });
   }
 }
 

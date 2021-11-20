@@ -35,5 +35,5 @@ export enum PageEnum {
   EDITOR_ACTIVITY = 'editor-activity',
 
   // gitee 登录地址
-  GITEE_LOGIN_LINK = 'https://gitee.com/oauth/authorize?client_id=011a0c0dc54703cb3eb5cb91019ce8f7182c04663c298758ad0f4a7365d783af&redirect_uri=https://library.tibis.top/login&response_type=code&state=1'
+  GITEE_LOGIN_LINK = ''
 }

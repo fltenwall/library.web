@@ -20,20 +20,14 @@
   <div class="flex search-page-content">
     <div class="search-page-content-left">
       <div v-if="searchList.length">
-        <div class="header">
-          找到约 {{ pageInfo.total }} 条结果 （用时 {{ pageInfo.responseTime }} 秒）
-        </div>
+        <div class="header">找到约 {{ pageInfo.total }} 条结果 （用时 {{ pageInfo.responseTime }} 秒）</div>
         <search-list :data-source="searchList" :search-value="pageInfo.query" />
       </div>
       <search-empty v-else-if="!loading">
         {{ pageInfo.query }}
       </search-empty>
       <div v-if="pageInfo.total" class="data-loading index-center">
-        <a-pagination
-          :current="pageInfo.page"
-          :total="pageInfo.total"
-          @change="handelepageChange"
-        />
+        <a-pagination :current="pageInfo.page" :total="pageInfo.total" @change="handelepageChange" />
       </div>
     </div>
     <div class="search-page-content-right">
@@ -80,30 +74,28 @@ export default defineComponent({
 
     // 向服务器请求数据
     async function fetchSearchListFromServer() {
-      try {
-        const query = queryData();
-        loading.value = true;
-        const sendDate = new Date().getTime();
-
-        console.log(query);
-        const data = { content: [], totalElements: 10 };
-
-        // const { data } = await service.fecthList(query)
-        const receiveDate = new Date().getTime();
-        searchList.value = data.content;
-        pageInfo.total = data.totalElements;
-        pageInfo.responseTime = (receiveDate - sendDate) / 1000;
-      } catch (err) {
-        message.error(err.msg);
-      } finally {
-        loading.value = false;
-      }
+      // try {
+      //   const query = queryData();
+      //   loading.value = true;
+      //   const sendDate = new Date().getTime();
+      //   console.log(query);
+      //   const data = { content: [], totalElements: 10 };
+      //   // const { data } = await service.fecthList(query)
+      //   const receiveDate = new Date().getTime();
+      //   searchList.value = data.content;
+      //   pageInfo.total = data.totalElements;
+      //   pageInfo.responseTime = (receiveDate - sendDate) / 1000;
+      // } catch (err) {
+      //   message.error(err.msg);
+      // } finally {
+      //   loading.value = false;
+      // }
     }
 
     // 请求热搜词
     async function fetchHotListFromServer() {
-      const { data } = await service.fecthHotList();
-      HotList.value = data;
+      // const { data } = await service.fecthHotList();
+      // HotList.value = data;
     }
 
     // 获取搜索数据

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Cover } from '../../../../utils/usePointPos';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
-import { Ref, computed, unref, onMounted, onBeforeUnmount, inject } from 'vue';
+import { Ref, computed, unref, inject } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { isNumber, isObject } from '/@/utils/is';
 import usePointPos from '../../../../utils/usePointPos';
 
 interface Store {
-  uuid: string;
+  id: string;
 
   key: keyof PointInfo;
 
@@ -27,19 +27,19 @@ interface LimitRules {
 }
 
 // 处理 vuex 使用重载
-export function handleStore(type: 'd', { uuid }: { uuid: string }): void;
+export function handleStore(type: 'd', { id }: { id: string }): void;
 
-export function handleStore(type: 'u', { uuid, key, value }: Store): void;
+export function handleStore(type: 'u', { id, key, value }: Store): void;
 
-export function handleStore(type: string, { uuid, key, value }: Store): void {
+export function handleStore(type: string, { id, key, value }: Store): void {
   const mapState = {
     u: () => {
       // 更新
-      pointStore.commitUpdatePointData({ uuid, key, value: value as never });
+      pointStore.commitUpdatePointData({ id, key, value: value as never });
     },
     d: () => {
       // 删除
-      pointStore.commitDeletePointData({ uuid });
+      pointStore.commitDeletePointData({ id });
     }
   };
 
@@ -58,11 +58,12 @@ export function limitRules(): LimitRules {
   const isElasticLayout = computed(() => unref(pageOptions).layoutType === 2);
 
   // 处理限制 宽高
-  function limitSize(pos: { y?: number; x?: number }, record: BaseSchema) {
+  function limitSize(pos: { y?: number; x?: number }, record: BaseSchema): BaseSchema {
     const { height: CH, width: CW } = getViewSize();
     const x = record.x;
     const y = record.y;
-    const uuid = record.uuid;
+    const id = record.id;
+    const name = record.name;
     let width = record.width;
     let height = record.height;
     if (isNumber(pos.y)) {
@@ -71,7 +72,7 @@ export function limitRules(): LimitRules {
     if (isNumber(pos.x)) {
       width = x + width + pos.x > CW ? CW - x : width + pos.x;
     }
-    const layout = { x, y, height, width, uuid };
+    const layout = { x, y, height, width, id, name };
 
     // 弹性布局
     unref(isElasticLayout) && (layout.y = elasticLayout(layout, layout, CW));
@@ -82,13 +83,14 @@ export function limitRules(): LimitRules {
   // 位置信息处理
   function limitPosition(pos: { x: number; y: number }, record: BaseSchema): Position {
     const { height: CH, width: CW } = getViewSize();
-    const uuid = record.uuid;
+    const id = record.id;
+    const name = record.name;
     const width = record.width;
     const height = record.height;
-    const move = { x: pos.x + record.x, y: pos.y + record.y, width, height, uuid };
+    const move = { x: pos.x + record.x, y: pos.y + record.y, width, height, id, name };
     const x = move.x > CW - width! ? CW - width! : move.x <= 0 ? 0 : move.x;
     const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y;
-    const layout = { x, y, width, height, uuid };
+    const layout = { x, y, width, height, id, name };
     // 弹性布局
     unref(isElasticLayout) && (layout.y = elasticLayout(move, layout, CW));
 
@@ -112,7 +114,7 @@ export function limitRules(): LimitRules {
       return move;
     };
 
-    const offset = usePointPos({ type: 'custom', schema: move, uuids: [layout.uuid], cb });
+    const offset = usePointPos({ type: 'custom', schema: move, ids: [layout.id], cb });
 
     return offset.y;
   }
@@ -121,20 +123,12 @@ export function limitRules(): LimitRules {
 }
 
 // 视图发送变化
-export function viewResize(panelRef: Ref<HTMLElement | null>): void {
+export function viewResize(panelRef: Ref<HTMLNULL>): void {
   const { setViewSize } = inject('viewSize') as {
-    setViewSize: (width: number, height: number) => void;
+    setViewSize: (panelRef: Ref<HTMLNULL>) => void;
   };
 
-  const resizeObserver = new ResizeObserver(() => {
-    const { clientHeight, clientWidth } = panelRef.value!;
-    // 传递数据
-    setViewSize(clientWidth, clientHeight);
-  });
-  // 开始
-  onMounted(() => resizeObserver.observe(panelRef.value!));
-  // 结束
-  onBeforeUnmount(() => resizeObserver.unobserve(panelRef.value!));
+  setViewSize(panelRef);
 }
 
 // 修改全部组件位置
@@ -154,27 +148,27 @@ export function pointDataModify(layout?: BaseSchema): void {
   // 当前移动位置
   const cover: Cover = {};
   if (isObject(layout)) {
-    cover[layout.uuid] = layout;
+    cover[layout.id] = layout;
   }
   // 遍历所有组件
   for (const schema of unref(pointData)) {
-    if (layout?.uuid === schema.uuid) continue;
+    if (layout?.id === schema.id) continue;
 
-    const uuids = [schema.uuid];
+    const ids = [schema.id];
     // 计算后的位置
-    const pos = usePointPos({ type: 'top', schema, uuids, cover });
+    const pos = usePointPos({ type: 'top', schema, ids, cover });
     // 数据不一样再更新
     if (pos.x !== schema.x || pos.y !== schema.y) {
-      updatePointStyle(pos.x, pos.y, schema.uuid);
+      updatePointStyle(pos.x, pos.y, schema.id);
     }
   }
 }
 
 // 样式更新
-function updatePointStyle(x: number, y: number, uuid: string): void {
-  pointStore.commitUpdatePointData({ uuid, key: 'x', value: x as never });
-  pointStore.commitUpdatePointData({ uuid, key: 'y', value: y as never });
-  pointStore.commitUpdatePointStyle({ uuid, key: 'transform', value: `translate(${x}px,${y}px)` });
+function updatePointStyle(x: number, y: number, id: string): void {
+  pointStore.commitUpdatePointData({ id, key: 'x', value: x as never });
+  pointStore.commitUpdatePointData({ id, key: 'y', value: y as never });
+  pointStore.commitUpdatePointStyle({ id, key: 'transform', value: `translate(${x}px,${y}px)` });
 }
 
 // 区间内最高值
@@ -184,8 +178,8 @@ export function rangeHighest(cover?: Cover): number {
   const pointData = pointStore.getPointDataState;
 
   for (const el of pointData) {
-    const y = cover?.[el.uuid]?.y || el.y;
-    const height = cover?.[el.uuid]?.height || el.height;
+    const y = cover?.[el.id]?.y || el.y;
+    const height = cover?.[el.id]?.height || el.height;
 
     highest = y + height > highest ? y + height : highest;
   }

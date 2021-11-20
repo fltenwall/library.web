@@ -8,7 +8,7 @@ export interface DataItem {
   // 状态
   state?: 'start' | 'end' | 'move';
   // 移动中 元素
-  uuid?: string;
+  id?: string;
   // 位置
   pos: {
     // 布局位置

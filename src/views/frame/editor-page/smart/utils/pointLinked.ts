@@ -22,9 +22,9 @@ export default function (): UseLinked {
   // 拖拽数据信息
   const pointData = computed(() => pointStore.getPointDataState);
   // 选中数据
-  const pointUUID = computed({
-    set: (uuid) => pointStore.commitUpdatePointUUIDState({ uuid }),
-    get: () => pointStore.getPointUUIDState
+  const pointid = computed({
+    set: (id) => pointStore.commitUpdatePointidState({ id }),
+    get: () => pointStore.getPointidState
   });
   // 内部更新不触发
   const isValueUpdateFromInner = ref<boolean>(false);
@@ -36,7 +36,7 @@ export default function (): UseLinked {
       if (unref(isValueUpdateFromInner)) {
         isValueUpdateFromInner.value = false;
       } else {
-        linked.add({ data: val, select: unref(pointUUID) });
+        linked.add({ data: val, select: unref(pointid) });
         undateState();
       }
     },
@@ -86,13 +86,13 @@ export default function (): UseLinked {
 
   // 更新样式
   function updateStyle(select: string) {
-    pointUUID.value = select;
+    pointid.value = select;
     unref(pointData).forEach((el) => {
-      const uuid = el.uuid!;
-      pointStore.commitUpdatePointStyle({ uuid, key: 'width', value: `${el.width}px` });
-      pointStore.commitUpdatePointStyle({ uuid, key: 'height', value: `${el.height}px` });
+      const id = el.id!;
+      pointStore.commitUpdatePointStyle({ id, key: 'width', value: `${el.width}px` });
+      pointStore.commitUpdatePointStyle({ id, key: 'height', value: `${el.height}px` });
       pointStore.commitUpdatePointStyle({
-        uuid,
+        id,
         key: 'transform',
         value: `translate(${el.x}px,${el.y}px)`
       });

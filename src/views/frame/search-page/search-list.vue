@@ -20,10 +20,7 @@
         </div>
         <div class="main-box">
           <span class="box-title">描述</span>
-          <span
-            class="box-content"
-            v-html="highlight(item.description || '没有找到任何描述信息')"
-          />
+          <span class="box-content" v-html="highlight(item.description || '没有找到任何描述信息')" />
         </div>
       </div>
     </div>

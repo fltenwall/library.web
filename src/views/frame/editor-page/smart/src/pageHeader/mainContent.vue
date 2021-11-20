@@ -18,7 +18,7 @@
 import { computed, ref } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 
-const inputRef = ref<HTMLElement | null>(null);
+const inputRef = ref<HTMLNULL>(null);
 //
 const inputState = ref<boolean>(false);
 //

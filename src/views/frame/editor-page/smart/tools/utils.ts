@@ -5,10 +5,10 @@ import { pointStore } from '/@/store/modules/point';
 
 type Trigger = 'width' | 'height' | 'x' | 'y';
 
-export function queryPoint(uuid: string): PointInfo | undefined {
+export function queryPoint(id: string): PointInfo | undefined {
   const pointData = computed(() => pointStore.getPointDataState);
 
-  return unref(pointData).find((el) => el.uuid === uuid);
+  return unref(pointData).find((el) => el.id === id);
 }
 
 export function templateInit<T extends PointInfo>(dataItem: T): void {
@@ -20,7 +20,7 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
 
   const pointInfo = computed(() => pointStore.getPointInfo);
 
-  const pointUUID = computed(() => pointStore.getPointUUIDState);
+  const pointid = computed(() => pointStore.getPointidState);
   // 内部更新不触发
   const isValueUpdateFromInner = ref<boolean>(false);
 
@@ -67,7 +67,7 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
         updateBaseContent('y', 'transform', y, `translate(${unref(pointInfo).x}px,${y}px`);
       },
       other: () => {
-        pointStore.commitUpdatePointData({ uuid: unref(pointUUID), key, value });
+        pointStore.commitUpdatePointData({ id: unref(pointid), key, value });
       }
     };
 
@@ -75,15 +75,10 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
   }
 
   // 更新基本内容
-  function updateBaseContent(
-    key: Trigger,
-    styleKey: string,
-    dataValue: number,
-    styleValue: string
-  ) {
+  function updateBaseContent(key: Trigger, styleKey: string, dataValue: number, styleValue: string) {
     dataItem[key] = dataValue;
-    pointStore.commitUpdatePointData({ uuid: unref(pointUUID), key, value: dataValue as never });
-    pointStore.commitUpdatePointStyle({ uuid: unref(pointUUID), key: styleKey, value: styleValue });
+    pointStore.commitUpdatePointData({ id: unref(pointid), key, value: dataValue as never });
+    pointStore.commitUpdatePointStyle({ id: unref(pointid), key: styleKey, value: styleValue });
   }
 
   // 数据信息 初始化

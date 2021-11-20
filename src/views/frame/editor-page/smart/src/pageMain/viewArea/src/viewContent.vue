@@ -26,8 +26,8 @@ export default defineComponent({
 
       const options = { x: layerX + 5, y: layerY + 5 };
       // 非当前选中的弹出
-      if (attrs.uuid !== pointStore.getPointUUIDState) {
-        emit('on-right-select', attrs.uuid);
+      if (attrs.id !== pointStore.getPointidState) {
+        emit('on-right-select', attrs.id);
       }
 
       emit('on-contextmenu', options);

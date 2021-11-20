@@ -1,10 +1,6 @@
 <template>
   <div>
-    <search-layout
-      :options="searchOptions"
-      @on-instance="initSearchInstance"
-      @on-search="onClickSearch"
-    />
+    <search-layout :options="searchOptions" @on-instance="initSearchInstance" @on-search="onClickSearch" />
     <table-layout
       :title="title"
       :loading="loading"

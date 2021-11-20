@@ -1,6 +1,6 @@
 export interface Schema {
   // 唯一值
-  uuid: string;
+  id: string;
 
   // 距离左边位置
   x: number;
@@ -21,10 +21,7 @@ export interface BaseSchema extends Schema {
   height: number;
 }
 
-export interface PointInfo extends BaseSchema, Indexable {
-  // 工具名称
-  name: string;
-
+export interface PointInfo extends Partial<BaseSchema>, Indexable {
   // 层级
   zIndex?: number;
 }

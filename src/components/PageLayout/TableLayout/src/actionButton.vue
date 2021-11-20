@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import type { Actions } from './interface';
+import type { Actions } from '../interface';
 
 defineProps({
   content: {

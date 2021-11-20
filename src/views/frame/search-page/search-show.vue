@@ -11,12 +11,7 @@
   </public-header>
   <div class="search-page-show-middle">
     <div class="content index-middle">
-      <icon
-        icon="ion:arrow-back-outline"
-        size="22"
-        class="icon index-center-middle"
-        @click="back"
-      />
+      <icon icon="ion:arrow-back-outline" size="22" class="icon index-center-middle" @click="back" />
       <span class="title">资源检索</span>
     </div>
   </div>

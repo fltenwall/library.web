@@ -21,7 +21,7 @@ export interface ActivityManage {
   mode?: 1 | 2;
 
   // 背景颜色
-  bgColor?: string;
+  backgroundColor?: string;
 
   // 描述
   description?: string;

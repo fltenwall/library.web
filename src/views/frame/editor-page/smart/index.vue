@@ -41,7 +41,7 @@ export default defineComponent({
 
     // 点击 point
     function handleClickPoint() {
-      actionItem.visible = false;
+      actionItem.visible = true;
     }
 
     onBeforeUnmount(() => pointStore.commitEmptyState());

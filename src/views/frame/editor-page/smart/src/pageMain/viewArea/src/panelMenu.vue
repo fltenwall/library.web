@@ -9,7 +9,7 @@
 import { handleStore } from '../utils/index';
 
 const props = defineProps({
-  uuid: {
+  id: {
     type: String,
     default: ''
   }
@@ -19,9 +19,9 @@ const emits = defineEmits(['on-delete']);
 
 // 删除 point
 function handleDeletePoint() {
-  handleStore('d', { uuid: props.uuid });
+  handleStore('d', { id: props.id });
 
-  emits('on-delete', props.uuid);
+  emits('on-delete', props.id);
 }
 </script>
 

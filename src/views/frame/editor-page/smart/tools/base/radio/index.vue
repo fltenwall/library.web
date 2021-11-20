@@ -6,13 +6,13 @@
 import { queryPoint } from '../../utils';
 
 const props = defineProps({
-  uuid: {
+  id: {
     type: String,
     default: ''
   }
 });
 
-const point = queryPoint(props.uuid);
+const point = queryPoint(props.id);
 
 console.log(point);
 </script>

@@ -23,7 +23,10 @@
     "paths": {
       "/@/*": [
         "src/*"
-      ]
+      ],
+      "/@components/*": [
+        "src/components/*"
+      ],
     }
   },
   "exclude": [

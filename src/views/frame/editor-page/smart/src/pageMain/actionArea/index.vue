@@ -1,35 +1,33 @@
 <template>
-  <div class="action-area absolute">
-    <global-drawer v-model:value="visible" placement="right">
-      <div class="action-area-header index-middle index-space-between">
-        <div>
-          {{ pointConfigs.label[pointInfo.name || 'form'] }}
-        </div>
-        <div>
-          <question-circle-outlined />
-        </div>
+  <global-drawer v-model:value="visible" placement="right" class="action-area">
+    <div class="action-area-header index-middle index-space-between">
+      <div>
+        {{ pointConfigs.label[pointInfo.name || 'form'] }}
       </div>
-      <a-tabs v-show="pointInfo.name" size="small">
-        <a-tab-pane key="1" tab="属性">
-          <a-form class="action-area-main" label-align="left">
-            <tool-attribute />
-          </a-form>
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="配置">
-          <a-form class="action-area-main" label-align="left">
-            <component :is="`${pointInfo.name}-point`" />
-          </a-form>
-        </a-tab-pane>
-      </a-tabs>
-      <a-tabs v-show="!pointInfo.name" size="small">
-        <a-tab-pane key="3" tab="配置">
-          <a-form class="action-area-main" label-align="left">
-            <default-point />
-          </a-form>
-        </a-tab-pane>
-      </a-tabs>
-    </global-drawer>
-  </div>
+      <div>
+        <question-circle-outlined />
+      </div>
+    </div>
+    <a-tabs v-show="pointInfo.name" size="small">
+      <a-tab-pane key="1" tab="属性">
+        <a-form class="action-area-main" label-align="left">
+          <tool-attribute />
+        </a-form>
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="配置">
+        <a-form class="action-area-main" label-align="left">
+          <component :is="`${pointInfo.name}-point`" />
+        </a-form>
+      </a-tab-pane>
+    </a-tabs>
+    <a-tabs v-show="!pointInfo.name" size="small">
+      <a-tab-pane key="3" tab="配置">
+        <a-form class="action-area-main" label-align="left">
+          <default-point />
+        </a-form>
+      </a-tab-pane>
+    </a-tabs>
+  </global-drawer>
 </template>
 
 <script lang="ts">
@@ -69,11 +67,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .action-area {
-  right: 0;
-  z-index: 2;
-  width: 300px;
-  height: 100%;
-
   &-header {
     padding: 10px 16px 0;
     font-family: Microsoft JhengHei;

@@ -14,19 +14,19 @@
         <!-- 拖拽组件 -->
         <draggable-offset
           v-for="item in pointData"
-          :key="item.uuid"
+          :key="item.id"
           class="view-item"
           :record="item"
           :is-size="true"
           :class="panelStyle.opacity !== 1 && 'stop-events'"
-          :style="pointStyle[item.uuid]"
+          :style="pointStyle[item.id]"
           :move="!!dataItem.isMove"
-          :hover="dataItem.hover === item.uuid"
-          :select="pointUUID === item.uuid"
+          :hover="dataItem.hover === item.id"
+          :select="pointid === item.id"
           @on-end="handleMoveEnd"
           @on-move="handleMove"
           @on-start="handleMoveStart"
-          @mouseenter="mouseEvent.mouseenter(item.uuid)"
+          @mouseenter="mouseEvent.mouseenter(item.id)"
           @mouseleave="mouseEvent.mouseleave"
         >
           <view-content
@@ -49,7 +49,7 @@
         />
 
         <!-- 右键菜单 -->
-        <panel-menu :style="menuStyle" :uuid="pointUUID" @on-delete="handleDeletePoint" />
+        <panel-menu :id="pointid" :style="menuStyle" @on-delete="handleDeletePoint" />
       </div>
     </div>
   </scrollbar>
@@ -60,7 +60,7 @@ import type { CSSProperties } from 'vue';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, onMounted } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
@@ -82,14 +82,14 @@ const pointData = computed(() => pointStore.getPointDataState);
 // 拖拽数据样式
 const pointStyle = computed(() => pointStore.getPointStyleState);
 // 选中数据
-const pointUUID = computed({
-  set: (uuid) => pointStore.commitUpdatePointUUIDState({ uuid }),
-  get: () => pointStore.getPointUUIDState
+const pointid = computed({
+  set: (id) => pointStore.commitUpdatePointidState({ id }),
+  get: () => pointStore.getPointidState
 });
 // 当前状态
 const dataItem = reactive<DataItem>({ pos: {} });
 // ref
-const panelRef = ref<HTMLElement | null>(null);
+const panelRef = ref<HTMLNULL>(null);
 
 const limit = limitRules();
 
@@ -105,10 +105,10 @@ function usePointSize({ x, y, width: w, height: h }: Required<PointInfo>) {
 }
 
 //  初始化样式
-function initPointStyle(uuid: string, { x, y, width, height }: PointInfo) {
-  setPointStyle({ uuid, key: 'transform', value: `translate(${x}px,${y}px)` });
-  setPointStyle({ uuid, key: 'width', value: `${width}px` });
-  setPointStyle({ uuid, key: 'height', value: `${height}px` });
+function initPointStyle(id: string, { x, y, width, height }: PointInfo) {
+  setPointStyle({ id, key: 'transform', value: `translate(${x}px,${y}px)` });
+  setPointStyle({ id, key: 'width', value: `${width}px` });
+  setPointStyle({ id, key: 'height', value: `${height}px` });
 }
 
 // 处理移动
@@ -122,7 +122,7 @@ function handleMove({ record, x, y, type }: Move) {
       // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
       // 更新 x, y
-      setPointTransform({ uuid: record.uuid, x: pos.move.x, y: pos.move.y });
+      setPointTransform({ id: record.id, x: pos.move.x, y: pos.move.y });
     },
     ew: () => {
       const layout = limit.limitSize({ x }, record);
@@ -131,9 +131,9 @@ function handleMove({ record, x, y, type }: Move) {
       // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
       // 更新宽度
-      setPointStyle({ uuid: record.uuid, key: 'width', value: `${layout.width}px` });
+      setPointStyle({ id: record.id, key: 'width', value: `${layout.width}px` });
       // 更新 x, y
-      setPointTransform({ uuid: record.uuid, x: layout.x, y: layout.y });
+      setPointTransform({ id: record.id, x: layout.x, y: layout.y });
     },
     ns: () => {
       const layout = limit.limitSize({ y }, record);
@@ -142,7 +142,7 @@ function handleMove({ record, x, y, type }: Move) {
       // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
       // 更新高度
-      setPointStyle({ uuid: record.uuid, key: 'height', value: `${layout.height}px` });
+      setPointStyle({ id: record.id, key: 'height', value: `${layout.height}px` });
     },
     se: () => {
       const layout = limit.limitSize({ y, x }, record);
@@ -151,13 +151,13 @@ function handleMove({ record, x, y, type }: Move) {
       // 更新全部数据
       pointDataModify(dataItem.pos.layout!);
       // 设置样式
-      setPointStyle({ uuid: record.uuid, key: 'width', value: `${layout.width}px` });
-      setPointStyle({ uuid: record.uuid, key: 'height', value: `${layout.height}px` });
+      setPointStyle({ id: record.id, key: 'width', value: `${layout.width}px` });
+      setPointStyle({ id: record.id, key: 'height', value: `${layout.height}px` });
     }
   };
   mapState[type]();
 
-  setPanelHeight({ [dataItem.uuid!]: dataItem.pos!.layout! });
+  setPanelHeight({ [dataItem.id!]: dataItem.pos!.layout! });
   // 设置状态
   dataItem.state = 'move';
 }
@@ -167,20 +167,20 @@ function handleMoveEnd({ record, x, y, type }: Move) {
   // 设置鼠标弹起
   dataItem.state = 'end';
   dataItem.isMove = false;
-  dataItem.uuid = '';
+  dataItem.id = '';
 
   // 没有变化不更新数据
   if (x === 0 && y === 0) return;
 
-  const uuid = record.uuid;
+  const id = record.id;
 
   const mapState = {
     mouse: () => {
       // 更新数据
-      handleStore('u', { uuid, key: 'x', value: dataItem.pos.layout?.x });
-      handleStore('u', { uuid, key: 'y', value: dataItem.pos.layout?.y });
+      handleStore('u', { id, key: 'x', value: dataItem.pos.layout?.x });
+      handleStore('u', { id, key: 'y', value: dataItem.pos.layout?.y });
       // 样式更新
-      setPointTransform({ uuid, x: dataItem.pos.layout!.x, y: dataItem.pos.layout!.y });
+      setPointTransform({ id, x: dataItem.pos.layout!.x, y: dataItem.pos.layout!.y });
     },
     ew: () => {
       const { width } = limit.limitSize({ x }, record);
@@ -204,10 +204,10 @@ function handleMoveEnd({ record, x, y, type }: Move) {
     // 宽高 小于 10 表示删除 否则就是更新数据
     if (value < 10) {
       // 删数数据
-      handleStore('d', { uuid });
+      handleStore('d', { id });
     } else {
       // 更新数据
-      handleStore('u', { uuid, key, value });
+      handleStore('u', { id, key, value });
     }
   }
   mapState[type]();
@@ -220,27 +220,27 @@ function handleMoveStart({ record }: { record: BaseSchema; type: string }) {
   // 设置鼠标按下
   dataItem.state = 'start';
   dataItem.isMove = true;
-  dataItem.uuid = record.uuid;
+  dataItem.id = record.id;
   // 传递数据
-  setSelectPoint(record.uuid);
+  setSelectPoint(record.id);
 }
 // 设置样式
-function setPointStyle(options: { uuid: string; key: string; value: string }) {
+function setPointStyle(options: { id: string; key: string; value: string }) {
   pointStore.commitUpdatePointStyle(options);
 }
 
 // 设置 transform
-function setPointTransform({ uuid, x, y }: { uuid: string; x: number; y: number }) {
+function setPointTransform({ id, x, y }: { id: string; x: number; y: number }) {
   const key = 'transform';
   const value = `translate(${x}px,${y}px)`;
-  setPointStyle({ uuid, key, value });
+  setPointStyle({ id, key, value });
 }
 
 const mouseEvent = {
   // 处理鼠标进入
-  mouseenter(uuid: string) {
+  mouseenter(id: string) {
     // 移动中禁止高亮
-    !dataItem.isMove && (dataItem.hover = uuid);
+    !dataItem.isMove && (dataItem.hover = id);
   },
   // 处理鼠标离开
   mouseleave() {
@@ -259,10 +259,10 @@ const dragEvent = {
     // 获取数据位置
     const { offsetX, offsetY } = event;
     // 唯一值
-    const uuid = buildShortUUID();
+    const id = buildShortUUID();
     const schema = cloneDeep(schemaList[name]);
     // 合并
-    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, uuid, name });
+    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, id, name });
     // 计算大小
     const { width, height } = usePointSize(schema as Required<PointInfo>);
     schema.width = width;
@@ -272,9 +272,9 @@ const dragEvent = {
     schema.x = x;
     schema.y = y;
     // 初始化样式
-    initPointStyle(uuid, schema);
+    initPointStyle(id, schema);
     // 传递数据
-    setSelectPoint(uuid);
+    setSelectPoint(id);
     // 添加数据
     pointStore.commitAddPointData(schema as Required<PointInfo>);
     // 更新数据
@@ -297,11 +297,11 @@ const dragEvent = {
 };
 
 // 设置数据
-function setSelectPoint(uuid: string) {
+function setSelectPoint(id: string) {
   // 传递数据
   emit('on-click-point');
   // 设置选中
-  pointUUID.value = uuid;
+  pointid.value = id;
 }
 
 // 右键
@@ -336,7 +336,7 @@ function handleDeletePoint() {
   pointDataModify();
 }
 // 监听视图变化
-viewResize(panelRef);
+onMounted(() => viewResize(panelRef));
 </script>
 
 <style lang="less" scoped>
@@ -346,11 +346,11 @@ viewResize(panelRef);
   justify-content: center;
   align-items: center;
   padding: 70px 0 70px;
-  margin: 0 300px 0 0;
+  margin: 0 auto;
 
   &-panel {
     width: 375px;
-    min-height: calc(100vh - 194px);
+    min-height: 700px;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     user-select: none;

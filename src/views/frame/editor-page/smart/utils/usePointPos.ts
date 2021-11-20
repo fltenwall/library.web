@@ -10,7 +10,7 @@ interface Options {
 
   schema: BaseSchema;
 
-  uuids?: string[];
+  ids?: string[];
 
   cover?: Cover;
 
@@ -22,7 +22,7 @@ interface BaseOptions {
 
   schema: BaseSchema;
 
-  uuids?: string[];
+  ids?: string[];
 
   cover?: Cover;
 }
@@ -32,7 +32,7 @@ interface CustomOptions {
 
   schema: BaseSchema;
 
-  uuids?: string[];
+  ids?: string[];
 
   cover?: Cover;
 
@@ -46,7 +46,7 @@ export default function (options: BaseOptions): { x: number; y: number };
 export default function (options: CustomOptions): { x: number; y: number };
 
 export default function (options: Options): { x: number; y: number } {
-  const { type, schema, uuids, cover, cb } = options;
+  const { type, schema, ids, cover, cb } = options;
   const pageOptions = pointStore.getPageOptionsState;
   // 弹性布局
   if (pageOptions.layoutType !== 2) return { x: schema.x, y: schema.y };
@@ -63,13 +63,13 @@ export default function (options: Options): { x: number; y: number } {
   });
 
   for (const el of pointData) {
-    // 忽略 uuid
-    if (uuids?.includes(el.uuid)) continue;
+    // 忽略 id
+    if (ids?.includes(el.id)) continue;
 
-    const x = cover?.[el.uuid]?.x ?? el.x;
-    const y = cover?.[el.uuid]?.y ?? el.y;
-    const width = cover?.[el.uuid]?.width ?? el.width;
-    const height = cover?.[el.uuid]?.height ?? el.height;
+    const x = cover?.[el.id]?.x ?? el.x;
+    const y = cover?.[el.id]?.y ?? el.y;
+    const width = cover?.[el.id]?.width ?? el.width;
+    const height = cover?.[el.id]?.height ?? el.height;
 
     let target = schema;
 
