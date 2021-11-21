@@ -16,12 +16,12 @@
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="模式" v-bind="validateInfos.mode">
-              <select-wrap v-model:value="dataItem.state" :options="modeSelectOption" />
+              <select-wrap v-model:value="dataItem.mode" :options="modeSelectOption" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="页面布局" v-bind="validateInfos.mode">
-              <select-wrap v-model:value="dataItem.mode" :options="layoutSelectOption" />
+            <a-form-item label="页面布局" v-bind="validateInfos.layoutType">
+              <select-wrap v-model:value="dataItem.layoutType" :options="layoutSelectOption" />
             </a-form-item>
           </a-col>
         </a-row>
@@ -48,9 +48,7 @@
       <a-button @click="onComposePage">排版</a-button>
       <a-button v-if="!readonly" @click="onRestPage">重置</a-button>
       <a-button v-if="readonly" type="primary" @click="onEditPage">编辑</a-button>
-      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage"
-        >保存</a-button
-      >
+      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">保存</a-button>
     </template>
   </global-data-page>
 </template>
@@ -70,8 +68,7 @@ export default defineComponent({
     const rules = reactive(formRules);
     const onServerMethods = { onNewData, onSaveData, onLoadDataById };
     const parameter = { rules, dataItem, onServerMethods };
-    const { pageInfo, onDataMethods, validateInfos, loading } =
-      dataPageMix<ActivityManage>(parameter);
+    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<ActivityManage>(parameter);
     const { mode, readonly } = toRefs(pageInfo);
     // 页面跳转
     const go = useGo();
@@ -103,7 +100,7 @@ export default defineComponent({
     }
     // 排版页面
     function onComposePage() {
-      go({ name: PageEnum.EDITOR_FORM, params: { id: pageInfo.query.id! } });
+      go({ name: PageEnum.EDITOR_ACTIVITY, params: { id: pageInfo.query.id! } });
     }
 
     return {

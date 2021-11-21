@@ -3,24 +3,18 @@
     <div class="index-theme header-left-title index-middle">
       <span>{{ MixinConfig.shortTitle }}</span>
     </div>
-
-    <div class="index-center-middle simulator-item ml-10">
+    <div :class="['index-center-middle simulator-item ml-10', canvasMode === 1 && 'actived']">
       <icon icon="clarity:mobile-line" />
     </div>
 
-    <div class="index-center-middle simulator-item actived ml-1">
+    <div :class="['index-center-middle simulator-item ml-1', canvasMode === 2 && 'actived']">
       <icon icon="clarity:computer-line" size="16" />
     </div>
 
     <div class="button index-center-middle ml-10 mr-4">
       <a-tooltip placement="bottom">
         <template #title>一键还原</template>
-        <icon
-          icon="icons8:refresh"
-          class="point-button"
-          :disable="!resetState"
-          @click="handleReset"
-        />
+        <icon icon="icons8:refresh" class="point-button" :disable="!resetState" @click="handleReset" />
       </a-tooltip>
       <a-tooltip placement="bottom">
         <template #title>撤销</template>
@@ -51,6 +45,8 @@ import { pointStore } from '/@/store/modules/point';
 import { isEmptyArray } from '/@/utils/is';
 
 const resetState = computed(() => isEmptyArray(pointStore.getPointDataState));
+
+const canvasMode = computed(() => pointStore.getPageOptionsState.mode);
 // 使用链表
 const linked = pointLinked();
 // 一键还原

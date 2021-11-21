@@ -10,9 +10,7 @@
     @on-action="handleClickAction"
   >
     <template #tableBodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'updateTime'">{{
-        useFromatlll(record.createTime)
-      }}</template>
+      <template v-if="column.dataIndex === 'updateTime'">{{ useFromatlll(record.createTime) }}</template>
       <template v-else-if="column.dataIndex === 'mode'">{{ modeMap.get(record.mode) }}</template>
     </template>
   </page-layout>

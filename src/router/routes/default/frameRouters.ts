@@ -56,7 +56,7 @@ export const FrameRouters: AppRouteRecordRaw[] = [
   {
     path: '/editor-form/:id',
     name: 'editor-form',
-    component: () => import('/@/views/frame/editor-page/smart/index.vue'),
+    component: () => import('/@/views/frame/editor-page/form/index.vue'),
     meta: {
       title: '编辑'
     }

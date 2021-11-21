@@ -18,7 +18,7 @@ import actionArea from './src/pageMain/actionArea/index.vue';
 import toolArea from './src/pageMain/toolArea/index.vue';
 import viewArea from './src/pageMain/viewArea/index.vue';
 import pageHeader from './src/pageHeader/index.vue';
-import service from '/@/api/page-manage/form-page';
+import service from '/@/api/page-manage/activity-page';
 import { pointStore } from '/@/store/modules/point';
 
 import useViewSize from './utils/useViewSize';

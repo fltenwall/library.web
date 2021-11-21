@@ -7,6 +7,14 @@ export const formRules: FromRules = {
       whitespace: true,
       message: '不允许为空'
     }
+  ],
+  layoutType: [
+    {
+      type: 'number',
+      required: true,
+      whitespace: true,
+      message: '不允许为空'
+    }
   ]
 };
 

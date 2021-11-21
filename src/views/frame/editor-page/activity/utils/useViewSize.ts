@@ -14,8 +14,6 @@ export default function (): void {
     // 设置
     setViewSize(panelRef: Ref<HTMLNULL>) {
       instance.value = panelRef.value;
-
-      console.log(instance.value);
     }
   };
 

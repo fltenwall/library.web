@@ -4,7 +4,7 @@
       <div
         ref="panelRef"
         class="view-area-panel relative"
-        :style="panelStyle"
+        :style="[panelStyle, `width: ${modeMap.get(canvasMode)}`]"
         @drop="dragEvent.handleDrag"
         @dragover.prevent
         @dragenter="dragEvent.handleDragenter"
@@ -77,6 +77,10 @@ const emit = defineEmits(['on-click-point']);
 
 // 面板样式
 const panelStyle = reactive<CSSProperties>({});
+// 画布模式
+const canvasMode = computed(() => pointStore.getPageOptionsState.mode);
+// 画布尺寸
+const modeMap = new Map().set(1, '375px').set(2, 'calc(100vw - 800px)');
 // 拖拽数据信息
 const pointData = computed(() => pointStore.getPointDataState);
 // 拖拽数据样式
@@ -349,7 +353,6 @@ onMounted(() => viewResize(panelRef));
   margin: 0 auto;
 
   &-panel {
-    width: 375px;
     min-height: 700px;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);

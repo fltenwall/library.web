@@ -1,6 +1,6 @@
 <template>
   <page-layout
-    title="表单列表"
+    title="活动列表"
     :name="DATA_PAGE_NAME"
     :table-actions="actions"
     :table-columns="tableColumns"
@@ -10,9 +10,7 @@
     @on-action="handleClickAction"
   >
     <template #tableBodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'updateTime'">{{
-        useFromatlll(record.createTime)
-      }}</template>
+      <template v-if="column.dataIndex === 'updateTime'">{{ useFromatlll(record.createTime) }}</template>
       <template v-else-if="column.dataIndex === 'mode'">{{ modeMap.get(record.mode) }}</template>
     </template>
   </page-layout>
