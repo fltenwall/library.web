@@ -5,14 +5,14 @@
     <!-- 内容 -->
     <div class="flex flex-item hidden editor-form-main relative">
       <tool-area />
-      <view-area class="flex-item" @on-click-point="handleClickPoint" />
-      <action-area v-model:value="actionItem.visible" />
+      <view-area />
+      <action-area />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeUnmount, reactive, unref } from 'vue';
+<script setup lang="ts">
+import { onBeforeUnmount, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import actionArea from './src/pageMain/actionArea/index.vue';
 import toolArea from './src/pageMain/toolArea/index.vue';
@@ -23,37 +23,20 @@ import { pointStore } from '/@/store/modules/point';
 
 import useViewSize from './utils/useViewSize';
 
-export default defineComponent({
-  components: { actionArea, toolArea, viewArea, pageHeader },
-  setup() {
-    const { currentRoute } = useRouter();
+const { currentRoute } = useRouter();
 
-    const actionItem = reactive<{ visible: boolean }>({ visible: false });
+// 视图大小
+useViewSize();
 
-    // 视图大小
-    useViewSize();
+// 通过ID加载数据
+async function onLoadDataById(id: number) {
+  const { data } = await service.getItemById(id);
+  pointStore.commitSetPageOptionsState(data);
+}
 
-    // 通过ID加载数据
-    async function onLoadDataById(id: number) {
-      const { data } = await service.getItemById(id);
-      pointStore.commitSetPageOptionsState(data);
-    }
+onBeforeUnmount(() => pointStore.commitEmptyState());
 
-    // 点击 point
-    function handleClickPoint() {
-      actionItem.visible = true;
-    }
-
-    onBeforeUnmount(() => pointStore.commitEmptyState());
-
-    onLoadDataById(+unref(currentRoute).params.id);
-
-    return {
-      actionItem,
-      handleClickPoint
-    };
-  }
-});
+onLoadDataById(+unref(currentRoute).params.id);
 </script>
 
 <style lang="less" scoped>

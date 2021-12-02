@@ -1,14 +1,12 @@
 <template>
   <global-drawer v-model:value="visible" placement="right" class="action-area">
     <div class="action-area-header index-middle index-space-between">
-      <div>
-        {{ pointConfigs.label[pointInfo.name || 'form'] }}
-      </div>
+      <div>{{ baseConfigs.label[pointInfo.name || 'form'] }}</div>
       <div>
         <question-circle-outlined />
       </div>
     </div>
-    <a-tabs v-show="pointInfo.name" size="small">
+    <a-tabs v-if="isString(pointInfo.name)" size="small">
       <a-tab-pane key="1" tab="属性">
         <a-form class="action-area-main" label-align="left">
           <tool-attribute />
@@ -16,11 +14,11 @@
       </a-tab-pane>
       <a-tab-pane key="2" tab="配置">
         <a-form class="action-area-main" label-align="left">
-          <component :is="`${pointInfo.name}-point`" />
+          <component :is="moduleAction[pointInfo.name]" />
         </a-form>
       </a-tab-pane>
     </a-tabs>
-    <a-tabs v-show="!pointInfo.name" size="small">
+    <a-tabs v-else size="small">
       <a-tab-pane key="3" tab="配置">
         <a-form class="action-area-main" label-align="left">
           <default-point />
@@ -30,39 +28,24 @@
   </global-drawer>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch, computed } from 'vue';
-import { templateList } from '../../../tools/template';
+<script setup lang="ts">
+import { ref, computed, watch } from 'vue';
+import { moduleAction, baseConfigs } from '../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
-import { pointConfigs } from '../../../tools/index';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import toolAttribute from './toolAttribute.vue';
 import defaultPoint from './defaultPoint.vue';
+import { isString } from '/@/utils/is';
 
-export default defineComponent({
-  components: { ...templateList, toolAttribute, defaultPoint, QuestionCircleOutlined },
-  props: {
-    value: {
-      type: Boolean,
-      default: true
-    }
-  },
-  emits: ['update:value'],
-  setup(props, { emit }) {
-    const pointInfo = computed(() => pointStore.getPointInfo);
-    // 折叠面板
-    const visible = ref<boolean>(props.value);
-    watch(
-      () => visible.value,
-      (val) => emit('update:value', val)
-    );
-    watch(
-      () => props.value,
-      (val) => (visible.value = val)
-    );
-    return { visible, pointConfigs, pointInfo };
-  }
-});
+const pointInfo = computed(() => pointStore.getPointInfo);
+const pointidState = computed(() => pointStore.getPointidState);
+// 折叠面板
+const visible = ref<boolean>(true);
+
+watch(
+  () => pointidState.value,
+  (val) => val && (visible.value = true)
+);
 </script>
 
 <style lang="less" scoped>

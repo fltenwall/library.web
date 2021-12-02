@@ -4,7 +4,7 @@
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
           <div>
-            <icon :icon="pointConfigs.icon[menu]" size="20" />
+            <icon :icon="baseConfigs.icon[menu]" size="20" />
           </div>
         </template>
       </a-tab-pane>
@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { viewList, pointConfigs } from '../../../tools/index';
+import { moduleGather, baseConfigs } from '../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 const activeKey = computed({
@@ -33,7 +33,7 @@ const activeKey = computed({
   set: (state) => pointStore.commitTabState(state)
 });
 
-const sidebarMenus = computed(() => Object.keys(viewList));
+const sidebarMenus = computed(() => Object.keys(moduleGather));
 </script>
 
 <style lang="less" scoped>

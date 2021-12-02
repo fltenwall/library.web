@@ -18,7 +18,7 @@ function scriptErrorHandler(
   colno?: number,
   error?: Error
 ) {
-  console.warn(event, source, lineno, colno, error);
+  console.log(event, source, lineno, colno, error);
 }
 
 function asyncErrorHandler(event: Event) {

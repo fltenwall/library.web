@@ -1,14 +1,7 @@
 import type { Component } from 'vue';
+import type { PointInfo } from '/@/lib/interface/PointInfo';
+import { usePinYin } from '/@/hooks/web/usePinYin';
 import { isArray, isUnDef } from '/@/utils/is';
-import PinYin from 'pinyin';
-
-interface ViewList {
-  [prop: string]: string[];
-}
-
-interface PointList {
-  [prop: string]: Component;
-}
 
 interface PointConfigs {
   label: { [prop: string]: string };
@@ -18,24 +11,23 @@ interface PointConfigs {
   pinyin: { [prop: string]: string };
 }
 
-// 视图工具
-const viewTools = import.meta.globEager('./**/index.vue');
-
+// 视图内容
+const moduleViewSource = import.meta.globEager('./**/index.vue');
 // 模型工具
 const schemaTools = import.meta.globEager('./**/schema.ts');
-// 拼音
-export const pinyin = (text: string): string => {
-  return PinYin(text, { style: PinYin.STYLE_NORMAL }).flat().join('');
-};
+// 操作
+const moduleActionSource = import.meta.globEager('./**/template.vue');
 
-// 工具列表
-export const viewList: ViewList = {};
-
+// 模块集合
+export const moduleGather: Recordable<string[]> = {};
 // 模块列表
-export const pointList: PointList = {};
-
+export const moduleView: Recordable<Component> = {};
+// 模型工具
+export const moduleSchema: Indexable<PointInfo> = {};
+// 操作数据
+export const moduleAction: Recordable<Component> = {};
 // 分类 中文 和 图标
-export const pointConfigs: PointConfigs = {
+export const baseConfigs: PointConfigs = {
   label: {
     base: '基础组件',
     form: '页面配置',
@@ -50,15 +42,15 @@ export const pointConfigs: PointConfigs = {
   pinyin: {}
 };
 
-Object.keys(viewTools).forEach((key) => {
+Object.keys(moduleViewSource).forEach((key) => {
   // 读取文件名称
   const [classify, name] = key.replace(/\.\/|.index.vue/g, '').split('/');
   // 设置数组
-  !isArray(viewList[classify]) && (viewList[classify] = []);
+  !isArray(moduleGather[classify]) && (moduleGather[classify] = []);
   // 添加模块
-  pointList[`${name}-point`] = viewTools[key].default;
+  moduleView[name] = moduleViewSource[key].default;
   // 添加数据
-  viewList[classify].push(name);
+  moduleGather[classify].push(name);
 });
 
 Object.keys(schemaTools).forEach((key) => {
@@ -69,9 +61,18 @@ Object.keys(schemaTools).forEach((key) => {
   // 关键字
   const label = schemaTools[key].label;
   // 添加名称
-  pointConfigs.label[name] = label;
+  baseConfigs.label[name] = label;
   // 添加名称
-  pointConfigs.icon[name] = schemaTools[key].icon;
+  baseConfigs.icon[name] = schemaTools[key].icon;
   // 添加拼音
-  pointConfigs.pinyin[name] = pinyin(label);
+  baseConfigs.pinyin[name] = usePinYin(label);
+  // 模块数据信息
+  moduleSchema[name] = schemaTools[key].schema;
+});
+
+Object.keys(moduleActionSource).forEach((key) => {
+  // 读取文件名称
+  const [, name] = key.replace(/\.\/|.schema.vue/g, '').split('/');
+  // 添加模型
+  moduleAction[name] = moduleActionSource[key].default;
 });

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-export function is(val: unknown, type: string): boolean {
+export function is<T>(val: unknown, type: string): val is T {
   return toString.call(val) === `[object ${type}]`;
 }
 
@@ -22,7 +22,7 @@ export function isBoolean(val: unknown): val is boolean {
 }
 
 export function isString(val: unknown): val is string {
-  return is(val, 'String');
+  return is<string>(val, 'String');
 }
 
 export function isNumber(val: unknown): val is number {

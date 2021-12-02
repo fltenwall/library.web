@@ -1,6 +1,6 @@
 <template>
-  <scrollbar>
-    <div class="view-area">
+  <scrollbar class="flex-item">
+    <div class="view-area" @click="handleClickOtherArea">
       <div
         ref="panelRef"
         class="view-area-panel relative"
@@ -65,15 +65,13 @@ import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
-import { schemaList } from '../../../tools/schema';
+import { moduleSchema } from '../../../tools/index';
 import { assign, cloneDeep } from 'lodash-es';
 import { handleStore, limitRules, viewResize, pointDataModify, rangeHighest } from './utils/index';
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
 import { isUnDef } from '/@/utils/is';
-
-const emit = defineEmits(['on-click-point']);
 
 // 面板样式
 const panelStyle = reactive<CSSProperties>({});
@@ -264,7 +262,7 @@ const dragEvent = {
     const { offsetX, offsetY } = event;
     // 唯一值
     const id = buildShortUUID();
-    const schema = cloneDeep(schemaList[name]);
+    const schema = cloneDeep(moduleSchema[name]);
     // 合并
     assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, id, name });
     // 计算大小
@@ -302,8 +300,6 @@ const dragEvent = {
 
 // 设置数据
 function setSelectPoint(id: string) {
-  // 传递数据
-  emit('on-click-point');
   // 设置选中
   pointid.value = id;
 }
@@ -339,6 +335,13 @@ function handleDeletePoint() {
 
   pointDataModify();
 }
+
+// 处理点击空白区域
+function handleClickOtherArea() {
+  // 设置为空
+  setSelectPoint('');
+}
+
 // 监听视图变化
 onMounted(() => viewResize(panelRef));
 </script>

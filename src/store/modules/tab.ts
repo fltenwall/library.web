@@ -26,7 +26,7 @@ interface SliceCloseParameter {
   startBase?: number;
 }
 
-const NAME = 'TAB';
+const NAME = 'tab';
 
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class Tab extends VuexModule {
@@ -106,9 +106,7 @@ export default class Tab extends VuexModule {
         nameList.push(item.name as string);
       }
     }
-    this.tabsState = toRaw(this.tabsState).filter(
-      (item) => !nameList.includes(item.name as string)
-    );
+    this.tabsState = toRaw(this.tabsState).filter((item) => !nameList.includes(item.name as string));
   }
 
   @Mutation

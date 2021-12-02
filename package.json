@@ -28,7 +28,7 @@
   "dependencies": {
     "@antv/g2": "^4.1.30",
     "@iconify/iconify": "^2.0.4",
-    "ant-design-vue": "^3.0.0-alpha.8",
+    "ant-design-vue": "^3.0.0-alpha.13",
     "axios": "^0.24.0",
     "crypto-es": "^1.2.7",
     "dayjs": "^1.10.7",
@@ -42,12 +42,12 @@
     "spark-md5": "^3.0.2",
     "tinycolor2": "^1.4.2",
     "vditor": "^3.8.7",
-    "vue": "^3.2.20",
+    "vue": "^3.2.23",
     "vue-json-pretty": "^1.8.1",
     "vue-router": "^4.0.12",
-    "vue-toastification": "2.0.0-rc.1",
+    "vue-toastification": "2.0.0-rc.5",
     "vuex": "^4.0.2",
-    "vuex-module-decorators": "^1.0.1",
+    "vuex-module-decorators": "^2.0.0",
     "xss": "^1.0.9"
   },
   "devDependencies": {
@@ -67,7 +67,7 @@
     "@typescript-eslint/parser": "^5.3.1",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vitejs/plugin-vue-jsx": "^1.2.0",
-    "@vue/compiler-sfc": "^3.2.21",
+    "@vue/compiler-sfc": "^3.2.23",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "eslint": "^8.2.0",

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '/@/lib/props/TableList';
-import service from '/@/api/record-manage/operator-record';
+import service from '/@/api/record-manage/login-record';
 import { SearchOptions } from '/@/components/PageLayout/SearchLayout/interface';
 import { PagerQueryData } from '/@/lib/http/axios/types';
 import { useFromatlll } from '/@/utils/dateFormat';

@@ -88,8 +88,8 @@ export function limitRules(): LimitRules {
     const width = record.width;
     const height = record.height;
     const move = { x: pos.x + record.x, y: pos.y + record.y, width, height, id, name };
-    const x = move.x > CW - width! ? CW - width! : move.x <= 0 ? 0 : move.x;
-    const y = move.y > CH - height! ? CH - height! : move.y <= 0 ? 0 : move.y;
+    const x = move.x > CW - width ? CW - width : move.x <= 0 ? 0 : move.x;
+    const y = move.y > CH - height ? CH - height : move.y <= 0 ? 0 : move.y;
     const layout = { x, y, width, height, id, name };
     // 弹性布局
     unref(isElasticLayout) && (layout.y = elasticLayout(move, layout, CW));

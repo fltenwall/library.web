@@ -15,7 +15,7 @@
     <!-- 默认工具列表 -->
     <template v-else>
       <div v-for="(names, key) in tools" :key="key">
-        <div class="panel-title" @dragstart.prevent>{{ pointConfigs.label[key] }}</div>
+        <div class="panel-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
         <div class="panel-content">
           <panel-box v-for="name in names" :key="name" :name="name" />
         </div>
@@ -29,11 +29,12 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import { computed, ref, unref, watch } from 'vue';
-import { viewList, pointConfigs, pinyin } from '../../../tools/index';
+import { moduleGather, baseConfigs } from '../../../tools/index';
 import { isEmpty, isArray, isNull } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
 import panelBox from './panelBox.vue';
+import { usePinYin } from '/@/hooks/web/usePinYin';
 
 const inputSearch = ref<string>('');
 
@@ -48,14 +49,14 @@ const placeholderStyle = ref<CSSProperties>({});
 const isValueUpdateFromInner = ref<boolean>(false);
 
 const tools = computed(() => {
-  let result: { [prop: string]: string[] } | string[] = viewList;
+  let result: Recordable<string[]> | string[] = moduleGather;
   // 判断不是否为空
   if (isEmpty(unref(inputSearch))) {
-    const input = pinyin(unref(inputSearch));
+    const input = usePinYin(unref(inputSearch));
     // 全部组件
-    const cts = Object.keys(pointConfigs.pinyin);
+    const cts = Object.keys(baseConfigs.pinyin);
     // 拼音筛选出组件
-    const pinyinSelect = cts.filter((key) => pointConfigs.pinyin[key].includes(input));
+    const pinyinSelect = cts.filter((key) => baseConfigs.pinyin[key].includes(input));
     // key筛选出组件
     const keySelect = cts.filter((key) => key.includes(input));
 
@@ -81,9 +82,9 @@ watch(
 
 (function () {
   let sum = 0;
-  let list = Object.keys(viewList);
+  let list = Object.keys(moduleGather);
   for (let i = 0; i < list.length; i++) {
-    const distance = Math.ceil(viewList[list[i]].length / 2) * 115 + 42;
+    const distance = Math.ceil(moduleGather[list[i]].length / 2) * 115 + 42;
 
     if (list.length - 1 === i) {
       placeholderStyle.value = { height: `calc(100% - ${distance - 1}px)` };

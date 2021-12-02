@@ -1,16 +1,15 @@
 <template>
-  <div class="view-content" @contextmenu.prevent="onContextmenu">
-    <component :is="`${name}-point`" v-bind="$attrs" />
+  <div class="view-content" @click.stop @contextmenu.prevent="onContextmenu">
+    <component :is="moduleView[name]" v-bind="$attrs" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { pointList } from '../../../../tools/index';
+import { moduleView } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 export default defineComponent({
-  components: { ...pointList },
   inheritAttrs: false,
   props: {
     name: {
@@ -33,7 +32,7 @@ export default defineComponent({
       emit('on-contextmenu', options);
     }
 
-    return { onContextmenu };
+    return { onContextmenu, moduleView };
   }
 });
 </script>

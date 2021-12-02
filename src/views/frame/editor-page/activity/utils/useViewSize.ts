@@ -8,8 +8,8 @@ export default function (): void {
   const options = {
     // 获取
     getViewSize() {
-      const { clientHeight: height, clientWidth: widht } = instance.value!;
-      return { height, widht };
+      const { clientHeight: height, clientWidth: width } = instance.value!;
+      return { height, width };
     },
     // 设置
     setViewSize(panelRef: Ref<HTMLNULL>) {

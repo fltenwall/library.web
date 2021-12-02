@@ -1,15 +1,15 @@
 <template>
   <div class="panel-box" draggable="true" @dragstart="handleDragstart($event)">
     <div class="index-center-middle flex-item">
-      <icon :icon="pointConfigs.icon[name]" size="20" />
+      <icon :icon="baseConfigs.icon[name]" size="20" />
     </div>
-    <div class="panel-box-title">{{ pointConfigs.label[name] }}</div>
+    <div class="panel-box-title">{{ baseConfigs.label[name] }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import { pointConfigs } from '../../../tools/index';
+import { baseConfigs } from '../../../tools/index';
 
 const props = defineProps({
   name: {
