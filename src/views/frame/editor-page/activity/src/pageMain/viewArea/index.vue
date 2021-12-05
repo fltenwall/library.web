@@ -264,14 +264,14 @@ const dragEvent = {
     // 清除透明样式
     panelStyle.opacity = 1;
     // 获取传来的数据
-    const { name, offset } = JSON.parse(event.dataTransfer?.getData('tool') || '');
+    const { name, offset, data } = JSON.parse(event.dataTransfer?.getData('tool') || '');
     // 获取数据位置
     const { offsetX, offsetY } = event;
     // 唯一值
     const id = buildShortUUID();
     const schema = cloneDeep(moduleSchema[name]);
     // 合并
-    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, id, name });
+    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, id, name }, data);
     // 计算大小
     const { width, height } = usePointSize(schema as Required<PointInfo>);
     schema.width = width;

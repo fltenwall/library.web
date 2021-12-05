@@ -23,6 +23,10 @@ const props = defineProps({
   draggable: {
     type: Boolean,
     default: true
+  },
+  data: {
+    type: Object,
+    default: () => ({})
   }
 });
 
@@ -39,7 +43,7 @@ function handleDragstart(event: DragEvent) {
 
   const offset = { x: width / 2 - offsetX, y: height / 2 - offsetY };
 
-  const tool = { name, offset };
+  const tool = { name, offset, data: props.data };
 
   // 数据传递
   event.dataTransfer?.setData('tool', JSON.stringify(tool));

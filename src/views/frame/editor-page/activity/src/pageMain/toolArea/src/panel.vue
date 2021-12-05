@@ -23,12 +23,14 @@
         <div v-for="(names, key) in tools" :key="key">
           <div class="panel-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
           <div class="panel-content">
-            <panel-box v-for="name in names" :key="name" :name="name">
-              <template #content>
-                <icon :icon="baseConfigs.icon[name]" size="20" class="mb-4" />
-              </template>
-              <template #title>{{ baseConfigs.label[name] }}</template>
-            </panel-box>
+            <template v-for="name in names" :key="name">
+              <panel-box v-if="baseConfigs.visible[name]" :name="name">
+                <template #content>
+                  <icon :icon="baseConfigs.icon[name]" size="20" class="mb-4" />
+                </template>
+                <template #title>{{ baseConfigs.label[name] }}</template>
+              </panel-box>
+            </template>
           </div>
         </div>
         <!-- 占位 -->

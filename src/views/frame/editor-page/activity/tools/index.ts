@@ -4,11 +4,13 @@ import { usePinYin } from '/@/hooks/web/usePinYin';
 import { isArray, isUnDef } from '/@/utils/is';
 
 interface PointConfigs {
-  label: { [prop: string]: string };
+  label: Recordable<string>;
 
-  icon: { [prop: string]: string };
+  icon: Recordable<string>;
 
-  pinyin: { [prop: string]: string };
+  pinyin: Recordable<string>;
+
+  visible: Recordable<boolean>;
 }
 
 // 视图内容
@@ -39,7 +41,8 @@ export const baseConfigs: PointConfigs = {
     media: 'cil:media-play',
     chart: 'ant-design:pie-chart-outlined'
   },
-  pinyin: {}
+  pinyin: {},
+  visible: {}
 };
 
 Object.keys(moduleViewSource).forEach((key) => {
@@ -60,12 +63,16 @@ Object.keys(schemaTools).forEach((key) => {
   if (isUnDef(name)) return;
   // 关键字
   const label = schemaTools[key].label;
+  // 可见
+  const visible = schemaTools[key].visible;
   // 添加名称
   baseConfigs.label[name] = label;
   // 添加名称
   baseConfigs.icon[name] = schemaTools[key].icon;
   // 添加拼音
   baseConfigs.pinyin[name] = usePinYin(label);
+  // 是否可见
+  baseConfigs.visible[name] = isUnDef(visible) || visible ? true : false;
   // 模块数据信息
   moduleSchema[name] = schemaTools[key].schema;
 });

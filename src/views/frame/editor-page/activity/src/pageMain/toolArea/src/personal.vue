@@ -16,8 +16,10 @@
           <panel-box
             v-for="item in dataSource"
             :key="item.id"
+            name="personal"
             :draggable="isDrag"
             :class="backgroundImage === item.hash && 'select'"
+            :data="{ src: `${MixinConfig.preview}${item.hash}` }"
             @click="handleSelectImage(item)"
           >
             <!-- 标签 -->
@@ -155,6 +157,7 @@ fetchDataFromServer();
 .preview-image {
   height: 103px;
   max-width: 100%;
+  pointer-events: none;
 
   &__wrap {
     width: 100%;
