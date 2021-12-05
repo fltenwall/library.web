@@ -1,4 +1,4 @@
-interface RulesOptions {
+export interface RulesOptions {
   // 枚举类型
   enum?: string;
 

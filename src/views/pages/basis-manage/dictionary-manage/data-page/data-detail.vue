@@ -1,38 +1,32 @@
 <template>
   <global-card title="字典数据">
-    <a-form :label-col="{ flex: '100px' }" :wrapper-col="{ flex: 'auto' }">
-      <a-row>
-        <a-col :xs="24" :lg="8" class="pl-4 pr-4">
-          <a-form-item label="数据标签">
-            <input-wrap v-model:value="queryData.label" :is-readonly="false" />
-          </a-form-item>
-        </a-col>
-        <a-col :xs="24" :lg="8" class="pl-4 pr-4" />
-        <a-col :xs="24" :lg="8" class="pl-4 pr-4">
-          <div class="index-button-right">
-            <a-button
-              :type="mode !== MixinPageMode.edit ? 'primary' : 'default'"
-              @click="onSearchData"
-            >
-              查询
-            </a-button>
-            <a-button v-if="mode === MixinPageMode.edit" type="primary" @click="onNewDataItem">
-              新增
-            </a-button>
-          </div>
-        </a-col>
-      </a-row>
+    <!-- 搜索数据 -->
+    <a-form :label-col="{ flex: '100px' }">
+      <div class="index-space-between">
+        <form-item-wrap label="数据标签">
+          <input-wrap v-model:value="queryData.label" :is-readonly="false" />
+        </form-item-wrap>
+        <div class="index-button-right mr-4">
+          <a-button>查询</a-button>
+          <a-button v-if="editMode" @click="onNewDataItem">新增</a-button>
+        </div>
+      </div>
     </a-form>
+
     <!-- 表格 -->
     <global-table :loading="loading" :columns="dataTypeColumn" :data-source="dataSource">
-      <template #state="{ record }">
-        <div>{{ record.state ? '正常' : '停用' }}</div>
-      </template>
-      <template #operation="{ record }">
-        <div class="index-operation">
-          <span @click="onEditDataItem(record)">编辑</span>
-          <span @click="onDeleteDataItem(record)">删除</span>
-        </div>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'state'">
+          <a-tag v-if="record.state" color="success" class="mr-0">开启</a-tag>
+          <a-tag v-else color="error">关闭</a-tag>
+        </template>
+
+        <template v-else-if="column.dataIndex === 'operation'">
+          <div class="index-operation">
+            <action-button @on-select="onEditDataItem(record)">编辑</action-button>
+            <action-button value="delete" @on-select="onDeleteDataItem(record)">删除</action-button>
+          </div>
+        </template>
       </template>
     </global-table>
 
@@ -45,132 +39,79 @@
     />
 
     <!-- 对话框 -->
-    <data-detail-modal
-      v-model:visible="modal.visible"
-      :dict-data="modal.data"
-      :title="modal.title"
-      @on-success="onModalSuccess"
-    />
+    <data-detail-modal v-model:visible="visible" :dict-data="dataItem" @on-success="fetchDataFromServer" />
   </global-card>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
-import { defineComponent, reactive, ref } from 'vue';
-import { dataTypeColumn } from './data-page';
 import { PageMode } from '/@/utils/helper/breadcrumb';
-import { usePagination } from '/@/hooks/web/usePagination';
-import dataDetailModal from './data-detail-modal.vue';
+import { ref, reactive, computed } from 'vue';
 import { message } from 'ant-design-vue';
-import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import { usePagination } from '/@/hooks/web/usePagination';
+import { dataTypeColumn } from './data-page';
+import dataDetailModal from './data-detail-modal.vue';
 import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 
-interface Modal {
-  // 标题
-  title?: string;
-  // 隐藏/显示
-  visible: boolean;
-  // 数据集
-  data: DictionaryDetail;
-}
-
-export default defineComponent({
-  components: { dataDetailModal },
-  props: {
-    mode: {
-      // 出错 -1 查看 0 编辑 1 新增 2
-      type: Number as PropType<PageMode>,
-      default: undefined
-    },
-    dictType: {
-      type: String,
-      default: ''
-    }
+const props = defineProps({
+  dictType: {
+    type: String,
+    default: ''
   },
-  setup(props) {
-    // 查询数据
-    const queryData = reactive({ type: props.dictType });
-
-    // 对话框
-    const modal = reactive<Modal>({ visible: false, data: {}, title: '' });
-
-    // 全部数据
-    const dataSource = ref<DictionaryDetail[]>([]);
-
-    // 加载
-    const loading = ref<boolean>(false);
-
-    // 总页数
-    const totalElements = ref<number>(0);
-
-    // 页面发生变换
-    const pagination = usePagination();
-
-    // 页面发生变化
-    const onPageChange = () => fetchDataFromServer();
-
-    // 搜索数据
-    const onSearchData = () => fetchDataFromServer();
-
-    // 对话框数据修改成功
-    const onModalSuccess = () => fetchDataFromServer();
-
-    // 点击添加按钮
-    const onNewDataItem = () => {
-      modal.title = '添加字典数据';
-      modal.visible = true;
-      modal.data = { type: props.dictType };
-    };
-
-    // 编辑数据
-    const onEditDataItem = (record: DictionaryDetail) => {
-      modal.title = '修改字典数据';
-      modal.visible = true;
-      modal.data = record;
-    };
-
-    // 数据删除
-    async function onDeleteDataItem({ id }: DictionaryDetail) {
-      useDeleteModal(async () => {
-        await service.deleteItemById(id!);
-        fetchDataFromServer();
-      });
-    }
-
-    // 获取服务器数据
-    async function fetchDataFromServer() {
-      try {
-        loading.value = true;
-        const { page, size } = pagination.getPagination();
-        const { data } = await service.fecthList({ page, size, sort: '', ...queryData });
-        dataSource.value = data.content;
-        totalElements.value = data.totalElements;
-      } catch (err) {
-        message.error(`数据获取失败: ${err.msg}`);
-      } finally {
-        loading.value = false;
-      }
-    }
-
-    fetchDataFromServer();
-
-    return {
-      modal,
-      loading,
-      queryData,
-      dataSource,
-      totalElements,
-      dataTypeColumn,
-      ...pagination,
-      onPageChange,
-      onSearchData,
-      onNewDataItem,
-      onEditDataItem,
-      onModalSuccess,
-      onDeleteDataItem
-    };
+  mode: {
+    // 出错 -1 查看 0 编辑 1 新增 2
+    type: Number as PropType<PageMode>,
+    default: undefined
   }
 });
-</script>
 
-<style lang="less" scoped></style>
+const editMode = computed(() => props.mode === PageMode.edit);
+// 查询数据
+const queryData = reactive({ type: props.dictType, label: '' });
+// 加载
+const loading = ref<boolean>(false);
+// 总页数
+const totalElements = ref<number>(0);
+// 页面发生变换
+const { current, getPagination } = usePagination();
+// 页面发生变化
+const onPageChange = () => fetchDataFromServer();
+// 全部数据
+const dataSource = ref<DictionaryDetail[]>([]);
+// 是否显示对话框
+const visible = ref<boolean>(false);
+// 数据内容
+let dataItem = ref({});
+// 点击添加按钮
+const onNewDataItem = () => {
+  dataItem.value = { type: props.dictType };
+  visible.value = true;
+};
+// 编辑数据
+const onEditDataItem = (record: DictionaryDetail) => {
+  dataItem.value = record;
+  visible.value = true;
+};
+// 数据删除
+async function onDeleteDataItem({ id }: Required<DictionaryDetail>) {
+  await service.deleteItemById(id);
+
+  fetchDataFromServer();
+}
+// 获取服务器数据
+async function fetchDataFromServer() {
+  try {
+    loading.value = true;
+    const query = { ...getPagination(), sort: '', ...queryData };
+    const { data } = await service.fecthList(query);
+    dataSource.value = data.content;
+    totalElements.value = data.totalElements;
+  } catch (err) {
+    message.error((err as { msg: string }).msg);
+  } finally {
+    loading.value = false;
+  }
+}
+
+fetchDataFromServer();
+</script>

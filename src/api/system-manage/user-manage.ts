@@ -23,7 +23,7 @@ export interface UserManage {
   email?: string;
 
   // 性别
-  sex?: number;
+  sexId?: number;
 
   // 密码
   password?: string;

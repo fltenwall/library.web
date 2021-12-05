@@ -23,6 +23,9 @@ export interface ActivityManage {
   // 背景颜色
   backgroundColor?: string;
 
+  // 背景颜色
+  backgroundImage?: string;
+
   // 描述
   description?: string;
 

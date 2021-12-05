@@ -3,17 +3,13 @@
     <a-tabs v-model:activeKey="activeKey" tab-position="left">
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
-          <div>
-            <icon :icon="baseConfigs.icon[menu]" size="20" />
-          </div>
+          <icon :icon="baseConfigs.icon[menu]" size="20" />
         </template>
       </a-tab-pane>
 
-      <a-tab-pane>
+      <a-tab-pane key="personal">
         <template #tab>
-          <div>
-            <icon icon="ant-design:user-outlined" size="20" />
-          </div>
+          <icon icon="ant-design:user-outlined" size="20" />
         </template>
       </a-tab-pane>
     </a-tabs>
@@ -25,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { moduleGather, baseConfigs } from '../../../tools/index';
+import { moduleGather, baseConfigs } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 const activeKey = computed({

@@ -1,40 +1,52 @@
 <template>
-  <div class="panel-search-wrap">
-    <a-input v-model:value="inputSearch" class="panel-search" placeholder="搜索您想要的组件">
-      <template #prefix>
-        <search-outlined />
-      </template>
-    </a-input>
-  </div>
-  <scrollbar v-model:scroll-top="scrollTop" class="panel-main" @on-scroll="handleScroll">
-    <!-- 搜索工具列表 -->
-    <div v-if="isArray(tools)" class="panel-content">
-      <panel-box v-for="name in tools" :key="name" :name="name" />
+  <div class="panel-wrap">
+    <div class="panel-search-wrap">
+      <a-input v-model:value="inputSearch" class="panel-search" placeholder="搜索您想要的组件">
+        <template #prefix>
+          <search-outlined />
+        </template>
+      </a-input>
     </div>
-
-    <!-- 默认工具列表 -->
-    <template v-else>
-      <div v-for="(names, key) in tools" :key="key">
-        <div class="panel-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
-        <div class="panel-content">
-          <panel-box v-for="name in names" :key="name" :name="name" />
-        </div>
+    <scrollbar v-model:scroll-top="scrollTop" @on-scroll="handleScroll">
+      <!-- 搜索工具列表 -->
+      <div v-if="isArray(tools)" class="panel-content">
+        <panel-box v-for="name in tools" :key="name" :name="name">
+          <template #content>
+            <icon :icon="baseConfigs.icon[name]" size="20" class="mb-4" />
+          </template>
+          <template #title>{{ baseConfigs.label[name] }}</template>
+        </panel-box>
       </div>
-      <!-- 占位 -->
-      <div :style="placeholderStyle" />
-    </template>
-  </scrollbar>
+
+      <!-- 默认工具列表 -->
+      <template v-else>
+        <div v-for="(names, key) in tools" :key="key">
+          <div class="panel-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
+          <div class="panel-content">
+            <panel-box v-for="name in names" :key="name" :name="name">
+              <template #content>
+                <icon :icon="baseConfigs.icon[name]" size="20" class="mb-4" />
+              </template>
+              <template #title>{{ baseConfigs.label[name] }}</template>
+            </panel-box>
+          </div>
+        </div>
+        <!-- 占位 -->
+        <div :style="placeholderStyle" />
+      </template>
+    </scrollbar>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import { computed, ref, unref, watch } from 'vue';
-import { moduleGather, baseConfigs } from '../../../tools/index';
-import { isEmpty, isArray, isNull } from '/@/utils/is';
+import { computed, ref, unref, watch, onMounted } from 'vue';
+import { moduleGather, baseConfigs } from '../../../../tools/index';
+import { isEmpty, isArray, isNull, isUnDef } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
-import panelBox from './panelBox.vue';
 import { usePinYin } from '/@/hooks/web/usePinYin';
+import panelBox from './panelBox.vue';
 
 const inputSearch = ref<string>('');
 
@@ -73,9 +85,9 @@ watch(
       isValueUpdateFromInner.value = false;
     } else {
       // 判断不是否为空
-      if (isEmpty(unref(inputSearch)) || isNull(val)) return;
+      if (isEmpty(unref(inputSearch)) || isNull(val) || isUnDef(toolsTop[val])) return;
 
-      scrollTop.value = toolsTop[val] || 0;
+      scrollTop.value = toolsTop[val];
     }
   }
 );
@@ -111,9 +123,19 @@ function handleScroll(top: number) {
     }
   }
 }
+
+onMounted(() => {
+  scrollTop.value = toolsTop[tabState.value] || 0;
+});
 </script>
 
 <style lang="less" scoped>
+.panel-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .panel {
   &-content {
     display: flex;
@@ -139,9 +161,5 @@ function handleScroll(top: number) {
     padding: 20px 10px 0;
     margin: 0 0 20px;
   }
-}
-
-.panel-main {
-  height: 100%;
 }
 </style>

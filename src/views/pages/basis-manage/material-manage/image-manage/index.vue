@@ -8,22 +8,22 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import { Classify } from '/@/api/basis-manage/material-manage/image-manage';
+import { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 import imageMenu from './imageMenu.vue';
 import imageView from './imageView.vue';
 import { assign } from 'lodash';
 
-const selected = reactive<Classify>({});
+const selected = reactive<DictionaryDetail>({});
 // 菜单数据
-const menuData = ref<Required<Classify>[]>([]);
+const menuData = ref<Required<DictionaryDetail>[]>([]);
 
 // 处理选中
-function handleSelected(record: Required<Classify>) {
+function handleSelected(record: Required<DictionaryDetail>) {
   assign(selected, record);
 }
 
 // 处理菜单数据
-function handleMenuData(data: Required<Classify>[]) {
+function handleMenuData(data: Required<DictionaryDetail>[]) {
   menuData.value = data;
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="default-point-item">
-    <div>宽度</div>
+    <div class="c333">宽度</div>
     <ui-input class="w-100" :value="viewSize.width" readonly />
   </div>
   <div class="default-point-item">
-    <div>高度</div>
+    <div class="c333">高度</div>
     <ui-input class="w-100" :value="viewSize.height" readonly />
   </div>
   <a-divider />
@@ -35,6 +35,10 @@
       :value="pageOptions.backgroundColor"
       @change="handleUpdateData($event, 'backgroundColor')"
     />
+  </div>
+  <div class="default-point-item">
+    <div class="c333">背景图片链接</div>
+    <ui-input class="w-180" :value="pageOptions.backgroundImage" readonly />
   </div>
 </template>
 

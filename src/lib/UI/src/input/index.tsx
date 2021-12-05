@@ -25,6 +25,10 @@ export default defineComponent({
     min: {
       type: Number as PropType<number>,
       default: undefined
+    },
+    placeholder: {
+      type: String,
+      default: '请输入'
     }
   },
   emits: ['update:value'],
@@ -66,7 +70,7 @@ export default defineComponent({
     return () => (
       <Input
         value={input.value}
-        placeholder="请输入"
+        placeholder={props.placeholder}
         size={props.size}
         onChange={handlChange}
         onBlur={handleBlur}

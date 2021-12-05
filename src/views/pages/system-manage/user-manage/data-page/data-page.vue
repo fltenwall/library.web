@@ -16,11 +16,7 @@
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
             <a-form-item label="密码" v-bind="validateInfos.password" :required="mode === 2">
-              <input-wrap
-                v-model:value="dataItem.password"
-                type="password"
-                :readonly="mode !== 2"
-              />
+              <input-wrap v-model:value="dataItem.password" type="password" :readonly="mode !== 2" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -38,8 +34,8 @@
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="性别" v-bind="validateInfos.sex">
-              <dict-select v-model:value="dataItem.sex" type="sys_user_sex" />
+            <a-form-item label="性别" v-bind="validateInfos.sexId">
+              <dict-select v-model:value="dataItem.sexId" type="sys_user_sex" />
             </a-form-item>
           </a-col>
           <a-col :xs="24" :lg="9" class="pl-4 pr-4">
@@ -83,9 +79,7 @@
       <a-button v-if="readonly" v-show-by-auth="'USER:UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
-      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
-        保存
-      </a-button>
+      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage"> 保存 </a-button>
     </template>
   </global-data-page>
 </template>

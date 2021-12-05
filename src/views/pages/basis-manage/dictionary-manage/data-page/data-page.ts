@@ -25,44 +25,30 @@ export const selectOption = [
 
 export const dataTypeColumn: TableColumn[] = [
   {
-    title: '字典编号',
-    dataIndex: 'id',
-    align: 'center',
-    ellipsis: true
-  },
-  {
     title: '数据标签',
     dataIndex: 'label',
-    align: 'center',
-    ellipsis: true
+    align: 'center'
   },
   {
     title: '数据键值',
     dataIndex: 'value',
-    align: 'center',
-    ellipsis: true
+    align: 'center'
   },
   {
     title: '状态',
     dataIndex: 'state',
-    align: 'center',
-    ellipsis: true,
-    slots: { customRender: 'state' }
+    align: 'center'
   },
   {
     title: '描述',
     dataIndex: 'description',
-    align: 'center',
-    ellipsis: true
+    align: 'center'
   },
   {
     title: '操作',
     align: 'center',
-    width: 170,
-    fixed: 'right',
-    ellipsis: true,
     dataIndex: 'operation',
-    slots: { customRender: 'operation' }
+    ellipsis: true
   }
 ];
 

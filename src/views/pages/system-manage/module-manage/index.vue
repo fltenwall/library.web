@@ -1,7 +1,7 @@
 <template>
   <div class="module-manage">
     <!-- 菜单列表 -->
-    <scrollbar class="module-tree">
+    <scrollbar class="module-tree default-shadow">
       <a-directory-tree
         :selected-keys="selectedKeys"
         :tree-data="menuItem"
@@ -13,15 +13,15 @@
 
     <!-- 模块权限设置 -->
     <div class="module-visit">
-      <div class="module-visit-header">
+      <div class="module-visit-header default-shadow">
         <div class="pb-4 fs-5">模块权限设置</div>
         <div class="flex">
           <div class="flex-item">模块名称：{{ selected?.meta?.title }}</div>
-          <div class="flex-item">模块唯一值：{{ selected?.name }}</div>
+          <div class="flex-item">模块标识符：{{ selected?.name }}</div>
         </div>
       </div>
       <!-- 操作 -->
-      <div class="module-visit-main">
+      <div class="module-visit-main default-shadow">
         <div class="flex flex-end pb-4">
           <a-button @click="onClickNewItem">新增</a-button>
         </div>
@@ -31,9 +31,7 @@
               <div>名称：{{ item.name }}</div>
               <div class="mb-3 mt-3">
                 权限项：
-                <a-tag v-for="auth in item.authorities" :key="auth">{{
-                  authorityList[auth]
-                }}</a-tag>
+                <a-tag v-for="auth in item.authorities" :key="auth">{{ authorityList[auth] }}</a-tag>
               </div>
               <div class="index-operation flex flex-end">
                 <!-- <span>编辑</span> -->
@@ -42,7 +40,7 @@
             </div>
           </div>
         </scrollbar>
-
+        <!-- 分页 -->
         <pagination-wrap v-model:current="current" class="pt-4" :total="totalElements" />
 
         <module-add-modal

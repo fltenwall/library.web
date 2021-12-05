@@ -1,15 +1,16 @@
 <template>
   <scrollbar class="flex-item">
-    <div class="view-area" @click="handleClickOtherArea">
+    <div class="view-area" @click="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
       <div
         ref="panelRef"
         class="view-area-panel relative"
         :style="[panelStyle, `width: ${modeMap.get(canvasMode)}`]"
         @drop="dragEvent.handleDrag"
         @dragover.prevent
+        @click.stop
         @dragenter="dragEvent.handleDragenter"
         @dragleave="dragEvent.handleDragleave"
-        @contextmenu.prevent="handleCancelSelect"
+        @contextmenu.prevent.stop="handleCancelSelect"
       >
         <!-- 拖拽组件 -->
         <draggable-offset
@@ -60,7 +61,7 @@ import type { CSSProperties } from 'vue';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
-import { computed, reactive, ref, onMounted } from 'vue';
+import { computed, reactive, ref, onMounted, watch } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
@@ -72,11 +73,17 @@ import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
 import { isUnDef } from '/@/utils/is';
+import config from '/@/config';
+import { loadImageSize } from '/@/utils';
 
 // 面板样式
 const panelStyle = reactive<CSSProperties>({});
+// 页面数据
+const pageOptions = computed(() => pointStore.getPageOptionsState);
 // 画布模式
-const canvasMode = computed(() => pointStore.getPageOptionsState.mode);
+const canvasMode = computed(() => pageOptions.value.mode);
+// 背景图片
+const backgroundImage = computed(() => pageOptions.value.backgroundImage);
 // 画布尺寸
 const modeMap = new Map().set(1, '375px').set(2, 'calc(100vw - 800px)');
 // 拖拽数据信息
@@ -94,7 +101,6 @@ const dataItem = reactive<DataItem>({ pos: {} });
 const panelRef = ref<HTMLNULL>(null);
 
 const limit = limitRules();
-
 // 菜单样式变化
 const menuStyle = ref<CSSProperties>({});
 
@@ -226,6 +232,7 @@ function handleMoveStart({ record }: { record: BaseSchema; type: string }) {
   // 传递数据
   setSelectPoint(record.id);
 }
+
 // 设置样式
 function setPointStyle(options: { id: string; key: string; value: string }) {
   pointStore.commitUpdatePointStyle(options);
@@ -324,6 +331,7 @@ function handleContextmenu({ x, y }: { x: number; y: number }) {
 function hanldeClickDragAway() {
   menuStyle.value = { display: 'none' };
 }
+
 // 设置面板高度
 function setPanelHeight(cover?: Cover) {
   panelStyle.height = `${rangeHighest(cover) + 100}px`;
@@ -342,6 +350,24 @@ function handleClickOtherArea() {
   setSelectPoint('');
 }
 
+// 设置背景图
+watch(
+  () => backgroundImage.value,
+  async (val) => {
+    if (!val) {
+      panelStyle.backgroundImage = '';
+      panelStyle.minHeight = '';
+    } else {
+      const src = `${config.preview}${val}`;
+      const { width, height } = await loadImageSize(src);
+      const canvasWidth = parseInt(modeMap.get(canvasMode.value));
+      // 设置画布尺寸
+      panelStyle.backgroundImage = `url(${src})`;
+      panelStyle.minHeight = `${height / (width / canvasWidth)}px`;
+    }
+  },
+  { immediate: true }
+);
 // 监听视图变化
 onMounted(() => viewResize(panelRef));
 </script>
@@ -357,7 +383,8 @@ onMounted(() => viewResize(panelRef));
 
   &-panel {
     min-height: 700px;
-    background: #fff;
+    background-color: #fff;
+    background-size: 100% 100%;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     user-select: none;
   }

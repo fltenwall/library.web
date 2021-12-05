@@ -1,13 +1,10 @@
 <template>
   <div class="image-menu default-shadow">
     <div class="mb-4">目录</div>
-
     <div class="flex">
       <div class="menu-item" @click="handleNewItem">新建</div>
       <div class="w-3" />
-      <div :class="[selected.id === '' && 'selected', 'menu-item']" @click="handleViewAllItem">
-        全部
-      </div>
+      <div :class="[!selected.id && 'selected', 'menu-item']" @click="handleViewAllItem">全部</div>
     </div>
 
     <scrollbar class="image-menu-mian">
@@ -17,9 +14,9 @@
         :class="[selected.id === item.id && 'selected', 'image-menu-item']"
         @click="handleSelectItem(item)"
       >
-        <div class="index-hidden-newline image-menu-item-title">{{ item.title }}</div>
+        <div class="index-hidden-newline image-menu-item-title">{{ item.label }}</div>
         <div class="fs-3 mt-8 flex flex-space-between index-middle">
-          <div>创建于：{{ item.createTime }}</div>
+          <div>创建于：{{ useFromatlll(item.createTime) }}</div>
           <div class="index-operation item-operation">
             <span @click.stop="handleEditItem(item)">编辑</span>
             <span @click.stop="handleDeleleItem(item)">删除</span>
@@ -33,12 +30,15 @@
       v-model:visible="visible"
       width="350px"
       :confirm-loading="saveLoading"
-      :title="`${dataItem.id ? '编辑' : '新建'}目录`"
+      :title="dataItem.id ? '编辑' : '新建'"
       @ok="handleSaveItem"
     >
       <a-form :rules="rules">
-        <a-form-item label="目录名称" v-bind="validateInfos.title">
-          <a-input v-model:value="dataItem.title" />
+        <a-form-item label="名称" v-bind="validateInfos.title">
+          <a-input v-model:value="dataItem.label" />
+        </a-form-item>
+        <a-form-item label="键值" v-bind="validateInfos.value">
+          <a-input v-model:value="dataItem.value" />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -49,25 +49,31 @@
 import { ref, reactive } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
-import service, { Classify } from '/@/api/basis-manage/material-manage/image-manage';
+import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 import { message, Form } from 'ant-design-vue';
 import { assign } from 'lodash';
-import { isString } from '/@/utils/is';
+import { isNumber } from '/@/utils/is';
+import { useFromatlll } from '/@/utils/dateFormat';
+
+const DICT_TYPE = 'image_manage';
 
 const useForm = Form.useForm;
 const emit = defineEmits(['on-select', 'on-data-source']);
 // 选中的数据
-const selected = reactive<Classify>({ id: '' });
+const selected = reactive<DictionaryDetail>({});
 // 数据源
-const dataSource = ref<Required<Classify>[]>([]);
+const dataSource = ref<Required<DictionaryDetail>[]>([]);
 // 加载
 const loading = ref<boolean>(false);
 // 保存加载
 const saveLoading = ref<boolean>(false);
 // 添加规则
-const rules = reactive({ title: [{ required: true, message: '不允许为空' }] });
+const rules = reactive({
+  title: [{ required: true, message: '不允许为空' }],
+  value: [{ required: true, message: '不允许为空' }]
+});
 // 数据内容
-const dataItem = reactive<Classify>({ title: '', id: undefined });
+const dataItem = reactive<DictionaryDetail>({ type: DICT_TYPE, state: 1 });
 // 对话框是否显示
 const visible = ref<boolean>(false);
 // 获取表单规则
@@ -75,7 +81,7 @@ const { validate, validateInfos, resetFields } = useForm(dataItem, rules);
 // 获取服务器数据
 async function fetchDataFromServer() {
   try {
-    const { data } = await service.fecthClassifyList();
+    const { data } = await service.fecthListByType(DICT_TYPE);
     dataSource.value = data;
     emit('on-data-source', data);
   } catch (err) {
@@ -90,7 +96,7 @@ function handleNewItem() {
   visible.value = true;
 }
 // 编辑
-function handleEditItem(record: Required<Classify>) {
+function handleEditItem(record: Required<DictionaryDetail>) {
   assign(dataItem, record);
   visible.value = true;
 }
@@ -99,10 +105,10 @@ async function handleSaveItem() {
   if (!(await validItem()) || saveLoading.value) return;
   try {
     saveLoading.value = true;
-    if (isString(dataItem.id)) {
-      await service.updateClassify(dataItem.id, { title: dataItem.title! });
+    if (isNumber(dataItem.id)) {
+      await service.updateItem(dataItem.id, dataItem);
     } else {
-      await service.saveClassifyNewItem({ title: dataItem.title! });
+      await service.saveNewItem(dataItem);
     }
     fetchDataFromServer();
     visible.value = false;
@@ -113,15 +119,15 @@ async function handleSaveItem() {
   }
 }
 // 删除
-function handleDeleleItem(record: Required<Classify>) {
+function handleDeleleItem(record: Required<DictionaryDetail>) {
   useDeleteModal(async () => {
-    await service.deleteClassifyById(record.id);
+    await service.deleteItemById(record.id);
 
     fetchDataFromServer();
   });
 }
 // 选中
-function handleSelectItem(record: Required<Classify>) {
+function handleSelectItem(record: Required<DictionaryDetail>) {
   emit('on-select', record);
   assign(selected, record);
 }

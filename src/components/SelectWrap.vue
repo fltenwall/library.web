@@ -55,8 +55,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .select-wrap {
-  min-width: 181.8px;
-
   ::v-deep(.ant-select-selector) {
     color: rgba(0, 0, 0, 0.65) !important ;
     cursor: default !important;

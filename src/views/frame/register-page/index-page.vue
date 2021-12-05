@@ -51,14 +51,8 @@
             @on-blur="handleDataContent('repeat', 'blur')"
           />
           <div class="error-tip">{{ errorTip.repeat }}</div>
-          <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }"
-            >登录现有帐号</router-link
-          >
-          <global-button
-            ref="buttonInstance"
-            :size="1"
-            :disabled="disabled"
-            @on-click="onButtonClick"
+          <router-link class="button" :to="{ name: MixinPageEnum.BASE_LOGIN }">登录现有帐号</router-link>
+          <global-button ref="buttonInstance" :size="1" :disabled="disabled" @on-click="onButtonClick"
             >注 册</global-button
           >
         </div>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Ref } from 'vue';
 import type { CreateStorage } from '/@/utils/storage/Storage';
-import type { FromRules } from '/@/lib/interface/From';
+import type { FromRules, RulesOptions } from '/@/lib/interface/From';
 import { unref, onBeforeUnmount, onMounted, reactive, toRef, ref } from 'vue';
 import { provideDataPage } from './methods/useDepend';
 import { checkCacheData, setCacheData } from './methods/cacheData';
@@ -38,7 +38,7 @@ interface DataPageMix<T> {
   validateInfos: T;
 
   // 检测
-  validate: () => void;
+  validate: (names?: string, option?: RulesOptions) => Promise<void>;
 
   // 保存加载
   loading: Ref<boolean>;
@@ -77,13 +77,7 @@ interface PageInfo {
 }
 
 // 页面为新建模式  初始化
-function newModeInit<T>(
-  dataItem: T,
-  mode: Ref<number>,
-  name: string,
-  storage: CreateStorage,
-  cacheData: T
-) {
+function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: CreateStorage, cacheData: T) {
   // 页面刷新前处理
   function updateHandler() {
     if (mode.value === PageMode.new && !isEqual(dataItem, cacheData)) {

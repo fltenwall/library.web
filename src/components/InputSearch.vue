@@ -17,13 +17,13 @@ export default defineComponent({
   setup() {
     const listPage = injectListPage();
 
-    const pageLayout = injectPageLayout();
+    const PageLayout = injectPageLayout();
 
     // 回车时间
     const handleEnterEvent = () => {
       listPage?.onFetchData?.();
 
-      pageLayout?.onSearchData?.();
+      PageLayout?.onSearchData?.();
     };
 
     return { handleEnterEvent };

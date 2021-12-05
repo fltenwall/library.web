@@ -1,8 +1,8 @@
 <template>
   <div class="header-right flex">
-    <div class="button pointer index-center-middle">保存</div>
-    <div class="button pointer index-center-middle">预览</div>
-    <div class="button-primary index-center-middle" @click="onGoBack">返回</div>
+    <div class="button pointer index-center-middle">保 存</div>
+    <div class="button pointer index-center-middle">预 览</div>
+    <div class="button-primary index-center-middle" @click="onGoBack">返 回</div>
   </div>
 </template>
 

@@ -1,37 +1,31 @@
 <template>
   <global-data-page :mode="mode">
-    <a-form :label-col="{ flex: '100px' }" :wrapper-col="{ flex: 'auto' }">
+    <a-form :label-col="{ flex: '100px' }">
       <!-- 基本信息 -->
       <global-card title="基本信息">
-        <a-row>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="字典名称" v-bind="validateInfos.name">
-              <input-wrap v-model:value="dataItem.name" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="字典类型" v-bind="validateInfos.type">
-              <input-wrap v-model:value="dataItem.type" :readonly="mode === 1" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
-            <a-form-item label="状态" v-bind="validateInfos.state">
-              <select-wrap v-model:value="dataItem.state" :options="selectOption" />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-col :xs="24" :lg="18" class="pl-4 pr-4">
-            <a-form-item label="描述">
-              <textarea-wrap
-                v-model:value="dataItem.description"
-                show-count
-                :maxlength="260"
-                :auto-size="{ minRows: 2, maxRows: 5 }"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        <div>
+          <form-item-wrap label="字典名称" v-bind="validateInfos.name">
+            <input-wrap v-model:value="dataItem.name" />
+          </form-item-wrap>
+          <form-item-wrap label="字典类型" v-bind="validateInfos.type">
+            <input-wrap v-model:value="dataItem.type" :readonly="mode === 1" />
+          </form-item-wrap>
+        </div>
+
+        <div>
+          <form-item-wrap label="状态" v-bind="validateInfos.state">
+            <select-wrap v-model:value="dataItem.state" :options="selectOption" />
+          </form-item-wrap>
+        </div>
+
+        <form-item-wrap label="描述" :width="`${(100 / 3) * 2}%`">
+          <textarea-wrap
+            v-model:value="dataItem.description"
+            show-count
+            :maxlength="260"
+            :auto-size="{ minRows: 2, maxRows: 5 }"
+          />
+        </form-item-wrap>
       </global-card>
     </a-form>
 
@@ -43,11 +37,9 @@
 
     <!-- 操作 -->
     <template #footer-block>
-      <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
-      <a-button v-if="readonly" type="primary" @click="onEditPage"> 编辑 </a-button>
-      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
-        保存
-      </a-button>
+      <a-button v-if="!readonly" @click="onRestPage">重置</a-button>
+      <a-button v-if="readonly" type="primary" @click="onEditPage">编辑</a-button>
+      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">保存</a-button>
     </template>
   </global-data-page>
 </template>
@@ -67,8 +59,7 @@ export default defineComponent({
     const rules = reactive(formRules);
     const onServerMethods = { onNewData, onSaveData, onLoadDataById };
     const parameter = { rules, dataItem, onServerMethods };
-    const { pageInfo, onDataMethods, validateInfos, loading } =
-      dataPageMix<DictionaryManage>(parameter);
+    const { pageInfo, onDataMethods, validateInfos, loading } = dataPageMix<DictionaryManage>(parameter);
     const { mode, readonly } = toRefs(pageInfo);
 
     // 通过ID加载数据

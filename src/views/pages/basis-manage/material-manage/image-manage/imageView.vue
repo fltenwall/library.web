@@ -1,11 +1,16 @@
 <template>
   <div ref="imageView" class="image-view default-shadow">
     <div class="image-view-header index-middle">
-      <div>{{ selected.title || '全部' }}</div>
+      <div>{{ selected.label || '全部' }}</div>
       <div class="flex">
         <a-input placeholder="查询" />
         <a-button class="mr-3 ml-3">查询</a-button>
-        <upload :disabled="!selected.id" @on-change="handleFileChange">
+        <upload
+          :disabled="!selected.id"
+          :data="{ classifyId: selected.id }"
+          :before-upload="handleBeforeUpload"
+          @upload-success="handleUploadSuccess"
+        >
           <a-button>上传</a-button>
         </upload>
       </div>
@@ -14,17 +19,30 @@
     <scrollbar class="image-main">
       <div class="image-item-list">
         <div v-for="item in dataSource" :key="item.id" class="image-item-card">
-          <a-image :src="`${MixinConfig.preview}${item.hash}`" class="preview-image" />
+          <img :src="`${MixinConfig.preview}${item.hash}`" class="preview-image" />
           <div class="image-item-card-content">
-            <div class="index-hidden-newline">名称：{{ item.name }}</div>
-            <div>类型：{{ item.type }}</div>
-            <div>大小：{{ fileSize(item.size) }}</div>
+            <div class="index-hidden-newline">
+              <span class="card-row__title">名称</span>
+              <span class="card-row__content">{{ item.name }}</span>
+            </div>
+            <div>
+              <span class="card-row__title">类型</span>
+              <span class="card-row__content">{{ item.type.replace('image/', '').toLocaleUpperCase() }}</span>
+            </div>
+            <div>
+              <span class="card-row__title">大小</span>
+              <span class="card-row__content">{{ fileSize(item.size) }}</span>
+            </div>
             <div class="index-middle flex-space-between">
-              <div>创建于：{{ useMoment(item.createTime, 'YYYY年MM月DD日') }}</div>
-              <div class="index-operation item-operation">
-                <span @click="handleimageItemEdit(item)">编辑</span>
-                <span @click="handleimageItemDelete(item)">删除</span>
+              <div>
+                <span class="card-row__title">创建于</span>
+                <span class="card-row__content">{{ useMoment(item.createTime) }}</span>
               </div>
+              <icon
+                icon="ant-design:ellipsis-outlined"
+                class="card-row__button"
+                @click="handleimageItemSetting(item)"
+              />
             </div>
           </div>
         </div>
@@ -32,52 +50,39 @@
       <!-- 空数据 -->
       <a-empty v-if="!dataSource.length && !loading" />
     </scrollbar>
-
-    <pagination-wrap class="pt-4" v-model:current="current" :total="totalElements" />
-
+    <!-- 分页 -->
+    <pagination-wrap v-model:current="current" class="pt-4" :total="totalElements" />
     <!-- 对话框 -->
-    <a-modal
+    <image-view-modal
       v-model:visible="visible"
-      title="编辑"
-      width="400px"
-      :confirm-loading="saveLoading"
-      @ok="handleSaveItem"
-    >
-      <a-form :rules="rules">
-        <a-form-item label="分类" v-bind="validateInfos.classifyId">
-          <a-select v-model:value="dataItem.classifyId" :options="options" disabled />
-        </a-form-item>
-        <a-form-item label="名称" v-bind="validateInfos.name">
-          <a-input v-model:value="dataItem.name" />
-        </a-form-item>
-      </a-form>
-    </a-modal>
+      :image-data="dataItem"
+      :options="options"
+      @on-success="fetchDataFromServer"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import type { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 import { ref, computed, reactive, watch } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { usePagination } from '/@/hooks/web/usePagination';
-import service, { Classify, ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
-import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
 import { useMoment } from '/@/utils/dateFormat';
-import { message, Form } from 'ant-design-vue';
-import { imageUploader } from './data-list';
+import { message } from 'ant-design-vue';
 import { assign, cloneDeep } from 'lodash';
 import { Upload } from '/@/lib/UI/index';
-import { isString } from '/@/utils/is';
-
-const useForm = Form.useForm;
+import { isNumber } from '/@/utils/is';
+import imageViewModal from './imageViewModal.vue';
 
 const props = defineProps({
   selected: {
-    type: Object as PropType<Classify>,
+    type: Object as PropType<DictionaryDetail>,
     default: () => ({})
   },
   menuData: {
-    type: Array as PropType<Required<Classify>[]>,
+    type: Array as PropType<Required<DictionaryDetail>[]>,
     default: () => []
   }
 });
@@ -90,25 +95,12 @@ const totalElements = ref<number>(0);
 const loading = ref<boolean>(true);
 // 对话框是否显示
 const visible = ref<boolean>(false);
-// 保存加载
-const saveLoading = ref<boolean>(false);
 // 下拉菜单
-const options = computed(() =>
-  props.menuData.map(({ title, id }) => ({ value: id, label: title }))
-);
+const options = computed(() => props.menuData.map(({ label, id }) => ({ value: id, label })));
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
-// 添加规则
-const rules = reactive({
-  name: [{ required: true, message: '不允许为空' }],
-  classifyId: [{ required: true, message: '不允许为空' }]
-});
-// 获取表单规则
-const { validateInfos } = useForm(dataItem, rules);
 // 分页
 const { current, getPagination } = usePagination();
-
-const selectUploadImages = imageUploader();
 
 // 获取服务器数据
 async function fetchDataFromServer() {
@@ -134,13 +126,8 @@ function queryData() {
 }
 
 // 文件上传
-async function handleFileChange(files: File[]) {
-  if (!isString(props.selected.id)) return;
-  // 设置上传数据
-  await selectUploadImages(files, props.selected.id);
-  loading.value = false;
-  // 刷新数据
-  fetchDataFromServer();
+async function handleBeforeUpload() {
+  return isNumber(props.selected.id);
 }
 
 // 文件大小
@@ -149,40 +136,16 @@ function fileSize(size: number) {
 }
 
 // 处理照片编辑
-function handleimageItemEdit(record: Required<ImageManage>) {
+function handleimageItemSetting(record: Required<ImageManage>) {
   assign(dataItem, cloneDeep(record));
   visible.value = true;
 }
 
-// 处理保存数据
-async function handleSaveItem() {
-  try {
-    if (saveLoading.value) return;
+// 处理图片上传成功
+function handleUploadSuccess() {
+  message.success(`文件上传成功，已保存至【${props.selected.label}】`);
 
-    saveLoading.value = true;
-    // 设置上传数据
-    await service.updateImage(dataItem.id!, { name: dataItem.name! });
-
-    fetchDataFromServer();
-
-    visible.value = false;
-  } catch (err) {
-    message.error((err as { msg: string }).msg);
-  } finally {
-    loading.value = false;
-  }
-}
-
-// 处理删除图片
-function handleimageItemDelete(record: ImageManage) {
-  useDeleteModal(async () => {
-    try {
-      await service.deleteImageById(record.id!);
-      fetchDataFromServer();
-    } catch (err) {
-      message.error((err as { msg: string }).msg);
-    }
-  });
+  fetchDataFromServer();
 }
 
 watch(
@@ -223,7 +186,7 @@ fetchDataFromServer();
 
 .image-item-card {
   display: inline-flex;
-  width: 425px;
+  width: calc(33.333% - 5px);
   height: 150px;
   padding: 10px;
   margin: 0 0 15px 0;
@@ -248,6 +211,47 @@ fetchDataFromServer();
     & > span {
       min-width: 30px;
     }
+  }
+
+  .card-row {
+    &__title {
+      display: inline-block;
+      width: 45px;
+      text-align-last: justify;
+    }
+
+    &__content {
+      &::before {
+        margin: 0 10px 0 3px;
+        content: ':';
+      }
+    }
+
+    &__button {
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  }
+
+  &:hover {
+    .card-row {
+      &__button {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1550px) {
+  .image-item-card {
+    width: calc(50% - 5px);
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .image-item-card {
+    width: 100%;
   }
 }
 </style>

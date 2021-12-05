@@ -28,7 +28,7 @@ import SearchLayout from './SearchLayout/index.vue';
 import { PageMode } from '/@/utils/helper/breadcrumb';
 import { Instance as SearchInstance } from './SearchLayout/interface';
 import { Instance as TableInstance } from './TableLayout/interface';
-import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
+import { message } from 'ant-design-vue';
 
 const go = useGo();
 
@@ -90,7 +90,14 @@ function onClickAction(key: 'view' | 'edit' | 'delete' | 'new', record: { id: nu
       go({ name: props.name, query: { mode: PageMode[PageMode.edit], id: record.id } });
     },
     delete: async () => {
-      useDeleteModal(async () => (await props.onDeleteData?.(record.id), onSearchData()));
+      try {
+        loading.value = true;
+        await props.onDeleteData?.(record.id);
+        onSearchData();
+      } catch (err) {
+        message.error((err as { msg: string }).msg);
+        loading.value = false;
+      }
     }
   };
 

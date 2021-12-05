@@ -36,7 +36,7 @@ export interface DictionaryDetail {
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<DictionaryDetail>;
+export type DataPager = PagerResponseData<Required<DictionaryDetail>>;
 
 export default class Service {
   // 向服务查询数据并分页返回结果
@@ -66,8 +66,8 @@ export default class Service {
   }
 
   // 通过类型取得数据
-  static fecthListByType(type: string): Promise<Result<Array<DictionaryDetail>>> {
-    return request<Result<Array<DictionaryDetail>>>({
+  static fecthListByType(type: string): Promise<Result<Array<Required<DictionaryDetail>>>> {
+    return request<Result<Array<Required<DictionaryDetail>>>>({
       url: '/epi/dict-detail/all/type/' + type,
       method: 'get'
     });

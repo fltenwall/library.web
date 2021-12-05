@@ -32,9 +32,11 @@
             <action-button
               v-for="item in actionsMap"
               :key="item.value"
-              :content="item"
+              :value="item.value"
               @on-select="onClickAction(item.value, data.record)"
-            />
+            >
+              {{ item.label }}
+            </action-button>
           </div>
         </template>
       </template>
@@ -49,7 +51,6 @@ import { computed, ref } from 'vue';
 import { usePagination } from '/@/hooks/web/usePagination';
 import { isArray } from '/@/utils/is';
 import { SyncOutlined, SettingOutlined } from '@ant-design/icons-vue';
-import actionButton from './src/actionButton.vue';
 import propsOptions from './props';
 
 const props = defineProps(propsOptions);

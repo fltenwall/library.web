@@ -5,7 +5,7 @@ export function useFromatlll(date: string): string {
   return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
-export function useMoment(date: string, value = 'YYYY年MM月DD日 HH:mm'): string {
+export function useMoment(date: string, value = 'YYYY-MM-DD HH:mm'): string {
   return dayjs(date).format(value);
 }
 

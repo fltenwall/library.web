@@ -59,7 +59,7 @@ export default defineComponent({
   display: flex;
 
   &-left {
-    margin: 0 0 0 80px;
+    margin: 0 0 0 90px;
   }
 
   &-right {
@@ -76,7 +76,7 @@ export default defineComponent({
 
   &-title::after {
     margin: 0 15px 0 0;
-    content: ':';
+    content: ' :';
   }
 
   &-icon {

@@ -9,9 +9,7 @@
     :on-delete-data="deleteDataFromServer"
   >
     <template #tableBodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'date'">
-        {{ record.startDate }} - {{ record.endDate }}
-      </template>
+      <template v-if="column.dataIndex === 'date'"> {{ record.startDate }} - {{ record.endDate }} </template>
 
       <template v-else-if="column.dataIndex === 'delay'">
         <div>{{ onDelayTime(record) }}</div>

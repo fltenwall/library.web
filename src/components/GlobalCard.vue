@@ -1,5 +1,5 @@
 <template>
-  <div class="global-card index-card">
+  <div class="global-card index-card default-shadow">
     <div class="card-title">
       {{ title }}
     </div>
@@ -19,12 +19,12 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .global-card {
   padding: 16px 0;
 
   .card-title {
-    margin: 0 16px 16px;
+    margin: 0 32px 16px;
     font-size: 16px;
     font-weight: 700;
     color: #2c3a61;

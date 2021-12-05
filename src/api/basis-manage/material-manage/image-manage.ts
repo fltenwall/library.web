@@ -1,6 +1,7 @@
 import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
 import request from '/@/lib/http/axios/';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
+import { DictionaryDetail } from '../dictionary-detail';
 
 export interface ImageManage {
   //  主键
@@ -20,6 +21,9 @@ export interface ImageManage {
 
   // 状态
   status?: boolean;
+
+  // 分组
+  classify?: DictionaryDetail;
 
   // 分组 id
   classifyId?: string;
@@ -70,6 +74,15 @@ export default class Service {
   static fecthImageList(query?: PagerQueryData): Promise<DataPager> {
     return request<DataPager>({
       url: '/epi/material/image',
+      method: 'get',
+      params: query
+    });
+  }
+
+  // 向服务查询数据并分页返回结果
+  static fecthImageListByDict(query?: PagerQueryData): Promise<DataPager> {
+    return request<DataPager>({
+      url: '/epi/material/image/dict',
       method: 'get',
       params: query
     });
@@ -129,7 +142,7 @@ export default class Service {
   }
 
   // 合并分片
-  static mergeChunks(item: { classifyId: string; hash: string }): Promise<Result<boolean>> {
+  static mergeChunks(item: { hash: string }): Promise<Result<boolean>> {
     return request<Result<boolean>>({
       url: '/epi/material/image/merge-chunk',
       data: item,

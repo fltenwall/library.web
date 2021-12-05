@@ -9,7 +9,7 @@ declare type Callback = () => void;
 
 declare type OnUploadProgress = (event: { loaded: number; total: number }) => void;
 
-declare type HTMLNULL = HTMLNULL;
+declare type HTMLNULL = HTMLElement | null;
 
 declare type ValueOf<T> = T[keyof T];
 
