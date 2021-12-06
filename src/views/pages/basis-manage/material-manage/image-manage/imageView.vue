@@ -105,7 +105,7 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
 // 分页
-const { current, getPagination } = usePagination(1, 10);
+const { current, getPagination } = usePagination(1, 15);
 
 // 获取服务器数据
 async function fetchDataFromServer() {
@@ -258,12 +258,25 @@ fetchDataFromServer();
 @media screen and (max-width: 1550px) {
   .image-item-card {
     width: calc(50% - 5px);
+
+    &:nth-of-type(3n + 2) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    &:nth-of-type(2n + 1) {
+      margin-right: 10px;
+    }
   }
 }
 
 @media screen and (max-width: 1450px) {
   .image-item-card {
     width: 100%;
+
+    &:nth-of-type(2n + 1) {
+      margin-right: 0;
+    }
   }
 }
 </style>
