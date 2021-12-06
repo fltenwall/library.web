@@ -54,6 +54,7 @@
     <pagination-wrap
       v-model:current="current"
       class="pt-4"
+      :page-size="pageSize"
       :total="totalElements"
       @change="fetchDataFromServer"
     />
@@ -105,7 +106,7 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
 // 分页
-const { current, getPagination } = usePagination(1, 15);
+const { current, pageSize, getPagination } = usePagination(1, 15);
 
 // 获取服务器数据
 async function fetchDataFromServer() {
