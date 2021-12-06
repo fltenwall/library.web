@@ -6,7 +6,7 @@ export const tableProps = {
     default: null
   },
   dataSource: {
-    type: Array as PropType<unknown[]>,
+    type: Array as PropType<{ id?: string }[]>,
     default: []
   },
   rowKey: {
@@ -23,10 +23,6 @@ export const tableProps = {
   },
   loading: {
     type: Boolean as PropType<boolean>,
-    default: false
-  },
-  pagination: {
-    type: [Boolean, Object],
     default: false
   },
   bordered: {
@@ -52,7 +48,7 @@ export const tableListProps = {
 };
 
 export interface TableColumn {
-  dataIndex: string[] | string;
+  dataIndex: string | string[];
 
   key?: string;
 
@@ -64,7 +60,7 @@ export interface TableColumn {
 
   ellipsis?: boolean | { showTitle?: boolean };
 
-  fixed?: boolean | string;
+  fixed?: boolean | 'left' | 'right';
 }
 
 export interface Options {

@@ -6,7 +6,6 @@
     :row-key="rowKey"
     :columns="tableColumns"
     :data-source="dataSource"
-    :pagination="pagination"
     :scroll="scroll"
     :row-selection="rowSelection"
   >

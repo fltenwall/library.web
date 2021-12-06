@@ -1,11 +1,5 @@
 <template>
-  <a-modal
-    v-model:visible="visible"
-    :width="400"
-    :footer="null"
-    :mask-closable="false"
-    :closable="false"
-  >
+  <a-modal v-model:visible="visible" :width="400" :footer="null" :mask-closable="false" :closable="false">
     <div class="header">
       {{ title }}
     </div>
@@ -18,11 +12,7 @@
         />
       </a-form-item>
       <a-form-item v-bind="validateInfos.repeat">
-        <a-input-password
-          v-model:value="dataItem.repeat"
-          placeholder="确认密码"
-          :visibility-toggle="false"
-        />
+        <a-input-password v-model:value="dataItem.repeat" placeholder="确认密码" :visibility-toggle="false" />
       </a-form-item>
     </a-form>
     <div class="footer">
@@ -72,10 +62,7 @@ export default defineComponent({
           validator: (_rule: unknown, value: string): Promise<void> => {
             if (!dataItem.password) return Promise.resolve();
             if (!value) return Promise.reject('不允许为空');
-            let character = value.replace(
-              /(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g,
-              '\\$1'
-            );
+            let character = value.replace(/(\*|\.|\?|\+|\$|\^|\[|\]|\(|\)|\{|\}|\||\\|\/)/g, '\\$1');
             if (props.loading) character = `^${character}$`;
             else character = `^${character}.*`;
             if (new RegExp(character).test(dataItem.password!)) return Promise.resolve();
