@@ -51,7 +51,12 @@
       <a-empty v-if="!dataSource.length && !loading" />
     </scrollbar>
     <!-- 分页 -->
-    <pagination-wrap v-model:current="current" class="pt-4" :total="totalElements" />
+    <pagination-wrap
+      v-model:current="current"
+      class="pt-4"
+      :total="totalElements"
+      @change="fetchDataFromServer"
+    />
     <!-- 对话框 -->
     <image-view-modal
       v-model:visible="visible"
@@ -100,7 +105,7 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
 // 分页
-const { current, getPagination } = usePagination();
+const { current, getPagination } = usePagination(1, 10);
 
 // 获取服务器数据
 async function fetchDataFromServer() {
@@ -150,7 +155,10 @@ function handleUploadSuccess() {
 
 watch(
   () => props.selected.id,
-  () => fetchDataFromServer()
+  () => {
+    current.value = 1;
+    fetchDataFromServer();
+  }
 );
 
 fetchDataFromServer();
@@ -180,7 +188,6 @@ fetchDataFromServer();
 
 .image-item-list {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -191,6 +198,11 @@ fetchDataFromServer();
   padding: 10px;
   margin: 0 0 15px 0;
   border: @itemBorder;
+
+  &:nth-of-type(3n + 2) {
+    margin-right: 7.5px;
+    margin-left: 7.5px;
+  }
 
   ::v-deep(.preview-image) {
     width: 130px;

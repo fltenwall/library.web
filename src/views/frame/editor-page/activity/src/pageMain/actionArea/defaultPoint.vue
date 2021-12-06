@@ -38,7 +38,7 @@
   </div>
   <div class="default-point-item">
     <div class="c333">背景图片链接</div>
-    <ui-input class="w-180" :value="pageOptions.backgroundImage" readonly />
+    <ui-input class="w-180" :value="pageOptions.backgroundImage" placeholder="" readonly />
   </div>
 </template>
 

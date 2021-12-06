@@ -98,7 +98,9 @@ watch(
   let sum = 0;
   let list = Object.keys(moduleGather);
   for (let i = 0; i < list.length; i++) {
-    const distance = Math.ceil(moduleGather[list[i]].length / 2) * 115 + 42;
+    // 获取展示模块高度
+    const module = moduleGather[list[i]].filter((name) => baseConfigs.visible[name]);
+    const distance = Math.ceil(module.length / 2) * 115 + 42;
 
     if (list.length - 1 === i) {
       placeholderStyle.value = { height: `calc(100% - ${distance - 1}px)` };

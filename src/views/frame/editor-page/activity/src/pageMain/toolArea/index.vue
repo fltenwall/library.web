@@ -24,6 +24,7 @@ const activeKey = computed(() => pointStore.getTabState);
 
 const activeMap = { personal: '0' };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const marginTop = computed(() => (activeMap as any)[activeKey.value] || '0');
 
 onMounted(() => {

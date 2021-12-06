@@ -2,7 +2,7 @@ import { ref, Ref } from 'vue';
 
 export type SetPagination = (page?: number, size?: number) => void;
 
-export type GetPagination = () => { page: number; size: number };
+export type GetPagination = () => { size: number; page: number };
 
 interface Pagination {
   // 当前页数
@@ -28,7 +28,7 @@ export function usePagination(page = 1, size = 10): Pagination {
     pageSize.value = size;
   };
 
-  const getPagination = (): GetPagination => {
+  const getPagination = () => {
     return {
       page: current.value - 1,
 
