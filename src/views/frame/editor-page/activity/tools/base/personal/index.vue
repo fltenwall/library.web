@@ -2,6 +2,16 @@
   <img :src="src" />
 </template>
 
+<!-- 默认配置项 -->
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  inheritAttrs: false
+});
+</script>
+
+<!-- setup 执行项 -->
 <script setup lang="ts">
 // import type { Schema } from './schema';
 // import { reactive, toRefs, useAttrs } from 'vue';

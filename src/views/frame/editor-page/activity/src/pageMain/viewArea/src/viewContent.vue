@@ -1,32 +1,33 @@
 <template>
   <div class="view-content" @click.stop @contextmenu.prevent="onContextmenu">
-    <component :is="moduleView[name]" v-bind="$attrs" />
+    <component :is="moduleView[record.name]" v-bind="record" />
   </div>
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
+import type { BaseSchema } from '/@/lib/interface/PointInfo';
 import { defineComponent } from 'vue';
 import { moduleView } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 export default defineComponent({
-  inheritAttrs: false,
   props: {
-    name: {
-      type: String,
-      default: ''
+    record: {
+      type: Object as PropType<BaseSchema>,
+      default: () => ({})
     }
   },
   emits: ['on-contextmenu', 'on-right-select'],
-  setup(_props, { attrs, emit }) {
+  setup(props, { emit }) {
     // 处理点击右键
     function onContextmenu(event: MouseEvent) {
       const { layerX, layerY } = event as unknown as { layerX: number; layerY: number };
 
       const options = { x: layerX + 5, y: layerY + 5 };
       // 非当前选中的弹出
-      if (attrs.id !== pointStore.getPointidState) {
-        emit('on-right-select', attrs.id);
+      if (props.record.id !== pointStore.getPointidState) {
+        emit('on-right-select', props.record.id);
       }
 
       emit('on-contextmenu', options);

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { computed, unref, provide, ref, watch, inject } from 'vue';
-import { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '/@/lib/interface/PointInfo';
+import { computed, unref, provide, ref, watch, inject, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 
 type Trigger = 'width' | 'height' | 'x' | 'y';
@@ -11,7 +11,10 @@ export function queryPoint(id: string): PointInfo | undefined {
   return unref(pointData).find((el) => el.id === id);
 }
 
-export function templateInit<T extends PointInfo>(dataItem: T): void {
+export function templateInit<T extends PointInfo>(): Partial<T> {
+  // 数据集合
+  const dataItem = reactive<Partial<T>>({});
+
   provide('editor-form', { changeTrigger });
 
   const { getViewSize } = inject('viewSize') as {
@@ -91,4 +94,6 @@ export function templateInit<T extends PointInfo>(dataItem: T): void {
       (dataItem as any)[key] = data![key as string];
     });
   }
+
+  return dataItem;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="scrollbar-box">
     <div ref="wrap" class="scrollbar-wrap scrollbar-wrap-hidden-default">
-      <component :is="tag" ref="resize" class="h100">
+      <component :is="tag" ref="resize" class="scrollbar-content">
         <slot />
       </component>
     </div>
@@ -25,9 +25,14 @@ export default defineComponent({
     scrollTop: {
       type: Number,
       default: 0
+    },
+    distanceToEdge: {
+      // 从边缘到触发回调的距离。
+      type: Number,
+      default: 0
     }
   },
-  emits: ['on-scroll', 'update:scrollTop'],
+  emits: ['on-scroll', 'update:scrollTop', 'on-reach-bottom'],
   setup(props, { emit }) {
     const sizeWidth = ref<string>('0');
     const sizeHeight = ref<string>('0');
@@ -45,10 +50,25 @@ export default defineComponent({
       wrap.value?.removeEventListener('scroll', handleScroll, false);
     }, 300);
 
-    //
-    function handleScroll() {
-      emit('on-scroll', wrap.value?.scrollTop);
+    // 设置滚动值, 利用 防抖
+    const updateScrollTop = debounce(() => {
       emit('update:scrollTop', wrap.value?.scrollTop);
+    }, 300);
+
+    // 处理滚动事件
+    function handleScroll() {
+      const scrollTop = wrap.value?.scrollTop || 0;
+      const clientHeight = wrap.value?.clientHeight || 0;
+      const scrollHeight = wrap.value?.scrollHeight || 0;
+
+      emit('on-scroll', scrollTop);
+
+      if (scrollTop + clientHeight + props.distanceToEdge >= scrollHeight) {
+        // 滚动至底部时触发
+        emit('on-reach-bottom');
+      }
+
+      updateScrollTop();
     }
 
     // 鼠标滑动, 开始监听滚动
@@ -98,6 +118,10 @@ export default defineComponent({
     }
   }
 
+  &-content {
+    height: 100%;
+  }
+
   &-bar {
     position: absolute;
     right: 2px;
@@ -126,9 +150,4 @@ export default defineComponent({
     }
   }
 }
-
-// .scrollbar-content:hover > .scrollbar__bar {
-//   opacity: 1;
-//   transition: opacity 340ms ease-out;
-// }
 </style>

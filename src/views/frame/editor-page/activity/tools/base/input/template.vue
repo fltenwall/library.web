@@ -12,14 +12,11 @@
 
 <script setup lang="ts">
 import type { Schema } from './schema';
-import { reactive } from 'vue';
 import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 
-// 数据集合
-const dataItem = reactive<Partial<Schema>>({});
 // 响应式数据
-templateInit<Partial<Schema>>(dataItem);
+const dataItem = templateInit<Partial<Schema>>();
 </script>
 
 <style lang="less" scoped></style>
