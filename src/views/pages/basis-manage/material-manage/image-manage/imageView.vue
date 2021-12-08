@@ -106,7 +106,7 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
 // 分页
-const { current, pageSize, getPagination } = usePagination(1, 15);
+const { current, pageSize, getPagination } = usePagination(1, 12);
 
 // 获取服务器数据
 async function fetchDataFromServer() {

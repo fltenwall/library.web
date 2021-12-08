@@ -5,9 +5,9 @@ export interface Schema extends PointInfo {
 }
 
 export const schema: Schema = {
-  height: 80,
+  height: 100,
 
-  width: 300,
+  width: 100,
 
   label: ''
 };

@@ -32,7 +32,7 @@
         >
           <view-content
             v-click-away="hanldeClickDragAway"
-            v-bind="item"
+            :record="item"
             @on-contextmenu="handleContextmenu"
             @on-right-select="setSelectPoint"
           />

@@ -7,10 +7,11 @@
         <a-button>上传</a-button>
       </upload>
     </div>
-    <scrollbar>
+    <scrollbar @on-reach-bottom="handleScrollBottom">
       <div class="personal__content">
         <!-- 空数据 -->
-        <a-empty v-if="isEmpty" :image="simpleImage" />
+        <a-empty v-if="isEmpty" :image="simpleImage" class="personal__content-empty" />
+
         <!-- 内容 -->
         <template v-else>
           <panel-box
@@ -36,20 +37,28 @@
             <template #title>{{ item.name }}</template>
           </panel-box>
         </template>
+
+        <!-- 加载数据中 -->
+        <div v-if="loading" class="loading__wrap">
+          <loading-outlined :style="{ color: '#1890ff' }" />
+          <div class="loading__title">加载中</div>
+        </div>
       </div>
     </scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, unref } from 'vue';
 import { Empty } from 'ant-design-vue';
 import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
+import { usePagination } from '/@/hooks/web/usePagination';
 import { message } from 'ant-design-vue';
-import panelBox from './panelBox.vue';
 import { Upload } from '/@/lib/UI/index';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
+import panelBox from './panelBox.vue';
+import { concat } from 'lodash';
 
 const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 
@@ -64,6 +73,10 @@ const loading = ref<boolean>(false);
 const isEmpty = computed(() => !dataSource.value.length && !loading.value);
 // 背景
 const backgroundImage = computed(() => pointStore.getPageOptionsState.backgroundImage);
+// 分页
+const { current, pageSize, getPagination } = usePagination(1, 20);
+// 总数
+const totalElements = ref<number>(0);
 
 const options = [
   { label: '背景', value: 1 },
@@ -79,8 +92,8 @@ async function fetchDataFromServer() {
     loading.value = true;
     const query = queryData();
     const { data } = await service.fecthImageListByDict(query);
-    dataSource.value = data.content;
-    // totalElements.value = data.totalElements;
+    dataSource.value = concat(unref(dataSource), unref(data.content));
+    totalElements.value = data.totalElements;
   } catch (err) {
     message.error((err as { msg: string }).msg);
   } finally {
@@ -90,10 +103,9 @@ async function fetchDataFromServer() {
 // 数据查询
 function queryData() {
   return {
-    page: 0,
-    size: 20,
     type: DICT_TYPE,
     value: DICT_VALUE,
+    ...getPagination(),
     sort: 'createTime,desc'
   };
 }
@@ -115,6 +127,15 @@ function handleUploadSuccess() {
   message.success('文件上传成功，已保存至【我的素材】');
 
   fetchDataFromServer();
+}
+// 滚动条滚动到底部触发
+function handleScrollBottom() {
+  if (unref(current) * unref(pageSize) < unref(totalElements) && !unref(loading)) {
+    // 滚动加载分页数据
+    current.value += 1;
+
+    fetchDataFromServer();
+  }
 }
 
 fetchDataFromServer();
@@ -152,6 +173,10 @@ fetchDataFromServer();
   display: flex;
   flex-wrap: wrap;
   padding: 20px 10px 0;
+
+  &-empty {
+    width: 100%;
+  }
 }
 
 .preview-image {
@@ -166,6 +191,20 @@ fetchDataFromServer();
       linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
     background-position: 0 0, 10px 10px;
     background-size: 20px 20px;
+  }
+}
+
+.loading__wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  padding-top: 20px;
+  text-align: center;
+
+  .loading__title {
+    margin-top: 5px;
+    font-size: 12px;
   }
 }
 </style>

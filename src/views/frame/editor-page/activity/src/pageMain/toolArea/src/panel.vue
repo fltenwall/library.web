@@ -103,7 +103,7 @@ watch(
     const distance = Math.ceil(module.length / 2) * 115 + 42;
 
     if (list.length - 1 === i) {
-      placeholderStyle.value = { height: `calc(100% - ${distance - 1}px)` };
+      placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
     }
 
     toolsTop[list[i]] = sum;

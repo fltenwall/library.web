@@ -4,7 +4,7 @@
       <slot />
     </div>
 
-    <input ref="fileRef" type="file" accept="image/*" class="input-file" @change="handleFileChange" />
+    <input ref="fileRef" type="file" :accept="accept" class="input-file" @change="handleFileChange" />
   </div>
 </template>
 
