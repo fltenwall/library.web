@@ -248,6 +248,8 @@ fetchDataFromServer();
   }
 
   &:hover {
+    box-shadow: 0 2px 8px #00000026;
+
     .card-row {
       &__button {
         opacity: 1;

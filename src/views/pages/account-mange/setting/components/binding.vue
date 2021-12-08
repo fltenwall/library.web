@@ -2,9 +2,8 @@
   <div>binding</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({});
+<script setup lang="ts">
+import {} from 'vue';
 </script>
 
 <style lang="less" scoped></style>
