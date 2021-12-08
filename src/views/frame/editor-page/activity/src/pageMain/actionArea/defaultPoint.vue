@@ -9,6 +9,11 @@
   </div>
   <a-divider />
   <div class="default-point-item">
+    <div class="c333">锁定高度</div>
+    <lock :value="pageOptions.heigheLock" @on-change="(value) => handleUpdateData(value, 'heigheLock')" />
+  </div>
+  <a-divider />
+  <div class="default-point-item">
     <div class="c333">布局类型</div>
     <a-radio-group
       :value="pageOptions.layoutType"
@@ -46,6 +51,7 @@
 import type { ActivityManage } from '/@/api/page-manage/activity-page';
 import { inject, computed } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
+import lock from './src/lock.vue';
 import { pointStore } from '/@/store/modules/point';
 
 const { getViewSize } = inject('viewSize') as {
@@ -61,6 +67,7 @@ function handleChange(e: Event, key: keyof ActivityManage) {
   const value = (e.target as unknown as { value: number }).value;
   handleUpdateData(value, key);
 }
+
 // 处理数据内容发生变化
 function handleUpdateData(value: ActivityManage[keyof ActivityManage], key: keyof ActivityManage) {
   pointStore.commitUpdatePageOptionsState({ key, value });

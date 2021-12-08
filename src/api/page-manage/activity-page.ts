@@ -26,6 +26,9 @@ export interface ActivityManage {
   // 背景颜色
   backgroundImage?: string;
 
+  // 高度锁
+  heigheLock?: false;
+
   // 描述
   description?: string;
 

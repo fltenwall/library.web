@@ -18,15 +18,17 @@
           :key="item.id"
           class="view-item"
           :record="item"
-          :is-size="true"
+          :is-size="!item.sizeLock"
+          :is-position="!item.positionLock"
           :class="panelStyle.opacity !== 1 && 'stop-events'"
           :style="pointStyle[item.id]"
           :move="!!dataItem.isMove"
           :hover="dataItem.hover === item.id"
           :select="pointid === item.id"
-          @on-end="handleMoveEnd"
-          @on-move="handleMove"
-          @on-start="handleMoveStart"
+          @on-end="handleModuleMoveEnd"
+          @on-move="handleModuleMove"
+          @on-start="handleModuleMoveStart"
+          @on-click="handleModuleClick"
           @mouseenter="mouseEvent.mouseenter(item.id)"
           @mouseleave="mouseEvent.mouseleave"
         >
@@ -58,7 +60,7 @@
 
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
 import { computed, reactive, ref, onMounted, watch } from 'vue';
@@ -120,7 +122,7 @@ function initPointStyle(id: string, { x, y, width, height }: PointInfo) {
 }
 
 // 处理移动
-function handleMove({ record, x, y, type }: Move) {
+function handleModuleMove({ record, x, y, type }: Move) {
   const mapState = {
     mouse: () => {
       // 计算位置
@@ -171,7 +173,7 @@ function handleMove({ record, x, y, type }: Move) {
 }
 
 // 处理移动结束
-function handleMoveEnd({ record, x, y, type }: Move) {
+function handleModuleMoveEnd({ record, x, y, type }: Move) {
   // 设置鼠标弹起
   dataItem.state = 'end';
   dataItem.isMove = false;
@@ -224,13 +226,15 @@ function handleMoveEnd({ record, x, y, type }: Move) {
 }
 
 // 处理移动开始
-function handleMoveStart({ record }: { record: BaseSchema; type: string }) {
+function handleModuleMoveStart({ record }: Move) {
   // 设置鼠标按下
   dataItem.state = 'start';
   dataItem.isMove = true;
   dataItem.id = record.id;
   // 传递数据
   setSelectPoint(record.id);
+  // 隐藏菜单
+  hanldeClickDragAway();
 }
 
 // 设置样式
@@ -334,6 +338,9 @@ function hanldeClickDragAway() {
 
 // 设置面板高度
 function setPanelHeight(cover?: Cover) {
+  // 高度锁定 禁止高度增加
+  if (pageOptions.value.heigheLock) return;
+
   panelStyle.height = `${rangeHighest(cover) + 100}px`;
 }
 
@@ -348,6 +355,13 @@ function handleDeletePoint() {
 function handleClickOtherArea() {
   // 设置为空
   setSelectPoint('');
+}
+
+// 处理模块点击
+function handleModuleClick({ record }: Move) {
+  setSelectPoint(record.id);
+  // 隐藏菜单
+  hanldeClickDragAway();
 }
 
 // 设置背景图
@@ -400,7 +414,6 @@ onMounted(() => viewResize(panelRef));
     }
 
     &[hover='true'] {
-      cursor: move;
       border-color: @primary-color;
     }
 

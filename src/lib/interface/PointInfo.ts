@@ -10,6 +10,12 @@ export interface Schema {
 
   // 工具名称
   name: string;
+
+  // 位置锁
+  positionLock: false;
+
+  // 尺寸锁
+  sizeLock: false;
 }
 
 // 组件数据

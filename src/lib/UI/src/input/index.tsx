@@ -48,7 +48,7 @@ export default defineComponent({
       // 父组件更新
       emit('update:value', props.type === 'number' ? +value.replace(/[^0-9]+/g, '') : value);
       // 传递改变数据
-      instance.changeTrigger(props.prop);
+      instance.changeTrigger?.(props.prop);
     }
 
     // 输入框失去焦点, 同步数据

@@ -1,7 +1,11 @@
 <template>
   <div class="panel-menu">
     <div class="panel-menu-item">复制</div>
-    <div class="panel-menu-item" @click="handleDeletePoint">删除</div>
+    <div class="panel-menu-item">锁定</div>
+    <div class="panel-menu-item index-space-between" @click="handleDeletePoint">
+      <div>删除</div>
+      <div class="menuTips">Del</div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +56,11 @@ function handleDeletePoint() {
       color: #2c63ff;
       cursor: pointer;
     }
+  }
+
+  .menuTips {
+    font-size: 12px;
+    color: #bfbfbf;
   }
 }
 </style>

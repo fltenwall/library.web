@@ -21,12 +21,17 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    isPosition: {
+      // 是否可以改变尺寸
+      type: Boolean,
+      default: false
+    },
     record: {
       type: Object,
       default: () => ({})
     }
   },
-  emits: ['on-move', 'on-end', 'on-start', 'on-resize'],
+  emits: ['on-move', 'on-end', 'on-start', 'on-click'],
   setup(props, { emit }) {
     // 开始位置
     let startX: number, startY: number;
@@ -39,16 +44,21 @@ export default defineComponent({
     function startMove(event: MouseEvent, name: Type) {
       // 判断鼠标按键
       if (event.button !== 0) return;
+      // 禁止移动
+      if (!props.isPosition && name === 'mouse') {
+        emit('on-click', { record: props.record });
+        return;
+      }
       // 设置开始位置
       startX = event.pageX;
       startY = event.pageY;
       // 事件类型
       eventType = name;
+
+      emit('on-start', { record: props.record, type: eventType });
       // 设置移动事件 鼠标抬起事件
       document.addEventListener('mousemove', moving, false);
       document.addEventListener('mouseup', endMove, false);
-
-      emit('on-start', { record: props.record, type: eventType });
     }
 
     // 拖拽移动事件

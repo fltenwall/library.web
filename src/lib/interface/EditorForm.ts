@@ -1,3 +1,3 @@
 export interface EditorForm {
-  changeTrigger: (key: string) => void;
+  changeTrigger?: (key: string) => void;
 }

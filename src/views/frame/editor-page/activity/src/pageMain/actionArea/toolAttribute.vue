@@ -4,19 +4,6 @@
     <ui-input v-model:value="dataItem.id" readonly prop="zIndex" type="number" class="w-200" />
   </div>
   <a-divider />
-  <div class="action-row">
-    <div>锁定位置</div>
-    <div class="unlock-wrap">
-      <icon icon="ant-design:unlock-outlined" size="14" />
-    </div>
-  </div>
-  <div class="action-row">
-    <div>锁定比例</div>
-    <div class="unlock-wrap lock">
-      <icon icon="ant-design:lock-outlined" size="14" />
-    </div>
-  </div>
-  <a-divider />
   <div class="flex">
     <div class="flex-item mr-3 index-middle">
       <div class="flex-shrink-0 w-6">w</div>
@@ -39,6 +26,15 @@
   </div>
   <a-divider />
   <div class="action-row">
+    <div>锁定位置</div>
+    <lock v-model:value="dataItem.positionLock" prop="positionLock" />
+  </div>
+  <div class="action-row">
+    <div>锁定比例</div>
+    <lock v-model:value="dataItem.sizeLock" prop="sizeLock" />
+  </div>
+  <a-divider />
+  <div class="action-row">
     <div>层级</div>
     <ui-input v-model:value="dataItem.zIndex" class="w-100" prop="zIndex" type="number" />
   </div>
@@ -47,6 +43,7 @@
 <script setup lang="ts">
 import { templateInit } from '../../../tools/utils';
 import uiInput from '/@/lib/UI/src/input/index';
+import lock from './src/lock.vue';
 
 const dataItem = templateInit();
 </script>
@@ -63,19 +60,6 @@ const dataItem = templateInit();
 
   & + .action-row {
     margin-top: 16px;
-  }
-}
-
-.unlock-wrap {
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  .middle();
-
-  &.lock {
-    background: #f2f2f2;
-    border-radius: 3px;
   }
 }
 </style>
