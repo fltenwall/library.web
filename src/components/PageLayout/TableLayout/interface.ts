@@ -9,7 +9,7 @@ export interface Instance {
 }
 
 export interface Actions {
-  label: string;
+  label: string | ((record: unknown) => string);
 
   value: string;
 }

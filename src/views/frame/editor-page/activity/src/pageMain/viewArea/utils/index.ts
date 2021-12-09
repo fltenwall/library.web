@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Cover } from '../../../../utils/usePointPos';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
-import { Ref, computed, unref, inject } from 'vue';
+import { computed, unref } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { isNumber, isObject } from '/@/utils/is';
 import usePointPos from '../../../../utils/usePointPos';
@@ -48,10 +48,8 @@ export function handleStore(type: string, { id, key, value }: Store): void {
 
 // 拖拽限制规则
 export function limitRules(): LimitRules {
-  // 视图大小
-  const { getViewSize } = inject('viewSize') as {
-    getViewSize: () => { width: number; height: number };
-  };
+  // 画布大小
+  const canvasSize = computed(() => pointStore.getCanvasSizeState);
   // 表单配置
   const pageOptions = computed(() => pointStore.getPageOptionsState);
   // 是否是弹性布局
@@ -59,7 +57,7 @@ export function limitRules(): LimitRules {
 
   // 处理限制 宽高
   function limitSize(pos: { y?: number; x?: number }, record: BaseSchema): BaseSchema {
-    const { height: CH, width: CW } = getViewSize();
+    const { height: CH, width: CW } = canvasSize.value;
     const x = record.x;
     const y = record.y;
     const id = record.id;
@@ -82,7 +80,7 @@ export function limitRules(): LimitRules {
 
   // 位置信息处理
   function limitPosition(pos: { x: number; y: number }, record: BaseSchema): Position {
-    const { height: CH, width: CW } = getViewSize();
+    const { height: CH, width: CW } = canvasSize.value;
     const id = record.id;
     const name = record.name;
     const width = record.width;
@@ -120,15 +118,6 @@ export function limitRules(): LimitRules {
   }
 
   return { limitSize, limitPosition };
-}
-
-// 视图发送变化
-export function viewResize(panelRef: Ref<HTMLNULL>): void {
-  const { setViewSize } = inject('viewSize') as {
-    setViewSize: (panelRef: Ref<HTMLNULL>) => void;
-  };
-
-  setViewSize(panelRef);
 }
 
 // 修改全部组件位置

@@ -21,12 +21,7 @@ import pageHeader from './src/pageHeader/index.vue';
 import service from '/@/api/page-manage/activity-page';
 import { pointStore } from '/@/store/modules/point';
 
-import useViewSize from './utils/useViewSize';
-
 const { currentRoute } = useRouter();
-
-// 视图大小
-useViewSize();
 
 // 通过ID加载数据
 async function onLoadDataById(id: number) {

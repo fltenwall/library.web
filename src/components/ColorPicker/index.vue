@@ -35,7 +35,7 @@
         <!-- 底部 -->
         <div class="color-footer">
           <a-input v-model:value="inputColor" class="color-footer-input" @blur="handleInputBlur" />
-          <a-button class="color-footer-button">确定</a-button>
+          <a-button class="color-footer-button" @click="handleSelectColor">确定</a-button>
         </div>
       </div>
     </template>
@@ -104,7 +104,6 @@ watch(
   (color) => {
     isValueUpdateFromInner.value = true;
 
-    // emits('update:value', color);
     emits('change', color);
 
     inputColor.value = color;
@@ -121,6 +120,13 @@ watch(
     }
   }
 );
+
+// 点击确定更新数据
+function handleSelectColor() {
+  emits('update:value', currentColor.value);
+
+  visible.value = false;
+}
 
 // 颜色更新
 function updateColor(color: Hsla | string) {

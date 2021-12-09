@@ -12,6 +12,8 @@
     <template #tableBodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'updateTime'">{{ useFromatlll(record.createTime) }}</template>
       <template v-else-if="column.dataIndex === 'mode'">{{ modeMap.get(record.mode) }}</template>
+      <template v-else-if="column.dataIndex === 'layoutType'">{{ layoutMap.get(record.mode) }}</template>
+      <template v-else-if="column.dataIndex === 'state'">{{ stateMap.get(record.state) }}</template>
     </template>
   </page-layout>
 </template>
@@ -31,9 +33,14 @@ const go = useGo();
 
 const modeMap = new Map().set(1, '移动端').set(2, 'PC端');
 
+const layoutMap = new Map().set(1, '自由布局').set(2, '弹性布局');
+
+const stateMap = new Map().set(false, '关闭').set(true, '开启');
+
 const actions = [
   { label: '新增', value: 'new' },
   { label: '查看', value: 'view' },
+  { label: (record: Required<ActivityManage>) => stateMap.get(!record.state), value: 'state' },
   { label: '排版', value: 'compose' },
   { label: '编辑', value: 'edit' },
   { label: '删除', value: 'delete' }
@@ -68,11 +75,6 @@ const searchOptions: SearchOptions[] = [
 
 const tableColumns: TableColumn[] = [
   {
-    title: '编号',
-    dataIndex: 'id',
-    ellipsis: true
-  },
-  {
     title: '名称',
     dataIndex: 'name',
     ellipsis: true
@@ -83,8 +85,13 @@ const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
-    title: '描述',
-    dataIndex: 'description',
+    title: '页面布局',
+    dataIndex: 'layoutType',
+    ellipsis: true
+  },
+  {
+    title: '状态',
+    dataIndex: 'state',
     ellipsis: true
   },
   {

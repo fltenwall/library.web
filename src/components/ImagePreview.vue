@@ -1,6 +1,6 @@
 <template>
   <div class="image-preview__wrap index-center-middle" @wheel="handelWheel">
-    <draggable-offset @on-move="handelImageMove" @on-end="handelImageEnd">
+    <draggable-offset :is-position="true" @on-move="handelImageMove" @on-end="handelImageEnd">
       <img class="image-preview" ondragstart="return false;" :src="src" :style="{ transform }" />
     </draggable-offset>
   </div>
@@ -59,6 +59,7 @@ emit('on-instance', { initPosition });
 <style lang="less" scoped>
 .image-preview {
   height: 129px;
+  user-select: none;
 
   &__wrap {
     position: relative;

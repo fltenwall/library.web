@@ -3,8 +3,8 @@
     <div class="view-area" @click="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
       <div
         ref="panelRef"
-        class="view-area-panel relative"
-        :style="[panelStyle, `width: ${modeMap.get(canvasMode)}`]"
+        :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
+        :style="panelStyle"
         @drop="dragEvent.handleDrag"
         @dragover.prevent
         @click.stop
@@ -63,14 +63,14 @@ import type { CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
-import { computed, reactive, ref, onMounted, watch } from 'vue';
+import { computed, reactive, ref, watch, nextTick } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
 import { moduleSchema } from '../../../tools/index';
 import { assign, cloneDeep } from 'lodash-es';
-import { handleStore, limitRules, viewResize, pointDataModify, rangeHighest } from './utils/index';
+import { handleStore, limitRules, pointDataModify, rangeHighest } from './utils/index';
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
@@ -82,12 +82,12 @@ import { loadImageSize } from '/@/utils';
 const panelStyle = reactive<CSSProperties>({});
 // 页面数据
 const pageOptions = computed(() => pointStore.getPageOptionsState);
-// 画布模式
-const canvasMode = computed(() => pageOptions.value.mode);
+// 页面模式
+const pageMode = computed(() => pageOptions.value.mode);
 // 背景图片
 const backgroundImage = computed(() => pageOptions.value.backgroundImage);
-// 画布尺寸
-const modeMap = new Map().set(1, '375px').set(2, 'calc(100vw - 800px)');
+// 背景颜色
+const backgroundColor = computed(() => pageOptions.value.backgroundColor);
 // 拖拽数据信息
 const pointData = computed(() => pointStore.getPointDataState);
 // 拖拽数据样式
@@ -101,7 +101,7 @@ const pointid = computed({
 const dataItem = reactive<DataItem>({ pos: {} });
 // ref
 const panelRef = ref<HTMLNULL>(null);
-
+// 限制
 const limit = limitRules();
 // 菜单样式变化
 const menuStyle = ref<CSSProperties>({});
@@ -342,6 +342,8 @@ function setPanelHeight(cover?: Cover) {
   if (pageOptions.value.heigheLock) return;
 
   panelStyle.height = `${rangeHighest(cover) + 100}px`;
+
+  updataCanvasSize();
 }
 
 // 处理删除 point
@@ -364,6 +366,16 @@ function handleModuleClick({ record }: Move) {
   hanldeClickDragAway();
 }
 
+// 更新画布大小
+function updataCanvasSize() {
+  nextTick(() => {
+    const { clientHeight: height, clientWidth: width } = panelRef.value!;
+    // 更新画布大小
+    pointStore.commitUpdataCanvasSize({ key: 'width', value: width });
+    pointStore.commitUpdataCanvasSize({ key: 'height', value: height });
+  });
+}
+
 // 设置背景图
 watch(
   () => backgroundImage.value,
@@ -374,16 +386,31 @@ watch(
     } else {
       const src = `${config.preview}${val}`;
       const { width, height } = await loadImageSize(src);
-      const canvasWidth = parseInt(modeMap.get(canvasMode.value));
+      const { clientWidth } = panelRef.value!;
       // 设置画布尺寸
       panelStyle.backgroundImage = `url(${src})`;
-      panelStyle.minHeight = `${height / (width / canvasWidth)}px`;
+      panelStyle.minHeight = `${height / (width / clientWidth)}px`;
     }
+
+    updataCanvasSize();
   },
   { immediate: true }
 );
-// 监听视图变化
-onMounted(() => viewResize(panelRef));
+
+// 设置背景颜色
+watch(
+  () => backgroundColor.value,
+  (val) => {
+    panelStyle.backgroundColor = val;
+  },
+  { immediate: true }
+);
+
+// 页面模式发生变化
+watch(
+  () => pageMode.value,
+  () => updataCanvasSize()
+);
 </script>
 
 <style lang="less" scoped>
@@ -396,7 +423,8 @@ onMounted(() => viewResize(panelRef));
   margin: 0 auto;
 
   &-panel {
-    min-height: 700px;
+    width: 52vw;
+    min-height: 52vw * 0.7;
     background-color: #fff;
     background-size: 100% 100%;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
@@ -434,5 +462,10 @@ onMounted(() => viewResize(panelRef));
     background: #ffccc7;
     opacity: 0.6;
   }
+}
+
+.mobile-mode {
+  width: 375px;
+  min-height: 700px;
 }
 </style>

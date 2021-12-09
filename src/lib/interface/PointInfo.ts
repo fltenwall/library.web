@@ -12,20 +12,23 @@ export interface Schema {
   name: string;
 
   // 位置锁
-  positionLock: false;
+  positionLock?: false;
 
   // 尺寸锁
-  sizeLock: false;
+  sizeLock?: false;
 }
 
-// 组件数据
-export interface BaseSchema extends Schema {
+// 尺寸
+export interface Size {
   // 宽度
   width: number;
 
   // 高度
   height: number;
 }
+
+// 组件数据
+export interface BaseSchema extends Schema, Size {}
 
 export interface PointInfo extends Partial<BaseSchema>, Indexable {
   // 层级

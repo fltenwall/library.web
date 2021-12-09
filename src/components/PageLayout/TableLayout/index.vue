@@ -35,7 +35,7 @@
               :value="item.value"
               @on-select="onClickAction(item.value, data.record)"
             >
-              {{ item.label }}
+              {{ isFunction(item.label) ? item.label(data.record) : item.label }}
             </action-button>
           </div>
         </template>
@@ -47,9 +47,10 @@
 </template>
 
 <script setup lang="ts">
+import type { TableColumn } from '/@/lib/props/TableList';
 import { computed, ref } from 'vue';
 import { usePagination } from '/@/hooks/web/usePagination';
-import { isArray } from '/@/utils/is';
+import { isArray, isFunction } from '/@/utils/is';
 import { SyncOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import propsOptions from './props';
 
@@ -61,7 +62,7 @@ const dataSource = ref([]);
 
 const totalElements = ref(0);
 
-const actionColumns = {
+const actionColumns: TableColumn = {
   title: '操作',
   align: 'center',
   fixed: 'right',
@@ -70,7 +71,7 @@ const actionColumns = {
 };
 
 const customColumns = computed(() => {
-  const columns = props.columns.map((el) => ({ align: 'center', ...el }));
+  const columns: TableColumn[] = props.columns.map((el) => ({ align: 'center', ...el }));
 
   isArray(props.actions) && columns.push(actionColumns);
 

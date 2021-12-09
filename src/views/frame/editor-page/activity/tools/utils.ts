@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { PointInfo } from '/@/lib/interface/PointInfo';
-import { computed, unref, provide, ref, watch, inject, reactive } from 'vue';
+import { computed, unref, provide, ref, watch, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 
 type Trigger = 'width' | 'height' | 'x' | 'y';
@@ -17,9 +17,8 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
 
   provide('editor-form', { changeTrigger });
 
-  const { getViewSize } = inject('viewSize') as {
-    getViewSize: () => { width: number; height: number };
-  };
+  // 画布大小
+  const canvasSize = computed(() => pointStore.getCanvasSizeState);
 
   const pointInfo = computed(() => pointStore.getPointInfo);
 
@@ -43,7 +42,7 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
 
   // 数据改变触发
   function changeTrigger(key: Trigger | string) {
-    const { width: CW, height: CH } = getViewSize();
+    const { height: CH, width: CW } = canvasSize.value;
     const value = (dataItem as any)[key] as never;
     isValueUpdateFromInner.value = true;
 

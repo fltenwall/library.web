@@ -19,8 +19,8 @@ export const formRules: FromRules = {
 };
 
 export const stateSelectOption = [
-  { value: 1, label: '正常' },
-  { value: 0, label: '停用' }
+  { value: 1, label: '开启' },
+  { value: 0, label: '关闭' }
 ];
 
 export const modeSelectOption = [

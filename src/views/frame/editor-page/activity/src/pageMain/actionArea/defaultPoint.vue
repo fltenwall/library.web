@@ -1,16 +1,28 @@
 <template>
   <div class="default-point-item">
     <div class="c333">宽度</div>
-    <ui-input class="w-100" :value="viewSize.width" readonly />
+    <ui-input class="w-100" :value="canvasSize.width" readonly />
   </div>
   <div class="default-point-item">
     <div class="c333">高度</div>
-    <ui-input class="w-100" :value="viewSize.height" readonly />
+    <ui-input class="w-100" :value="canvasSize.height" readonly />
   </div>
   <a-divider />
   <div class="default-point-item">
     <div class="c333">锁定高度</div>
     <lock :value="pageOptions.heigheLock" @on-change="(value) => handleUpdateData(value, 'heigheLock')" />
+  </div>
+  <a-divider />
+  <div class="default-point-item">
+    <div class="c333">背景颜色</div>
+    <color-picker
+      :value="pageOptions.backgroundColor"
+      @change="handleUpdateData($event, 'backgroundColor')"
+    />
+  </div>
+  <div class="default-point-item">
+    <div class="c333">背景图片链接</div>
+    <ui-input class="w-180" :value="pageOptions.backgroundImage" placeholder="" readonly />
   </div>
   <a-divider />
   <div class="default-point-item">
@@ -33,34 +45,19 @@
       <a-radio-button :value="20">20px</a-radio-button>
     </a-radio-group>
   </div>
-  <a-divider />
-  <div class="default-point-item">
-    <div class="c333">背景颜色</div>
-    <color-picker
-      :value="pageOptions.backgroundColor"
-      @change="handleUpdateData($event, 'backgroundColor')"
-    />
-  </div>
-  <div class="default-point-item">
-    <div class="c333">背景图片链接</div>
-    <ui-input class="w-180" :value="pageOptions.backgroundImage" placeholder="" readonly />
-  </div>
 </template>
 
 <script setup lang="ts">
 import type { ActivityManage } from '/@/api/page-manage/activity-page';
-import { inject, computed } from 'vue';
+import { computed } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
 import lock from './src/lock.vue';
 import { pointStore } from '/@/store/modules/point';
 
-const { getViewSize } = inject('viewSize') as {
-  getViewSize: () => { width: number; height: number };
-};
-// 视图区
-const viewSize = computed(() => getViewSize());
 // 数据
 const pageOptions = computed(() => pointStore.getPageOptionsState);
+// 画布大小
+const canvasSize = computed(() => pointStore.getCanvasSizeState);
 
 // 处理布局切换
 function handleChange(e: Event, key: keyof ActivityManage) {

@@ -1,6 +1,6 @@
 <template>
   <div class="header-right flex">
-    <div class="button pointer index-center-middle">保 存</div>
+    <div class="button pointer index-center-middle" @click="handleKeepData">保 存</div>
     <div class="button pointer index-center-middle">预 览</div>
     <div class="button-primary index-center-middle" @click="onGoBack">返 回</div>
   </div>
@@ -8,11 +8,17 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+// import { pointStore } from '/@/store/modules/point';
 
 const { back } = useRouter();
 
 // 处理页面返回
 const onGoBack = () => back();
+
+// 处理保存数据
+function handleKeepData() {
+  // console.log(pointStore.getPageOptionsState);
+}
 </script>
 
 <style lang="less" scoped>

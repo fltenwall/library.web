@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'vue';
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo, Size } from '/@/lib/interface/PointInfo';
 import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 import { isObject } from '/@/utils/is';
@@ -38,6 +38,9 @@ export default class Point extends VuexModule {
   // 标签状态
   private tabState = 'base';
 
+  // 画布尺寸
+  private canvasSizeState: Size = { height: 0, width: 0 };
+
   // 获取组件数据
   get getPointDataState(): Required<PointInfo>[] {
     return this.pointDataState;
@@ -58,6 +61,7 @@ export default class Point extends VuexModule {
     return this.pageOptionsState;
   }
 
+  // 获取 标签类型
   get getTabState(): string {
     return this.tabState;
   }
@@ -66,6 +70,11 @@ export default class Point extends VuexModule {
   get getPointInfo(): PointInfo {
     const point = this.pointDataState.find((el) => el.id === this.pointidState);
     return point ?? {};
+  }
+
+  // 获取画布大小
+  get getCanvasSizeState(): Size {
+    return this.canvasSizeState;
   }
 
   // 添加数据
@@ -126,6 +135,12 @@ export default class Point extends VuexModule {
 
     // 删除
     index !== -1 && this.pointDataState.splice(index, 1);
+  }
+
+  // 更新画布尺寸
+  @Mutation
+  commitUpdataCanvasSize({ key, value }: { key: keyof Size; value: number }): void {
+    this.canvasSizeState[key] = value;
   }
 
   // 清空

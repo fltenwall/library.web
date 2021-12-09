@@ -106,7 +106,7 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 // 选中的数据
 const dataItem = reactive<ImageManage>({});
 // 分页
-const { current, pageSize, getPagination } = usePagination(1, 12);
+const { current, pageSize, getPagination } = usePagination(1, 18);
 
 // 获取服务器数据
 async function fetchDataFromServer() {
@@ -195,8 +195,8 @@ fetchDataFromServer();
 .image-item-card {
   display: inline-flex;
   width: calc(33.333% - 5px);
-  height: 150px;
-  padding: 10px;
+  height: 130px;
+  padding: 5px;
   margin: 0 0 15px 0;
   border: @itemBorder;
 
@@ -205,16 +205,16 @@ fetchDataFromServer();
     margin-left: 7.5px;
   }
 
-  ::v-deep(.preview-image) {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
+  .preview-image {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
   }
 
   &-content {
     display: flex;
     width: 0;
-    margin: 0 0 0 10px;
+    margin: 0 0 0 15px;
     flex: 1;
     flex-direction: column;
     justify-content: space-between;
