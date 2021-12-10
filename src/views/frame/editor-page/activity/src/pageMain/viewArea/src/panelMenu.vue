@@ -1,7 +1,7 @@
 <template>
   <div class="panel-menu">
-    <div class="panel-menu-item">复制</div>
-    <div class="panel-menu-item">锁定</div>
+    <div class="panel-menu-item" @click="handleCopyPoint">复制</div>
+    <div class="panel-menu-item" @click="handleLockPoint">{{ lock ? '解锁' : '锁定' }}</div>
     <div class="panel-menu-item index-space-between" @click="handleDeletePoint">
       <div>删除</div>
       <div class="menuTips">Del</div>
@@ -10,22 +10,42 @@
 </template>
 
 <script setup lang="ts">
+import { computed, unref } from 'vue';
+import { pointStore } from '/@/store/modules/point';
 import { handleStore } from '../utils/index';
+import { isDef } from '/@/utils/is';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: ''
-  }
-});
+const pointInfo = computed(() => pointStore.getPointInfo);
 
-const emits = defineEmits(['on-delete']);
+const lock = computed(() => pointInfo.value.sizeLock && pointInfo.value.positionLock);
+
+const emits = defineEmits(['on-delete', 'on-copy']);
 
 // 删除 point
 function handleDeletePoint() {
-  handleStore('d', { id: props.id });
+  const id = pointInfo.value.id;
 
-  emits('on-delete', props.id);
+  isDef<string>(id) && handleStore('d', { id });
+
+  emits('on-delete', unref(pointInfo).id);
+}
+
+// 锁定
+function handleLockPoint() {
+  const id = pointInfo.value.id;
+
+  const sizeLock = pointInfo.value.sizeLock;
+
+  const positionLock = pointInfo.value.positionLock;
+
+  isDef<string>(id) && handleStore('u', { id, key: 'sizeLock', value: !sizeLock });
+
+  isDef<string>(id) && handleStore('u', { id, key: 'positionLock', value: !positionLock });
+}
+
+// 复制
+function handleCopyPoint() {
+  emits('on-copy', unref(pointInfo));
 }
 </script>
 

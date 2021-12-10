@@ -92,6 +92,7 @@ async function fetchDataFromServer() {
     loading.value = true;
     const query = queryData();
     const { data } = await service.fecthImageListByDict(query);
+    current.value === 1 && (dataSource.value = []);
     dataSource.value = concat(unref(dataSource), unref(data.content));
     totalElements.value = data.totalElements;
   } catch (err) {
@@ -125,7 +126,7 @@ function handleSelectImage(record: ImageManage) {
 // 处理图片上传成功
 function handleUploadSuccess() {
   message.success('文件上传成功，已保存至【我的素材】');
-
+  current.value = 1;
   fetchDataFromServer();
 }
 // 滚动条滚动到底部触发

@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Ref } from 'vue';
 import type { Cover } from '../../../../utils/usePointPos';
 import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
 import { computed, unref } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { isNumber, isObject } from '/@/utils/is';
 import usePointPos from '../../../../utils/usePointPos';
+import { debounce } from 'lodash-es';
 
 interface Store {
   id: string;
@@ -174,4 +176,15 @@ export function rangeHighest(cover?: Cover): number {
   }
 
   return highest;
+}
+
+// 更新画布大小
+export function initUpdataCanvasSize(panelRef: Ref<HTMLNULL>) {
+  return debounce(() => {
+    const { width, height } = panelRef.value!.getBoundingClientRect();
+
+    // 更新画布大小
+    pointStore.commitUpdataCanvasSize({ key: 'width', value: Math.ceil(width) });
+    pointStore.commitUpdataCanvasSize({ key: 'height', value: Math.ceil(height) });
+  }, 500);
 }

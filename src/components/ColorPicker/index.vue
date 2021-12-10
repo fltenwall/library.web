@@ -118,7 +118,8 @@ watch(
     } else {
       updateColor(color);
     }
-  }
+  },
+  { immediate: true }
 );
 
 // 点击确定更新数据

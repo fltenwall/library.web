@@ -1,13 +1,12 @@
 <template>
   <scrollbar class="flex-item">
-    <div class="view-area" @click="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
+    <div class="view-area" @mousedown.self="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
       <div
         ref="panelRef"
         :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
         :style="panelStyle"
         @drop="dragEvent.handleDrag"
         @dragover.prevent
-        @click.stop
         @dragenter="dragEvent.handleDragenter"
         @dragleave="dragEvent.handleDragleave"
         @contextmenu.prevent.stop="handleCancelSelect"
@@ -52,7 +51,7 @@
         />
 
         <!-- 右键菜单 -->
-        <panel-menu :id="pointid" :style="menuStyle" @on-delete="handleDeletePoint" />
+        <panel-menu :style="menuStyle" @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
       </div>
     </div>
   </scrollbar>
@@ -63,14 +62,14 @@ import type { CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
-import { computed, reactive, ref, watch, nextTick } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
 import { moduleSchema } from '../../../tools/index';
 import { assign, cloneDeep } from 'lodash-es';
-import { handleStore, limitRules, pointDataModify, rangeHighest } from './utils/index';
+import { handleStore, limitRules, pointDataModify, rangeHighest, initUpdataCanvasSize } from './utils/index';
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
@@ -92,7 +91,7 @@ const backgroundColor = computed(() => pageOptions.value.backgroundColor);
 const pointData = computed(() => pointStore.getPointDataState);
 // 拖拽数据样式
 const pointStyle = computed(() => pointStore.getPointStyleState);
-// 选中数据
+// 选中数据 id
 const pointid = computed({
   set: (id) => pointStore.commitUpdatePointidState({ id }),
   get: () => pointStore.getPointidState
@@ -105,6 +104,8 @@ const panelRef = ref<HTMLNULL>(null);
 const limit = limitRules();
 // 菜单样式变化
 const menuStyle = ref<CSSProperties>({});
+// 更新画布大小
+const updataCanvasSize = initUpdataCanvasSize(panelRef);
 
 // 计算组件大小
 function usePointSize({ x, y, width: w, height: h }: Required<PointInfo>) {
@@ -269,33 +270,16 @@ const dragEvent = {
     panelStyle.opacity = 1;
     // 获取传来的数据
     const { name, offset, data } = JSON.parse(event.dataTransfer?.getData('tool') || '');
+    // 空数据则不添加
+    if (isUnDef(name)) return;
     // 获取数据位置
     const { offsetX, offsetY } = event;
-    // 唯一值
-    const id = buildShortUUID();
+    // 获取模型数据
     const schema = cloneDeep(moduleSchema[name]);
     // 合并
-    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, id, name }, data);
-    // 计算大小
-    const { width, height } = usePointSize(schema as Required<PointInfo>);
-    schema.width = width;
-    schema.height = height;
-    // 计算位置
-    const { x, y } = usePointPos({ type: 'top', schema: schema as Required<PointInfo> });
-    schema.x = x;
-    schema.y = y;
-    // 初始化样式
-    initPointStyle(id, schema);
-    // 传递数据
-    setSelectPoint(id);
-    // 添加数据
-    pointStore.commitAddPointData(schema as Required<PointInfo>);
-    // 更新数据
-    pointDataModify(schema as Required<PointInfo>);
-    // 设置面板高度
-    setPanelHeight();
-    // 隐藏菜单
-    hanldeClickDragAway();
+    assign(schema, { x: offsetX + offset.x, y: offsetY + offset.y, name }, data);
+    // 创建 point
+    createPoint(schema);
   },
 
   // 当被鼠标拖动的对象进入其容器范围内时触发此事件
@@ -308,6 +292,33 @@ const dragEvent = {
     panelStyle.opacity = 1;
   }
 };
+
+// 创建 Point
+function createPoint(data: Required<PointInfo>) {
+  const schema = data;
+  // 唯一值
+  schema.id = buildShortUUID();
+  // 计算大小
+  const { width, height } = usePointSize(schema);
+  schema.width = width;
+  schema.height = height;
+  // 计算位置
+  const { x, y } = usePointPos({ type: 'top', schema });
+  schema.x = x;
+  schema.y = y;
+  // 初始化样式
+  initPointStyle(schema.id, schema);
+  // 传递数据
+  setSelectPoint(schema.id);
+  // 添加数据
+  pointStore.commitAddPointData(schema as Required<PointInfo>);
+  // 更新数据
+  pointDataModify(schema as Required<PointInfo>);
+  // 设置面板高度
+  setPanelHeight();
+  // 隐藏菜单
+  hanldeClickDragAway();
+}
 
 // 设置数据
 function setSelectPoint(id: string) {
@@ -353,6 +364,16 @@ function handleDeletePoint() {
   pointDataModify();
 }
 
+// 处理复制 point
+function handleCopyPoint(data: Required<PointInfo>) {
+  const schema = cloneDeep(data);
+
+  schema.x += 10;
+  schema.y += 10;
+
+  createPoint(schema);
+}
+
 // 处理点击空白区域
 function handleClickOtherArea() {
   // 设置为空
@@ -364,16 +385,6 @@ function handleModuleClick({ record }: Move) {
   setSelectPoint(record.id);
   // 隐藏菜单
   hanldeClickDragAway();
-}
-
-// 更新画布大小
-function updataCanvasSize() {
-  nextTick(() => {
-    const { clientHeight: height, clientWidth: width } = panelRef.value!;
-    // 更新画布大小
-    pointStore.commitUpdataCanvasSize({ key: 'width', value: width });
-    pointStore.commitUpdataCanvasSize({ key: 'height', value: height });
-  });
 }
 
 // 设置背景图
@@ -400,9 +411,7 @@ watch(
 // 设置背景颜色
 watch(
   () => backgroundColor.value,
-  (val) => {
-    panelStyle.backgroundColor = val;
-  },
+  (val) => (panelStyle.backgroundColor = val),
   { immediate: true }
 );
 
@@ -433,7 +442,7 @@ watch(
 
   .view-item {
     z-index: 2;
-    border: 2px solid transparent;
+    outline: 2px solid transparent;
     box-sizing: border-box;
     transition: all 0.2s ease;
 
@@ -442,11 +451,11 @@ watch(
     }
 
     &[hover='true'] {
-      border-color: @primary-color;
+      outline-color: @primary-color;
     }
 
     &[select='true'] {
-      border-color: @primary-color;
+      outline-color: @primary-color;
     }
 
     &[move='true'] {

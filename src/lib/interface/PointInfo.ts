@@ -11,6 +11,9 @@ export interface Schema {
   // 工具名称
   name: string;
 
+  // 层级
+  zIndex?: number;
+
   // 位置锁
   positionLock?: false;
 

@@ -57,7 +57,7 @@ export default defineComponent({
 
     // 处理滚动事件
     function handleScroll() {
-      const scrollTop = wrap.value?.scrollTop || 0;
+      const scrollTop = Math.ceil(wrap.value?.scrollTop || 0);
       const clientHeight = wrap.value?.clientHeight || 0;
       const scrollHeight = wrap.value?.scrollHeight || 0;
 

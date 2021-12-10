@@ -44,7 +44,7 @@
 import type { CSSProperties } from 'vue';
 import { computed, ref, unref, watch, onMounted } from 'vue';
 import { moduleGather, baseConfigs } from '../../../../tools/index';
-import { isEmpty, isArray, isNull, isUnDef } from '/@/utils/is';
+import { isEmpty, isArray, isNull } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
 import { usePinYin } from '/@/hooks/web/usePinYin';
@@ -56,7 +56,7 @@ const scrollTop = ref<number>(0);
 // 标签状态
 const tabState = computed(() => pointStore.getTabState);
 // 距离顶部高度集合
-const toolsTop: { [prop: string]: number } = {};
+const topMap: Map<string, number> = new Map();
 // 占位符样式
 const placeholderStyle = ref<CSSProperties>({});
 
@@ -87,9 +87,9 @@ watch(
       isValueUpdateFromInner.value = false;
     } else {
       // 判断不是否为空
-      if (isEmpty(unref(inputSearch)) || isNull(val) || isUnDef(toolsTop[val])) return;
+      if (isEmpty(unref(inputSearch)) || isNull(val) || !topMap.has(val)) return;
 
-      scrollTop.value = toolsTop[val];
+      scrollTop.value = topMap.get(val) || 0;
     }
   }
 );
@@ -106,30 +106,33 @@ watch(
       placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
     }
 
-    toolsTop[list[i]] = sum;
+    topMap.set(list[i], sum);
 
     sum += distance;
   }
 
-  toolsTop['infinite'] = Infinity;
+  topMap.set('infinite', Infinity);
 })();
 
 // 处理滚动条滚动
 function handleScroll(top: number) {
-  let tops = Object.keys(toolsTop);
-  for (let i = 0; i < tops.length; i++) {
-    if (toolsTop[tops[i + 1]] >= top) {
-      tabState.value !== tops[i] && (isValueUpdateFromInner.value = true);
-
-      pointStore.commitTabState(tops[i]);
+  let last = 'base';
+  for (let key of topMap.keys()) {
+    const value = topMap.get(key) || 0;
+    if (value > top) {
+      tabState.value !== key && (isValueUpdateFromInner.value = true);
+      // 使用上一个数据 作为 当前选中的标签
+      pointStore.commitTabState(last);
 
       break;
+    } else {
+      last = key;
     }
   }
 }
 
 onMounted(() => {
-  scrollTop.value = toolsTop[tabState.value] || 0;
+  scrollTop.value = topMap.get(tabState.value) || 0;
 });
 </script>
 

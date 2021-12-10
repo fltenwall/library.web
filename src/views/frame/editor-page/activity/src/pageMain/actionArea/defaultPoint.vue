@@ -10,7 +10,10 @@
   <a-divider />
   <div class="default-point-item">
     <div class="c333">锁定高度</div>
-    <lock :value="pageOptions.heigheLock" @on-change="(value) => handleUpdateData(value, 'heigheLock')" />
+    <lock
+      :value="pageOptions.heigheLock"
+      @on-change="(value: string) => handleUpdateData(value, 'heigheLock')"
+    />
   </div>
   <a-divider />
   <div class="default-point-item">
@@ -22,7 +25,14 @@
   </div>
   <div class="default-point-item">
     <div class="c333">背景图片链接</div>
-    <ui-input class="w-180" :value="pageOptions.backgroundImage" placeholder="" readonly />
+    <ui-input
+      class="w-180"
+      :value="pageOptions.backgroundImage"
+      readonly
+      allow-clear
+      placeholder=""
+      @on-change="(value: string) => handleUpdateData(value, 'backgroundImage')"
+    />
   </div>
   <a-divider />
   <div class="default-point-item">
@@ -62,6 +72,7 @@ const canvasSize = computed(() => pointStore.getCanvasSizeState);
 // 处理布局切换
 function handleChange(e: Event, key: keyof ActivityManage) {
   const value = (e.target as unknown as { value: number }).value;
+
   handleUpdateData(value, key);
 }
 

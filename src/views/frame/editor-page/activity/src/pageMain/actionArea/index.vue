@@ -83,6 +83,10 @@ watch(
     }
   }
 
+  ::v-deep(.ant-input-affix-wrapper) {
+    height: 28.85px;
+  }
+
   ::v-deep(.ant-input) {
     font-size: 12px;
   }

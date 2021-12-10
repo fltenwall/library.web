@@ -72,7 +72,7 @@ export interface LoginParams {
 
 export default class Service {
   // 获取用户信息和token
-  static getAccountInfo(query: { code: string }): Promise<Result<Security>> {
+  static getAccountInfo(query?: { code: string }): Promise<Result<Security>> {
     return request<Result<Security>>({
       url: '/epi/user/me',
       method: 'get',

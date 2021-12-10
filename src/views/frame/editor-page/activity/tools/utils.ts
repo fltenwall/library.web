@@ -3,7 +3,7 @@ import type { PointInfo } from '/@/lib/interface/PointInfo';
 import { computed, unref, provide, ref, watch, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 
-type Trigger = 'width' | 'height' | 'x' | 'y';
+type Trigger = 'width' | 'height' | 'x' | 'y' | 'zIndex';
 
 export function queryPoint(id: string): PointInfo | undefined {
   const pointData = computed(() => pointStore.getPointDataState);
@@ -68,6 +68,9 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
         const y = value + height > CH ? CH - height : value;
         updateBaseContent('y', 'transform', y, `translate(${unref(pointInfo).x}px,${y}px`);
       },
+      zIndex: () => {
+        updateBaseContent('zIndex', 'zIndex', value, `${value}`);
+      },
       other: () => {
         pointStore.commitUpdatePointData({ id: unref(pointid), key, value });
       }
@@ -94,5 +97,5 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
     });
   }
 
-  return dataItem;
+  return dataItem as Partial<T>;
 }

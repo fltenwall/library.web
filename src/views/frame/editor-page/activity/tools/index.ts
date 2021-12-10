@@ -25,7 +25,7 @@ export const moduleGather: Recordable<string[]> = {};
 // 模块列表
 export const moduleView: Recordable<Component> = {};
 // 模型工具
-export const moduleSchema: Indexable<PointInfo> = {};
+export const moduleSchema: Indexable<Required<PointInfo>> = {};
 // 操作数据
 export const moduleAction: Recordable<Component> = {};
 // 分类 中文 和 图标
