@@ -97,7 +97,11 @@ export default defineComponent({
           suffix: () => {
             const isShow = input.value && props.allowClear;
 
-            return isShow && <icon icon="eva:close-fill" size="12" class="pointer" onClick={handleClear} />;
+            return isShow ? (
+              <icon icon="eva:close-fill" size="12" class="pointer" onClick={handleClear} />
+            ) : (
+              ''
+            );
           }
         }}
       </Input>

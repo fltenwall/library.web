@@ -12,7 +12,7 @@
     <div class="c333">锁定高度</div>
     <lock
       :value="pageOptions.heigheLock"
-      @on-change="(value: string) => handleUpdateData(value, 'heigheLock')"
+      @change="(value: string) => handleUpdateData(value, 'heigheLock')"
     />
   </div>
   <a-divider />

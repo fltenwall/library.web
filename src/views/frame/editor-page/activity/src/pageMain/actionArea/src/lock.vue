@@ -20,7 +20,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['update:value', 'on-change']);
+const emit = defineEmits(['update:value', 'change']);
 
 const instance = inject('editor-form', {}) as EditorForm;
 
@@ -29,7 +29,7 @@ function handleChangeState() {
   // 更新父组件数据
   emit('update:value', !props.value);
 
-  emit('on-change', !props.value);
+  emit('change', !props.value);
   // 传递改变数据
   instance.changeTrigger?.(props.prop);
 }
