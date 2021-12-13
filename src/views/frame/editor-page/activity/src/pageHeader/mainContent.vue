@@ -3,7 +3,7 @@
     <input
       ref="inputRef"
       :value="pageOptions.name"
-      class="name-input mr-2"
+      class="name-input mr2"
       @focus="onInputFocus"
       @blur="onInputBlur"
       @input="onInputChange"

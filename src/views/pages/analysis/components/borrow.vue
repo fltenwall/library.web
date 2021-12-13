@@ -12,18 +12,18 @@
     <div class="borrow-main index-middle">
       <div>
         日同比
-        <span class="ml-1 mr-1">0%</span>
+        <span class="ml1 mr1">0%</span>
         <caret-up-outlined style="color: #f5222d;" />
       </div>
       <div>
         周同比
-        <span class="ml-1 mr-1">0%</span>
+        <span class="ml1 mr1">0%</span>
         <caret-down-outlined style="color: #52c41a;" />
       </div>
     </div>
     <div class="borrow-footer">
       <span>总借书量</span>
-      <span class="ml-1"> 0 </span>
+      <span class="ml1"> 0 </span>
     </div>
   </div>
 </template>

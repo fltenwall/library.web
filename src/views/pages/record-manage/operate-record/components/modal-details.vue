@@ -1,6 +1,6 @@
 <template>
   <a-modal title="操作日志详细" :width="700" :visible="visible" @cancel="onCancel">
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col span="12">
         <div class="row-title">操作模块</div>
         <div class="row-content">
@@ -14,7 +14,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col span="12">
         <div class="row-title">登录信息</div>
         <div class="row-content">
@@ -30,7 +30,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col span="12">
         <div class="row-title">操作地点</div>
         <div class="row-content">
@@ -47,7 +47,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col>
         <div class="row-title">请求参数</div>
         <div class="row-content index-newline">
@@ -55,7 +55,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col>
         <div class="row-title">操作环境</div>
         <div class="row-content">
@@ -65,7 +65,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row type="flex" class="pb-5">
+    <a-row type="flex" class="pb5">
       <a-col span="12">
         <div class="row-title">操作描述</div>
         <div class="row-content">

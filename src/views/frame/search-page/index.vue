@@ -2,7 +2,7 @@
   <public-header class="search-page-header">
     <template #left>
       <router-link to="/">
-        <img :src="MixinConfig.logo" class="w-8 mr-4" />
+        <img :src="MixinConfig.logo" class="w8 mr4" />
       </router-link>
       <input-search
         v-model:value="pageInfo.query"

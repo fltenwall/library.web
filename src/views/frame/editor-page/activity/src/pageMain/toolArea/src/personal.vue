@@ -2,7 +2,7 @@
   <div class="personal-wrap">
     <div class="personal__header">我的素材</div>
     <div class="personal__actions">
-      <select-wrap v-model:value="selectType" :options="options" class="w-140" placeholder="操作方式" />
+      <select-wrap v-model:value="selectType" :options="options" class="w140" placeholder="操作方式" />
       <upload :data="{ value: DICT_VALUE, type: DICT_TYPE }" @upload-success="handleUploadSuccess">
         <a-button>上传</a-button>
       </upload>

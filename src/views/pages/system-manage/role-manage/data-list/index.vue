@@ -59,14 +59,18 @@ const searchOptions: SearchOptions[] = [
 
 const tableColumns: TableColumn[] = [
   {
-    title: '是否默认角色',
+    title: '默认角色',
     dataIndex: 'isDefault',
-    ellipsis: true
+    ellipsis: true,
+    width: 80
   },
   {
     title: '角色名称',
-    dataIndex: 'name',
-    ellipsis: true
+    dataIndex: 'name'
+  },
+  {
+    title: '角色描述',
+    dataIndex: 'description'
   }
 ];
 </script>

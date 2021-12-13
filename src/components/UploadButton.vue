@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-1 ml-1" @click="openFile">
+  <div class="mr1 ml1" @click="openFile">
     <input ref="inputRef" type="file" class="display-none" :accept="accept" @change="handleFiles" />
     <a-button :loading="loading">
       {{ title }}

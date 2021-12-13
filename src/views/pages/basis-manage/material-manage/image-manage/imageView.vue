@@ -4,7 +4,7 @@
       <div>{{ selected.label || '全部' }}</div>
       <div class="flex">
         <a-input placeholder="查询" />
-        <a-button class="mr-3 ml-3">查询</a-button>
+        <a-button class="mr3 ml3">查询</a-button>
         <upload
           :disabled="!selected.id"
           :data="{ classifyId: selected.id }"
@@ -33,6 +33,10 @@
               <span class="card-row__title">大小</span>
               <span class="card-row__content">{{ fileSize(item.size) }}</span>
             </div>
+            <div>
+              <span class="card-row__title">状态</span>
+              <span class="card-row__content">{{ item.status ? '开 启' : '关 闭' }}</span>
+            </div>
             <div class="index-middle flex-space-between">
               <div>
                 <span class="card-row__title">创建于</span>
@@ -53,7 +57,7 @@
     <!-- 分页 -->
     <pagination-wrap
       v-model:current="current"
-      class="pt-4"
+      class="pt4"
       :page-size="pageSize"
       :total="totalElements"
       @change="fetchDataFromServer"
@@ -62,7 +66,7 @@
     <image-view-modal
       v-model:visible="visible"
       :image-data="dataItem"
-      :options="options"
+      :organize="options"
       @on-success="fetchDataFromServer"
     />
   </div>
@@ -195,8 +199,8 @@ fetchDataFromServer();
 .image-item-card {
   display: inline-flex;
   width: calc(33.333% - 5px);
-  height: 130px;
-  padding: 5px;
+  height: 150px;
+  padding: 5px 10px 5px 5px;
   margin: 0 0 15px 0;
   border: @itemBorder;
 
@@ -206,8 +210,8 @@ fetchDataFromServer();
   }
 
   .preview-image {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
   }
 

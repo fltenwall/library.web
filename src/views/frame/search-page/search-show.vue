@@ -1,8 +1,8 @@
 <template>
   <public-header class="search-page-show-header">
     <template #left>
-      <router-link to="/" class="index-middle ml-15">
-        <img :src="MixinConfig.logo" class="w-6 mr-4" />
+      <router-link to="/" class="index-middle ml15">
+        <img :src="MixinConfig.logo" class="w6 mr4" />
         <div class="header-title index-theme">
           {{ MixinConfig.title }}
         </div>
@@ -57,7 +57,7 @@
     </div>
     <global-table
       bordered
-      class="mt-10 default-shadow"
+      class="mt10 default-shadow"
       :loading="loading"
       :data-source="bookDetail"
       :columns="holdInfoColumns"

@@ -14,7 +14,7 @@
     <div ref="containerRef" />
     <div class="visits-footer">
       <span>总访问量</span>
-      <span class="ml-1"> {{ visitData.count }} </span>
+      <span class="ml1"> {{ visitData.count }} </span>
     </div>
   </div>
 </template>

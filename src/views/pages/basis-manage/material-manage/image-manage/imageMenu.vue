@@ -1,9 +1,9 @@
 <template>
   <div class="image-menu default-shadow">
-    <div class="mb-4">目录</div>
+    <div class="mb4">目录</div>
     <div class="flex">
       <div class="menu-item" @click="handleNewItem">新建</div>
-      <div class="w-3" />
+      <div class="w3" />
       <div :class="[!selected.id && 'selected', 'menu-item']" @click="handleViewAllItem">全部</div>
     </div>
 
@@ -15,7 +15,7 @@
         @click="handleSelectItem(item)"
       >
         <div class="index-hidden-newline image-menu-item-title">{{ item.label }}</div>
-        <div class="fs-3 mt-8 flex flex-space-between index-middle">
+        <div class="fs3 mt8 flex flex-space-between index-middle">
           <div>创建于：{{ useFromatlll(item.createTime) }}</div>
           <div class="index-operation item-operation">
             <span @click.stop="handleEditItem(item)">编辑</span>

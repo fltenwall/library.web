@@ -3,15 +3,15 @@
     <div class="index-theme header-left-title index-middle">
       <span>{{ MixinConfig.shortTitle }}</span>
     </div>
-    <div :class="['index-center-middle simulator-item ml-10', canvasMode === 1 && 'actived']">
+    <div :class="['index-center-middle simulator-item ml10', canvasMode === 1 && 'actived']">
       <icon icon="clarity:mobile-line" />
     </div>
 
-    <div :class="['index-center-middle simulator-item ml-1', canvasMode === 2 && 'actived']">
+    <div :class="['index-center-middle simulator-item ml1', canvasMode === 2 && 'actived']">
       <icon icon="clarity:computer-line" size="16" />
     </div>
 
-    <div class="button index-center-middle ml-10 mr-4">
+    <div class="button index-center-middle ml10 mr4">
       <a-tooltip placement="bottom">
         <template #title>一键还原</template>
         <icon icon="icons8:refresh" class="point-button" :disable="!resetState" @click="handleReset" />
@@ -20,7 +20,7 @@
         <template #title>撤销</template>
         <icon
           icon="la:undo"
-          class="point-button mr-4 ml-4"
+          class="point-button mr4 ml4"
           :disable="!linked.linkedState.undo"
           @click="linked.handleUndo"
         />

@@ -1,12 +1,12 @@
 <template>
   <div v-title="'输入账号'" class="forget">
     <public-header class="forget-header" main-class="header-main" />
-    <div class="forget-main pr-8 pl-8">
-      <div class="h p-4">找回密码</div>
-      <div class="m index-middle">
+    <div class="forget-main pr8 pl8">
+      <div class="h p4">找回密码</div>
+      <div class="index-middle">
         <div class="m-edit">
-          <div class="pl-5 mt-5 mb-4">
-            <div class="m-title mb-1">输入{{ shortTitle }}账号</div>
+          <div class="pl5 mt5 mb4">
+            <div class="m-title mb1">输入{{ shortTitle }}账号</div>
             <div class="m-tip">输入注册{{ shortTitle }}帐号的手机号或邮件地址</div>
           </div>
           <global-input

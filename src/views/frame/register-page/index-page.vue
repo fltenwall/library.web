@@ -56,7 +56,7 @@
             >注 册</global-button
           >
         </div>
-        <div class="pt-15 index-middle flex-item flex-column">
+        <div class="pt15 index-middle flex-item flex-column">
           <img :src="accountImage" class="account-image" />
           <div class="account-content">
             只需一个帐号，您便可以使用 {{ MixinConfig.shortTitle }} 的所有产品和服务。

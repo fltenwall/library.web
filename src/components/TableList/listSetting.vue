@@ -11,22 +11,14 @@
     </tooltip-button>
 
     <template #title>
-      <div class="pt-1 pb-1">
-        <a-checkbox
-          v-model:checked="checkAll"
-          :indeterminate="indeterminate"
-          @change="onCheckAllChange"
-        >
+      <div class="pt1 pb1">
+        <a-checkbox v-model:checked="checkAll" :indeterminate="indeterminate" @change="onCheckAllChange">
           列设置
         </a-checkbox>
       </div>
     </template>
     <template #content>
-      <a-checkbox-group
-        v-model:value="checkedList"
-        :options="plainOptions"
-        @change="onCheckChange"
-      />
+      <a-checkbox-group v-model:value="checkedList" :options="plainOptions" @change="onCheckChange" />
     </template>
   </a-popover>
 </template>

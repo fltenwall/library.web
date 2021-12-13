@@ -10,21 +10,29 @@
     @on-action="handleClickAction"
   >
     <template #tableBodyCell="{ column, record }">
-      <template v-if="column.dataIndex === 'updateTime'">
-        {{ useFromatlll(record.createTime) }}
-      </template>
-      <template v-else-if="column.dataIndex === 'enabled'">
-        <div class="index-center-middle">
-          <div :class="[record.enabled ? 'use' : 'disable', 'circle', 'mr-2']" />
-          <div>{{ record.enabled ? '使用中' : '禁用中' }}</div>
+      <template v-if="column.dataIndex === 'username'">
+        <div class="index-middle">
+          <a-badge :count="record.superAdmin ? '超' : ''">
+            <a-avatar shape="square" :size="32">
+              <template #icon>
+                <user-outlined />
+              </template>
+            </a-avatar>
+          </a-badge>
+          <div class="ml5">
+            <div class="font-600 mb1">{{ record.username }}</div>
+            <div class="text-gray-400">{{ record.email || record.mobile }}</div>
+          </div>
         </div>
       </template>
-      <template v-else-if="column.dataIndex === 'superAdmin'">
-        <a-switch checked-children="是" un-checked-children="否" :checked="record.superAdmin" />
+      <template v-if="column.dataIndex === 'updateTime'">{{ useFromatlll(record.createTime) }}</template>
+      <template v-else-if="column.dataIndex === 'enabled'">
+        <a-tag :color="record.enabled ? '#4f46e5' : '#52525b'">
+          {{ record.enabled ? '使用中' : '禁用中' }}
+        </a-tag>
       </template>
-      <template v-else-if="column.dataIndex === 'role'">
-        {{ record.role.name }}
-      </template>
+      <template v-else-if="column.dataIndex === 'role'">{{ record.role.name }}</template>
+      <template v-else-if="column.dataIndex === 'binding'"> </template>
     </template>
   </page-layout>
 
@@ -132,12 +140,8 @@ const tableColumns: TableColumn[] = [
   {
     title: '登录账户',
     dataIndex: 'username',
-    ellipsis: true
-  },
-  {
-    title: '超级管理员',
-    dataIndex: 'superAdmin',
-    ellipsis: true
+    ellipsis: true,
+    align: 'left'
   },
   {
     title: '用户状态',
@@ -155,30 +159,16 @@ const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
-    title: '手机号码',
-    dataIndex: 'mobile',
+    title: '性别',
+    dataIndex: ['sex', 'label'],
     ellipsis: true
   },
   {
-    title: '邮件地址',
-    dataIndex: 'email',
+    title: '账户绑定',
+    dataIndex: 'binding',
     ellipsis: true
   }
 ];
 </script>
 
-<style lang="less" scoped>
-.circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-
-  &.disable {
-    background: #ff7875;
-  }
-
-  &.use {
-    background: #7cb305;
-  }
-}
-</style>
+<style lang="less" scoped></style>

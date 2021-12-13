@@ -15,7 +15,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
 
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_DROP_CONSOLE, VITE_PROXY, VITE_OPEN } = viteEnv;
+  const { VITE_PUBLIC_PATH, VITE_DROP_CONSOLE, VITE_PROXY } = viteEnv;
 
   const isBuild = command === 'build';
 
@@ -43,13 +43,13 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
        * 端口号
        * @default 3000
        */
-      port: VITE_PORT,
+      port: 3200,
 
       /**
        * 运行自动打开浏览器·
        * @default 'false'
        */
-      open: VITE_OPEN,
+      open: false,
 
       // 本地跨域代理
       proxy: createProxy(VITE_PROXY)

@@ -18,7 +18,7 @@
       </a-form-item>
     </a-form>
     <div class="index-right modal-footer">
-      <a-button class="mr-4" @click="onCancel"> 取消 </a-button>
+      <a-button class="mr4" @click="onCancel"> 取消 </a-button>
       <a-button
         type="primary"
         :disabled="!dataItem.name || !dataItem.link"

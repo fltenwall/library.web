@@ -4,7 +4,7 @@
     <template #overlay>
       <div class="master-content" @click.stop>
         <div class="master-content-title">快捷键</div>
-        <table class="w100">
+        <table class="full-width">
           <thead>
             <tr>
               <th>Markdown</th>

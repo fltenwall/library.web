@@ -45,7 +45,7 @@ export default defineComponent({
     );
 
     return () => (
-      <div class="p-4">
+      <div class="p4">
         <div ref={elementRef} />
       </div>
     );

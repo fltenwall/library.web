@@ -6,19 +6,19 @@
         <tree-menu v-model:value="dataItem.modularIds" class="tree-menu" :readonly="readonly" />
         <global-card title="基本信息" class="flex-item">
           <a-row>
-            <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+            <a-col :xs="24" :lg="9" class="pl4 pr4">
               <a-form-item label="角色名称" v-bind="validateInfos.name">
                 <input-wrap v-model:value="dataItem.name" />
               </a-form-item>
             </a-col>
-            <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+            <a-col :xs="24" :lg="9" class="pl4 pr4">
               <a-form-item label="是否默认角色" v-bind="validateInfos.isDefault">
                 <select-wrap v-model:value="dataItem.isDefault" :options="selectOption" />
               </a-form-item>
             </a-col>
           </a-row>
           <a-row>
-            <a-col :xs="24" :lg="18" class="pl-4 pr-4">
+            <a-col :xs="24" :lg="18" class="pl4 pr4">
               <a-form-item label="描述">
                 <textarea-wrap
                   v-model:value="dataItem.description"
@@ -42,9 +42,7 @@
       <a-button v-if="readonly" v-show-by-auth="'ROLE:UPDATE'" type="primary" @click="onEditPage">
         编辑
       </a-button>
-      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
-        保存
-      </a-button>
+      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage"> 保存 </a-button>
     </template>
   </global-data-page>
 </template>

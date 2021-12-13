@@ -14,7 +14,7 @@
     <div class="new-user-main index-middle" />
     <div class="new-user-footer">
       <span>总用户</span>
-      <span class="ml-1"> {{ dataItem.userCount }} </span>
+      <span class="ml1"> {{ dataItem.userCount }} </span>
     </div>
   </div>
 </template>

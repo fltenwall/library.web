@@ -1,7 +1,7 @@
 <template>
   <div class="image-manage">
     <image-menu @on-select="handleSelected" @on-data-source="handleMenuData" />
-    <div class="w-5"></div>
+    <div class="w5"></div>
     <image-view :selected="selected" :menu-data="menuData" />
   </div>
 </template>

@@ -4,17 +4,17 @@
       <!-- 基本信息 -->
       <global-card title="基本信息">
         <a-row>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="名称" v-bind="validateInfos.name">
               <input-wrap v-model:value="dataItem.name" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="状态" v-bind="validateInfos.state">
               <select-wrap v-model:value="dataItem.state" :options="stateSelectOption" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="模式" v-bind="validateInfos.mode">
               <select-wrap
                 v-model:value="dataItem.mode"
@@ -25,7 +25,7 @@
           </a-col>
         </a-row>
         <a-row>
-          <a-col :xs="24" :lg="18" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="18" class="pl4 pr4">
             <a-form-item label="描述">
               <textarea-wrap
                 v-model:value="dataItem.description"

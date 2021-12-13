@@ -41,7 +41,7 @@ export default defineComponent({
                           icon: () => <UserOutlined />
                         }}
                       </Avatar>
-                      <div class="ml-3">{userStore.getUserInfoState?.username}</div>
+                      <div class="ml3">{userStore.getUserInfoState?.username}</div>
                     </div>
                   )
                 }}

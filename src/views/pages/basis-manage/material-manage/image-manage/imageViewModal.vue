@@ -1,9 +1,12 @@
 <template>
   <a-modal v-model:visible="modalState" :style="{ top }" title="设置" :mask-closable="false" :footer="null">
     <image-preview :src="`${MixinConfig.preview}${dataItem.hash}`" @on-instance="initPreviewInstance" />
-    <a-form layout="vertical" class="mt-10">
+    <a-form layout="vertical" class="mt10">
       <a-form-item label="分类">
-        <a-select v-model:value="dataItem.classifyId" :options="options" />
+        <select-wrap v-model:value="dataItem.classifyId" :options="organize" />
+      </a-form-item>
+      <a-form-item label="状态">
+        <select-wrap v-model:value="dataItem.status" :options="options" />
       </a-form-item>
       <a-form-item label="名称">
         <a-input v-model:value="dataItem.name" />
@@ -16,12 +19,12 @@
       <a-descriptions-item label="更新时间">{{ useMoment(imageData.updateTime!) }}</a-descriptions-item>
     </a-descriptions>
 
-    <div class="index-space-between mt-4">
+    <div class="index-space-between mt4">
       <div>
         <a-button type="primary" danger @click="handleClickDelete">删除</a-button>
       </div>
       <div>
-        <a-button class="mr-2" @click="handleClickCancel">取消</a-button>
+        <a-button class="mr2" @click="handleClickCancel">取消</a-button>
         <a-button type="primary" :loading="loading" @click="handleSaveItem">保存</a-button>
       </div>
     </div>
@@ -36,9 +39,12 @@ import { useMoment } from '/@/utils/dateFormat';
 import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
 import { message } from 'ant-design-vue';
+import { difference } from '/@/utils/difference';
+import SelectWrap from '/@/components/SelectWrap.vue';
+import { isUnDef } from '/@/utils/is';
 
 const props = defineProps({
-  options: {
+  organize: {
     type: Array as PropType<{ label: string; value: number }[]>,
     default: () => []
   },
@@ -54,6 +60,11 @@ const props = defineProps({
 
 const emit = defineEmits(['update:visible', 'on-success']);
 
+const options = [
+  { value: 1, label: '开启' },
+  { value: 0, label: '关闭' }
+];
+// 输入数据
 const dataItem = reactive<ImageManage>({});
 // 对话框状态
 const modalState = ref<boolean>(false);
@@ -91,7 +102,9 @@ async function handleSaveItem() {
     if (loading.value) return;
     loading.value = true;
     // 设置上传数据
-    const data = { name: dataItem.name!, classifyId: dataItem.classifyId! };
+    const data = difference<ImageManage>(dataItem, props.imageData);
+    // 没有数据就不更新
+    if (isUnDef(data)) return;
     await service.updateImage(dataItem.id!, data);
     modalState.value = false;
     emit('on-success');
@@ -107,6 +120,7 @@ watch(
   (val) => {
     if (val) {
       assign(dataItem, props.imageData);
+
       initPosition?.();
     }
     modalState.value = val;

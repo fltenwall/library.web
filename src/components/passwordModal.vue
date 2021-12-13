@@ -17,7 +17,7 @@
     </a-form>
     <div class="footer">
       <a-button @click="onCancel"> 取消 </a-button>
-      <a-button type="primary" class="ml-4" :loading="loading" @click="onConfirm"> 确定 </a-button>
+      <a-button type="primary" class="ml4" :loading="loading" @click="onConfirm"> 确定 </a-button>
     </div>
   </a-modal>
 </template>

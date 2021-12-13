@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { configStyleImportPlugin } from './styleImport';
 import { configMockPlugin } from './mock';
+import { configWindiCSSPlugin } from './windicss';
 import viteCompression from 'vite-plugin-compression';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
@@ -15,6 +16,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // have to
     vueJsx()
   ];
+  vitePlugins.push(configWindiCSSPlugin());
 
   vitePlugins.push(configStyleImportPlugin());
 

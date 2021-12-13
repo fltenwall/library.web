@@ -1,7 +1,7 @@
 <template>
   <a-select
     class="select-wrap"
-    :value="value"
+    :value="selected"
     :disabled="inputReadonly"
     :placeholder="inputReadonly ? '' : placeholder"
     @select="onSelect"
@@ -13,6 +13,7 @@
 <script lang="ts">
 import type { Ref, PropType } from 'vue';
 import { defineComponent, computed, toRefs } from 'vue';
+import { isBoolean } from '../utils/is';
 import { injectDatapage } from '/@/lib/idata/data-page/methods/useDepend';
 
 const useinputReadonly = (readonly: Ref<boolean | undefined>, isReadonly: Ref<boolean>) => {
@@ -37,7 +38,7 @@ export default defineComponent({
       default: '请选择'
     },
     value: {
-      type: [Number, String],
+      type: [Number, String, Boolean],
       default: undefined
     }
   },
@@ -48,7 +49,10 @@ export default defineComponent({
     const inputReadonly = useinputReadonly(readonly, isReadonly);
 
     const onSelect = (value: unknown) => emit('update:value', value);
-    return { inputReadonly, onSelect };
+
+    const selected = computed(() => (isBoolean(props.value) ? (props.value ? 1 : 0) : props.value));
+
+    return { inputReadonly, selected, onSelect };
   }
 });
 </script>

@@ -6,7 +6,7 @@
         <form-item-wrap label="数据标签">
           <input-wrap v-model:value="queryData.label" :is-readonly="false" />
         </form-item-wrap>
-        <div class="index-button-right mr-4">
+        <div class="index-button-right mr4">
           <a-button>查询</a-button>
           <a-button v-if="editMode" @click="onNewDataItem">新增</a-button>
         </div>
@@ -17,7 +17,7 @@
     <global-table :loading="loading" :columns="dataTypeColumn" :data-source="dataSource">
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'state'">
-          <a-tag v-if="record.state" color="success" class="mr-0">开启</a-tag>
+          <a-tag v-if="record.state" color="success" class="mr0">开启</a-tag>
           <a-tag v-else color="error">关闭</a-tag>
         </template>
 
@@ -33,7 +33,7 @@
     <!-- 分页 -->
     <pagination-wrap
       v-model:current="current"
-      class="index-right pr-4 pt-5"
+      class="index-right pr4 pt5"
       :total="totalElements"
       @change="onPageChange"
     />

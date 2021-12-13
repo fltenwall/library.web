@@ -1,14 +1,14 @@
 <template>
   <div class="overview-header">
     <div class="overview-header-title">工作台</div>
-    <div class="flex mt-4">
+    <div class="flex mt4">
       <div class="index-middle">
         <a-avatar :size="60">
           <template #icon>
             <user-outlined />
           </template>
         </a-avatar>
-        <div class="ml-4">
+        <div class="ml4">
           <div class="content-title">
             <span>{{ userInfo.username }}</span>
             <span>，{{ blessing }}</span>

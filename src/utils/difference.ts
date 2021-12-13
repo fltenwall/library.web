@@ -28,8 +28,7 @@ export function difference<T>(base: T, other: T): T {
   // 深检测对象差异
   const deepValid = (target: any, source: any) => {
     // 计算数组或者对象长度
-    const lengthValid = (value: any) =>
-      Array.isArray(value) ? value.length : Reflect.ownKeys(value).length;
+    const lengthValid = (value: any) => (Array.isArray(value) ? value.length : Reflect.ownKeys(value).length);
 
     // 结果
     const result: { value?: unknown } = {};

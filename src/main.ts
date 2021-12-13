@@ -3,6 +3,8 @@ import { setupRouter } from './router';
 import { setupStore } from './store';
 import App from './App.vue';
 import PluginsIniter from './plugins/plugins-initer';
+// 原子 css
+import 'virtual:windi.css';
 
 // 导入自定义 ui
 import '/@/assets/styles/index.less';

@@ -5,16 +5,16 @@
       <a-menu @click="handlemenuClick">
         <a-menu-item key="center">
           <user-outlined />
-          <span class="ml-1">个人中心</span>
+          <span class="ml1">个人中心</span>
         </a-menu-item>
         <a-menu-item key="setting">
           <setting-outlined />
-          <span class="ml-1">个人设置</span>
+          <span class="ml1">个人设置</span>
         </a-menu-item>
         <a-menu-divider />
         <a-menu-item key="logout">
           <logout-outlined />
-          <span class="ml-1">退出登录</span>
+          <span class="ml1">退出登录</span>
         </a-menu-item>
       </a-menu>
     </template>

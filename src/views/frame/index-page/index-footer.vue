@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer index-middle pl-10 pr-10">
+  <footer class="footer index-middle pl10 pr10">
     <div>
       <span><a href="https://github.com/PBOVE" target="_blank">pbove</a></span>
       <span><a href="https://github.com/Abouerp" target="_blank">abouerp</a></span>

@@ -4,39 +4,39 @@
       <!-- 基本信息 -->
       <global-card title="基本信息">
         <a-row>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="日期名称" v-bind="validateInfos.name">
               <input-wrap v-model:value="dataItem.name" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="状态" v-bind="validateInfos.state">
               <select-wrap v-model:value="dataItem.state" :options="selectOption" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="开始日期" v-bind="validateInfos.startDate">
               <date-picker-wrap v-model:value="dataItem.startDate" :end-date="dataItem.endDate" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="结束日期" v-bind="validateInfos.endDate">
               <date-picker-wrap v-model:value="dataItem.endDate" :start-date="dataItem.startDate" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="延迟日期" v-bind="validateInfos.delayValue">
               <input-number-wrap v-model:value="dataItem.delayValue" />
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :lg="9" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="9" class="pl4 pr4">
             <a-form-item label="延迟日期单位" v-bind="validateInfos.delayUnit">
               <select-wrap v-model:value="dataItem.delayUnit" :options="selectUnitOption" />
             </a-form-item>
           </a-col>
         </a-row>
         <a-row>
-          <a-col :xs="24" :lg="18" class="pl-4 pr-4">
+          <a-col :xs="24" :lg="18" class="pl4 pr4">
             <a-form-item label="描述">
               <textarea-wrap
                 v-model:value="dataItem.description"
@@ -57,9 +57,7 @@
     <template #footer-block>
       <a-button v-if="!readonly" @click="onRestPage"> 重置 </a-button>
       <a-button v-if="readonly" type="primary" @click="onEditPage"> 编辑 </a-button>
-      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">
-        保存
-      </a-button>
+      <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage"> 保存 </a-button>
     </template>
   </global-data-page>
 </template>

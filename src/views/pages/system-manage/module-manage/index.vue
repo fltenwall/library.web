@@ -14,7 +14,7 @@
     <!-- 模块权限设置 -->
     <div class="module-visit">
       <div class="module-visit-header default-shadow">
-        <div class="pb-4 fs-5">模块权限设置</div>
+        <div class="pb4 fs5">模块权限设置</div>
         <div class="flex">
           <div class="flex-item">模块名称：{{ selected?.meta?.title }}</div>
           <div class="flex-item">模块标识符：{{ selected?.name }}</div>
@@ -22,26 +22,18 @@
       </div>
       <!-- 操作 -->
       <div class="module-visit-main default-shadow">
-        <div class="flex flex-end pb-4">
+        <div class="flex flex-end pb4">
           <a-button @click="onClickNewItem">新增</a-button>
         </div>
-        <scrollbar class="flex-item h-0">
+        <scrollbar class="flex-item h0">
           <div class="module-auth-list">
             <div v-for="item in dataSource" :key="item.id" class="module-auth-item">
               <div>名称：{{ item.name }}</div>
-              <div class="mb-3 mt-3">
-                权限项：
-                <a-tag v-for="auth in item.authorities" :key="auth">{{ authorityList[auth] }}</a-tag>
-              </div>
-              <div class="index-operation flex flex-end">
-                <!-- <span>编辑</span> -->
-                <span @click="onDeleteAuth(item)">删除</span>
-              </div>
             </div>
           </div>
         </scrollbar>
         <!-- 分页 -->
-        <pagination-wrap v-model:current="current" class="pt-4" :total="totalElements" />
+        <pagination-wrap v-model:current="current" class="pt4" :total="totalElements" />
 
         <module-add-modal
           v-model:visible="visible"
@@ -64,6 +56,7 @@ import { usePagination } from '/@/hooks/web/usePagination';
 import { queryRoleAuthority } from '/@/enums/roleEnum';
 import { Scrollbar } from '/@/components/Scrollbar';
 import moduleAddModal from './moduleAddModal.vue';
+import { useMoment } from '/@/utils/dateFormat';
 import { PageEnum } from '/@/enums/pageEnum';
 import { isString } from '/@/utils/is';
 import { message } from 'ant-design-vue';
@@ -91,7 +84,7 @@ const selected = ref(findMenu(PageEnum.BASE_HOME));
 // 加载中
 const loading = ref<boolean>(false);
 // 数据
-const dataSource = ref<ModuleAuth[]>();
+const dataSource = ref<Required<ModuleAuth>[]>();
 // 对话框显示
 const visible = ref<boolean>(false);
 // 权限列表
@@ -217,10 +210,11 @@ fetchAuthFromServer();
 
 .module-auth-item {
   flex-shrink: 0;
-  width: calc(33.333333% - 10.8px);
+  width: 50%;
   padding: 10px;
   margin: 0 0 16px;
   border: 1px solid #e5e6eb;
+  border-radius: 4px;
 
   &:nth-of-type(3n + 2) {
     margin: 0 16px 16px;

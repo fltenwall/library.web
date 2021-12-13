@@ -1,6 +1,6 @@
 <template>
   <div class="editor-wrap">
-    <public-header class="editor-header p-3">
+    <public-header class="editor-header p3">
       <template #left>
         <input class="title-input" placeholder="输入标题..." maxlength="80" />
       </template>
@@ -17,14 +17,14 @@
       <div class="index-middle">
         <master-state />
       </div>
-      <div class="index-middle fs-3">
-        <div class="mr-2">
-          <span class="mr-1">lines：</span>
-          <span class="w-20 inline-block">{{ lineCount }}</span>
+      <div class="index-middle fs3">
+        <div class="mr2">
+          <span class="mr1">lines：</span>
+          <span class="w20 inline-block">{{ lineCount }}</span>
         </div>
         <div>
-          <span class="mr-1">words：</span>
-          <span class="w-20 inline-block">{{ wordCount(handbook) }}</span>
+          <span class="mr1">words：</span>
+          <span class="w20 inline-block">{{ wordCount(handbook) }}</span>
         </div>
       </div>
     </div>

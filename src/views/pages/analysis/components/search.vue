@@ -12,7 +12,7 @@
     <div ref="containerRef" />
     <div class="search-footer">
       <span>总搜索量</span>
-      <span class="ml-1"> 1,259 </span>
+      <span class="ml1"> 1,259 </span>
     </div>
   </div>
 </template>

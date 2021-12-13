@@ -1,19 +1,14 @@
 <template>
-  <div class="wrap pt-4 pb-4 pr-4 default-shadow">
+  <div class="wrap pt4 pb4 pr4 default-shadow">
     <div class="left">
-      <a-menu
-        v-model:selectedKeys="selectedKeys"
-        class="left-menu"
-        mode="inline"
-        @click="handleClick"
-      >
+      <a-menu v-model:selectedKeys="selectedKeys" class="left-menu" mode="inline" @click="handleClick">
         <a-menu-item v-for="(item, key) in menuList" :key="key">
           {{ item }}
         </a-menu-item>
       </a-menu>
     </div>
-    <div class="right pl-4 pr-4">
-      <div class="right-header mb-3">
+    <div class="right pl4 pr4">
+      <div class="right-header mb3">
         {{ menuList[selectedKeys] }}
       </div>
       <router-view />

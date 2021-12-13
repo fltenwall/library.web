@@ -12,7 +12,9 @@
     <template #tableBodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'updateTime'">{{ useFromatlll(record.createTime) }}</template>
       <template v-else-if="column.dataIndex === 'mode'">{{ modeMap.get(record.mode) }}</template>
-      <template v-else-if="column.dataIndex === 'layoutType'">{{ layoutMap.get(record.mode) }}</template>
+      <template v-else-if="column.dataIndex === 'layoutType'">
+        {{ layoutMap.get(record.layoutType) }}
+      </template>
       <template v-else-if="column.dataIndex === 'state'">{{ stateMap.get(record.state) }}</template>
     </template>
   </page-layout>
@@ -40,9 +42,9 @@ const stateMap = new Map().set(false, '关闭').set(true, '开启');
 const actions = [
   { label: '新增', value: 'new' },
   { label: '查看', value: 'view' },
-  { label: (record: Required<ActivityManage>) => stateMap.get(!record.state), value: 'state' },
   { label: '排版', value: 'compose' },
   { label: '编辑', value: 'edit' },
+  { label: (record: Required<ActivityManage>) => stateMap.get(!record.state), value: 'state' },
   { label: '删除', value: 'delete' }
 ];
 

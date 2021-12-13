@@ -137,9 +137,9 @@ export default defineComponent({
         return (
           <Menu.Item key={el.event}>
             {() => (
-              <div class="p-1 index-middle">
+              <div class="p1 index-middle">
                 <Icon icon={el.icon!} />
-                <span class="pl-3">{el.text}</span>
+                <span class="pl3">{el.text}</span>
               </div>
             )}
           </Menu.Item>
@@ -152,9 +152,7 @@ export default defineComponent({
       return (
         <Dropdown>
           {{
-            default: () => (
-              <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />
-            ),
+            default: () => <Icon icon="radix-icons:caret-down" class="default-dropdown-icon" size="20" />,
             overlay: () => <Menu onClick={handelMenuClick}>{() => renderMenu()}</Menu>
           }}
         </Dropdown>

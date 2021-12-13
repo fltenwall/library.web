@@ -42,7 +42,7 @@
       </template>
     </global-table>
 
-    <pagination-wrap v-model:current="current" class="p-4" :total="totalElements" @change="onPageChange" />
+    <pagination-wrap v-model:current="current" class="p4" :total="totalElements" @change="onPageChange" />
   </div>
 </template>
 
@@ -62,16 +62,17 @@ const dataSource = ref([]);
 
 const totalElements = ref(0);
 
-const actionColumns: TableColumn = {
-  title: '操作',
-  align: 'center',
-  fixed: 'right',
-  dataIndex: 'action',
-  ellipsis: true
-};
-
 const customColumns = computed(() => {
   const columns: TableColumn[] = props.columns.map((el) => ({ align: 'center', ...el }));
+
+  const actionColumns: TableColumn = {
+    title: '操作',
+    align: 'center',
+    fixed: 'right',
+    dataIndex: 'action',
+    ellipsis: true,
+    width: actionsMap.value.length * 28
+  };
 
   isArray(props.actions) && columns.push(actionColumns);
 
@@ -79,7 +80,7 @@ const customColumns = computed(() => {
 });
 
 const actionsMap = computed(() => {
-  return isArray(props.actions) && props.actions.filter((el) => (el ? el.value !== 'new' : false));
+  return isArray(props.actions) ? props.actions.filter((el) => (el ? el.value !== 'new' : false)) : [];
 });
 
 const isNewAction = computed(() => {

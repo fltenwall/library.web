@@ -8,7 +8,7 @@
     }"
   >
     <div class="ui-input-search" :style="{ height: `${height}px` }" @click="handleSearchClick">
-      <search-outlined v-if="prefix" class="ui-input-prefix mr-4" />
+      <search-outlined v-if="prefix" class="ui-input-prefix mr4" />
       <input
         ref="inputInstance"
         v-model="inputValue"

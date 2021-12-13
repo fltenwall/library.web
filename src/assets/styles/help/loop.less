@@ -4,7 +4,7 @@
   .fn() when (@xy = none) {
     @size: @base-size * @i;
 
-    .@{style-name}-@{i} {
+    .@{style-name}@{i} {
       @{tag-name}: ~'@{size}px ';
     }
     .loop(@style-name, @tag-name, @next, @base-size, @max, @xy);

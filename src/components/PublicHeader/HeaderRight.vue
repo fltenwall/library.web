@@ -1,7 +1,7 @@
 <template>
   <div class="header-right-action">
     <slot />
-    <div v-if="isShowUserInfo" class="ml-8">
+    <div v-if="isShowUserInfo" class="ml8">
       <div v-if="userIsLogin">
         <drop-menu>
           <router-link :to="{ name: PageEnum.BASE_HOME }" class="index-middle pointer c000">
@@ -10,7 +10,7 @@
                 <user-outlined />
               </template>
             </a-avatar>
-            <div class="ml-3">
+            <div class="ml3">
               {{ userInfo.username }}
             </div>
           </router-link>

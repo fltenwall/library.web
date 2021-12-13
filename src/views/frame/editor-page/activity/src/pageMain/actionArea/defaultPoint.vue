@@ -1,11 +1,11 @@
 <template>
   <div class="default-point-item">
     <div class="c333">宽度</div>
-    <ui-input class="w-100" :value="canvasSize.width" readonly />
+    <ui-input class="w100" :value="canvasSize.width" readonly />
   </div>
   <div class="default-point-item">
     <div class="c333">高度</div>
-    <ui-input class="w-100" :value="canvasSize.height" readonly />
+    <ui-input class="w100" :value="canvasSize.height" readonly />
   </div>
   <a-divider />
   <div class="default-point-item">
@@ -26,7 +26,7 @@
   <div class="default-point-item">
     <div class="c333">背景图片链接</div>
     <ui-input
-      class="w-180"
+      class="w180"
       :value="pageOptions.backgroundImage"
       readonly
       allow-clear

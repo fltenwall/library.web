@@ -1,5 +1,5 @@
 <template>
-  <search-outlined class="pr-2" @click="handleSearchClick" />
+  <search-outlined class="pr2" @click="handleSearchClick" />
   <menu-select
     :style="selectStyle"
     class="no-border menu-search-select"

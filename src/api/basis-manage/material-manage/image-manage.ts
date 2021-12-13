@@ -20,7 +20,7 @@ export interface ImageManage {
   size?: number;
 
   // 状态
-  status?: boolean;
+  status?: boolean | 1 | 0;
 
   // 分组
   classify?: DictionaryDetail;
@@ -107,7 +107,7 @@ export default class Service {
   }
 
   // 更新数据到远程服务器
-  static updateImage(id: number, item: { name: string }): Promise<Result<ImageManage>> {
+  static updateImage(id: number, item: ImageManage): Promise<Result<ImageManage>> {
     return request<Result<ImageManage>>({
       url: '/epi/material/image/' + id,
       method: 'put',
