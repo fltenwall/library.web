@@ -56,9 +56,8 @@ function handleDragstart(event: DragEvent) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 105px;
-  height: 105px;
-  margin: 5px 0;
+  width: 115px;
+  height: 115px;
   border: 1px solid hsla(0, 0%, 62%, 0.24);
   transition: all 0.3s;
 
@@ -84,8 +83,12 @@ function handleDragstart(event: DragEvent) {
     }
   }
 
+  &:nth-of-type(2n + 1) {
+    margin: 10px 7.5px 0 7.5px;
+  }
+
   &:nth-of-type(2n + 2) {
-    margin: 5px 0 5px 10px;
+    margin: 10px 7.5px 0 7.5px;
   }
 
   &-title {

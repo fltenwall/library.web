@@ -35,7 +35,7 @@ export interface Authority {
 /**
  * 分页结果定义
  */
-export type DataPager = PagerResponseData<ModuleManage>;
+export type DataPager = PagerResponseData<Required<ModuleManage>>;
 
 export default class Service {
   static fecthListByAuthority(): Promise<Result<Authority>> {

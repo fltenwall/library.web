@@ -32,7 +32,7 @@
         </a-tag>
       </template>
       <template v-else-if="column.dataIndex === 'role'">{{ record.role.name }}</template>
-      <template v-else-if="column.dataIndex === 'binding'"> </template>
+      <template v-else-if="column.dataIndex === 'createTime'">{{ useFromatlll(record.createTime) }}</template>
     </template>
   </page-layout>
 
@@ -164,8 +164,8 @@ const tableColumns: TableColumn[] = [
     ellipsis: true
   },
   {
-    title: '账户绑定',
-    dataIndex: 'binding',
+    title: '创建时间',
+    dataIndex: 'createTime',
     ellipsis: true
   }
 ];

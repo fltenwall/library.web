@@ -1,7 +1,7 @@
 <template>
   <div class="panel-menu">
-    <div class="panel-menu-item" @click="handleCopyPoint">复制</div>
-    <div class="panel-menu-item" @click="handleLockPoint">{{ lock ? '解锁' : '锁定' }}</div>
+    <div class="panel-menu-item" :class="isLock && 'disabled'" @click="handleCopyPoint">复制</div>
+    <div class="panel-menu-item" @click="handleLockPoint">{{ isLock ? '解锁' : '锁定' }}</div>
     <div class="panel-menu-item index-space-between" @click="handleDeletePoint">
       <div>删除</div>
       <div class="menuTips">Del</div>
@@ -17,7 +17,7 @@ import { isDef } from '/@/utils/is';
 
 const pointInfo = computed(() => pointStore.getPointInfo);
 
-const lock = computed(() => pointInfo.value.sizeLock && pointInfo.value.positionLock);
+const isLock = computed(() => pointInfo.value.sizeLock && pointInfo.value.positionLock);
 
 const emits = defineEmits(['on-delete', 'on-copy']);
 
@@ -45,6 +45,8 @@ function handleLockPoint() {
 
 // 复制
 function handleCopyPoint() {
+  // 锁定不允许复制
+  if (isLock.value) return;
   emits('on-copy', unref(pointInfo));
 }
 </script>
@@ -75,6 +77,11 @@ function handleCopyPoint() {
     &:hover {
       color: #2c63ff;
       cursor: pointer;
+    }
+
+    &.disabled {
+      color: rgba(0, 0, 0, 0.25) !important;
+      cursor: not-allowed;
     }
   }
 

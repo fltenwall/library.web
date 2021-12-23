@@ -2,7 +2,13 @@
   <div class="personal-wrap">
     <div class="personal__header">我的素材</div>
     <div class="personal__actions">
-      <select-wrap v-model:value="selectType" :options="options" class="w140" placeholder="操作方式" />
+      <select-wrap
+        v-model:value="selectType"
+        class="flex-item mr-2"
+        placeholder="操作方式"
+        dropdown-class-name="personal__actions-select"
+        :options="options"
+      />
       <upload :data="{ value: DICT_VALUE, type: DICT_TYPE }" @upload-success="handleUploadSuccess">
         <a-button>上传</a-button>
       </upload>
@@ -82,7 +88,7 @@ const options = [
   { label: '背景', value: 1 },
   { label: '插画', value: 2 }
 ];
-const selectType = ref(1);
+const selectType = ref(2);
 // 是否可以拖拽
 const isDrag = computed(() => selectType.value !== 1);
 
@@ -162,18 +168,20 @@ fetchDataFromServer();
   padding: 10px 10px 20px;
 
   ::v-deep(.ant-select-selector) {
-    border-radius: 16px;
+    height: 28.85px;
+    font-size: 12px;
   }
 
   ::v-deep(button) {
-    border-radius: 16px;
+    height: 28.85px;
+    font-size: 12px;
   }
 }
 
 .personal__content {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 10px 0;
+  padding: 0 10px 0;
 
   &-empty {
     width: 100%;
@@ -205,6 +213,14 @@ fetchDataFromServer();
 
   .loading__title {
     margin-top: 5px;
+    font-size: 12px;
+  }
+}
+</style>
+
+<style lang="less">
+.personal__actions-select {
+  .ant-select-item {
     font-size: 12px;
   }
 }

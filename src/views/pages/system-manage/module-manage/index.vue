@@ -14,26 +14,33 @@
     <!-- 模块权限设置 -->
     <div class="module-visit">
       <div class="module-visit-header default-shadow">
-        <div class="pb4 fs5">模块权限设置</div>
-        <div class="flex">
-          <div class="flex-item">模块名称：{{ selected?.meta?.title }}</div>
-          <div class="flex-item">模块标识符：{{ selected?.name }}</div>
-        </div>
+        <div class="font-bold text-base">模块权限分配</div>
+        <a-button @click="onClickNewItem">新增</a-button>
       </div>
       <!-- 操作 -->
       <div class="module-visit-main default-shadow">
-        <div class="flex flex-end pb4">
-          <a-button @click="onClickNewItem">新增</a-button>
-        </div>
         <scrollbar class="flex-item h0">
-          <div class="module-auth-list">
-            <div v-for="item in dataSource" :key="item.id" class="module-auth-item">
-              <div>名称：{{ item.name }}</div>
+          <div v-for="item in dataSource" :key="item.id" class="module-visit-item">
+            <div class="index-space-between p3">
+              <div>{{ item.name }}</div>
+              <dropdown-warp
+                :options="options"
+                @select="({ key }: { key: string }) => handleSelectActions(key,item)"
+              >
+                <icon icon="ant-design:ellipsis-outlined" size="20" class="module-item-ellipsis" />
+              </dropdown-warp>
+            </div>
+            <div class="module-visit-item__main">
+              <div v-for="auth in item.authorities" :key="auth" class="module-visit-item__auth">
+                {{ authorityList[auth] }}
+              </div>
             </div>
           </div>
+
+          <a-empty v-if="!dataSource?.length" class="pt10" />
         </scrollbar>
         <!-- 分页 -->
-        <pagination-wrap v-model:current="current" class="pt4" :total="totalElements" />
+        <pagination-wrap v-model:current="current" class="p4" :total="totalElements" />
 
         <module-add-modal
           v-model:visible="visible"
@@ -56,7 +63,6 @@ import { usePagination } from '/@/hooks/web/usePagination';
 import { queryRoleAuthority } from '/@/enums/roleEnum';
 import { Scrollbar } from '/@/components/Scrollbar';
 import moduleAddModal from './moduleAddModal.vue';
-import { useMoment } from '/@/utils/dateFormat';
 import { PageEnum } from '/@/enums/pageEnum';
 import { isString } from '/@/utils/is';
 import { message } from 'ant-design-vue';
@@ -95,6 +101,11 @@ const onClickNewItem = () => (visible.value = true);
 const { current } = usePagination();
 // 总数
 const totalElements = ref<number>(0);
+// 下拉菜单
+const options = [
+  { key: 'eidt', icon: 'la:pen', content: '编辑' },
+  { key: 'delete', icon: 'ant-design:delete-outlined', content: '删除' }
+];
 
 function initTreeData(source: TreeData[]): TreeData[] {
   return source.map(({ title, children, name, path }) => {
@@ -103,7 +114,7 @@ function initTreeData(source: TreeData[]): TreeData[] {
     return { title, children, name, path, selectable: !children?.length };
   });
 }
-
+// 处理选择菜单
 function handleSelectMenu([key]: string[]) {
   if (!isString(key)) return;
 
@@ -114,8 +125,15 @@ function handleSelectMenu([key]: string[]) {
   fetchDataFromServer();
 }
 
+// 处理选中 菜单
+function handleSelectActions(key: string, record: Required<ModuleAuth>) {
+  if (key === 'delete') {
+    onDeleteAuth(record);
+  }
+}
+
 // 数据解析
-function dataParse(data: ModuleManage[]): ModuleAuth[] {
+function dataParse(data: Required<ModuleManage>[]): Required<ModuleAuth>[] {
   return data.map((el) => {
     return {
       ...el,
@@ -151,7 +169,7 @@ async function fetchAuthFromServer() {
 }
 
 // 删除权限
-function onDeleteAuth(record: ModuleAuth) {
+function onDeleteAuth(record: Required<ModuleAuth>) {
   useDeleteModal(async () => {
     try {
       await service.deleteItemById(record.id!);
@@ -161,8 +179,6 @@ function onDeleteAuth(record: ModuleAuth) {
     }
   });
 }
-
-fetchDataFromServer();
 
 fetchAuthFromServer();
 </script>
@@ -187,6 +203,9 @@ fetchAuthFromServer();
   margin: 0 0 0 16px;
 
   &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 16px;
     background: #fff;
   }
@@ -194,30 +213,28 @@ fetchAuthFromServer();
   &-main {
     display: flex;
     height: 0;
-    padding: 16px;
     margin: 16px 0 0;
     background: #fff;
     flex: 1;
     flex-direction: column;
   }
-}
 
-.module-auth-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+  &-item {
+    margin: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
 
-.module-auth-item {
-  flex-shrink: 0;
-  width: 50%;
-  padding: 10px;
-  margin: 0 0 16px;
-  border: 1px solid #e5e6eb;
-  border-radius: 4px;
+    &__main {
+      padding: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
 
-  &:nth-of-type(3n + 2) {
-    margin: 0 16px 16px;
+    &__auth {
+      display: inline-flex;
+      padding: 5px 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+    }
   }
 }
 </style>

@@ -1,15 +1,32 @@
 <template>
   <div class="tool-area-switch">
-    <a-tabs v-model:activeKey="activeKey" tab-position="left">
+    <a-tabs v-model:activeKey="activeKey" tab-position="left" class="flex-item">
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
-          <icon :icon="baseConfigs.icon[menu]" size="20" />
+          <a-tooltip placement="right">
+            <template #title>
+              {{ baseConfigs.label[menu] }}
+            </template>
+            <icon :icon="baseConfigs.icon[menu]" size="20" />
+          </a-tooltip>
         </template>
       </a-tab-pane>
 
       <a-tab-pane key="personal">
         <template #tab>
-          <icon icon="ant-design:user-outlined" size="20" />
+          <a-tooltip placement="right">
+            <template #title> 我的素材 </template>
+            <icon icon="ant-design:user-outlined" size="20" />
+          </a-tooltip>
+        </template>
+      </a-tab-pane>
+
+      <a-tab-pane key="structure">
+        <template #tab>
+          <a-tooltip placement="right">
+            <template #title> 大纲树 </template>
+            <icon icon="ant-design:gold-outlined" size="20" />
+          </a-tooltip>
         </template>
       </a-tab-pane>
     </a-tabs>
@@ -21,7 +38,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { moduleGather, baseConfigs } from '../../../../tools/index';
+import { moduleMuster, baseConfigs } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 
 const activeKey = computed({
@@ -29,7 +46,7 @@ const activeKey = computed({
   set: (state) => pointStore.commitTabState(state)
 });
 
-const sidebarMenus = computed(() => Object.keys(moduleGather));
+const sidebarMenus = computed(() => Object.keys(moduleMuster));
 </script>
 
 <style lang="less" scoped>

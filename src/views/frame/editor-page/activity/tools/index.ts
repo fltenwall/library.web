@@ -21,7 +21,7 @@ const schemaTools = import.meta.globEager('./**/schema.ts');
 const moduleActionSource = import.meta.globEager('./**/template.vue');
 
 // 模块集合
-export const moduleGather: Recordable<string[]> = {};
+export const moduleMuster: Recordable<string[]> = {};
 // 模块列表
 export const moduleView: Recordable<Component> = {};
 // 模型工具
@@ -49,11 +49,11 @@ Object.keys(moduleViewSource).forEach((key) => {
   // 读取文件名称
   const [classify, name] = key.replace(/\.\/|.index.vue/g, '').split('/');
   // 设置数组
-  !isArray(moduleGather[classify]) && (moduleGather[classify] = []);
+  !isArray(moduleMuster[classify]) && (moduleMuster[classify] = []);
   // 添加模块
   moduleView[name] = moduleViewSource[key].default;
   // 添加数据
-  moduleGather[classify].push(name);
+  moduleMuster[classify].push(name);
 });
 
 Object.keys(schemaTools).forEach((key) => {
