@@ -19,7 +19,7 @@
     <scrollbar class="image-main">
       <div class="image-item-list">
         <div v-for="item in dataSource" :key="item.id" class="image-item-card">
-          <img :src="`${MixinConfig.preview}${item.hash}`" class="preview-image" />
+          <img :src="`${preview}${item.hash}`" class="preview-image" />
           <div class="image-item-card-content">
             <div class="index-hidden-newline">
               <span class="card-row__title">名称</span>
@@ -111,6 +111,8 @@ const options = computed(() => props.menuData.map(({ label, id }) => ({ value: i
 const dataItem = reactive<ImageManage>({});
 // 分页
 const { current, pageSize, getPagination } = usePagination(1, 18);
+// 预览
+const preview = '/epi/material/image/preview/';
 
 // 获取服务器数据
 async function fetchDataFromServer() {

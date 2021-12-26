@@ -12,8 +12,9 @@
 import { isFunction } from 'lodash';
 import { ref } from 'vue';
 import WebUploader from '/@/utils/webUploader';
-import service from '/@/api/basis-manage/material-manage/image-manage';
+import service, { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
 import { message } from 'ant-design-vue';
+import { isObject } from '/@/utils/is';
 
 const props = defineProps({
   loading: {
@@ -57,9 +58,9 @@ async function handleFileChange(event: InputEvent) {
 
   try {
     message.loading(`${files.length}个文件上传中...`, 0);
-    await selectUploadImages(files);
+    const result = await selectUploadImages(files);
     message.destroy();
-    emit('upload-success');
+    emit('upload-success', result);
   } catch (err) {
     message.destroy();
     // 上传失败
@@ -70,7 +71,7 @@ async function handleFileChange(event: InputEvent) {
   fileRef.value!.value = null;
 }
 
-function imageUploader(): (files: File[]) => Promise<void> {
+function imageUploader(): (files: File[]) => Promise<ImageManage[]> {
   const webUploader = new WebUploader({ chunkSize: 1024 * 1024 * 5 });
 
   function sendRequest(list: FormData[]) {
@@ -97,23 +98,36 @@ function imageUploader(): (files: File[]) => Promise<void> {
 
   return async function (files: File[]) {
     const currents = await webUploader.sendUploadContent(files);
-    // 校验文件
-    const [current] = await webUploader.uploadFileBefore(currents);
 
-    if (!current) return;
+    const uploadlist = [];
 
-    const list = [];
+    for (const current of currents) {
+      // 校验文件
+      const { data: result } = await webUploader.validUpload(current);
+      // 实现秒传
+      if (isObject(result)) {
+        uploadlist.push(result);
 
-    for (const { chunk, hash } of current.chunkList) {
-      const data = new FormData();
-      data.append('chunkHash', hash);
-      data.append('chunk', chunk);
-      list.push(data);
+        continue;
+      }
+
+      const list = [];
+
+      for (const { chunk, hash } of current.chunkList) {
+        const data = new FormData();
+        data.append('chunkHash', hash);
+        data.append('chunk', chunk);
+        list.push(data);
+      }
+      // 发生上传
+      await sendRequest(list);
+      // 合并请求
+      const { data } = await service.mergeChunks({ ...props.data, hash: current.hash });
+
+      uploadlist.push(data);
     }
-    // 发生上传
-    await sendRequest(list);
-    // 合并请求
-    await service.mergeChunks({ ...props.data, hash: current.hash });
+
+    return uploadlist;
   };
 }
 </script>

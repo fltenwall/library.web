@@ -3,18 +3,18 @@
     <div class="overview-header-title">工作台</div>
     <div class="flex mt4">
       <div class="index-middle">
-        <a-avatar :size="60">
+        <a-avatar :size="60" :src="`${MixinConfig.preview}${userInfo?.portrait}`">
           <template #icon>
             <user-outlined />
           </template>
         </a-avatar>
         <div class="ml4">
           <div class="content-title">
-            <span>{{ userInfo.username }}</span>
+            <span>{{ userInfo?.username }}</span>
             <span>，{{ blessing }}</span>
           </div>
           <div class="content-tips">
-            <span>{{ userInfo.description }}</span>
+            <span>{{ userInfo?.description }}</span>
           </div>
         </div>
       </div>

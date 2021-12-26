@@ -181,7 +181,7 @@ fetchDataFromServer();
 .personal__content {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 10px 0;
+  padding: 0 10px 10px;
 
   &-empty {
     width: 100%;

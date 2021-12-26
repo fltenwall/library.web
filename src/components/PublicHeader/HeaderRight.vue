@@ -5,7 +5,7 @@
       <div v-if="userIsLogin">
         <drop-menu>
           <router-link :to="{ name: PageEnum.BASE_HOME }" class="index-middle pointer c000">
-            <a-avatar :size="25">
+            <a-avatar :size="25" :src="`${MixinConfig.preview}${userInfo?.portrait}`">
               <template #icon>
                 <user-outlined />
               </template>

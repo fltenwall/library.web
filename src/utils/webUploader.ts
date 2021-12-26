@@ -103,6 +103,11 @@ export default class WebUploader {
     return currents.filter((el) => el.status !== fileStatus.success);
   }
 
+  // 服务端验证是否上传, 实现上传
+  async validUpload({ fileInfo: { name, size, type }, hash, chunkList }: UploadContent) {
+    return await service.validUpload({ name, size, type, hash, length: chunkList.length });
+  }
+
   // 生成文件切片
   private createFileChunk(file: File, size = 1024 * 1024 * 2) {
     let current = 0;
@@ -134,11 +139,6 @@ export default class WebUploader {
       };
       loadNext(0);
     });
-  }
-
-  // 服务端验证是否上传, 实现上传
-  private async validUpload({ fileInfo: { name, size, type }, hash, chunkList }: UploadContent) {
-    return await service.validUpload({ name, size, type, hash, length: chunkList.length });
   }
 
   // 秒传更新数据

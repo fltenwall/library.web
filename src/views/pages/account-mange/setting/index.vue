@@ -9,7 +9,7 @@
     </div>
     <div class="right pl4 pr4">
       <div class="right-header mb3">
-        {{ menuList[selectedKeys] }}
+        {{ headerTitle }}
       </div>
       <router-view />
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGo } from '/@/hooks/web/usePage';
 
@@ -28,6 +28,7 @@ export default defineComponent({
     const selectedKeys = ref<string[]>();
     const { currentRoute } = useRouter();
     const currentName = currentRoute.value.name as string;
+    const headerTitle = computed(() => currentRoute.value.meta.title);
     const go = useGo();
 
     const menuList = {
@@ -46,6 +47,7 @@ export default defineComponent({
 
     return {
       menuList,
+      headerTitle,
       selectedKeys,
       handleClick
     };
@@ -56,7 +58,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .wrap {
   display: flex;
-  margin: 0 16px 16px;
+  margin: 16px;
   background: #fff;
   border-radius: var(--public-order-radius);
 }

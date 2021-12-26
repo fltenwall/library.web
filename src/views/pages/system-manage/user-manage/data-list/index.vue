@@ -13,7 +13,7 @@
       <template v-if="column.dataIndex === 'username'">
         <div class="index-middle">
           <a-badge :count="record.superAdmin ? '超' : ''">
-            <a-avatar shape="square" :size="32">
+            <a-avatar shape="square" :size="32" :src="`${MixinConfig.preview}${record.portrait}`">
               <template #icon>
                 <user-outlined />
               </template>

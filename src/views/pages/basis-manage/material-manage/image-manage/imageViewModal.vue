@@ -1,6 +1,6 @@
 <template>
   <a-modal v-model:visible="modalState" :style="{ top }" title="设置" :mask-closable="false" :footer="null">
-    <image-preview :src="`${MixinConfig.preview}${dataItem.hash}`" @on-instance="initPreviewInstance" />
+    <image-preview :src="`${preview}${dataItem.hash}`" @on-instance="initPreviewInstance" />
     <a-form layout="vertical" class="mt10">
       <a-form-item label="分类">
         <select-wrap v-model:value="dataItem.classifyId" :options="organize" />
@@ -72,6 +72,8 @@ const modalState = ref<boolean>(false);
 const top = ref('40px');
 // 加载
 const loading = ref<boolean>(false);
+// 预览
+const preview = '/epi/material/image/preview/';
 // 初始化预览位置
 let initPosition: () => void;
 // 返回预览组件实例

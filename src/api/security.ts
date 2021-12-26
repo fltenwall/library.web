@@ -13,7 +13,7 @@ export interface UserInfo {
   nickname?: string;
 
   // 角色权限
-  authorities: string[];
+  authorities?: string[];
 
   // 电话
   mobile?: string;
@@ -23,6 +23,15 @@ export interface UserInfo {
 
   // 性别
   sex?: string;
+
+  // 省份
+  province?: string;
+
+  // 城市
+  city?: string;
+
+  // 头像
+  portrait?: string;
 
   // 是否超级管理员
   superAdmin?: boolean;
@@ -60,7 +69,7 @@ export interface CSRF {
 }
 
 export interface Security {
-  user: UserInfo;
+  user: Required<UserInfo>;
   _csrf: CSRF;
 }
 
@@ -77,6 +86,15 @@ export default class Service {
       url: '/epi/user/me',
       method: 'get',
       params: query
+    });
+  }
+
+  // 更新用户信息和token
+  static updateAccountInfo(data: UserInfo): Promise<Result<Required<UserInfo>>> {
+    return request<Result<Required<UserInfo>>>({
+      url: '/epi/user/me',
+      method: 'put',
+      data
     });
   }
 

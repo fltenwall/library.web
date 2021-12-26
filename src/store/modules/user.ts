@@ -13,12 +13,12 @@ const NAME = 'user';
  */
 @Module({ name: NAME, store, dynamic: true, namespaced: true })
 export default class User extends VuexModule {
-  private userInfoState: UserInfo | null = null;
+  private userInfoState: Required<UserInfo> | null = null;
 
   private tokenState: CSRF | null = null;
 
   // 获取用户信息
-  get getUserInfoState(): UserInfo | null {
+  get getUserInfoState(): Required<UserInfo> | null {
     return this.userInfoState;
   }
 
@@ -33,7 +33,7 @@ export default class User extends VuexModule {
   }
 
   @Mutation
-  commitUserInfoState(info: UserInfo): void {
+  commitUserInfoState(info: Required<UserInfo>): void {
     this.userInfoState = info;
   }
 

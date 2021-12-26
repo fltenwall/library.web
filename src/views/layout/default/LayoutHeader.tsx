@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { Layout, Avatar } from 'ant-design-vue';
 import LayoutBreadcrumb from './LayoutBreadcrumb';
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons-vue';
@@ -6,6 +6,7 @@ import { menuStore } from '/@/store/modules/menu';
 import DropMenu from '/@/components/PublicHeader/dropMenu.vue';
 import { userStore } from '/@/store/modules/user';
 import MenuSearch from '/@/components/MenuSearch.vue';
+import config from '/@/config';
 
 export default defineComponent({
   name: 'DefaultLayoutHeader',
@@ -18,6 +19,8 @@ export default defineComponent({
         menuStore.commitCollapsedState(true);
       }
     }
+
+    const userInfo = computed(() => userStore.getUserInfoState);
 
     return () => (
       <Layout.Header class="layout-header">
@@ -36,12 +39,12 @@ export default defineComponent({
                 {{
                   default: () => (
                     <div class="index-middle layout-header-right-action">
-                      <Avatar size={25}>
+                      <Avatar size={25} src={config.preview + userInfo.value?.portrait}>
                         {{
                           icon: () => <UserOutlined />
                         }}
                       </Avatar>
-                      <div class="ml3">{userStore.getUserInfoState?.username}</div>
+                      <div class="ml3">{userInfo.value?.username}</div>
                     </div>
                   )
                 }}

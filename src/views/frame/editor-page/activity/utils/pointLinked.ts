@@ -4,7 +4,7 @@ import { watch, computed, reactive, ref, unref } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import { pointStore } from '/@/store/modules/point';
 import Linked from '/@/utils/linked';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, throttle } from 'lodash-es';
 
 interface UseLinked {
   linkedState: { undo: boolean; redo: boolean };
@@ -36,8 +36,7 @@ export default function (): UseLinked {
       if (unref(isValueUpdateFromInner)) {
         isValueUpdateFromInner.value = false;
       } else {
-        linked.add({ data: val, select: unref(pointid) });
-        undateState();
+        throttleLink(val);
       }
     },
     { deep: true }
@@ -66,6 +65,12 @@ export default function (): UseLinked {
     // 更新
     updateContent();
   }
+
+  // 处理添加数据
+  const throttleLink = throttle((val: Required<PointInfo>[]) => {
+    linked.add({ data: val, select: unref(pointid) });
+    undateState();
+  }, 500);
 
   // 更新数据
   function updateContent() {

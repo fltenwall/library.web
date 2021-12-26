@@ -142,8 +142,8 @@ export default class Service {
   }
 
   // 合并分片
-  static mergeChunks(item: { hash: string }): Promise<Result<boolean>> {
-    return request<Result<boolean>>({
+  static mergeChunks(item: { hash: string }): Promise<Result<ImageManage>> {
+    return request<Result<ImageManage>>({
       url: '/epi/material/image/merge-chunk',
       data: item,
       method: 'post'
