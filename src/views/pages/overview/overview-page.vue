@@ -10,7 +10,7 @@
         </a-avatar>
         <div class="ml4">
           <div class="content-title">
-            <span>{{ userInfo?.username }}</span>
+            <span>{{ userInfo?.nickname }}</span>
             <span>，{{ blessing }}</span>
           </div>
           <div class="content-tips">

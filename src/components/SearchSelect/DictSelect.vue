@@ -16,7 +16,7 @@ export default defineComponent({
   components: { SelectSearch },
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: undefined
     },
     type: {

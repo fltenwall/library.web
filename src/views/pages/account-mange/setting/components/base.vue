@@ -40,10 +40,10 @@
 <script setup lang="ts">
 import type { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
 import { reactive } from 'vue';
+import { message } from 'ant-design-vue';
 import { userStore } from '/@/store/modules/user';
 import { Upload } from '/@/lib/UI/index';
 import service, { UserInfo } from '/@/api/security';
-import { message } from 'ant-design-vue';
 
 const DICT_TYPE = 'image_manage';
 const DICT_VALUE = 'user_portrait';

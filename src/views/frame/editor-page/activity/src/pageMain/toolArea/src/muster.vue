@@ -12,7 +12,7 @@
       <div v-if="isArray(tools)" class="muster-content">
         <panel-box v-for="name in tools" :key="name" :name="name">
           <template #content>
-            <icon :icon="baseConfigs.icon[name]" size="20" class="mb4" />
+            <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
           </template>
           <template #title>{{ baseConfigs.label[name] }}</template>
         </panel-box>
@@ -26,7 +26,7 @@
             <template v-for="name in names" :key="name">
               <panel-box v-if="baseConfigs.visible[name]" :name="name">
                 <template #content>
-                  <icon :icon="baseConfigs.icon[name]" size="28" class="mb4" />
+                  <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
                 </template>
                 <template #title>{{ baseConfigs.label[name] }}</template>
               </panel-box>

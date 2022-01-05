@@ -62,6 +62,10 @@ function hanldeClickDragAway() {
 </script>
 
 <style lang="less">
+.popup-wrap {
+  display: inline-block;
+}
+
 .popup-overlay {
   z-index: 1000;
   margin: 10px 0 0;

@@ -15,7 +15,7 @@
     <div class="module-visit">
       <div class="module-visit-header default-shadow">
         <div class="font-bold text-base">模块权限分配</div>
-        <a-button @click="onClickNewItem">新增</a-button>
+        <a-button v-show-by-auth="'MODULAR:CREATE'" @click="onClickNewItem">新增</a-button>
       </div>
       <!-- 操作 -->
       <div class="module-visit-main default-shadow">
@@ -68,11 +68,7 @@ import { isString } from '/@/utils/is';
 import { message } from 'ant-design-vue';
 
 interface TreeData extends MenuType {
-  disabled?: boolean;
-
   key?: string;
-
-  selectable?: boolean;
 }
 
 interface ModuleAuth extends Omit<ModuleManage, 'authorities'> {
@@ -80,7 +76,7 @@ interface ModuleAuth extends Omit<ModuleManage, 'authorities'> {
 }
 
 // 模块数据
-const menuItem: MenuType[] = reactive(initTreeData(getMenus(false)));
+const menuItem: TreeData[] = reactive(initTreeData(getMenus(false)));
 // 查找模块
 const findMenu = (key: string) => getFlatMenus(false).find((menu) => menu.name === key);
 // 选中的模块

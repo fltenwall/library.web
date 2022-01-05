@@ -23,7 +23,11 @@ export default defineComponent({
       default: 'default'
     },
     min: {
-      type: Number as PropType<number>,
+      type: Number,
+      default: undefined
+    },
+    max: {
+      type: Number,
       default: undefined
     },
     placeholder: {
@@ -35,7 +39,7 @@ export default defineComponent({
       defalut: false
     }
   },
-  emits: ['update:value', 'on-change'],
+  emits: ['update:value', 'change'],
   setup(props, { emit }) {
     const instance = inject('editor-form', {}) as EditorForm;
 
@@ -64,14 +68,24 @@ export default defineComponent({
       // 父组件更新
       emit('update:value', value);
       // 传递改变数据
-      instance.changeTrigger?.(props.prop);
+      props.prop && instance.changeTrigger?.(props.prop);
 
-      emit('on-change', value);
+      emit('change', value);
     }
 
     // 输入框失去焦点, 同步数据
     function handleBlur() {
-      input.value = props.value;
+      if (props.type === 'number') {
+        if (props.max && props.value > props.max) {
+          updateValue(props.max);
+        } else if (props.min && props.value < props.min) {
+          updateValue(props.min);
+        } else {
+          input.value = props.value;
+        }
+      } else {
+        input.value = props.value;
+      }
     }
 
     watch(
@@ -85,6 +99,12 @@ export default defineComponent({
       }
     );
 
+    const slotConfig: { suffix?: unknown } = {};
+
+    if (input.value && props.allowClear) {
+      slotConfig.suffix = <icon icon="eva:close-fill" size="12" class="pointer" onClick={handleClear} />;
+    }
+
     return () => (
       <Input
         value={input.value}
@@ -93,15 +113,7 @@ export default defineComponent({
         onChange={handlChange}
         onBlur={handleBlur}
       >
-        {{
-          suffix: () => {
-            return input.value && props.allowClear ? (
-              <icon icon="eva:close-fill" size="12" class="pointer" onClick={handleClear} />
-            ) : (
-              ''
-            );
-          }
-        }}
+        {slotConfig}
       </Input>
     );
   }

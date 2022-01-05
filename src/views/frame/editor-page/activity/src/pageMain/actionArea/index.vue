@@ -13,7 +13,7 @@
         </a-form>
       </a-tab-pane>
       <a-tab-pane key="2" tab="配置">
-        <a-form class="action-area-main" label-align="left">
+        <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
           <component :is="moduleAction[pointInfo.name]" />
         </a-form>
       </a-tab-pane>
@@ -64,7 +64,7 @@ watch(
   }
 
   ::v-deep(.ant-row) {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
 
     .ant-col {
       &.ant-form-item-control-wrapper {
@@ -72,12 +72,16 @@ watch(
         display: flex;
         justify-content: flex-end;
 
-        .ant-form-item-control {
-          width: 100%;
-        }
-
         .select-wrap {
           min-width: 100%;
+        }
+      }
+
+      .ant-form-item-control {
+        width: 100%;
+
+        &-input-content {
+          text-align: right;
         }
       }
     }
@@ -88,6 +92,7 @@ watch(
   }
 
   ::v-deep(.ant-input) {
+    height: 28.85px;
     font-size: 12px;
   }
 

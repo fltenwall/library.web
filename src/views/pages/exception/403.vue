@@ -30,6 +30,7 @@ export default defineComponent({
   &-image {
     width: 600px;
     padding-right: 152px;
+    pointer-events: none;
   }
 
   &-title {
