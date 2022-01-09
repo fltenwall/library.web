@@ -97,21 +97,21 @@ export default defineComponent({
 
   .ew {
     top: 50%;
-    right: 0;
+    right: 2px;
     cursor: ew-resize;
     transform: translateY(-50%) rotate(315deg);
   }
 
   .ns {
-    bottom: 0;
+    bottom: 2px;
     left: 50%;
     cursor: ns-resize;
     transform: translateX(-50%) rotate(45deg);
   }
 
   .se {
-    right: 0;
-    bottom: 0;
+    right: 2px;
+    bottom: 2px;
     cursor: se-resize;
   }
 

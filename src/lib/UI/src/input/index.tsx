@@ -1,7 +1,8 @@
 import type { PropType } from 'vue';
 import { defineComponent, inject, ref, watch } from 'vue';
-import { Input } from 'ant-design-vue';
+import { Input, Button } from 'ant-design-vue';
 import { EditorForm } from '/@/lib/interface/EditorForm';
+import './index.less';
 
 export default defineComponent({
   props: {
@@ -35,6 +36,10 @@ export default defineComponent({
       default: '请输入'
     },
     allowClear: {
+      type: Boolean,
+      defalut: false
+    },
+    readonly: {
       type: Boolean,
       defalut: false
     }
@@ -99,22 +104,24 @@ export default defineComponent({
       }
     );
 
-    const slotConfig: { suffix?: unknown } = {};
-
-    if (input.value && props.allowClear) {
-      slotConfig.suffix = <icon icon="eva:close-fill" size="12" class="pointer" onClick={handleClear} />;
-    }
+    const closeButton = (
+      <Button class="ui-input-close" onClick={handleClear}>
+        删除
+      </Button>
+    );
 
     return () => (
-      <Input
-        value={input.value}
-        placeholder={props.placeholder}
-        size={props.size}
-        onChange={handlChange}
-        onBlur={handleBlur}
-      >
-        {slotConfig}
-      </Input>
+      <div class="flex">
+        <Input
+          value={input.value}
+          placeholder={props.placeholder}
+          size={props.size}
+          readonly={props.readonly}
+          onChange={handlChange}
+          onBlur={handleBlur}
+        />
+        {!!input.value && props.allowClear && closeButton}
+      </div>
     );
   }
 });

@@ -15,7 +15,7 @@ import { difference } from '/@/utils/difference';
 import useToast from '/@/components/Toast';
 
 import './index.less';
-import { isUnDef } from '/@/utils/is';
+import { isUndefined } from '/@/utils/is';
 
 const useForm = Form.useForm;
 
@@ -108,7 +108,7 @@ function newModeInit<T>(dataItem: T, mode: Ref<number>, name: string, storage: C
 export function dataItemInit<T>(dataItem: T, rules: FromRules): void {
   const ruleKeys: string[] = Object.keys(rules);
   ruleKeys.forEach((key) => {
-    if (isUnDef((dataItem as any)[key])) {
+    if (isUndefined((dataItem as any)[key])) {
       (dataItem as any)[key] = '';
     }
   });

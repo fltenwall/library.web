@@ -1,16 +1,9 @@
 <template>
   <div class="personal-wrap">
-    <div class="personal__header">我的素材</div>
     <div class="personal__actions">
-      <select-wrap
-        v-model:value="selectType"
-        class="flex-item mr-2"
-        placeholder="操作方式"
-        dropdown-class-name="personal__actions-select"
-        :options="options"
-      />
+      <div class="personal__header">我的素材</div>
       <upload :data="{ value: DICT_VALUE, type: DICT_TYPE }" @upload-success="handleUploadSuccess">
-        <a-button>上传</a-button>
+        <div class="personal__actions-upload">上 传</div>
       </upload>
     </div>
     <scrollbar @on-reach-bottom="handleScrollBottom">
@@ -24,10 +17,8 @@
             v-for="item in dataSource"
             :key="item.id"
             name="personal"
-            :draggable="isDrag"
             :class="backgroundImage === item.hash && 'select'"
             :data="{ src: `${MixinConfig.preview}${item.hash}` }"
-            @click="handleSelectImage(item)"
           >
             <!-- 标签 -->
             <template v-if="backgroundImage === item.hash && 'select'" #tag>背景</template>
@@ -84,14 +75,6 @@ const { current, pageSize, getPagination } = usePagination(1, 20);
 // 总数
 const totalElements = ref<number>(0);
 
-const options = [
-  { label: '背景', value: 1 },
-  { label: '插画', value: 2 }
-];
-const selectType = ref(2);
-// 是否可以拖拽
-const isDrag = computed(() => selectType.value !== 1);
-
 // 获取服务器数据
 async function fetchDataFromServer() {
   try {
@@ -115,18 +98,6 @@ function queryData() {
     ...getPagination(),
     sort: 'createTime,desc'
   };
-}
-
-function handleSelectImage(record: ImageManage) {
-  // 拖拽数据, 禁止点击
-  if (isDrag.value) return;
-  // 选中图片为背景
-  if (selectType.value === 1) {
-    let value = record.hash;
-    backgroundImage.value === value && (value = '');
-
-    pointStore.commitUpdatePageOptionsState({ key: 'backgroundImage', value });
-  }
 }
 
 // 处理图片上传成功
@@ -165,16 +136,14 @@ fetchDataFromServer();
 .personal__actions {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   padding: 10px 10px 20px;
 
-  ::v-deep(.ant-select-selector) {
-    height: 28.85px;
+  &-upload {
+    padding-right: 10px;
     font-size: 12px;
-  }
-
-  ::v-deep(button) {
-    height: 28.85px;
-    font-size: 12px;
+    color: @primary-color;
+    cursor: pointer;
   }
 }
 
@@ -213,14 +182,6 @@ fetchDataFromServer();
 
   .loading__title {
     margin-top: 5px;
-    font-size: 12px;
-  }
-}
-</style>
-
-<style lang="less">
-.personal__actions-select {
-  .ant-select-item {
     font-size: 12px;
   }
 }

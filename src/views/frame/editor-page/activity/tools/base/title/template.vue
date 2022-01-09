@@ -24,6 +24,12 @@
   <a-form-item label="标题字体">
     <slider-input v-model:value="dataItem.titleSize" :min="12" :max="50" prop="titleSize" />
   </a-form-item>
+  <a-form-item label="上边圆角">
+    <slider-input v-model:value="dataItem.upperRadius" prop="upperRadius" />
+  </a-form-item>
+  <a-form-item label="下边圆角">
+    <slider-input v-model:value="dataItem.lowerPadding" prop="lowerPadding" />
+  </a-form-item>
 </template>
 
 <script setup lang="ts">

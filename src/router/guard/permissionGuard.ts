@@ -1,7 +1,7 @@
 import type { Router } from 'vue-router';
 import { PageEnum } from '/@/enums/pageEnum';
 import { userStore } from '/@/store/modules/user';
-import { isDef, isUnDef } from '/@/utils/is';
+import { isDef, isUndefined } from '/@/utils/is';
 
 // 设置守卫
 export function createPermissionGuard(router: Router): void {
@@ -16,7 +16,7 @@ export function createPermissionGuard(router: Router): void {
     } else if (ignoreAuth) {
       // 忽略身份验证,直接跳转
       next();
-    } else if (isUnDef(userInfo.id)) {
+    } else if (isUndefined(userInfo.id)) {
       // 身份要验证,但是没有登录,跳转到登录页面
       next({ name: PageEnum.BASE_LOGIN, query: { redirect: to.fullPath as string } });
     } else {

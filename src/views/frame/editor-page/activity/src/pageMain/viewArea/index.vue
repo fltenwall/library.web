@@ -37,6 +37,10 @@
             @on-contextmenu="handleContextmenu"
             @on-right-select="setSelectPoint"
           />
+
+          <!-- 边框 -->
+          <div class="view-item-border__x"></div>
+          <div class="view-item-border__y"></div>
         </draggable-offset>
 
         <!-- 拖拽中才显示, 松开鼠标实际位置 -->
@@ -73,12 +77,12 @@ import { handleStore, limitRules, pointDataModify, rangeHighest, initUpdataCanva
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
 import viewContent from './src/viewContent.vue';
-import { isUnDef } from '/@/utils/is';
+import { isUndefined } from '/@/utils/is';
 import config from '/@/config';
 import { loadImageSize } from '/@/utils';
 
 // 面板样式
-const panelStyle = reactive<CSSProperties>({});
+const panelStyle = reactive<CSSProperties>({ opacity: 1 });
 // 页面数据
 const pageOptions = computed(() => pointStore.getPageOptionsState);
 // 页面模式
@@ -271,7 +275,7 @@ const dragEvent = {
     // 获取传来的数据
     const { name, offset, data } = JSON.parse(event.dataTransfer?.getData('tool') || '');
     // 空数据则不添加
-    if (isUnDef(name)) return;
+    if (isUndefined(name)) return;
     // 获取数据位置
     const { offsetX, offsetY } = event;
     // 获取模型数据
@@ -329,7 +333,7 @@ function setSelectPoint(id: string) {
 // 右键
 function handleCancelSelect(e?: MouseEvent) {
   // 点击空白区域隐藏
-  if (panelRef.value === e?.target || isUnDef(e)) {
+  if (panelRef.value === e?.target || isUndefined(e)) {
     // 设置为空
     setSelectPoint('');
     // 隐藏菜单
@@ -423,6 +427,24 @@ watch(
 </script>
 
 <style lang="less" scoped>
+.border-light {
+  .view-item-border {
+    &__x {
+      &::after,
+      &::before {
+        background: @primary-color;
+      }
+    }
+
+    &__y {
+      &::after,
+      &::before {
+        background: @primary-color;
+      }
+    }
+  }
+}
+
 .view-area {
   position: relative;
   display: flex;
@@ -442,7 +464,6 @@ watch(
 
   .view-item {
     z-index: 2;
-    outline: 2px solid transparent;
     box-sizing: border-box;
     transition: all 0.2s ease;
 
@@ -451,16 +472,58 @@ watch(
     }
 
     &[hover='true'] {
-      outline-color: @primary-color;
+      .border-light;
     }
 
     &[select='true'] {
-      outline-color: @primary-color;
+      .border-light;
     }
 
     &[move='true'] {
       &[select='true'] {
         transition: none;
+      }
+    }
+
+    &-border {
+      &__x {
+        &::after,
+        &::before {
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          content: '';
+        }
+
+        &::before {
+          top: 0;
+          left: 0;
+        }
+
+        &::after {
+          bottom: 0;
+          left: 0;
+        }
+      }
+
+      &__y {
+        &::after,
+        &::before {
+          position: absolute;
+          width: 2px;
+          height: 100%;
+          content: '';
+        }
+
+        &::before {
+          top: 0;
+          left: 0;
+        }
+
+        &::after {
+          top: 0;
+          right: 0;
+        }
       }
     }
   }

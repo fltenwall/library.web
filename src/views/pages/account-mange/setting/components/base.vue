@@ -26,35 +26,39 @@
         </template>
       </a-avatar>
 
-      <upload
-        class="mt5"
-        :data="{ value: DICT_VALUE, type: DICT_TYPE }"
-        @upload-success="handleUploadSuccess"
-      >
-        <a-button> 修改 </a-button>
-      </upload>
+      <a-button class="mt5" @click="visible = true"> 修改 </a-button>
     </div>
   </div>
+
+  <material-modal
+    v-model:value="visible"
+    :dict-type="DICT_TYPE"
+    :dict-value="DICT_VALUE"
+    :maxlength="1"
+    @select="handleSelectMaterial"
+  />
 </template>
 
 <script setup lang="ts">
 import type { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { userStore } from '/@/store/modules/user';
-import { Upload } from '/@/lib/UI/index';
 import service, { UserInfo } from '/@/api/security';
 
 const DICT_TYPE = 'image_manage';
 const DICT_VALUE = 'user_portrait';
 
 const userInfo = reactive<UserInfo>({ ...userStore.getUserInfoState });
+// 对话框
+const visible = ref<boolean>(false);
 
 // 处理上传成功 更新图片
-function handleUploadSuccess([result]: Required<ImageManage>[]) {
-  updateUserAccount({ portrait: result.hash });
 
-  userInfo.portrait = result.hash;
+function handleSelectMaterial([content]: ImageManage[]) {
+  updateUserAccount({ portrait: content.hash });
+
+  userInfo.portrait = content.hash;
 }
 
 // 更新数据

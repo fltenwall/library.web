@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import type { PointInfo } from '/@/lib/interface/PointInfo';
 import { onBeforeUnmount, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import actionArea from './src/pageMain/actionArea/index.vue';
@@ -25,8 +26,9 @@ const { currentRoute } = useRouter();
 
 // 通过ID加载数据
 async function onLoadDataById(id: number) {
-  const { data } = await service.getItemById(id);
-  pointStore.commitSetPageOptionsState(data);
+  const { data } = await service.getH5ItemById(id);
+  pointStore.commitSetPageOptionsState(data.pageOptions);
+  pointStore.commitSetPointDataState((data.templateList || []) as Required<PointInfo>[]);
 }
 
 onBeforeUnmount(() => pointStore.commitEmptyState());

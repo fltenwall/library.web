@@ -31,8 +31,11 @@
       readonly
       allow-clear
       placeholder=""
-      @on-change="(value: string) => handleUpdateData(value, 'backgroundImage')"
+      @change="(value: string) => handleUpdateData(value, 'backgroundImage')"
     />
+  </div>
+  <div class="mt2 flex justify-end">
+    <div class="material-button" @click="visible = true">素材库</div>
   </div>
   <a-divider />
   <div class="default-point-item">
@@ -46,7 +49,7 @@
       <a-radio-button :value="2">弹性布局</a-radio-button>
     </a-radio-group>
   </div>
-  <a-divider />
+  <!--  <a-divider />
   <div class="default-point-item">
     <div class="c333">内间距</div>
     <a-radio-group :value="pageOptions.margin" class="flex-end flex" @change="handleChange($event, 'margin')">
@@ -54,20 +57,35 @@
       <a-radio-button :value="10">10px</a-radio-button>
       <a-radio-button :value="20">20px</a-radio-button>
     </a-radio-group>
-  </div>
+  </div>-->
+
+  <!-- 素材库 -->
+  <material-modal
+    v-model:value="visible"
+    :maxlength="1"
+    :dict-type="DICT_TYPE"
+    :dict-value="DICT_VALUE"
+    @select="handleSelectMaterial"
+  />
 </template>
 
 <script setup lang="ts">
 import type { ActivityManage } from '/@/api/page-manage/activity-page';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
 import lock from './src/lock.vue';
 import { pointStore } from '/@/store/modules/point';
+import { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
+
+const DICT_TYPE = 'image_manage';
+const DICT_VALUE = 'activity_page';
 
 // 数据
 const pageOptions = computed(() => pointStore.getPageOptionsState);
 // 画布大小
 const canvasSize = computed(() => pointStore.getCanvasSizeState);
+// 对话框
+const visible = ref<boolean>(false);
 
 // 处理布局切换
 function handleChange(e: Event, key: keyof ActivityManage) {
@@ -80,6 +98,11 @@ function handleChange(e: Event, key: keyof ActivityManage) {
 function handleUpdateData(value: ActivityManage[keyof ActivityManage], key: keyof ActivityManage) {
   pointStore.commitUpdatePageOptionsState({ key, value });
 }
+
+// 处理选中的素材
+function handleSelectMaterial([content]: ImageManage[]) {
+  handleUpdateData(content.hash, 'backgroundImage');
+}
 </script>
 
 <style lang="less" scoped>
@@ -90,6 +113,17 @@ function handleUpdateData(value: ActivityManage[keyof ActivityManage], key: keyo
 
   & + .default-point-item {
     margin-top: 10px;
+  }
+}
+
+.material-button {
+  width: 60px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    color: @primary-color;
+    text-decoration: underline;
   }
 }
 </style>

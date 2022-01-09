@@ -1,4 +1,4 @@
-import { isUnDef, isNull } from '/@/utils/is';
+import { isUndefined, isNull } from '/@/utils/is';
 
 interface ConfigProvide {
   transformCellText: ({ text }: { text: string }) => string;
@@ -6,7 +6,7 @@ interface ConfigProvide {
 
 export function useConfigProvider(): ConfigProvide {
   function transformCellText({ text }: { text: string }) {
-    if (isNull(text) || isUnDef(text)) {
+    if (isNull(text) || isUndefined(text)) {
       return '-';
     }
     return text;

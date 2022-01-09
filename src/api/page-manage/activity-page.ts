@@ -26,6 +26,9 @@ export interface ActivityManage {
   // 背景颜色
   backgroundImage?: string;
 
+  // 模板数据列表
+  templateList?: null;
+
   // 高度锁
   heigheLock?: false;
 
@@ -43,6 +46,13 @@ export interface ActivityManage {
 
   // 更新时间
   updateTime?: string;
+}
+
+// 编辑页面数据
+export interface H5Activity {
+  pageOptions: Omit<ActivityManage, 'templateList'>;
+
+  templateList: Indexable[];
 }
 
 /**
@@ -77,10 +87,27 @@ export default class Service {
     });
   }
 
+  // 通过ID取得数据
+  static getH5ItemById(id: number): Promise<Result<H5Activity>> {
+    return request<Result<H5Activity>>({
+      url: '/epi/activity/h5/' + id,
+      method: 'get'
+    });
+  }
+
   // 更新数据到远程服务器
   static updateItem(id: number, item: ActivityManage): Promise<Result<ActivityManage>> {
     return request<Result<ActivityManage>>({
       url: '/epi/activity/' + id,
+      method: 'put',
+      data: item
+    });
+  }
+
+  // 更新数据到远程服务器
+  static updateH5Item(id: number, item: H5Activity): Promise<Result<H5Activity>> {
+    return request<Result<H5Activity>>({
+      url: '/epi/activity/h5/' + id,
       method: 'put',
       data: item
     });

@@ -41,7 +41,7 @@ import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
 import { message } from 'ant-design-vue';
 import { difference } from '/@/utils/difference';
 import SelectWrap from '/@/components/SelectWrap.vue';
-import { isUnDef } from '/@/utils/is';
+import { isUndefined } from '/@/utils/is';
 
 const props = defineProps({
   organize: {
@@ -106,7 +106,7 @@ async function handleSaveItem() {
     // 设置上传数据
     const data = difference<ImageManage>(dataItem, props.imageData);
     // 没有数据就不更新
-    if (isUnDef(data)) return;
+    if (isUndefined(data)) return;
     await service.updateImage(dataItem.id!, data);
     modalState.value = false;
     emit('on-success');

@@ -46,7 +46,7 @@
 import type { CSSProperties } from 'vue';
 import { DraggablePlace, Popup } from '/@/lib/UI/';
 import { reactive, computed, ref, watch, nextTick } from 'vue';
-import { isUnDef } from '/@/utils/is';
+import { isUndefined } from '/@/utils/is';
 import { clamp } from 'lodash';
 import propsOptions from './props';
 import tinycolor from 'tinycolor2';
@@ -184,7 +184,7 @@ function update() {
 function getCursorLeft() {
   const el = svpanel.value?.$el;
 
-  if (isUnDef(el)) return 0;
+  if (isUndefined(el)) return 0;
 
   return el.offsetWidth * hsva.value.s;
 }
@@ -192,7 +192,7 @@ function getCursorLeft() {
 function getCursorTop() {
   const el = svpanel.value?.$el;
 
-  if (isUnDef(el)) return 0;
+  if (isUndefined(el)) return 0;
 
   return (hsva.value.v - 1) * el.offsetHeight * -1;
 }
@@ -200,7 +200,7 @@ function getCursorTop() {
 function getThumbTop() {
   const el = slider.value?.$el;
 
-  if (isUnDef(el)) return 0;
+  if (isUndefined(el)) return 0;
 
   if (hsva.value.h === 0) {
     return el.offsetHeight;

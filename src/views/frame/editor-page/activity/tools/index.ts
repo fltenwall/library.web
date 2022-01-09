@@ -1,7 +1,7 @@
 import type { Component } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import { usePinYin } from '/@/hooks/web/usePinYin';
-import { isArray, isUnDef } from '/@/utils/is';
+import { isArray, isUndefined } from '/@/utils/is';
 
 interface PointConfigs {
   label: Recordable<string>;
@@ -60,7 +60,7 @@ Object.keys(schemaTools).forEach((key) => {
   // 读取文件名称
   const [, name] = key.replace(/\.\/|.schema.ts/g, '').split('/');
   // 判断为空跳过
-  if (isUnDef(name)) return;
+  if (isUndefined(name)) return;
   // 关键字
   const label = schemaTools[key].label;
   // 可见
@@ -72,7 +72,7 @@ Object.keys(schemaTools).forEach((key) => {
   // 添加拼音
   baseConfigs.pinyin[name] = usePinYin(label);
   // 是否可见
-  baseConfigs.visible[name] = isUnDef(visible) || visible ? true : false;
+  baseConfigs.visible[name] = isUndefined(visible) || visible ? true : false;
   // 模块数据信息
   moduleSchema[name] = schemaTools[key].schema;
 });

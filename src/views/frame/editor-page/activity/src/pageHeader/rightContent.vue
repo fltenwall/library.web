@@ -8,7 +8,10 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-// import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/point';
+import { difference } from '/@/utils/difference';
+import service from '/@/api/page-manage/activity-page';
+import { message } from 'ant-design-vue';
 
 const { back } = useRouter();
 
@@ -16,8 +19,20 @@ const { back } = useRouter();
 const onGoBack = () => back();
 
 // 处理保存数据
-function handleKeepData() {
-  // console.log(pointStore.getPageOptionsState);
+async function handleKeepData() {
+  const optionsState = pointStore.getPageOptionsState;
+  const optionsCache = pointStore.getPageOptionsCache;
+
+  const pageOptions = difference(optionsState, optionsCache);
+  const templateList = pointStore.getPointDataState;
+
+  try {
+    await service.updateH5Item(optionsCache.id!, { pageOptions, templateList });
+
+    message.success('保存成功');
+  } catch (err) {
+    message.error((err as { msg: string }).msg);
+  }
 }
 </script>
 

@@ -4,6 +4,7 @@ import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 import { isObject } from '/@/utils/is';
 import { ActivityManage } from '/@/api/page-manage/activity-page';
+import { cloneDeep } from 'lodash-es';
 
 const NAME = 'point';
 
@@ -34,6 +35,7 @@ export default class Point extends VuexModule {
 
   // 页面配置
   private pageOptionsState: ActivityManage = {};
+  private pageOptionsCache: ActivityManage = {};
 
   // 标签状态
   private tabState = 'base';
@@ -59,6 +61,11 @@ export default class Point extends VuexModule {
   // 获取页面配置
   get getPageOptionsState(): ActivityManage {
     return this.pageOptionsState;
+  }
+
+  // 获取页面缓存配置
+  get getPageOptionsCache(): ActivityManage {
+    return this.pageOptionsCache;
   }
 
   // 获取 标签类型
@@ -118,7 +125,24 @@ export default class Point extends VuexModule {
   // 设置页面配置
   @Mutation
   commitSetPageOptionsState(options: ActivityManage): void {
-    this.pageOptionsState = options;
+    this.pageOptionsState = cloneDeep(options);
+    this.pageOptionsCache = cloneDeep(options);
+  }
+
+  // 设置页面 样式 数据
+  @Mutation
+  commitSetPointDataState(data: Required<PointInfo>[]): void {
+    for (let i = 0; i < data.length; i++) {
+      const point = data[i];
+
+      this.pointStyleState[point.id] = {
+        width: `${point.width}px`,
+        height: `${point.height}px`,
+        transform: `translate(${point.x}px,${point.y}px)`
+      };
+    }
+
+    this.pointDataState = data;
   }
 
   // 更新页面配置
