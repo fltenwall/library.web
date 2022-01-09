@@ -36,6 +36,7 @@
               <div class="flex-item material-modal-cropper">
                 <vue-cropper
                   ref="cropperInstance"
+                  output-type="png"
                   :img="selectImage.base64"
                   :auto-crop="true"
                   :center-box="true"
