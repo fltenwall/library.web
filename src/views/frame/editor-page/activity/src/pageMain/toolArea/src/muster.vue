@@ -10,7 +10,12 @@
     <scrollbar v-model:scroll-top="scrollTop" @on-scroll="handleScroll">
       <!-- 搜索工具列表 -->
       <div v-if="isArray(tools)" class="muster-content">
-        <panel-box v-for="name in tools" :key="name" :name="name">
+        <panel-box
+          v-for="name in tools"
+          :key="name"
+          :name="name"
+          :draggable="baseConfigs.trigger[name] === 'drag'"
+        >
           <template #content>
             <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
           </template>
@@ -24,7 +29,11 @@
           <div class="muster-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
           <div class="muster-content">
             <template v-for="name in names" :key="name">
-              <panel-box v-if="baseConfigs.visible[name]" :name="name">
+              <panel-box
+                v-if="baseConfigs.visible[name]"
+                :name="name"
+                :draggable="baseConfigs.trigger[name] === 'drag'"
+              >
                 <template #content>
                   <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
                 </template>
@@ -68,7 +77,7 @@ const tools = computed(() => {
   if (isEmpty(unref(inputSearch))) {
     const input = usePinYin(unref(inputSearch));
     // 全部组件
-    const cts = Object.keys(baseConfigs.pinyin);
+    const cts = Object.keys(baseConfigs.pinyin).filter((key) => baseConfigs.visible[key]);
     // 拼音筛选出组件
     const pinyinSelect = cts.filter((key) => baseConfigs.pinyin[key].includes(input));
     // key筛选出组件

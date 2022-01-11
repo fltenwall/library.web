@@ -11,3 +11,5 @@ export const schema: Schema = {
 export const label = '可点击区域';
 
 export const icon = 'carbon:touch-1';
+
+export const trigger = 'click';

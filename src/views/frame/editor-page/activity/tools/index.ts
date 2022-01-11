@@ -11,6 +11,8 @@ interface PointConfigs {
   pinyin: Recordable<string>;
 
   visible: Recordable<boolean>;
+
+  trigger: Recordable<'click' | 'drag'>;
 }
 
 // 视图内容
@@ -42,7 +44,8 @@ export const baseConfigs: PointConfigs = {
     chart: 'ant-design:pie-chart-outlined'
   },
   pinyin: {},
-  visible: {}
+  visible: {},
+  trigger: {}
 };
 
 Object.keys(moduleViewSource).forEach((key) => {
@@ -65,6 +68,8 @@ Object.keys(schemaTools).forEach((key) => {
   const label = schemaTools[key].label;
   // 可见
   const visible = schemaTools[key].visible;
+  // 方式
+  const trigger = schemaTools[key].trigger;
   // 添加名称
   baseConfigs.label[name] = label;
   // 添加名称
@@ -73,6 +78,8 @@ Object.keys(schemaTools).forEach((key) => {
   baseConfigs.pinyin[name] = usePinYin(label);
   // 是否可见
   baseConfigs.visible[name] = isUndefined(visible) || visible ? true : false;
+  // 触发方式
+  baseConfigs.trigger[name] = (isUndefined(trigger) && 'drag') || trigger;
   // 模块数据信息
   moduleSchema[name] = schemaTools[key].schema;
 });

@@ -27,6 +27,8 @@ const props = defineProps(propsOptions);
 
 const emits = defineEmits(['update:visible']);
 
+defineExpose({ props });
+
 const visible = computed({
   set: (val) => emits('update:visible', val),
   get: () => props.visible

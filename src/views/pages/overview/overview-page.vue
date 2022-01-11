@@ -3,7 +3,7 @@
     <div class="overview-header-title">工作台</div>
     <div class="flex mt4">
       <div class="index-middle">
-        <a-avatar :size="60" :src="`${MixinConfig.preview}${userInfo?.portrait}`">
+        <a-avatar :size="60" :src="`${MixinConfig.preview}${userInfo?.portrait}`" class="user-portrait">
           <template #icon>
             <user-outlined />
           </template>
@@ -84,6 +84,16 @@ export default defineComponent({
       line-height: 22px;
       color: rgba(0, 0, 0, 0.45);
     }
+  }
+}
+
+.user-portrait {
+  &:hover {
+    transform: rotate(666turn);
+    transition-delay: 1s;
+    transition-duration: 59s;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.34, 0, 0.84, 1);
   }
 }
 </style>
