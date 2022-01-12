@@ -34,7 +34,7 @@ export default defineComponent({
         val = props.min;
       }
       // 父组件更新
-      emit('update:value', val);
+      emit('update:value', +val);
       // 传递改变数据
       props.prop && instance.changeTrigger?.(props.prop);
     }

@@ -14,14 +14,18 @@
       </a-tab-pane>
       <a-tab-pane key="2" tab="配置">
         <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
-          <component :is="moduleAction[pointInfo.name]" />
+          <scrollbar height="calc(100vh - 150px)">
+            <component :is="moduleAction[pointInfo.name]" />
+          </scrollbar>
         </a-form>
       </a-tab-pane>
     </a-tabs>
     <a-tabs v-else size="small">
       <a-tab-pane key="3" tab="配置">
         <a-form class="action-area-main" label-align="left">
-          <default-point />
+          <scrollbar>
+            <default-point />
+          </scrollbar>
         </a-form>
       </a-tab-pane>
     </a-tabs>
@@ -36,6 +40,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import toolAttribute from './toolAttribute.vue';
 import defaultPoint from './defaultPoint.vue';
 import { isString } from '/@/utils/is';
+import { Scrollbar } from '/@/components/Scrollbar';
 
 const pointInfo = computed(() => pointStore.getPointInfo);
 const pointidState = computed(() => pointStore.getPointidState);

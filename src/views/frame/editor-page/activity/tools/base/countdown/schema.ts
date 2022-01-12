@@ -4,16 +4,56 @@ export interface Schema extends PointInfo {
   startTime: string;
 
   endTime: string;
+
+  waitTitle: string;
+
+  startedTitle: string;
+
+  endedTitle: string;
+
+  borderRadius: number;
+
+  fontColor: string;
+
+  bgColor: string;
+
+  timeFontColor: string;
+
+  timeBgColor: string;
+
+  styleTheme: number;
+
+  position: string;
 }
 
 export const schema: Schema = {
-  height: 32,
+  height: 40,
 
-  width: 200,
+  width: 375,
 
   startTime: '',
 
-  endTime: ''
+  endTime: '',
+
+  waitTitle: '距开始：',
+
+  startedTitle: '距结束：',
+
+  endedTitle: '已结束',
+
+  borderRadius: 10,
+
+  fontColor: '#000000',
+
+  bgColor: '#ffffff',
+
+  timeFontColor: '#000000',
+
+  timeBgColor: '#ffffff',
+
+  styleTheme: 1,
+
+  position: 'left'
 };
 
 export const label = '倒计时';

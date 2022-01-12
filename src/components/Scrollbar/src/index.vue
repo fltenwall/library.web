@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollbar-box">
+  <div class="scrollbar-box" :style="{ height }">
     <div ref="wrap" class="scrollbar-wrap scrollbar-wrap-hidden-default">
       <component :is="tag" ref="resize" class="scrollbar-content">
         <slot />
@@ -30,6 +30,10 @@ export default defineComponent({
       // 从边缘到触发回调的距离。
       type: Number,
       default: 0
+    },
+    height: {
+      type: String,
+      default: undefined
     }
   },
   emits: ['on-scroll', 'update:scrollTop', 'on-reach-bottom'],

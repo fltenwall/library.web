@@ -1,5 +1,5 @@
 <template>
-  <div v-click-away="hanldeClickDragAway" class="popup-wrap">
+  <div class="popup-wrap">
     <div ref="container" @click="openOverlay">
       <slot />
     </div>
@@ -36,9 +36,14 @@ const visible = computed({
 
 let popperJS: Popper;
 
-onMounted(() => updatePopper());
+onMounted(() => {
+  updatePopper();
+  document.addEventListener('mouseup', hanldeClickDragAway);
+});
 
-onBeforeUnmount(() => popperJS.destroy());
+onBeforeUnmount(() => {
+  document.addEventListener('mouseup', hanldeClickDragAway);
+});
 
 watch(
   () => visible.value,
@@ -58,7 +63,11 @@ function updatePopper() {
 }
 
 // 点击以外的地方
-function hanldeClickDragAway() {
+function hanldeClickDragAway(e: MouseEvent) {
+  const target = e.target as Node;
+  // 内部点击
+  if (popper.value?.contains(target) || container.value?.contains(target)) return;
+
   visible.value && (visible.value = false);
 }
 </script>
