@@ -8,8 +8,6 @@ export const schema: Schema = {
   width: 100
 };
 
-export const label = '可点击区域';
+export const label = '按钮';
 
 export const icon = 'carbon:touch-1';
-
-export const trigger = 'click';

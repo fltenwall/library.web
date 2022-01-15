@@ -44,7 +44,7 @@ export default defineComponent({
       defalut: false
     }
   },
-  emits: ['update:value', 'change'],
+  emits: ['update:value', 'change', 'blur'],
   setup(props, { emit }) {
     const instance = inject('editor-form', {}) as EditorForm;
 
@@ -56,7 +56,7 @@ export default defineComponent({
     function handlChange(e: InputEvent) {
       isValueUpdateFromInner = true;
       const value = (e.target! as HTMLInputElement).value;
-      updateValue(props.type === 'number' ? +value.replace(/[^0-9]+/g, '') : value);
+      updateValue(props.type === 'number' ? parseFloat(value) || 0 : value);
     }
 
     // 处理输入框删除
@@ -91,6 +91,8 @@ export default defineComponent({
       } else {
         input.value = props.value;
       }
+
+      emit('blur', input.value);
     }
 
     watch(

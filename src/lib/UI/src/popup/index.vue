@@ -25,12 +25,14 @@ const popper = ref<HTMLNULL>(null);
 
 const props = defineProps(propsOptions);
 
-const emits = defineEmits(['update:visible']);
+const emit = defineEmits(['update:visible', 'clickDragAway']);
 
 defineExpose({ props });
 
+let startClick: MouseEvent;
+
 const visible = computed({
-  set: (val) => emits('update:visible', val),
+  set: (val) => emit('update:visible', val),
   get: () => props.visible
 });
 
@@ -38,11 +40,16 @@ let popperJS: Popper;
 
 onMounted(() => {
   updatePopper();
-  document.addEventListener('mouseup', hanldeClickDragAway);
+
+  document.addEventListener('mouseup', handleMuseUp);
+
+  document.addEventListener('mousedown', handleMuseDown);
 });
 
 onBeforeUnmount(() => {
-  document.addEventListener('mouseup', hanldeClickDragAway);
+  document.removeEventListener('mouseup', handleMuseUp);
+
+  document.removeEventListener('mousedown', handleMuseDown);
 });
 
 watch(
@@ -63,12 +70,23 @@ function updatePopper() {
 }
 
 // 点击以外的地方
-function hanldeClickDragAway(e: MouseEvent) {
-  const target = e.target as Node;
+function handleMuseUp(e: MouseEvent) {
+  const upTarget = e.target as Node;
+  const downTarget = startClick.target as Node;
+
+  const isContainedByPopper = popper.value?.contains(upTarget) || popper.value?.contains(downTarget);
+
   // 内部点击
-  if (popper.value?.contains(target) || container.value?.contains(target)) return;
+  if (isContainedByPopper || container.value?.contains(upTarget)) return;
+
+  visible.value && emit('clickDragAway');
 
   visible.value && (visible.value = false);
+}
+
+// 处理鼠标按下
+function handleMuseDown(e: MouseEvent) {
+  startClick = e;
 }
 </script>
 

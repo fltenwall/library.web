@@ -1,5 +1,5 @@
 <template>
-  <popup v-model:visible="visible">
+  <popup v-model:visible="visible" @clickDragAway="handleUnSelectColor">
     <div class="color-picker-trigger">
       <div class="color-picker-color" :style="{ background: currentColor }" />
     </div>
@@ -26,16 +26,63 @@
           <draggable-place
             ref="slider"
             class="color-main-slider"
-            @on-start="handleThumbMove"
-            @on-move="handleThumbMove"
+            @on-start="handleSliderThumbMove"
+            @on-move="handleSliderThumbMove"
           >
-            <div ref="thumb" class="color-main-slider-thumb" :style="thumbStyle" />
+            <div ref="sliderThumb" class="color-main-slider-thumb" :style="sliderThumbStyle" />
           </draggable-place>
         </div>
+
+        <!-- 透明 -->
+        <draggable-place
+          ref="alpha"
+          class="color-alpha-slider"
+          @on-start="handleAlphaThumbMove"
+          @on-move="handleAlphaThumbMove"
+        >
+          <div ref="alphaThumb" class="color-alpha-slider-thumb" :style="alphatThumbStyle" />
+        </draggable-place>
+
         <!-- 底部 -->
         <div class="color-footer">
-          <a-input v-model:value="inputColor" class="color-footer-input" @blur="handleInputBlur" />
-          <a-button class="color-footer-button" @click="handleSelectColor">确定</a-button>
+          <div class="flex">
+            <ui-input
+              v-model:value="inputColor.r"
+              class="color-footer-input"
+              :max="255"
+              type="number"
+              placeholder=" "
+              @blur="handleInputBlur"
+            />
+            <ui-input
+              v-model:value="inputColor.g"
+              class="color-footer-input"
+              :max="255"
+              type="number"
+              placeholder=" "
+              @blur="handleInputBlur"
+            />
+            <ui-input
+              v-model:value="inputColor.b"
+              class="color-footer-input"
+              :max="255"
+              type="number"
+              placeholder=" "
+              @blur="handleInputBlur"
+            />
+            <ui-input
+              v-model:value="inputColor.a"
+              class="color-footer-input"
+              :max="1"
+              type="number"
+              placeholder=" "
+              @blur="handleInputBlur"
+            />
+          </div>
+          <div>
+            <a-button class="color-footer-button mr2" @click="handleUnSelectColor">取消</a-button>
+            <a-button class="color-footer-button" @click="handleSelectColor">确定</a-button>
+          </div>
         </div>
       </div>
     </template>
@@ -43,13 +90,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CSSProperties } from 'vue';
+import { CSSProperties } from 'vue';
 import { DraggablePlace, Popup } from '/@/lib/UI/';
 import { reactive, computed, ref, watch, nextTick } from 'vue';
 import { isUndefined } from '/@/utils/is';
 import { clamp } from 'lodash';
 import propsOptions from './props';
 import tinycolor from 'tinycolor2';
+import UiInput from '/@/lib/UI/src/input/index';
 
 interface Move {
   x: number;
@@ -64,25 +112,40 @@ interface Hsla {
   a: number;
 }
 
+interface Rgba {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
 const emits = defineEmits(['update:value', 'change']);
 
 const props = defineProps(propsOptions);
 
-const inputColor = ref<string>('#000000');
+const inputColor = ref<Rgba>({ r: 0, g: 0, b: 0, a: 1 });
 
-const currentColor = ref<string>('#000000');
+const currentColor = ref<string>('rgba(0, 0, 0, 1)');
+
+const cacheInputColor = ref<string>('rgba(0, 0, 0, 1)');
 
 const slider = ref<{ $el: HTMLElement } | null>(null);
 
+const alpha = ref<{ $el: HTMLElement } | null>(null);
+
 const svpanel = ref<{ $el: HTMLElement } | null>(null);
 
-const thumb = ref<HTMLNULL>(null);
+const sliderThumb = ref<HTMLNULL>(null);
+
+const alphaThumb = ref<HTMLNULL>(null);
 
 const cursor = ref<HTMLNULL>(null);
 
 const cursorStyle = reactive<CSSProperties>({});
 
-const thumbStyle = reactive<CSSProperties>({});
+const sliderThumbStyle = reactive<CSSProperties>({});
+
+const alphatThumbStyle = reactive<CSSProperties>({});
 
 const visible = ref<boolean>(false);
 
@@ -106,7 +169,7 @@ watch(
 
     emits('change', color);
 
-    inputColor.value = color;
+    inputColor.value = tinycolor(color).toRgb();
   }
 );
 
@@ -116,7 +179,11 @@ watch(
     if (isValueUpdateFromInner.value) {
       isValueUpdateFromInner.value = false;
     } else {
+      cacheInputColor.value = color;
+
       updateColor(color);
+
+      updatePosition();
     }
   },
   { immediate: true }
@@ -124,6 +191,8 @@ watch(
 
 // 点击确定更新数据
 function handleSelectColor() {
+  cacheInputColor.value = currentColor.value;
+
   emits('update:value', currentColor.value);
 
   visible.value = false;
@@ -131,9 +200,9 @@ function handleSelectColor() {
 
 // 颜色更新
 function updateColor(color: Hsla | string) {
-  const value = tinycolor(color).isValid() ? color : '#000000';
+  const value = tinycolor(color).isValid() ? color : 'rgba(0, 0, 0, 1)';
 
-  currentColor.value = tinycolor(value).toHexString();
+  currentColor.value = tinycolor(value).toRgbString();
 }
 
 // 获取 饱和度, 明度
@@ -149,8 +218,8 @@ function handleCursorMove({ x, y, container: { height, width } }: Move) {
 }
 
 // 获取 色相
-function handleThumbMove({ y, container: { height } }: Move) {
-  thumbStyle.top = `${y}px`;
+function handleSliderThumbMove({ y, container: { height } }: Move) {
+  sliderThumbStyle.top = `${y}px`;
 
   if (y < 0) {
     hsva.value.h = 360;
@@ -163,10 +232,31 @@ function handleThumbMove({ y, container: { height } }: Move) {
   updateColor(hsva.value);
 }
 
+// 透明的发生变化
+function handleAlphaThumbMove({ x, container: { width } }: Move) {
+  alphatThumbStyle.left = `${x}px`;
+
+  if (x < 0) {
+    hsva.value.a = 0;
+  } else if (x > width) {
+    hsva.value.a = 1;
+  } else {
+    hsva.value.a = +(x / width).toFixed(1);
+  }
+
+  updateColor(hsva.value);
+}
+
 // 输入失去的值
 function handleInputBlur() {
-  updateColor(inputColor.value);
+  const color = tinycolor(inputColor.value).toHex();
 
+  updateColor(color);
+
+  updatePosition();
+}
+
+function updatePosition() {
   const { h, s, v } = tinycolor(currentColor.value).toHsv();
 
   hsva.value = { h, s, v, a: 1 };
@@ -178,7 +268,9 @@ function update() {
   cursorStyle.top = `${getCursorTop()}px`;
   cursorStyle.left = `${getCursorLeft()}px`;
 
-  thumbStyle.top = `${getThumbTop()}px`;
+  sliderThumbStyle.top = `${getThumbTop()}px`;
+
+  alphatThumbStyle.left = `${getThumbLeft()}px`;
 }
 
 function getCursorLeft() {
@@ -208,7 +300,29 @@ function getThumbTop() {
     return 0;
   }
 
-  return (hsva.value.h / 360) * el.offsetHeight - thumb.value!.offsetHeight / 2;
+  return (hsva.value.h / 360) * el.offsetHeight - sliderThumb.value!.offsetHeight / 2;
+}
+
+function getThumbLeft() {
+  const el = alpha.value?.$el;
+
+  if (isUndefined(el)) return 0;
+
+  if (hsva.value.a === 0) {
+    return 0;
+  } else if (hsva.value.a === 1) {
+    return el.offsetWidth;
+  }
+
+  return hsva.value.a * el.offsetWidth - alphaThumb.value!.offsetHeight / 2;
+}
+
+function handleUnSelectColor() {
+  updateColor(cacheInputColor.value);
+
+  updatePosition();
+
+  visible.value = false;
 }
 </script>
 
@@ -240,7 +354,7 @@ function getThumbTop() {
 
   &-svpanel {
     position: relative;
-    width: 280px;
+    width: 300px;
     height: 180px;
     margin: 0 10px 0 0;
 
@@ -304,15 +418,44 @@ function getThumbTop() {
   }
 }
 
+.color-alpha-slider {
+  position: relative;
+  width: 300px;
+  height: 12px;
+  margin-top: 10px;
+  background: linear-gradient(45deg, #eee 25%, transparent 0, transparent 75%, #eee 0, #eee),
+    linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
+  background-position: 0 0, 6px 6px;
+  background-size: 12px 12px;
+
+  &-thumb {
+    position: absolute;
+    width: 4px;
+    height: 100%;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 0 2px #0009;
+  }
+}
+
 .color-footer {
   display: flex;
   justify-content: space-between;
   margin: 10px 0 0;
 
   &-input {
-    width: 160px;
-    height: 28px;
-    font-size: 12px;
+    width: 40px;
+
+    ::v-deep(input) {
+      height: 28px;
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    &:not(:first-of-type) {
+      margin-left: 8px;
+    }
   }
 
   &-button {
