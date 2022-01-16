@@ -1,7 +1,33 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 
 export interface Schema extends PointInfo {
-  link: string;
+  list: Array<{ link: string; image: string; label: string }>;
+
+  type: 'image' | 'text' | 'image-text';
+
+  fontColor: string;
+
+  fontSize: number;
+
+  bgColor: string;
+
+  cardBgColor: string;
+
+  cardBorderRadius: number;
+
+  iconWidth: number;
+
+  paddingTop: number;
+
+  paddingBottom: number;
+
+  paddingY: number;
+
+  showNum: number;
+
+  radiusTop: number;
+
+  radiusBottom: number;
 }
 
 export const schema: Schema = {
@@ -9,7 +35,33 @@ export const schema: Schema = {
 
   width: 375,
 
-  link: ''
+  type: 'image-text',
+
+  fontColor: '#000000',
+
+  fontSize: 12,
+
+  iconWidth: 30,
+
+  bgColor: 'transparent',
+
+  cardBgColor: 'transparent',
+
+  cardBorderRadius: 0,
+
+  paddingY: 0,
+
+  paddingTop: 0,
+
+  paddingBottom: 0,
+
+  showNum: 4,
+
+  radiusTop: 0,
+
+  radiusBottom: 0,
+
+  list: [{ link: '', image: '', label: '' }]
 };
 
 export const label = '图文导航';

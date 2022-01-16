@@ -116,7 +116,7 @@ export default defineComponent({
       <div class="flex">
         <Input
           value={input.value}
-          placeholder={props.placeholder}
+          placeholder={props.readonly ? '' : props.placeholder}
           size={props.size}
           readonly={props.readonly}
           onChange={handlChange}

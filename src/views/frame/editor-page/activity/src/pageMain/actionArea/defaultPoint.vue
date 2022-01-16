@@ -30,7 +30,6 @@
       :value="pageOptions.backgroundImage"
       readonly
       allow-clear
-      placeholder=""
       @change="(value: string) => handleUpdateData(value, 'backgroundImage')"
     />
   </div>

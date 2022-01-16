@@ -58,7 +58,9 @@
         </div>
         <!-- 选中图片数据 -->
         <div v-for="[key, item] in selectImageMap" :key="key" class="relative inline-flex preview-image-row">
-          <div class="index-grid-image w80 h80 border-1 rounded-md inline-flex items-center m2">
+          <div
+            class="index-grid-image w80 h80 border-1 rounded-md inline-flex items-center m2 overflow-hidden"
+          >
             <img :src="`${MixinConfig.preview}${item.hash}`" class="preview-image full-height" />
           </div>
           <icon

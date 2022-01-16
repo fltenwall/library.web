@@ -9,13 +9,7 @@
   <div class="swiper-list">
     <div v-for="(item, index) in dataItem.list" :key="index" class="swiper-list-box">
       <a-form-item label="图片地址">
-        <ui-input
-          v-model:value="item.image"
-          readonly
-          allow-clear
-          placeholder=""
-          :prop="`list.${index}.image`"
-        />
+        <ui-input v-model:value="item.image" readonly allow-clear :prop="`list.${index}.image`" />
       </a-form-item>
       <a-form-item label="链接">
         <ui-input v-model:value="item.link" :prop="`list.${index}.link`" />
