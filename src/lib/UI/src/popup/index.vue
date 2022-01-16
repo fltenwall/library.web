@@ -50,6 +50,8 @@ onBeforeUnmount(() => {
   document.removeEventListener('mouseup', handleMuseUp);
 
   document.removeEventListener('mousedown', handleMuseDown);
+
+  popperJS && popperJS.destroy();
 });
 
 watch(

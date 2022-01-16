@@ -10,6 +10,8 @@ export interface Schema extends PointInfo {
   duration: number;
 
   vertical: boolean;
+
+  autoplay: number;
 }
 
 export const schema: Schema = {
@@ -20,6 +22,8 @@ export const schema: Schema = {
   borderRadius: 0,
 
   padding: 0,
+
+  autoplay: 5000,
 
   duration: 500,
 
