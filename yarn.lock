@@ -1280,10 +1280,10 @@
   dependencies:
     "color-convert" "^2.0.1"
 
-"ant-design-vue@^3.0.0-beta.5":
-  "integrity" "sha512-yX+JGkPlzXav56hHCg0aa1LAB9GQEEQ8Xfy0o7tc49zFH2v0Q8ekiWVXsvsiracLZgl7GcLm5HnEPp9tAy0BZQ=="
-  "resolved" "https://registry.npmmirror.com/ant-design-vue/download/ant-design-vue-3.0.0-beta.5.tgz"
-  "version" "3.0.0-beta.5"
+"ant-design-vue@^3.0.0-beta.7":
+  "integrity" "sha512-8ay9+AnleifI/Ji6DnbrBku1kwo3fPjNrxyqsBAfe573T4gML9AVpX2/CaJgc41ID9liJdNV8fChgVEckeVb1A=="
+  "resolved" "https://registry.npmmirror.com/ant-design-vue/download/ant-design-vue-3.0.0-beta.7.tgz"
+  "version" "3.0.0-beta.7"
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.0.0"

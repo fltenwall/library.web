@@ -45,11 +45,11 @@ export const schema: Schema = {
 
   fontColor: '#000000',
 
-  bgColor: '#ffffff',
+  bgColor: 'transparent',
 
   timeFontColor: '#000000',
 
-  timeBgColor: '#ffffff',
+  timeBgColor: 'transparent',
 
   styleTheme: 1,
 

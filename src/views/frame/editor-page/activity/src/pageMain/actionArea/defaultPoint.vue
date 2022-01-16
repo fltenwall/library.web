@@ -62,9 +62,9 @@
   <!-- 素材库 -->
   <material-modal
     v-model:value="visible"
+    dict-type="image_manage"
+    dict-value="activity_page"
     :maxlength="1"
-    :dict-type="DICT_TYPE"
-    :dict-value="DICT_VALUE"
     @select="handleSelectMaterial"
   />
 </template>
@@ -76,9 +76,6 @@ import uiInput from '/@/lib/UI/src/input/index';
 import lock from './src/lock.vue';
 import { pointStore } from '/@/store/modules/point';
 import { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
-
-const DICT_TYPE = 'image_manage';
-const DICT_VALUE = 'activity_page';
 
 // 数据
 const pageOptions = computed(() => pointStore.getPageOptionsState);

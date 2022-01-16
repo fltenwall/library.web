@@ -6,6 +6,10 @@ export interface Schema extends PointInfo {
   fontColor: string;
 
   bgColor: string;
+
+  speed: number;
+
+  closeable: number;
 }
 
 export const schema: Schema = {
@@ -17,7 +21,11 @@ export const schema: Schema = {
 
   fontColor: '#e39231',
 
-  bgColor: '#fffbe8'
+  bgColor: '#fffbe8',
+
+  speed: 60,
+
+  closeable: 0
 };
 
 export const label = '公告';

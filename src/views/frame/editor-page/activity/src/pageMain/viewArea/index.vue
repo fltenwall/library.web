@@ -55,7 +55,9 @@
         />
 
         <!-- 右键菜单 -->
-        <panel-menu :style="menuStyle" @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
+        <teleport to="body">
+          <panel-menu :style="menuStyle" @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
+        </teleport>
       </div>
     </div>
   </scrollbar>
@@ -481,6 +483,7 @@ watch(
 
     &[move='true'] {
       &[select='true'] {
+        z-index: 9999;
         transition: none;
       }
     }

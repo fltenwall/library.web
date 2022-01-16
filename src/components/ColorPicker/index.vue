@@ -1,5 +1,5 @@
 <template>
-  <popup v-model:visible="visible" @clickDragAway="handleUnSelectColor">
+  <popup v-model:visible="visible">
     <div class="color-picker-trigger">
       <div class="color-picker-color" :style="{ background: currentColor }" />
     </div>
@@ -123,11 +123,11 @@ const emits = defineEmits(['update:value', 'change']);
 
 const props = defineProps(propsOptions);
 
-const inputColor = ref<Rgba>({ r: 0, g: 0, b: 0, a: 1 });
+const inputColor = ref<Rgba>({ r: 255, g: 255, b: 255, a: 1 });
 
-const currentColor = ref<string>('rgba(0, 0, 0, 1)');
+const currentColor = ref<string>('rgba(255, 255, 255, 1)');
 
-const cacheInputColor = ref<string>('rgba(0, 0, 0, 1)');
+const cacheInputColor = ref<string>('rgba(255, 255, 255, 1)');
 
 const slider = ref<{ $el: HTMLElement } | null>(null);
 
@@ -200,7 +200,7 @@ function handleSelectColor() {
 
 // 颜色更新
 function updateColor(color: Hsla | string) {
-  const value = tinycolor(color).isValid() ? color : 'rgba(0, 0, 0, 1)';
+  const value = tinycolor(color).isValid() ? color : 'rgba(255, 255, 255, 1)';
 
   currentColor.value = tinycolor(value).toRgbString();
 }

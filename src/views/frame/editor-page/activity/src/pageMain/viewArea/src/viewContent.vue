@@ -22,9 +22,9 @@ export default defineComponent({
   setup(props, { emit }) {
     // 处理点击右键
     function onContextmenu(event: MouseEvent) {
-      const { layerX, layerY } = event as unknown as { layerX: number; layerY: number };
+      const { clientX, clientY } = event as unknown as { clientX: number; clientY: number };
 
-      const options = { x: layerX + 5, y: layerY + 5 };
+      const options = { x: clientX + 5, y: clientY + 5 };
       // 非当前选中的弹出
       if (props.record.id !== pointStore.getPointidState) {
         emit('on-right-select', props.record.id);

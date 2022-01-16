@@ -1,6 +1,26 @@
 <template>
-  <a-form-item label="点击链接">
+  <a-form-item label="链接">
     <ui-input v-model:value="dataItem.link" prop="label" />
+  </a-form-item>
+  <a-form-item label="指定模块">
+    <ui-input v-model:value="dataItem.pointId" prop="pointId" />
+  </a-form-item>
+  <a-divider />
+  <a-form-item label="按钮内容">
+    <ui-input v-model:value="dataItem.text" prop="text" />
+  </a-form-item>
+  <a-form-item label="字体颜色">
+    <ui-color-picker v-model:value="dataItem.textColor" prop="textColor" />
+  </a-form-item>
+  <a-form-item label="字体大小">
+    <slider-input v-model:value="dataItem.textSize" :min="12" :max="50" prop="textSize" />
+  </a-form-item>
+  <a-divider />
+  <a-form-item label="背景颜色">
+    <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
+  </a-form-item>
+  <a-form-item label="圆角边距">
+    <slider-input v-model:value="dataItem.borderRadius" prop="borderRadius" />
   </a-form-item>
 </template>
 
@@ -8,6 +28,8 @@
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
+import sliderInput from '/@/lib/UI/src/slider/sliderInput';
+import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();

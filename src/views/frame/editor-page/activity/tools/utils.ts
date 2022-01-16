@@ -2,6 +2,7 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import { computed, unref, provide, ref, watch, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
+import { cloneDeep } from 'lodash-es';
 
 type Trigger = 'width' | 'height' | 'x' | 'y' | 'zIndex';
 
@@ -9,6 +10,20 @@ export function queryPoint(id: string): PointInfo | undefined {
   const pointData = computed(() => pointStore.getPointDataState);
 
   return unref(pointData).find((el) => el.id === id);
+}
+
+function parsePath(path: string) {
+  const segments = path.split('.');
+
+  return function (obj: object) {
+    for (let i = 0; i < segments.length; i++) {
+      if (!obj) return;
+
+      obj = (obj as any)[segments[i]];
+    }
+
+    return obj;
+  };
 }
 
 export function templateInit<T extends PointInfo>(): Partial<T> {
@@ -43,7 +58,8 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
   // 数据改变触发
   function changeTrigger(key: Trigger | string) {
     const { height: CH, width: CW } = canvasSize.value;
-    const value = (dataItem as any)[key] as never;
+    const value = parsePath(key)(dataItem) as never;
+
     isValueUpdateFromInner.value = true;
 
     // 修改默认视图数据
@@ -93,7 +109,7 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
     });
 
     Reflect.ownKeys(data!).forEach((key) => {
-      (dataItem as any)[key] = data![key as string];
+      (dataItem as any)[key] = cloneDeep(data![key as string]);
     });
   }
 

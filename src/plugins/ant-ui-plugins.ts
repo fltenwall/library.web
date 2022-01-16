@@ -36,7 +36,8 @@ import {
   Switch,
   Empty,
   Descriptions,
-  Badge
+  Badge,
+  Carousel
 } from 'ant-design-vue';
 
 // 导入 Icon
@@ -61,7 +62,7 @@ export default class AntUiPlugins {
     app.use(Row).use(Col).use(Checkbox).use(Popover).use(Popconfirm).use(Menu).use(Dropdown);
     app.use(Progress).use(DatePicker).use(InputNumber).use(Tag).use(Upload).use(Tooltip).use(Spin);
     app.use(Tree).use(Affix).use(Layout).use(Drawer).use(Avatar).use(Tabs).use(Radio).use(Collapse);
-    app.use(Image).use(Switch).use(Empty).use(Descriptions).use(Badge);
+    app.use(Image).use(Switch).use(Empty).use(Descriptions).use(Badge).use(Carousel);
     app.component('PlusOutlined', PlusOutlined);
     app.component('DownOutlined', DownOutlined);
     app.component('SettingOutlined', SettingOutlined);

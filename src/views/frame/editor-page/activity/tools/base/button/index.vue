@@ -1,5 +1,5 @@
 <template>
-  <div class="index-center-middle">{{ label }}</div>
+  <div class="button-wrap" :style="wrapStyle">{{ point.text }}</div>
 </template>
 
 <!-- 默认配置项 -->
@@ -13,12 +13,32 @@ export default defineComponent({
 
 <!-- setup 执行项 -->
 <script setup lang="ts">
+import type { CSSProperties } from 'vue';
 import type { Schema } from './schema';
-import { reactive, toRefs, useAttrs } from 'vue';
+import { reactive, useAttrs, computed } from 'vue';
 
 const attrs = useAttrs();
 
-const { label } = toRefs(reactive<Schema>(attrs as Schema));
+const point = reactive<Schema>(attrs as unknown as Schema);
+
+const wrapStyle = computed(
+  (): CSSProperties => ({
+    color: point.textColor,
+    fontSize: `${point.textSize}px`,
+    backgroundColor: point.bgColor,
+    borderRadius: `${point.borderRadius}px`
+  })
+);
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.button {
+  &-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

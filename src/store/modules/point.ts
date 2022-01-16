@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CSSProperties } from 'vue';
 import type { PointInfo, Size } from '/@/lib/interface/PointInfo';
 import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
-import { isObject } from '/@/utils/is';
+import { isArray, isObject } from '/@/utils/is';
 import { ActivityManage } from '/@/api/page-manage/activity-page';
 import { cloneDeep } from 'lodash-es';
 
@@ -14,7 +15,9 @@ interface UpdatePointState {
   // 下标
   key: keyof PointInfo;
   // 值
-  value: never;
+  value?: never;
+  // 方式
+  type?: 'delete' | 'update';
 }
 
 interface UpdatePageOption {
@@ -92,12 +95,22 @@ export default class Point extends VuexModule {
 
   // 更新数据
   @Mutation
-  commitUpdatePointData({ id, key, value }: UpdatePointState): void {
+  commitUpdatePointData({ id, key: path, value, type = 'update' }: UpdatePointState): void {
     // 查找数据
-    const point = this.pointDataState.find((el) => el.id === id);
+    let point = this.pointDataState.find((el) => el.id === id);
+
+    const segments = (path as string).split('.');
+
+    const key = segments.pop();
+
+    segments.forEach((segment) => (point = (point as any)[segment]));
 
     // 更新数据
-    point && (point[key] = value);
+    type === 'update' && point && (point[key as string] = value);
+    // 删除数据
+    if (type === 'delete') {
+      if (isArray(point)) [point.splice(+(key as string), 1)];
+    }
   }
 
   // 更新数据样式

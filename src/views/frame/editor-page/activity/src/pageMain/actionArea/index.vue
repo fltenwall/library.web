@@ -1,5 +1,5 @@
 <template>
-  <global-drawer v-model:value="visible" placement="right" class="action-area">
+  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="310">
     <div class="action-area-header index-middle index-space-between">
       <div>{{ baseConfigs.label[pointInfo.name || 'form'] }}</div>
       <div>
