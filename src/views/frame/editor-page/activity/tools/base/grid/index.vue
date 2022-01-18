@@ -1,14 +1,14 @@
 <template>
   <div class="grid-wrap" :style="wrapStyle">
     <div v-for="(item, index) in point.list" :key="index" class="grid-box" :style="boxStyle">
-      <template v-if="point.type === 'image' || point.type === 'image-text'">
-        <img
-          v-if="item.image"
-          class="grid-box__image"
-          :src="`${MixinConfig.preview}${item.image}`"
-          :width="point.iconWidth"
-        />
-      </template>
+      <!-- 图片 -->
+      <img
+        v-if="(point.type === 'image' || point.type === 'image-text') && item.image"
+        class="grid-box__image"
+        :src="`${MixinConfig.preview}${item.image}`"
+        :width="point.iconWidth"
+      />
+      <!-- 文字 -->
       <div
         v-if="point.type === 'text' || point.type === 'image-text'"
         class="grid-box__text index-hidden-newline"

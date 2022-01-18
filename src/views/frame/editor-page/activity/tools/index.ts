@@ -4,7 +4,7 @@ import { usePinYin } from '/@/hooks/web/usePinYin';
 import { isArray, isUndefined } from '/@/utils/is';
 
 interface PointConfigs {
-  label: Recordable<string>;
+  label: Recordable<string | Recordable<string>>;
 
   icon: Recordable<string>;
 
@@ -21,6 +21,8 @@ const moduleViewSource = import.meta.globEager('./**/index.vue');
 const schemaTools = import.meta.globEager('./**/schema.ts');
 // 操作
 const moduleActionSource = import.meta.globEager('./**/template.vue');
+// 操作 扩展
+const moduleActionExtendSource = import.meta.globEager('./**/template/**.vue');
 
 // 模块集合
 export const moduleMuster: Recordable<string[]> = {};
@@ -30,13 +32,18 @@ export const moduleView: Recordable<Component> = {};
 export const moduleSchema: Indexable<Required<PointInfo>> = {};
 // 操作数据
 export const moduleAction: Recordable<Component> = {};
+// 操作数据扩展
+export const moduleActionExtend: Recordable<{ template: Component; name: string }[]> = {};
+
 // 分类 中文 和 图标
 export const baseConfigs: PointConfigs = {
   label: {
     base: '基础组件',
     form: '页面配置',
     media: '媒体组件',
-    chart: '可视化组件'
+    chart: '可视化组件',
+    attr: '属性',
+    config: '配置'
   },
   icon: {
     base: 'ant-design:appstore-outlined',
@@ -50,20 +57,24 @@ export const baseConfigs: PointConfigs = {
 
 Object.keys(moduleViewSource).forEach((key) => {
   // 读取文件名称
-  const [classify, name] = key.replace(/\.\/|.index.vue/g, '').split('/');
+  const [group, belong] = key.replace(/\.\/|.index.vue/g, '').split('/');
+  // 唯一值
+  const only = `${group}-${belong}`;
   // 设置数组
-  !isArray(moduleMuster[classify]) && (moduleMuster[classify] = []);
+  !isArray(moduleMuster[group]) && (moduleMuster[group] = []);
   // 添加模块
-  moduleView[name] = moduleViewSource[key].default;
+  moduleView[only] = moduleViewSource[key].default;
   // 添加数据
-  moduleMuster[classify].push(name);
+  moduleMuster[group].push(only);
 });
 
 Object.keys(schemaTools).forEach((key) => {
   // 读取文件名称
-  const [, name] = key.replace(/\.\/|.schema.ts/g, '').split('/');
+  const [group, belong] = key.replace(/\.\/|\.schema\.ts/g, '').split('/');
   // 判断为空跳过
-  if (isUndefined(name)) return;
+  if (isUndefined(belong)) return;
+  // 唯一值
+  const only = `${group}-${belong}`;
   // 关键字
   const label = schemaTools[key].label;
   // 可见
@@ -71,22 +82,37 @@ Object.keys(schemaTools).forEach((key) => {
   // 方式
   const trigger = schemaTools[key].trigger;
   // 添加名称
-  baseConfigs.label[name] = label;
+  baseConfigs.label[only] = label;
   // 添加名称
-  baseConfigs.icon[name] = schemaTools[key].icon;
+  baseConfigs.icon[only] = schemaTools[key].icon;
   // 添加拼音
-  baseConfigs.pinyin[name] = usePinYin(label);
+  baseConfigs.pinyin[only] = usePinYin(label);
   // 是否可见
-  baseConfigs.visible[name] = isUndefined(visible) || visible ? true : false;
+  baseConfigs.visible[only] = isUndefined(visible) || visible ? true : false;
   // 触发方式
-  baseConfigs.trigger[name] = (isUndefined(trigger) && 'drag') || trigger;
+  baseConfigs.trigger[only] = (isUndefined(trigger) && 'drag') || trigger;
   // 模块数据信息
-  moduleSchema[name] = schemaTools[key].schema;
+  moduleSchema[only] = schemaTools[key].schema;
 });
 
 Object.keys(moduleActionSource).forEach((key) => {
   // 读取文件名称
-  const [, name] = key.replace(/\.\/|.schema.vue/g, '').split('/');
+  const [group, belong] = key.replace(/\.\/|.template\.vue/g, '').split('/');
+  // 唯一值
+  const only = `${group}-${belong}`;
   // 添加模型
-  moduleAction[name] = moduleActionSource[key].default;
+  moduleAction[only] = moduleActionSource[key].default;
+});
+
+Object.keys(moduleActionExtendSource).forEach((key) => {
+  // 读取文件名称
+  const [group, belong, , name] = key.replace(/\.\/|\.vue/g, '').split('/');
+  // 唯一值
+  const only = `${group}-${belong}`;
+
+  if (isUndefined(moduleActionExtend[only])) {
+    moduleActionExtend[only] = [];
+  }
+
+  moduleActionExtend[only].push({ template: moduleActionExtendSource[key].default, name });
 });

@@ -28,6 +28,8 @@ export interface Schema extends PointInfo {
   radiusTop: number;
 
   radiusBottom: number;
+
+  interval: number;
 }
 
 export const schema: Schema = {
@@ -61,9 +63,11 @@ export const schema: Schema = {
 
   radiusBottom: 0,
 
+  interval: 10,
+
   list: [{ link: '', image: '', label: '' }]
 };
 
-export const label = '图文导航';
+export const label = { template: '图文导航', material: '素材' };
 
 export const icon = 'bi:grid-3x2';

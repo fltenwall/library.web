@@ -19,14 +19,14 @@
           <template #content>
             <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
           </template>
-          <template #title>{{ baseConfigs.label[name] }}</template>
+          <template #title>{{ labelShowParse(name) }}</template>
         </panel-box>
       </div>
 
       <!-- 默认工具列表 -->
       <template v-else>
         <div v-for="(names, key) in tools" :key="key" class="muster-box">
-          <div class="muster-title" @dragstart.prevent>{{ baseConfigs.label[key] }}</div>
+          <div class="muster-title" @dragstart.prevent>{{ labelShowParse(key) }}</div>
           <div class="muster-content">
             <template v-for="name in names" :key="name">
               <panel-box
@@ -37,7 +37,7 @@
                 <template #content>
                   <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
                 </template>
-                <template #title>{{ baseConfigs.label[name] }}</template>
+                <template #title>{{ labelShowParse(name) }}</template>
               </panel-box>
             </template>
           </div>
@@ -53,7 +53,7 @@
 import type { CSSProperties } from 'vue';
 import { computed, ref, unref, watch, onMounted } from 'vue';
 import { moduleMuster, baseConfigs } from '../../../../tools/index';
-import { isEmpty, isArray, isNull } from '/@/utils/is';
+import { isEmpty, isArray, isNull, isObject } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
 import { usePinYin } from '/@/hooks/web/usePinYin';
@@ -138,6 +138,12 @@ function handleScroll(top: number) {
       last = key;
     }
   }
+}
+
+function labelShowParse(name: string, key = 'template') {
+  const result = baseConfigs.label[name];
+
+  return isObject(result) ? result[key] : result;
 }
 
 onMounted(() => {

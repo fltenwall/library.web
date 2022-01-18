@@ -5,7 +5,7 @@
         <template #tab>
           <a-tooltip placement="right">
             <template #title>
-              {{ baseConfigs.label[menu] }}
+              {{ labelShowParse(menu) }}
             </template>
             <icon :icon="baseConfigs.icon[menu]" size="20" />
           </a-tooltip>
@@ -40,6 +40,7 @@
 import { computed } from 'vue';
 import { moduleMuster, baseConfigs } from '../../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
+import { isObject } from '/@/utils/is';
 
 const activeKey = computed({
   get: () => pointStore.getTabState,
@@ -47,6 +48,12 @@ const activeKey = computed({
 });
 
 const sidebarMenus = computed(() => Object.keys(moduleMuster));
+
+function labelShowParse(name: string, key = 'template') {
+  const result = baseConfigs.label[name];
+
+  return isObject(result) ? result[key] : result;
+}
 </script>
 
 <style lang="less" scoped>

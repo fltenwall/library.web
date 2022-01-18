@@ -53,9 +53,9 @@
 </template>
 
 <script setup lang="ts">
-import { templateInit } from '../../../tools/utils';
+import { templateInit } from '../../../../tools/utils';
 import uiInput from '/@/lib/UI/src/input/index';
-import lock from './src/lock.vue';
+import lock from './lock.vue';
 
 const dataItem = templateInit();
 </script>

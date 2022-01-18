@@ -1,30 +1,16 @@
 <template>
   <global-drawer v-model:value="visible" placement="right" class="action-area" :width="310">
     <div class="action-area-header index-middle index-space-between">
-      <div>{{ baseConfigs.label[pointInfo.name || 'form'] }}</div>
+      <div>{{ labelShowParse(pointName) }}</div>
       <div>
         <question-circle-outlined />
       </div>
     </div>
-    <a-tabs v-if="isString(pointInfo.name)" size="small">
-      <a-tab-pane key="1" tab="属性">
+    <a-tabs size="small">
+      <a-tab-pane v-for="item in modules" :key="item.name" :tab="labelShowParse(pointName, item.name)">
         <a-form class="action-area-main" label-align="left">
-          <tool-attribute />
-        </a-form>
-      </a-tab-pane>
-      <a-tab-pane key="2" tab="配置">
-        <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
           <scrollbar height="calc(100vh - 150px)">
-            <component :is="moduleAction[pointInfo.name]" />
-          </scrollbar>
-        </a-form>
-      </a-tab-pane>
-    </a-tabs>
-    <a-tabs v-else size="small">
-      <a-tab-pane key="3" tab="配置">
-        <a-form class="action-area-main" label-align="left">
-          <scrollbar>
-            <default-point />
+            <component :is="item.template" />
           </scrollbar>
         </a-form>
       </a-tab-pane>
@@ -34,16 +20,29 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { moduleAction, baseConfigs } from '../../../tools/index';
+import { moduleAction, baseConfigs, moduleActionExtend as moduleExtend } from '../../../tools/index';
 import { pointStore } from '/@/store/modules/point';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
-import toolAttribute from './toolAttribute.vue';
-import defaultPoint from './defaultPoint.vue';
-import { isString } from '/@/utils/is';
+import toolAttribute from './src/toolAttribute.vue';
+import defaultPoint from './src/defaultPoint.vue';
+import { isObject, isString } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
 
-const pointInfo = computed(() => pointStore.getPointInfo);
+const pointName = computed(() => pointStore.getPointInfo.name);
 const pointidState = computed(() => pointStore.getPointidState);
+
+const modules = computed(() => {
+  if (isString(pointName.value)) {
+    // 属性
+    const attr = { template: toolAttribute, name: 'attr' };
+    // 配置
+    const config = { template: moduleAction[pointName.value], name: 'config' };
+
+    return [attr, config, ...(moduleExtend?.[pointName.value] || [])];
+  }
+
+  return [{ template: defaultPoint, name: 'attr' }];
+});
 // 折叠面板
 const visible = ref<boolean>(true);
 
@@ -51,6 +50,17 @@ watch(
   () => pointidState.value,
   (val) => val && (visible.value = true)
 );
+
+function labelShowParse(name = 'form', key = 'template') {
+  if (baseConfigs.label[key]) {
+    // 存在内容名称无需查找
+    return baseConfigs.label[key];
+  }
+
+  const result = baseConfigs.label[name];
+
+  return isObject(result) ? result[key] : result;
+}
 </script>
 
 <style lang="less" scoped>
