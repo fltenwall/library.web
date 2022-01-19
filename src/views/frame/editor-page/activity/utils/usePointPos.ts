@@ -90,7 +90,7 @@ export default function (options: Options): { x: number; y: number } {
     const lo = Math.max(target.x, x);
     const hi = Math.min(target.x + target.width, x + width);
     // 求区间交际
-    if (lo > hi) continue;
+    if (lo >= hi) continue;
 
     // 计算差值
     if (reduceY > target.y - y - height) {

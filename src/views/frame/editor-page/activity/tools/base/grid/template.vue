@@ -1,4 +1,7 @@
 <template>
+  <a-form-item label="固定最底部"> </a-form-item>
+  <a-form-item label="使用粘性定位"> </a-form-item>
+  <a-divider />
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.cardBgColor" prop="cardBgColor" />
   </a-form-item>
@@ -36,39 +39,16 @@
   <a-form-item label="下圆角">
     <slider-input v-model:value="dataItem.radiusBottom" prop="radiusBottom" />
   </a-form-item>
-  <a-divider />
-  <a-form-item label="显示类型">
-    <radio-group-button v-model:value="dataItem.type" :options="types" prop="type" />
-  </a-form-item>
-  <a-form-item label="一行展示个数">
-    <radio-group-button v-model:value="dataItem.showNum" :options="showNums" prop="showNum" />
-  </a-form-item>
 </template>
 
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
-
-const types = [
-  { label: '图片', value: 'image' },
-  { label: '文字', value: 'text' },
-  { label: '图文', value: 'image-text' }
-];
-
-const showNums = [
-  { label: '1 个', value: 1 },
-  { label: '2 个', value: 2 },
-  { label: '3 个', value: 3 },
-  { label: '4 个', value: 4 },
-  { label: '5 个', value: 5 },
-  { label: '6 个', value: 6 }
-];
 </script>
 
 <style lang="less" scoped>

@@ -468,6 +468,7 @@ watch(
     z-index: 2;
     box-sizing: border-box;
     transition: all 0.2s ease;
+    transform-origin: center center;
 
     &.stop-events {
       pointer-events: none;

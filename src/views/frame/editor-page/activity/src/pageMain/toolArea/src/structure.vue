@@ -14,7 +14,7 @@
             <icon v-if="baseConfigs.icon[item.name]" size="24" :icon="baseConfigs.icon[item.name]" />
             <img v-if="isString(item.src)" :src="item.src" class="tree-node-preview__image" />
           </div>
-          <div class="ml2">{{ baseConfigs.label[item.name] }}</div>
+          <div class="ml2">{{ labelShowParse(item.name) }}</div>
         </div>
       </div>
     </scrollbar>
@@ -27,7 +27,7 @@ import { computed } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
 import { baseConfigs } from '../../../../tools/index';
-import { isString } from '/@/utils/is';
+import { isObject, isString } from '/@/utils/is';
 
 // 拖拽数据信息
 const pointData = computed(() => pointStore.getPointDataState);
@@ -36,6 +36,12 @@ const pointid = computed(() => pointStore.getPointidState);
 // 处理选中
 function handleSelectPoint(record: Schema) {
   pointStore.commitUpdatePointidState(record);
+}
+// 名称展示
+function labelShowParse(name: string, key = 'template') {
+  const result = baseConfigs.label[name];
+
+  return isObject(result) ? result[key] : result;
 }
 </script>
 

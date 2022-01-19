@@ -1,4 +1,20 @@
 <template>
+  <a-form-item label="显示类型">
+    <radio-group-button
+      v-model:value="dataItem.type"
+      class="grid-group-button"
+      :options="types"
+      prop="type"
+    />
+  </a-form-item>
+  <a-form-item label="一行展示个数">
+    <radio-group-button
+      v-model:value="dataItem.showNum"
+      class="grid-group-button"
+      :options="showNums"
+      prop="showNum"
+    />
+  </a-form-item>
   <div class="grid-list">
     <div v-for="(item, index) in dataItem.list" :key="index" class="grid-list-box">
       <a-form-item label="导航名称">
@@ -37,6 +53,7 @@ import { templateInit } from '../../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 import { pointStore } from '/@/store/modules/point';
 import { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
+import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 
 const pointid = computed(() => pointStore.getPointidState);
 // 对话框
@@ -45,6 +62,23 @@ const visible = ref<boolean>(false);
 const dataItem = templateInit<Partial<Schema>>();
 // 当前点击下标
 let currentIndex: number;
+
+const types = [
+  { label: '图片', value: 'image' },
+  { label: '文字', value: 'text' },
+  { label: '图文', value: 'image-text' }
+];
+
+const showNums = [
+  { label: '1 个', value: 1 },
+  { label: '2 个', value: 2 },
+  { label: '3 个', value: 3 },
+  { label: '4 个', value: 4 },
+  { label: '5 个', value: 5 },
+  { label: '6 个', value: 6 },
+  { label: '7 个', value: 7 },
+  { label: '8 个', value: 8 }
+];
 
 function handleAddBox() {
   const key = `list.${dataItem.list?.length}`;
@@ -83,6 +117,12 @@ function handleDeleteBox(index: number) {
     &:not(:first-of-type) {
       margin-top: 10px;
     }
+  }
+}
+
+.grid-group-button {
+  ::v-deep(.ant-radio-button-wrapper) {
+    width: 56px;
   }
 }
 </style>

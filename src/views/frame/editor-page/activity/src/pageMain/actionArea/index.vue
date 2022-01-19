@@ -1,14 +1,14 @@
 <template>
-  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="310">
+  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="340">
     <div class="action-area-header index-middle index-space-between">
       <div>{{ labelShowParse(pointName) }}</div>
       <div>
         <question-circle-outlined />
       </div>
     </div>
-    <a-tabs size="small">
+    <a-tabs v-model:activeKey="activeKey" size="small">
       <a-tab-pane v-for="item in modules" :key="item.name" :tab="labelShowParse(pointName, item.name)">
-        <a-form class="action-area-main" label-align="left">
+        <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
           <scrollbar height="calc(100vh - 150px)">
             <component :is="item.template" />
           </scrollbar>
@@ -30,6 +30,8 @@ import { Scrollbar } from '/@/components/Scrollbar';
 
 const pointName = computed(() => pointStore.getPointInfo.name);
 const pointidState = computed(() => pointStore.getPointidState);
+
+const activeKey = ref<string>('');
 
 const modules = computed(() => {
   if (isString(pointName.value)) {

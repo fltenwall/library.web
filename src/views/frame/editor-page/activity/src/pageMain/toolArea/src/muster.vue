@@ -58,6 +58,7 @@ import { Scrollbar } from '/@/components/Scrollbar';
 import { pointStore } from '/@/store/modules/point';
 import { usePinYin } from '/@/hooks/web/usePinYin';
 import panelBox from './panelBox.vue';
+import { debounce } from 'lodash-es';
 
 const inputSearch = ref<string>('');
 
@@ -109,7 +110,7 @@ watch(
   for (let i = 0; i < list.length; i++) {
     // 获取展示模块高度
     const module = moduleMuster[list[i]].filter((name) => baseConfigs.visible[name]);
-    const distance = Math.ceil(module.length / 2) * 125 + 42;
+    const distance = Math.ceil(module.length / 2) * 125 + (i ? 42 : 22);
 
     if (list.length - 1 === i) {
       placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
@@ -133,12 +134,19 @@ function handleScroll(top: number) {
       // 使用上一个数据 作为 当前选中的标签
       pointStore.commitTabState(last);
 
+      delayReset();
+
       break;
     } else {
       last = key;
     }
   }
 }
+
+// 复位
+const delayReset = debounce(() => {
+  isValueUpdateFromInner.value = false;
+}, 300);
 
 function labelShowParse(name: string, key = 'template') {
   const result = baseConfigs.label[name];

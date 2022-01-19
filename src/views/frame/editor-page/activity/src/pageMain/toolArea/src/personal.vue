@@ -16,7 +16,7 @@
           <panel-box
             v-for="item in dataSource"
             :key="item.id"
-            name="personal"
+            name="base-personal"
             :class="backgroundImage === item.hash && 'select'"
             :data="{ src: `${MixinConfig.preview}${item.hash}` }"
           >
