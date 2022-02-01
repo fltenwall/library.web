@@ -17,5 +17,3 @@ import leftContent from './leftContent.vue';
 import mainContent from './mainContent.vue';
 import rightContent from './rightContent.vue';
 </script>
-
-<style lang="less" scoped></style>

@@ -1,6 +1,14 @@
 <template>
-  <a-form-item label="固定最底部"> </a-form-item>
+  <a-form-item label="固定最底部">
+    <radio-group-button v-model:value="dataItem.fixed" :options="fixeds" prop="fixed" />
+  </a-form-item>
   <a-form-item label="使用粘性定位"> </a-form-item>
+  <a-form-item label="显示类型">
+    <radio-group-button v-model:value="dataItem.type" :options="types" prop="type" />
+  </a-form-item>
+  <a-form-item label="一行展示个数">
+    <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" />
+  </a-form-item>
   <a-divider />
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.cardBgColor" prop="cardBgColor" />
@@ -46,9 +54,33 @@ import type { Schema } from './schema';
 import { templateInit } from '../../utils';
 import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
+import { Select as UiSelect } from '/@/lib/UI/';
+import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
+
+const types = [
+  { label: '图片', value: 'image' },
+  { label: '文字', value: 'text' },
+  { label: '图文', value: 'image-text' }
+];
+
+const fixeds = [
+  { label: '是', value: 1 },
+  { label: '否', value: 0 }
+];
+
+const showNums = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6', value: 6 },
+  { label: '7', value: 7 },
+  { label: '8', value: 8 }
+];
 </script>
 
 <style lang="less" scoped>

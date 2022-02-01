@@ -1,6 +1,6 @@
 <template>
   <div class="tool-area-switch">
-    <a-tabs v-model:activeKey="activeKey" tab-position="left" class="flex-item">
+    <a-tabs v-model:activeKey="activeKey" tab-position="left" size="small" class="flex-item">
       <a-tab-pane v-for="menu in sidebarMenus" :key="menu">
         <template #tab>
           <a-tooltip placement="right">
@@ -26,6 +26,15 @@
           <a-tooltip placement="right">
             <template #title> 大纲树 </template>
             <icon icon="ant-design:gold-outlined" size="20" />
+          </a-tooltip>
+        </template>
+      </a-tab-pane>
+
+      <a-tab-pane key="record">
+        <template #tab>
+          <a-tooltip placement="right">
+            <template #title> 日志 </template>
+            <icon icon="ant-design:field-time-outlined" size="20" />
           </a-tooltip>
         </template>
       </a-tab-pane>

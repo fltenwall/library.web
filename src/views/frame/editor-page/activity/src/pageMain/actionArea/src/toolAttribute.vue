@@ -48,7 +48,7 @@
   <a-divider />
   <div class="action-row">
     <div>层级</div>
-    <ui-input v-model:value="dataItem.zIndex" class="w100" prop="zIndex" type="number" />
+    <ui-input v-model:value="dataItem.style_zIndex" class="w100" prop="style_zIndex" type="number" />
   </div>
 </template>
 

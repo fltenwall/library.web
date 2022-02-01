@@ -1,8 +1,8 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
-    <div class="index-theme header-left-title index-middle">
+    <router-link class="index-theme header-left-title index-middle" :to="{ name: PageEnum.BASE_HOME }">
       <span>{{ MixinConfig.shortTitle }}</span>
-    </div>
+    </router-link>
     <div :class="['index-center-middle simulator-item ml10', canvasMode === 1 && 'actived']">
       <icon icon="clarity:mobile-line" />
     </div>
@@ -43,6 +43,7 @@ import { computed } from 'vue';
 import pointLinked from '../../utils/pointLinked';
 import { pointStore } from '/@/store/modules/point';
 import { isEmptyArray } from '/@/utils/is';
+import { PageEnum } from '/@/enums/pageEnum';
 
 const resetState = computed(() => isEmptyArray(pointStore.getPointDataState));
 

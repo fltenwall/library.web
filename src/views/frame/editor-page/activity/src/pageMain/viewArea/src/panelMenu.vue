@@ -34,13 +34,11 @@ function handleDeletePoint() {
 function handleLockPoint() {
   const id = pointInfo.value.id;
 
-  const sizeLock = pointInfo.value.sizeLock;
+  const value = !isLock.value;
 
-  const positionLock = pointInfo.value.positionLock;
+  isDef<string>(id) && handleStore('u', { id, key: 'sizeLock', value });
 
-  isDef<string>(id) && handleStore('u', { id, key: 'sizeLock', value: !sizeLock });
-
-  isDef<string>(id) && handleStore('u', { id, key: 'positionLock', value: !positionLock });
+  isDef<string>(id) && handleStore('u', { id, key: 'positionLock', value });
 }
 
 // 复制

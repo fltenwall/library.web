@@ -100,6 +100,7 @@ export function limitRules(): LimitRules {
   // 弹性布局处理
   function elasticLayout(move: BaseSchema, layout: BaseSchema, CW: number): number {
     const cb = (el: BaseSchema): false | BaseSchema => {
+      //
       if (el.y + el.height > move.y + move.height) {
         return el.y >= layout.y ? false : layout;
       }

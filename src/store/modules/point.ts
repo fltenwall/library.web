@@ -148,11 +148,17 @@ export default class Point extends VuexModule {
     for (let i = 0; i < data.length; i++) {
       const point = data[i];
 
-      this.pointStyleState[point.id] = {
+      const styleList = Object.keys(point).filter((key) => /^style_.+$/.test(key));
+
+      const style: Indexable = {
         width: `${point.width}px`,
         height: `${point.height}px`,
         transform: `translate(${point.x}px,${point.y}px)`
       };
+
+      styleList.forEach((key) => (style[key.replace(/^style_/, '')] = point[key]));
+
+      this.pointStyleState[point.id] = style;
     }
 
     this.pointDataState = data;

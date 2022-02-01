@@ -37,7 +37,7 @@
     <slider-input v-model:value="dataItem.borderRadius" prop="borderRadius" />
   </a-form-item>
   <a-form-item label="主题">
-    <radio-group-button v-model:value="dataItem.styleTheme" :options="styleThemes" prop="styleTheme" />
+    <radio-group-button v-model:value="dataItem.theme" :options="themes" prop="theme" />
   </a-form-item>
 
   <a-form-item label="位置">
@@ -76,7 +76,7 @@ import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
 
-const styleThemes = [
+const themes = [
   { label: '一', value: 1 },
   { label: '二', value: 2 }
 ];

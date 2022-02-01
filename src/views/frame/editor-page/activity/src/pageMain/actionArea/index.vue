@@ -1,5 +1,5 @@
 <template>
-  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="340">
+  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="310">
     <div class="action-area-header index-middle index-space-between">
       <div>{{ labelShowParse(pointName) }}</div>
       <div>
@@ -98,7 +98,8 @@ function labelShowParse(name = 'form', key = 'template') {
         width: 100%;
 
         &-input-content {
-          text-align: right;
+          display: flex;
+          justify-content: flex-end;
         }
       }
     }

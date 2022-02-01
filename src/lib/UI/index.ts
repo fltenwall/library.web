@@ -6,3 +6,4 @@ export { default as DraggablePlace } from './src/draggable/place.vue';
 export { default as Popup } from './src/popup/index.vue';
 export { default as ColorPicker } from './src/colorPicker/index';
 export { default as DatePicker } from './src/DatePicker/index';
+export { default as Select } from './src/select/index';

@@ -38,6 +38,13 @@
   dependencies:
     "@types/throttle-debounce" "^2.1.0"
 
+"@antfu/utils@^0.4.0":
+  "integrity" "sha512-gqkpvjkgFUu+s3kP+Ly33OKpo5zvVY3FDFhv5BIb98SncS3KD6DNxPfNDjwHIoyXbz1leWo1j8DtRLZ1D2Jv+Q=="
+  "resolved" "https://registry.npmmirror.com/@antfu/utils/download/@antfu/utils-0.4.0.tgz"
+  "version" "0.4.0"
+  dependencies:
+    "@types/throttle-debounce" "^2.1.0"
+
 "@antv/adjust@^0.2.1":
   "integrity" "sha1-w4hKaAwyZMwSXX8qtTmOihwLlAE="
   "resolved" "https://registry.npm.taobao.org/@antv/adjust/download/@antv/adjust-0.2.3.tgz?cache=0&sync_timestamp=1602724537148&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40antv%2Fadjust%2Fdownload%2F%40antv%2Fadjust-0.2.3.tgz"
@@ -789,10 +796,10 @@
     "estree-walker" "^1.0.1"
     "picomatch" "^2.2.2"
 
-"@rollup/pluginutils@^4.1.1":
-  "integrity" "sha1-HU2obdTt7RVlalfZM/2iuaCNR+w="
-  "resolved" "https://registry.nlark.com/@rollup/pluginutils/download/@rollup/pluginutils-4.1.1.tgz?cache=0&sync_timestamp=1626393703548&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40rollup%2Fpluginutils%2Fdownload%2F%40rollup%2Fpluginutils-4.1.1.tgz"
-  "version" "4.1.1"
+"@rollup/pluginutils@^4.1.1", "@rollup/pluginutils@^4.1.2":
+  "integrity" "sha512-ROn4qvkxP9SyPeHaf7uQC/GPFY6L/OWy9+bd9AwcjOAWQwxRscoEyAUD8qCY5o5iL4jqQwoLk2kaTKJPb/HwzQ=="
+  "resolved" "https://registry.npmmirror.com/@rollup/pluginutils/download/@rollup/pluginutils-4.1.2.tgz"
+  "version" "4.1.2"
   dependencies:
     "estree-walker" "^2.0.1"
     "picomatch" "^2.2.2"
@@ -844,6 +851,11 @@
   "integrity" "sha1-4Xfmme4bjCLSMXTKqnQiZEOJUJ8="
   "resolved" "https://registry.nlark.com/@types/estree/download/@types/estree-0.0.39.tgz"
   "version" "0.0.39"
+
+"@types/fingerprintjs2@^2.0.0":
+  "integrity" "sha512-isSTwNnW5I6zGZnpkinmVcV9pJqr7cLELns+tXDYzskIOAb2J+iCQ0mQJ9bRjHJhZfdlTFXZoCYK9ZgT3oMWXQ=="
+  "resolved" "https://registry.npmmirror.com/@types/fingerprintjs2/-/fingerprintjs2-2.0.0.tgz"
+  "version" "2.0.0"
 
 "@types/fs-extra@^9.0.13":
   "integrity" "sha1-dZT7rgT+fxkYzos9IT90/0SsH0U="
@@ -1067,6 +1079,16 @@
     "estree-walker" "^2.0.2"
     "source-map" "^0.6.1"
 
+"@vue/compiler-core@3.2.28":
+  "integrity" "sha512-mQpfEjmHVxmWKaup0HL6tLMv2HqjjJu7XT4/q0IoUXYXC4xKG8lIVn5YChJqxBTLPuQjzas7u7i9L4PAWJZRtA=="
+  "resolved" "https://registry.npmmirror.com/@vue/compiler-core/download/@vue/compiler-core-3.2.28.tgz"
+  "version" "3.2.28"
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/shared" "3.2.28"
+    "estree-walker" "^2.0.2"
+    "source-map" "^0.6.1"
+
 "@vue/compiler-dom@3.2.26":
   "integrity" "sha512-smBfaOW6mQDxcT3p9TKT6mE22vjxjJL50GFVJiI0chXYGU/xzC05QRGrW3HHVuJrmLTLx5zBhsZ2dIATERbarg=="
   "resolved" "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.26.tgz"
@@ -1075,7 +1097,31 @@
     "@vue/compiler-core" "3.2.26"
     "@vue/shared" "3.2.26"
 
-"@vue/compiler-sfc@^3.2.23", "@vue/compiler-sfc@>=3.1.0", "@vue/compiler-sfc@3.2.26":
+"@vue/compiler-dom@3.2.28":
+  "integrity" "sha512-KA4yXceLteKC7VykvPnViUixemQw3A+oii+deSbZJOQKQKVh1HLosI10qxa8ImPCyun41+wG3uGR+tW7eu1W6Q=="
+  "resolved" "https://registry.npmmirror.com/@vue/compiler-dom/download/@vue/compiler-dom-3.2.28.tgz"
+  "version" "3.2.28"
+  dependencies:
+    "@vue/compiler-core" "3.2.28"
+    "@vue/shared" "3.2.28"
+
+"@vue/compiler-sfc@^3.2.28", "@vue/compiler-sfc@>=3.1.0":
+  "integrity" "sha512-zB0WznfEBb4CbGBHzhboHDKVO5nxbkbxxFo9iVlxObP7a9/qvA5kkZEuT7nXP52f3b3qEfmVTjIT23Lo1ndZdQ=="
+  "resolved" "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.28.tgz"
+  "version" "3.2.28"
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/compiler-core" "3.2.28"
+    "@vue/compiler-dom" "3.2.28"
+    "@vue/compiler-ssr" "3.2.28"
+    "@vue/reactivity-transform" "3.2.28"
+    "@vue/shared" "3.2.28"
+    "estree-walker" "^2.0.2"
+    "magic-string" "^0.25.7"
+    "postcss" "^8.1.10"
+    "source-map" "^0.6.1"
+
+"@vue/compiler-sfc@3.2.26":
   "integrity" "sha512-ePpnfktV90UcLdsDQUh2JdiTuhV0Skv2iYXxfNMOK/F3Q+2BO0AulcVcfoksOpTJGmhhfosWfMyEaEf0UaWpIw=="
   "resolved" "https://registry.npmmirror.com/@vue/compiler-sfc/download/@vue/compiler-sfc-3.2.26.tgz"
   "version" "3.2.26"
@@ -1099,6 +1145,14 @@
     "@vue/compiler-dom" "3.2.26"
     "@vue/shared" "3.2.26"
 
+"@vue/compiler-ssr@3.2.28":
+  "integrity" "sha512-z8rck1PDTu20iLyip9lAvIhaO40DUJrw3Zv0mS4Apfh3PlfWpF5dhsO5g0dgt213wgYsQIYVIlU9cfrYapqRgg=="
+  "resolved" "https://registry.npmmirror.com/@vue/compiler-ssr/download/@vue/compiler-ssr-3.2.28.tgz"
+  "version" "3.2.28"
+  dependencies:
+    "@vue/compiler-dom" "3.2.28"
+    "@vue/shared" "3.2.28"
+
 "@vue/devtools-api@^6.0.0-beta.11":
   "integrity" "sha1-rXyzhOBi8WW8+cg3MhJb/7wq2D0="
   "resolved" "https://registry.nlark.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.15.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vue%2Fdevtools-api%2Fdownload%2F%40vue%2Fdevtools-api-6.0.0-beta.15.tgz"
@@ -1117,6 +1171,17 @@
     "@babel/parser" "^7.16.4"
     "@vue/compiler-core" "3.2.26"
     "@vue/shared" "3.2.26"
+    "estree-walker" "^2.0.2"
+    "magic-string" "^0.25.7"
+
+"@vue/reactivity-transform@3.2.28":
+  "integrity" "sha512-zE8idNkOPnBDd2tKSIk84hOQZ+jXKvSy5FoIIVlcNEJHnCFnQ3maqeSJ9KoB2Rf6EXUhFTiTDNRlYlXmT2uHbQ=="
+  "resolved" "https://registry.npmmirror.com/@vue/reactivity-transform/download/@vue/reactivity-transform-3.2.28.tgz"
+  "version" "3.2.28"
+  dependencies:
+    "@babel/parser" "^7.16.4"
+    "@vue/compiler-core" "3.2.28"
+    "@vue/shared" "3.2.28"
     "estree-walker" "^2.0.2"
     "magic-string" "^0.25.7"
 
@@ -1156,6 +1221,11 @@
   "integrity" "sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA=="
   "resolved" "https://registry.npmmirror.com/@vue/shared/download/@vue/shared-3.2.26.tgz"
   "version" "3.2.26"
+
+"@vue/shared@3.2.28":
+  "integrity" "sha512-eMQ8s9j8FpbGHlgUAaj/coaG3Q8YtMsoWL/RIHTsE3Ex7PUTyr7V91vB5HqWB5Sn8m4RXTHGO22/skoTUYvp0A=="
+  "resolved" "https://registry.npmmirror.com/@vue/shared/download/@vue/shared-3.2.28.tgz"
+  "version" "3.2.28"
 
 "@windicss/config@1.5.4":
   "integrity" "sha512-muRPFulqh7nU3VrsPb5+k6ulNyiw8VGg62zAWRZIBfeCRXZb2gV1Q8a/tPn8X1T/+HTt4f/1bzFiusqMKscmlw=="
@@ -2094,7 +2164,7 @@
   "resolved" "https://registry.npmmirror.com/esbuild-windows-64/download/esbuild-windows-64-0.13.15.tgz"
   "version" "0.13.15"
 
-"esbuild@^0.13.2":
+"esbuild@^0.13.2", "esbuild@>=0.13":
   "integrity" "sha512-raCxt02HBKv8RJxE8vkTSCXGIyKHdEdGfUmiYb8wnabnaEmHzyW7DCHb5tEN0xU8ryqg5xw54mcwnYkC4x3AIw=="
   "resolved" "https://registry.npmmirror.com/esbuild/download/esbuild-0.13.15.tgz"
   "version" "0.13.15"
@@ -2146,6 +2216,11 @@
   "integrity" "sha1-90cbILb+ipqSVMxoRFQgKIai3Xo="
   "resolved" "https://registry.nlark.com/eslint-config-prettier/download/eslint-config-prettier-8.3.0.tgz"
   "version" "8.3.0"
+
+"eslint-config-vue-global-api@0.4.1":
+  "integrity" "sha1-9zW4thvZSUgTFgTA8+Squlgkk6U="
+  "resolved" "https://registry.npmmirror.com/eslint-config-vue-global-api/download/eslint-config-vue-global-api-0.4.1.tgz"
+  "version" "0.4.1"
 
 "eslint-define-config@^1.1.1":
   "integrity" "sha1-HVD4VfKZhSOrcItEpibumQKwXqA="
@@ -2438,6 +2513,11 @@
   dependencies:
     "locate-path" "^5.0.0"
     "path-exists" "^4.0.0"
+
+"fingerprintjs2@^2.1.4":
+  "integrity" "sha512-veP2yVsnYvjDVkzZMyIEwpqCAQfsBLH+U4PK5MlFAnLjZrttbdRqEArE1fPcnJFz5oS5CrdONbsV7J6FGpIJEQ=="
+  "resolved" "https://registry.npmmirror.com/fingerprintjs2/-/fingerprintjs2-2.1.4.tgz"
+  "version" "2.1.4"
 
 "flat-cache@^3.0.4":
   "integrity" "sha1-YbAzgwKy/p+Vfcwy/CqH8cMEixE="
@@ -2808,10 +2888,10 @@
   "resolved" "https://registry.npm.taobao.org/is-buffer/download/is-buffer-2.0.5.tgz?cache=0&sync_timestamp=1604432378894&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-buffer%2Fdownload%2Fis-buffer-2.0.5.tgz"
   "version" "2.0.5"
 
-"is-core-module@^2.2.0":
-  "integrity" "sha1-91SENhfHC/0pt72HMnQAzaXBhJE="
-  "resolved" "https://registry.nlark.com/is-core-module/download/is-core-module-2.5.0.tgz"
-  "version" "2.5.0"
+"is-core-module@^2.8.1":
+  "integrity" "sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA=="
+  "resolved" "https://registry.npmmirror.com/is-core-module/download/is-core-module-2.8.1.tgz"
+  "version" "2.8.1"
   dependencies:
     "has" "^1.0.3"
 
@@ -3067,6 +3147,11 @@
     "rxjs" "^6.6.7"
     "through" "^2.3.8"
     "wrap-ansi" "^7.0.0"
+
+"local-pkg@^0.4.1":
+  "integrity" "sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw=="
+  "resolved" "https://registry.npmmirror.com/local-pkg/download/local-pkg-0.4.1.tgz"
+  "version" "0.4.1"
 
 "locate-path@^3.0.0":
   "integrity" "sha1-2+w7OrdZdYBxtY/ln8QYca8hQA4="
@@ -3582,7 +3667,7 @@
   "resolved" "https://registry.npm.taobao.org/path-key/download/path-key-3.1.1.tgz?cache=0&sync_timestamp=1617971695678&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpath-key%2Fdownload%2Fpath-key-3.1.1.tgz"
   "version" "3.1.1"
 
-"path-parse@^1.0.6":
+"path-parse@^1.0.7":
   "integrity" "sha1-+8EUtgykKzDZ2vWFjkvWi77bZzU="
   "resolved" "https://registry.nlark.com/path-parse/download/path-parse-1.0.7.tgz"
   "version" "1.0.7"
@@ -3962,13 +4047,14 @@
   "resolved" "https://registry.npm.taobao.org/resolve-from/download/resolve-from-5.0.0.tgz"
   "version" "5.0.0"
 
-"resolve@^1.10.0", "resolve@^1.19.0", "resolve@^1.20.0":
-  "integrity" "sha1-YpoBP7P3B1XW8LeTXMHCxTeLGXU="
-  "resolved" "https://registry.npm.taobao.org/resolve/download/resolve-1.20.0.tgz?cache=0&sync_timestamp=1613054822645&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fresolve%2Fdownload%2Fresolve-1.20.0.tgz"
-  "version" "1.20.0"
+"resolve@^1.10.0", "resolve@^1.19.0", "resolve@^1.20.0", "resolve@^1.21.0":
+  "integrity" "sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw=="
+  "resolved" "https://registry.npmmirror.com/resolve/download/resolve-1.22.0.tgz"
+  "version" "1.22.0"
   dependencies:
-    "is-core-module" "^2.2.0"
-    "path-parse" "^1.0.6"
+    "is-core-module" "^2.8.1"
+    "path-parse" "^1.0.7"
+    "supports-preserve-symlinks-flag" "^1.0.0"
 
 "restore-cursor@^3.1.0":
   "integrity" "sha1-OfZ8VLOnpYzqUjbZXPADQjljH34="
@@ -3990,7 +4076,7 @@
   dependencies:
     "glob" "^7.1.3"
 
-"rollup@^1.20.0||^2.0.0", "rollup@^2.42.0", "rollup@^2.57.0":
+"rollup@^1.20.0||^2.0.0", "rollup@^2.42.0", "rollup@^2.50.0", "rollup@^2.57.0":
   "integrity" "sha512-cJEQq2gwB0GWMD3rYImefQTSjrPYaC6s4J9pYqnstVLJ1CHa/aZNVkD4Epuvg4iLeMA4KRiq7UM7awKK6j7jcw=="
   "resolved" "https://registry.npmmirror.com/rollup/download/rollup-2.62.0.tgz"
   "version" "2.62.0"
@@ -4440,6 +4526,11 @@
   dependencies:
     "has-flag" "^4.0.0"
 
+"supports-preserve-symlinks-flag@^1.0.0":
+  "integrity" "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="
+  "resolved" "https://registry.npmmirror.com/supports-preserve-symlinks-flag/download/supports-preserve-symlinks-flag-1.0.0.tgz"
+  "version" "1.0.0"
+
 "svg-tags@^1.0.0":
   "integrity" "sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q="
   "resolved" "https://registry.npm.taobao.org/svg-tags/download/svg-tags-1.0.0.tgz"
@@ -4624,6 +4715,25 @@
   "resolved" "https://registry.npm.taobao.org/unpipe/download/unpipe-1.0.0.tgz?cache=0&sync_timestamp=1589682745059&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Funpipe%2Fdownload%2Funpipe-1.0.0.tgz"
   "version" "1.0.0"
 
+"unplugin-auto-import@^0.5.11":
+  "integrity" "sha512-MJ3POLe/IysRHF4yd32FkKDoxqSRoiuIHm89ys67B8FLuz2Pvh9poeqTVe6IhJsNxwv0+GSdFfj5Dpq24lhm4g=="
+  "resolved" "https://registry.npmmirror.com/unplugin-auto-import/download/unplugin-auto-import-0.5.11.tgz"
+  "version" "0.5.11"
+  dependencies:
+    "@antfu/utils" "^0.4.0"
+    "@rollup/pluginutils" "^4.1.2"
+    "local-pkg" "^0.4.1"
+    "magic-string" "^0.25.7"
+    "resolve" "^1.21.0"
+    "unplugin" "^0.3.0"
+
+"unplugin@^0.3.0":
+  "integrity" "sha512-AKagqOA5un8rT0vIoCyQ7ii1XcwAOynLYUmmd+DeyQdT9AkYtmRlk4eEsb0HOtovrufxGprOPOol1CwBTI4HRw=="
+  "resolved" "https://registry.npmmirror.com/unplugin/download/unplugin-0.3.1.tgz"
+  "version" "0.3.1"
+  dependencies:
+    "webpack-virtual-modules" "^0.4.3"
+
 "upper-case-first@^2.0.2":
   "integrity" "sha1-mSwyc/iCq9GdHgKJTMFHEX+EQyQ="
   "resolved" "https://registry.npm.taobao.org/upper-case-first/download/upper-case-first-2.0.2.tgz?cache=0&sync_timestamp=1606867326586&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fupper-case-first%2Fdownload%2Fupper-case-first-2.0.2.tgz"
@@ -4756,7 +4866,7 @@
     "kolorist" "^1.5.0"
     "windicss" "^3.2.1"
 
-"vite@^2.0.1", "vite@^2.5.10", "vite@>=2.0.0", "vite@2.6.13":
+"vite@^2.0.1", "vite@^2.3.0", "vite@^2.5.10", "vite@>=2.0.0", "vite@2.6.13":
   "integrity" "sha512-+tGZ1OxozRirTudl4M3N3UTNJOlxdVo/qBl2IlDEy/ZpTFcskp+k5ncNjayR3bRYTCbqSOFz2JWGN1UmuDMScA=="
   "resolved" "https://registry.npmmirror.com/vite/download/vite-2.6.13.tgz"
   "version" "2.6.13"
@@ -4773,6 +4883,11 @@
   "resolved" "https://registry.npmmirror.com/vue-cropper/download/vue-cropper-1.0.2.tgz"
   "version" "1.0.2"
 
+"vue-demi@latest":
+  "integrity" "sha1-9+GO++z/0RqwadFHLXoG4xm0F0w="
+  "resolved" "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz"
+  "version" "0.12.1"
+
 "vue-eslint-parser@^7.10.0":
   "integrity" "sha1-IUtd6pYQB/z/su5luJEjB2KNDa8="
   "resolved" "https://registry.nlark.com/vue-eslint-parser/download/vue-eslint-parser-7.11.0.tgz?cache=0&sync_timestamp=1630882911486&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.11.0.tgz"
@@ -4785,6 +4900,14 @@
     "esquery" "^1.4.0"
     "lodash" "^4.17.21"
     "semver" "^6.3.0"
+
+"vue-global-api@^0.4.1":
+  "integrity" "sha1-smaAIA6E2WgphtAli4JrUazQdTE="
+  "resolved" "https://registry.npmmirror.com/vue-global-api/download/vue-global-api-0.4.1.tgz"
+  "version" "0.4.1"
+  dependencies:
+    "eslint-config-vue-global-api" "0.4.1"
+    "vue-demi" "latest"
 
 "vue-json-pretty@^1.8.1":
   "integrity" "sha1-U4u1f8cYVEFSEFrvZZtMiEdTZe4="
@@ -4810,7 +4933,7 @@
   dependencies:
     "is-plain-object" "3.0.1"
 
-"vue@^3.0.0", "vue@^3.0.2", "vue@^3.2.23", "vue@>=3", "vue@>=3.0.3", "vue@>=3.1.0", "vue@3.2.26":
+"vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.2.23", "vue@>=3", "vue@>=3.0.3", "vue@>=3.1.0", "vue@3.2.26":
   "integrity" "sha512-KD4lULmskL5cCsEkfhERVRIOEDrfEL9CwAsLYpzptOGjaGFNWo3BQ9g8MAb7RaIO71rmVOziZ/uEN/rHwcUIhg=="
   "resolved" "https://registry.npmmirror.com/vue/download/vue-3.2.26.tgz"
   "version" "3.2.26"
@@ -4839,6 +4962,11 @@
   "version" "4.0.3"
   dependencies:
     "loose-envify" "^1.0.0"
+
+"webpack-virtual-modules@^0.4.3":
+  "integrity" "sha1-zVl8bVHVpey0c+6hmDpY+ooX3tk="
+  "resolved" "https://registry.nlark.com/webpack-virtual-modules/download/webpack-virtual-modules-0.4.3.tgz"
+  "version" "0.4.3"
 
 "which-module@^2.0.0":
   "integrity" "sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho="

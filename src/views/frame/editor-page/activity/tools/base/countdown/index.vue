@@ -3,21 +3,19 @@
     {{ title }}
     <template v-if="state !== stateEnum.ended">
       <div class="countdown-time" :style="timeStyle">{{ String(time.hh || 0).padStart(2, '0') }}</div>
-      <div>{{ ['', '时', ':'][point.styleTheme] }}</div>
+      <div>{{ ['', '时', ':'][point.theme] }}</div>
 
       <div class="countdown-time" :style="timeStyle">{{ String(time.mm || 0).padStart(2, '0') }}</div>
-      <div>{{ ['', '分', ':'][point.styleTheme] }}</div>
+      <div>{{ ['', '分', ':'][point.theme] }}</div>
 
       <div class="countdown-time" :style="timeStyle">{{ String(time.ss || 0).padStart(2, '0') }}</div>
-      <div>{{ ['', '秒', ''][point.styleTheme] }}</div>
+      <div>{{ ['', '秒', ''][point.theme] }}</div>
     </template>
   </div>
 </template>
 
 <!-- 默认配置项 -->
 <script lang="ts">
-import { defineComponent, onUnmounted } from 'vue';
-
 export default defineComponent({
   inheritAttrs: false
 });

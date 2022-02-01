@@ -21,7 +21,7 @@ export interface Schema extends PointInfo {
 
   timeBgColor: string;
 
-  styleTheme: number;
+  theme: number;
 
   position: string;
 }
@@ -51,7 +51,7 @@ export const schema: Schema = {
 
   timeBgColor: 'transparent',
 
-  styleTheme: 1,
+  theme: 1,
 
   position: 'left'
 };

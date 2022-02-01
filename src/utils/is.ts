@@ -56,3 +56,10 @@ export function isEmptyArray(val: any): boolean {
 export function isEmpty(val: any): boolean {
   return isEmptyArray(val) || isEmptyArray(val) || !!val;
 }
+
+export function isIntersection([a, b]: [number, number], [c, d]: [number, number]) {
+  const max = [a, c];
+  const min = [b, d];
+
+  return Math.max(...max) <= Math.min(...min);
+}

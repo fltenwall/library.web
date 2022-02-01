@@ -68,7 +68,6 @@ import type { CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
-import { computed, reactive, ref, watch } from 'vue';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';

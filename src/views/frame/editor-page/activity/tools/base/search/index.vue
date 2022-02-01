@@ -8,8 +8,6 @@
 
 <!-- 默认配置项 -->
 <script lang="ts">
-import { defineComponent } from 'vue';
-
 export default defineComponent({
   inheritAttrs: false
 });

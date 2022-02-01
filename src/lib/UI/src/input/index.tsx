@@ -113,7 +113,7 @@ export default defineComponent({
     );
 
     return () => (
-      <div class="flex">
+      <div class="flex w-full">
         <Input
           value={input.value}
           placeholder={props.readonly ? '' : props.placeholder}

@@ -40,7 +40,8 @@ export function queryModule(path: string): string {
     user: '用户管理',
     date: '日期管理',
     quick: '快捷方式',
-    form: '表单管理',
+    activity: '活动页面',
+    form: '表单页面',
     preview: '预览',
     'material/image/classify': '素材管理-图片分组',
     'material/image': '素材管理-图片'

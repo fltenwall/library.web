@@ -1,10 +1,10 @@
 <template>
-  <div>{{ dataItem }}</div>
+  {{ dataItem }}
 </template>
 
 <script setup lang="ts">
-import type { Schema } from './schema';
-import { templateInit } from '../../utils';
+import type { Schema } from '../schema';
+import { templateInit } from '../../../utils';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();

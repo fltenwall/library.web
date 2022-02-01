@@ -21,7 +21,7 @@
           <span @click="openDetailsModal(record)">详情</span>
         </div>
       </template>
-      <template v-else-if="column.dataIndex === 'systemModule'"> 未知 </template>
+      <template v-else-if="column.dataIndex === 'systemModule'"> {{ queryModule(record.path) }} </template>
     </template>
   </page-layout>
 
@@ -36,7 +36,7 @@ import { SearchOptions } from '/@/components/PageLayout/SearchLayout/interface';
 import { PagerQueryData } from '/@/lib/http/axios/types';
 import { useFromatlll } from '/@/utils/dateFormat';
 import modalDetails from './components/modal-details.vue';
-// import { queryModule } from '/@/utils/regExp';
+import { queryModule } from '/@/utils/regExp';
 
 // 从服务器取得数据 设置列表数据 禁止直接调用 刷新数据通过 onFetchData
 async function fetchDataFromServer(query: PagerQueryData) {

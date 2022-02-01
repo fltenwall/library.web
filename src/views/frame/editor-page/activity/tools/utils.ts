@@ -4,7 +4,9 @@ import { computed, unref, provide, ref, watch, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { cloneDeep } from 'lodash-es';
 
-type Trigger = 'width' | 'height' | 'x' | 'y' | 'zIndex';
+type Trigger = 'width' | 'height' | 'x' | 'y' | 'style_zIndex';
+
+type CustomState = Indexable<() => void>;
 
 export function queryPoint(id: string): PointInfo | undefined {
   const pointData = computed(() => pointStore.getPointDataState);
@@ -26,7 +28,7 @@ function parsePath(path: string) {
   };
 }
 
-export function templateInit<T extends PointInfo>(): Partial<T> {
+export function templateInit<T extends PointInfo>(customState: CustomState = {}): Partial<T> {
   // 数据集合
   const dataItem = reactive<Partial<T>>({});
 
@@ -63,7 +65,7 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
     isValueUpdateFromInner.value = true;
 
     // 修改默认视图数据
-    const mapState = {
+    const stateMap = {
       width: () => {
         const x = unref(pointInfo).x || 0;
         const width = x + value > CW ? CW - x : value < 10 ? 10 : value;
@@ -84,15 +86,17 @@ export function templateInit<T extends PointInfo>(): Partial<T> {
         const y = value + height > CH ? CH - height : value;
         updateBaseContent('y', 'transform', y, `translate(${unref(pointInfo).x}px,${y}px`);
       },
-      zIndex: () => {
-        updateBaseContent('zIndex', 'zIndex', value, `${value}`);
+      style_zIndex: () => {
+        updateBaseContent('style_zIndex', 'zIndex', value, `${value}`);
       },
       other: () => {
         pointStore.commitUpdatePointData({ id: unref(pointid), key, value });
       }
     };
 
-    mapState[key as Trigger] ? mapState[key as Trigger]() : mapState['other']();
+    const stateMethod = customState[key] || stateMap[key as Trigger] || stateMap['other'];
+
+    stateMethod();
   }
 
   // 更新基本内容

@@ -23,7 +23,6 @@
 
 <!-- 默认配置项 -->
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import noImage from '/@/assets/svg/noImage.svg';
 
 export default defineComponent({

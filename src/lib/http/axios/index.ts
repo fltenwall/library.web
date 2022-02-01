@@ -5,11 +5,14 @@ import { Result, ResponseError } from './types';
 import { checkRequestErrorMessage } from './error-message';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { userStore } from '/@/store/modules/user';
+import { cacheStore } from '/@/store/modules/cache';
 import { isNull } from '/@/utils/is';
 import { ResultEnum } from '/@/enums/httpEnum';
 import { useOverdue } from '/@/hooks/web/useOverdue';
 
-export default function request<T extends Result>(requestConfig: AxiosRequestConfig): Promise<T> {
+export default async function request<T extends Result>(requestConfig: AxiosRequestConfig): Promise<T> {
+  const visitorId = await cacheStore.getvisitorIdAction();
+
   return new Promise<T>((resolve, reject) => {
     // 设置用户的请求参数
     const config = requestConfig;
@@ -19,6 +22,11 @@ export default function request<T extends Result>(requestConfig: AxiosRequestCon
     if (!isNull(tokenInfo)) {
       if (!config.headers) config.headers = {};
       config.headers[tokenInfo.headerName] = tokenInfo.token;
+    }
+
+    if (!isNull(visitorId)) {
+      if (!config.headers) config.headers = {};
+      config.headers['ACCESS-IDENTIFY'] = visitorId;
     }
 
     if (config.headers && config.headers['Content-Type'] === ContentTypeEnum.FORM_URLENCODED) {

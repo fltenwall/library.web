@@ -12,13 +12,19 @@ export interface Schema {
   name: string;
 
   // 层级
-  zIndex?: number;
+  style_zIndex?: number;
 
   // 位置锁
-  positionLock?: false;
+  positionLock?: boolean;
 
   // 尺寸锁
-  sizeLock?: false;
+  sizeLock?: boolean;
+
+  // 位置禁用
+  positionDisabled: boolean;
+
+  // 尺寸禁用
+  sizeDisabled: boolean;
 }
 
 // 尺寸
@@ -35,5 +41,6 @@ export interface BaseSchema extends Schema, Size {}
 
 export interface PointInfo extends Partial<BaseSchema>, Indexable {
   // 层级
-  zIndex?: number;
+  style_zIndex?: number;
+  // 样式
 }

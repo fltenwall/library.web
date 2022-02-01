@@ -40,7 +40,7 @@ export default defineComponent({
     }
 
     return () => (
-      <div class="index-middle">
+      <div class="index-middle w-full">
         <Slider
           value={props.value}
           class="flex-item"

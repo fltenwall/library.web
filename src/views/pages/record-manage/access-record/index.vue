@@ -54,11 +54,6 @@ const searchOptions: SearchOptions[] = [
 
 const tableColumns: TableColumn[] = [
   {
-    title: '标识',
-    dataIndex: 'identify',
-    ellipsis: true
-  },
-  {
     title: 'IP 地址',
     dataIndex: 'ip',
     ellipsis: true
