@@ -1,6 +1,6 @@
 <template>
   <page-layout
-    title="用户列表"
+    title="接口管理"
     :name="DATA_PAGE_NAME"
     :table-actions="actions"
     :table-columns="tableColumns"
@@ -22,19 +22,19 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '/@/lib/props/TableList';
-import service from '/@/api/system-manage/role-manage';
+import service from '../../../../../api/system-manage/api-manage';
 import { showByAuth } from '/@/hooks/web/useAuthorities';
 import { SearchOptions } from '/@/components/PageLayout/SearchLayout/interface';
 import { PagerQueryData } from '/@/lib/http/axios/types';
 import { useFromatlll } from '/@/utils/dateFormat';
 
-const DATA_PAGE_NAME = 'system-manage-role-manage-data-page';
+const DATA_PAGE_NAME = 'system-manage-api-manage-data-page';
 
 const actions = [
-  showByAuth('ROLEMANAGE:POST') && { label: '新增', value: 'new' },
-  { label: '查看', value: 'view' },
-  showByAuth(['ROLEMANAGE:PUT', 'MODULARMANAGE:GET']) && { label: '编辑', value: 'edit' },
-  showByAuth('ROLEMANAGE:DELETE') && { label: '删除', value: 'delete' }
+  showByAuth('APIMANAGE:POST') && { label: '新增', value: 'new' },
+  showByAuth('APIMANAGE:ID:GET') && { label: '查看', value: 'view' },
+  showByAuth('APIMANAGE:PUT') && { label: '编辑', value: 'edit' },
+  showByAuth('APIMANAGE:DELETE') && { label: '删除', value: 'delete' }
 ];
 
 // 从服务器取得数据 设置列表数据 禁止直接调用 刷新数据通过 onFetchData
@@ -53,23 +53,36 @@ const searchOptions: SearchOptions[] = [
   {
     key: 'name',
     component: 'inputSearch',
-    label: '角色名称'
+    label: '名称'
+  },
+  {
+    key: 'identifier',
+    component: 'inputSearch',
+    label: '标识'
+  },
+  {
+    key: 'path',
+    component: 'inputSearch',
+    label: '路径'
   }
 ];
 
 const tableColumns: TableColumn[] = [
   {
-    title: '默认角色',
-    dataIndex: 'isDefault',
-    ellipsis: true,
-    width: 80
+    title: '名称',
+    dataIndex: 'name',
+    ellipsis: true
   },
   {
-    title: '角色名称',
-    dataIndex: 'name'
+    title: '路径',
+    dataIndex: 'path'
   },
   {
-    title: '角色描述',
+    title: '标识',
+    dataIndex: 'identifier'
+  },
+  {
+    title: '描述',
     dataIndex: 'description'
   }
 ];

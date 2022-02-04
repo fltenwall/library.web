@@ -1,5 +1,5 @@
 <template>
-  <scrollbar class="tree-menu">
+  <scrollbar class="tree-menu default-shadow">
     <template v-if="finished">
       <a-directory-tree
         v-model:checkedKeys="checked"
@@ -20,10 +20,7 @@
 import type { Menu as MenuType } from '/@/router/types';
 import { ref, watch } from 'vue';
 import { getMenus } from '/@/utils/helper/menu';
-// import { defineComponent, ref, unref, watch, computed } from 'vue';
-// import { getMenus } from '/@/utils/helper/menu';
 import { Scrollbar } from '/@/components/Scrollbar';
-// import { cloneDeep, debounce } from 'lodash-es';
 import service, { ModuleManage } from '/@/api/system-manage/module-manage';
 import { message } from 'ant-design-vue';
 import { PageMode } from '/@/utils/helper/breadcrumb';
@@ -38,7 +35,7 @@ interface TreeData extends MenuType {
 const props = defineProps({
   value: {
     type: String,
-    default: '[]'
+    default: ''
   },
   readonly: {
     type: Boolean,
@@ -61,7 +58,7 @@ let moudleData: Required<ModuleManage>[] = [];
 // 加载中
 const loading = ref<boolean>(false);
 // 加载完成
-const finished = ref<boolean>(false);
+const finished = ref<boolean>(props.mode === PageMode.new);
 // 树形菜单
 const treeData = ref<MenuType[]>(buildTreeData(getMenus(false)));
 // 选中的数据

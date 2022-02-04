@@ -48,15 +48,19 @@ const loading = ref<boolean>(false);
 
 // 搜索数据
 async function onSearchData() {
-  const query = { ...getSearchData(), ...getPagination() };
+  try {
+    const query = { ...getSearchData(), ...getPagination() };
 
-  loading.value = true;
+    loading.value = true;
 
-  const data = await props.onFetchData?.(query);
+    const data = await props.onFetchData?.(query);
 
-  loading.value = false;
+    loading.value = false;
 
-  setDataSource(data?.content, data?.totalElements);
+    setDataSource(data?.content, data?.totalElements);
+  } catch (err) {
+    message.error((err as { msg: string }).msg);
+  }
 }
 // 点击搜索
 function onClickSearch() {

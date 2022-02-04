@@ -44,7 +44,7 @@ export default defineComponent({
                           icon: () => <UserOutlined />
                         }}
                       </Avatar>
-                      <div class="ml3">{userInfo.value?.nickname}</div>
+                      <div class="ml3">{userInfo.value?.nickname || userInfo.value?.username}</div>
                     </div>
                   )
                 }}

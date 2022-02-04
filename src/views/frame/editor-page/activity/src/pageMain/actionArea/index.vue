@@ -31,7 +31,7 @@ import { Scrollbar } from '/@/components/Scrollbar';
 const pointName = computed(() => pointStore.getPointInfo.name);
 const pointidState = computed(() => pointStore.getPointidState);
 
-const activeKey = ref<string>('');
+const activeKey = ref<string>('attr');
 
 const modules = computed(() => {
   if (isString(pointName.value)) {

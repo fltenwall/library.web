@@ -7,7 +7,7 @@
     :title="title"
     @ok="handleNewData"
   >
-    <a-form :label-col="{ flex: '90px' }" :wrapper-col="{ flex: 'auto' }">
+    <a-form :label-col="{ flex: '90px' }">
       <a-form-item label="字典类型" v-bind="validateInfos.type">
         <input-wrap v-model:value="dataItem.type" readonly />
       </a-form-item>

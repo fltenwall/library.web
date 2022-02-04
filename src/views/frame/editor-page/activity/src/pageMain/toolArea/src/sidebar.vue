@@ -29,15 +29,6 @@
           </a-tooltip>
         </template>
       </a-tab-pane>
-
-      <a-tab-pane key="record">
-        <template #tab>
-          <a-tooltip placement="right">
-            <template #title> 日志 </template>
-            <icon icon="ant-design:field-time-outlined" size="20" />
-          </a-tooltip>
-        </template>
-      </a-tab-pane>
     </a-tabs>
     <div class="folding">
       <icon icon="ant-design:double-left-outlined" size="20" />

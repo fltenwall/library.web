@@ -3,29 +3,26 @@
     <a-form :label-col="{ flex: '100px' }">
       <!-- 基本信息 -->
       <global-card title="基本信息">
-        <div>
-          <form-item-wrap label="字典名称" v-bind="validateInfos.name">
-            <input-wrap v-model:value="dataItem.name" />
-          </form-item-wrap>
-          <form-item-wrap label="字典类型" v-bind="validateInfos.type">
-            <input-wrap v-model:value="dataItem.type" :readonly="mode === 1" />
-          </form-item-wrap>
-        </div>
+        <a-form-item label="字典名称" v-bind="validateInfos.name">
+          <input-wrap v-model:value="dataItem.name" />
+        </a-form-item>
+        <a-form-item label="字典类型" v-bind="validateInfos.type">
+          <input-wrap v-model:value="dataItem.type" :readonly="mode === 1" />
+        </a-form-item>
 
-        <div>
-          <form-item-wrap label="状态" v-bind="validateInfos.state">
-            <select-wrap v-model:value="dataItem.state" :options="selectOption" />
-          </form-item-wrap>
-        </div>
+        <a-form-item label="状态" v-bind="validateInfos.state">
+          <select-wrap v-model:value="dataItem.state" :options="selectOption" />
+        </a-form-item>
+        <a-form-item> </a-form-item>
 
-        <form-item-wrap label="描述" :width="`${(100 / 3) * 2}%`">
+        <a-form-item label="描述">
           <textarea-wrap
             v-model:value="dataItem.description"
             show-count
             :maxlength="260"
             :auto-size="{ minRows: 2, maxRows: 5 }"
           />
-        </form-item-wrap>
+        </a-form-item>
       </global-card>
     </a-form>
 

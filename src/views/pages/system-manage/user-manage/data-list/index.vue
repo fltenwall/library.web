@@ -59,11 +59,11 @@ import passwordModal from '/@/components/passwordModal.vue';
 const DATA_PAGE_NAME = 'system-manage-user-manage-data-page';
 
 const actions = [
-  showByAuth('USER:CREATE') && { label: '新增', value: 'new' },
+  showByAuth('USERMANAGE:POST') && { label: '新增', value: 'new' },
   { label: '查看', value: 'view' },
-  showByAuth('USER:UPDATE') && { label: '编辑', value: 'edit' },
-  showByAuth('USERPASSWORD:UPDATE') && { label: '重置密码', value: 'reset' },
-  showByAuth('USER:DELETE') && { label: '删除', value: 'delete' }
+  showByAuth('USERMANAGE:PUT') && { label: '编辑', value: 'edit' },
+  showByAuth('USERPASSWORD:PUT') && { label: '重置密码', value: 'reset' },
+  showByAuth('USERMANAGE:DELETE') && { label: '删除', value: 'delete' }
 ];
 
 // 对话框
