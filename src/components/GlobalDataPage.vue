@@ -47,5 +47,35 @@ export default defineComponent({
     height: 0;
     overflow: auto;
   }
+
+  .ant-form-item {
+    display: inline-flex;
+    width: 35%;
+    padding-right: 16px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .global-data-page {
+    .ant-form-item {
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .global-data-page {
+    .ant-form-item {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .global-data-page {
+    .ant-form-item {
+      width: 100%;
+    }
+  }
 }
 </style>

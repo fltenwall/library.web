@@ -15,29 +15,36 @@
     <div class="module-visit">
       <div class="module-visit-header default-shadow">
         <div class="font-bold text-base">模块权限分配</div>
-        <a-button v-show-by-auth="'MODULAR:CREATE'" @click="onClickNewItem">新增</a-button>
+        <a-button v-show-by-auth="'MODULARMANAGE:POST'" @click="onClickNewItem">新增</a-button>
       </div>
       <!-- 操作 -->
       <div class="module-visit-main default-shadow">
         <scrollbar class="flex-item h0">
-          <div v-for="item in dataSource" :key="item.id" class="module-visit-item">
-            <div class="index-space-between p3">
-              <div>{{ item.name }}</div>
-              <dropdown-warp
-                :options="options"
-                @select="({ key }: { key: string }) => handleSelectActions(key,item)"
-              >
-                <icon icon="ant-design:ellipsis-outlined" size="20" class="module-item-ellipsis" />
-              </dropdown-warp>
-            </div>
-            <div class="module-visit-item__main">
-              <div v-for="auth in item.authorities" :key="auth" class="module-visit-item__auth">
-                {{ authorityList[auth] }}
+          <div class="pt4">
+            <div v-for="item in dataSource" :key="item.id" class="module-visit-item">
+              <div class="index-space-between p3">
+                <div>{{ item.name }}</div>
+                <dropdown-warp
+                  v-if="options.length"
+                  :options="options"
+                  @select="({ key }: { key: string }) => handleSelectActions(key, item)"
+                >
+                  <icon icon="ant-design:ellipsis-outlined" size="20" class="pointer" />
+                </dropdown-warp>
+              </div>
+              <div class="module-visit-item__main">
+                <div
+                  v-for="auth in item.authorities"
+                  :key="(auth as { id: number }).id"
+                  class="module-visit-item__auth"
+                >
+                  {{ (auth as { name: string }).name }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <a-empty v-if="!dataSource?.length" class="pt10" />
+            <a-empty v-if="!dataSource?.length" class="pt10" />
+          </div>
         </scrollbar>
         <!-- 分页 -->
         <pagination-wrap v-model:current="current" class="p4" :total="totalElements" />
@@ -55,12 +62,11 @@
 
 <script setup lang="ts">
 import type { Menu as MenuType } from '/@/router/types';
-import { reactive, ref } from 'vue';
+import { showByAuth } from '/@/hooks/web/useAuthorities';
 import service, { ModuleManage, Authority } from '/@/api/system-manage/module-manage';
 import { getMenus, getFlatMenus } from '/@/utils/helper/menu';
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
 import { usePagination } from '/@/hooks/web/usePagination';
-import { queryRoleAuthority } from '/@/enums/roleEnum';
 import { Scrollbar } from '/@/components/Scrollbar';
 import moduleAddModal from './moduleAddModal.vue';
 import { PageEnum } from '/@/enums/pageEnum';
@@ -69,10 +75,6 @@ import { message } from 'ant-design-vue';
 
 interface TreeData extends MenuType {
   key?: string;
-}
-
-interface ModuleAuth extends Omit<ModuleManage, 'authorities'> {
-  authorities?: string[];
 }
 
 // 模块数据
@@ -86,7 +88,7 @@ const selected = ref(findMenu(PageEnum.BASE_HOME));
 // 加载中
 const loading = ref<boolean>(false);
 // 数据
-const dataSource = ref<Required<ModuleAuth>[]>();
+const dataSource = ref<Required<ModuleManage>[]>();
 // 对话框显示
 const visible = ref<boolean>(false);
 // 权限列表
@@ -98,10 +100,15 @@ const { current } = usePagination();
 // 总数
 const totalElements = ref<number>(0);
 // 下拉菜单
-const options = [
-  { key: 'eidt', icon: 'la:pen', content: '编辑' },
-  { key: 'delete', icon: 'ant-design:delete-outlined', content: '删除' }
-];
+const options: { key: string; icon: string; content: string }[] = [];
+
+if (showByAuth('MODULARMANAGE:PUT')) {
+  options.push({ key: 'eidt', icon: 'la:pen', content: '编辑' });
+}
+
+if (showByAuth('MODULARMANAGE:DELETE')) {
+  options.push({ key: 'delete', icon: 'ant-design:delete-outlined', content: '删除' });
+}
 
 function initTreeData(source: TreeData[]): TreeData[] {
   return source.map(({ title, children, name, path }) => {
@@ -122,20 +129,10 @@ function handleSelectMenu([key]: string[]) {
 }
 
 // 处理选中 菜单
-function handleSelectActions(key: string, record: Required<ModuleAuth>) {
+function handleSelectActions(key: string, record: Required<ModuleManage>) {
   if (key === 'delete') {
     onDeleteAuth(record);
   }
-}
-
-// 数据解析
-function dataParse(data: Required<ModuleManage>[]): Required<ModuleAuth>[] {
-  return data.map((el) => {
-    return {
-      ...el,
-      authorities: JSON.parse(el.authorities || '[]')
-    };
-  });
 }
 
 // 处理添加数据成功
@@ -150,7 +147,7 @@ async function fetchDataFromServer() {
     loading.value = true;
     const query = { identifier: selected.value?.name };
     const { data } = await service.fecthList(query);
-    dataSource.value = dataParse(data.content);
+    dataSource.value = data.content;
     totalElements.value = data.totalElements;
   } catch (err) {
     message.error((err as { msg: string }).msg);
@@ -159,13 +156,8 @@ async function fetchDataFromServer() {
   }
 }
 
-// 获取权限列表数据
-async function fetchAuthFromServer() {
-  authorityList.value = await queryRoleAuthority();
-}
-
 // 删除权限
-function onDeleteAuth(record: Required<ModuleAuth>) {
+function onDeleteAuth(record: Required<ModuleManage>) {
   useDeleteModal(async () => {
     try {
       await service.deleteItemById(record.id!);
@@ -175,8 +167,6 @@ function onDeleteAuth(record: Required<ModuleAuth>) {
     }
   });
 }
-
-fetchAuthFromServer();
 </script>
 
 <style lang="less" scoped>
@@ -216,7 +206,7 @@ fetchAuthFromServer();
   }
 
   &-item {
-    margin: 16px;
+    margin: 0 16px;
     border: 1px solid #e5e7eb;
     border-radius: 4px;
 
@@ -230,6 +220,14 @@ fetchAuthFromServer();
       padding: 5px 10px;
       border: 1px solid #e5e7eb;
       border-radius: 20px;
+
+      &:not(:first-of-type) {
+        margin-left: 10px;
+      }
+    }
+
+    &:not(:first-of-type) {
+      margin-top: 16px;
     }
   }
 }

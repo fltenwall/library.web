@@ -18,52 +18,48 @@ const routers: AppRouteModule = {
     {
       path: 'user-manage-list-page',
       name: 'user-manage-list-page',
-      component: (): unknown =>
-        import('/@/views/pages/system-manage/user-manage/data-list/index.vue'),
+      component: (): unknown => import('/@/views/pages/system-manage/user-manage/data-list/index.vue'),
       meta: {
         title: '用户管理',
-        auth: ['USER:GET']
+        auth: ['USERMANAGE:GET']
       }
     },
     {
       path: 'user-manage-data-page',
       name: 'user-manage-data-page',
-      component: (): unknown =>
-        import('/@/views/pages/system-manage/user-manage/data-page/data-page.vue'),
+      component: (): unknown => import('/@/views/pages/system-manage/user-manage/data-page/data-page.vue'),
       meta: {
         title: '用户详情',
         hideInMenu: true,
         ignoreTabKeepAlive: true,
         auth: {
-          new: ['USER:CREATE'],
-          view: ['USER:GET'],
-          edit: ['USER:GET', 'USER:UPDATE']
+          new: ['USERMANAGE:POST'],
+          view: ['USERMANAGE:ID:GET'],
+          edit: ['USERMANAGE:ID:GET', 'USERMANAGE:PUT']
         }
       }
     },
     {
       path: 'role-manage-list-page',
       name: 'role-manage-list-page',
-      component: (): unknown =>
-        import('/@/views/pages/system-manage/role-manage/data-list/index.vue'),
+      component: (): unknown => import('/@/views/pages/system-manage/role-manage/data-list/index.vue'),
       meta: {
         title: '角色管理',
-        auth: ['ROLE:GET']
+        auth: ['ROLEMANAGE:GET']
       }
     },
     {
       path: 'role-manage-data-page',
       name: 'role-manage-data-page',
-      component: (): unknown =>
-        import('/@/views/pages/system-manage/role-manage/data-page/data-page.vue'),
+      component: (): unknown => import('/@/views/pages/system-manage/role-manage/data-page/data-page.vue'),
       meta: {
         title: '角色详情',
         hideInMenu: true,
         ignoreTabKeepAlive: true,
         auth: {
-          new: ['ROLE:CREATE', 'MODULAR:GET'],
-          view: ['ROLE:GET', 'MODULAR:GET'],
-          edit: ['ROLE:GET', 'ROLE:UPDATE', 'MODULAR:GET']
+          new: ['ROLEMANAGE:POST', 'MODULARMANAGE:GET'],
+          view: ['ROLEMANAGE:GET', 'MODULARMANAGE:GET'],
+          edit: ['ROLEMANAGE:GET', 'ROLEMANAGE:PUT', 'MODULARMANAGE:GET']
         }
       }
     },
@@ -73,7 +69,31 @@ const routers: AppRouteModule = {
       component: (): unknown => import('/@/views/pages/system-manage/module-manage/index.vue'),
       meta: {
         title: '模块管理',
-        auth: ['MODULAR:GET']
+        auth: ['MODULARMANAGE:GET']
+      }
+    },
+    {
+      path: 'api-manage-list-page',
+      name: 'api-manage-list-page',
+      component: (): unknown => import('/@/views/pages/system-manage/api-manage/data-list/index.vue'),
+      meta: {
+        title: '接口管理',
+        auth: ['APIMANAGE:GET']
+      }
+    },
+    {
+      path: 'api-manage-data-page',
+      name: 'api-manage-data-page',
+      component: (): unknown => import('/@/views/pages/system-manage/api-manage/data-page/data-page.vue'),
+      meta: {
+        title: '接口管理详情',
+        hideInMenu: true,
+        ignoreTabKeepAlive: true,
+        auth: {
+          new: ['APIMANAGE:POST'],
+          view: ['APIMANAGE:ID:GET'],
+          edit: ['APIMANAGE:ID:GET', 'APIMANAGE:PUT']
+        }
       }
     }
   ],

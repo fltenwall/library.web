@@ -1,6 +1,6 @@
 <template>
   <global-data-page :mode="mode">
-    <a-form :label-col="{ flex: '110px' }" :wrapper-col="{ flex: 'auto' }">
+    <a-form :label-col="{ flex: '110px' }">
       <!-- 基本信息 -->
       <global-card title="基本信息">
         <a-row>

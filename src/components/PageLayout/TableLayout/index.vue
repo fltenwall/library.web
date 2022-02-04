@@ -50,7 +50,7 @@
 import type { TableColumn } from '/@/lib/props/TableList';
 import { computed, ref } from 'vue';
 import { usePagination } from '/@/hooks/web/usePagination';
-import { isArray, isFunction } from '/@/utils/is';
+import { isArray, isFunction, isObject } from '/@/utils/is';
 import { SyncOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import propsOptions from './props';
 
@@ -65,6 +65,8 @@ const totalElements = ref(0);
 const customColumns = computed(() => {
   const columns: TableColumn[] = props.columns.map((el) => ({ align: 'center', ...el }));
 
+  const actions = isArray(props.actions) ? props.actions.filter((el) => isObject(el)) : [];
+
   const actionColumns: TableColumn = {
     title: '操作',
     align: 'center',
@@ -74,7 +76,7 @@ const customColumns = computed(() => {
     width: actionsMap.value.length * 28
   };
 
-  isArray(props.actions) && columns.push(actionColumns);
+  actions.length && columns.push(actionColumns);
 
   return columns;
 });

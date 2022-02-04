@@ -1,3 +1,4 @@
+import type { ApiManage } from './api-manage';
 import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
 import request from '/@/lib/http/axios/';
 
@@ -9,7 +10,7 @@ export interface ModuleManage {
   name?: string;
 
   // 权限项
-  authorities?: string;
+  authorities?: number[] | ApiManage[];
 
   // 模块表示符
   identifier?: string;
@@ -38,17 +39,10 @@ export interface Authority {
 export type DataPager = PagerResponseData<Required<ModuleManage>>;
 
 export default class Service {
-  static fecthListByAuthority(): Promise<Result<Authority>> {
-    return request<Result<Authority>>({
-      url: '/epi/authority',
-      method: 'get'
-    });
-  }
-
   // 向服务查询数据并分页返回结果
-  static fecthList(query?: Partial<PagerQueryData>): Promise<DataPager> {
-    return request<DataPager>({
-      url: '/epi/modular',
+  static fecthList(query?: Partial<PagerQueryData>): Promise<Required<DataPager>> {
+    return request<Required<DataPager>>({
+      url: '/epi/modular-manage',
       method: 'get',
       params: query
     });
@@ -57,7 +51,7 @@ export default class Service {
   // 保存数据到远程服务器
   static saveNewItem(item: ModuleManage): Promise<Result<ModuleManage>> {
     return request<Result<ModuleManage>>({
-      url: '/epi/modular',
+      url: '/epi/modular-manage',
       method: 'post',
       data: item
     });
@@ -66,7 +60,7 @@ export default class Service {
   // 通过ID取得数据
   static getItemByName(name: string): Promise<Result<ModuleManage>> {
     return request<Result<ModuleManage>>({
-      url: '/epi/modular/' + name,
+      url: '/epi/modular-manage/' + name,
       method: 'get'
     });
   }
@@ -74,7 +68,7 @@ export default class Service {
   // 更新数据到远程服务器
   static updateItem(id: number, item: ModuleManage): Promise<Result<ModuleManage>> {
     return request<Result<ModuleManage>>({
-      url: '/epi/modular/' + id,
+      url: '/epi/modular-manage/' + id,
       method: 'put',
       data: item
     });
@@ -83,7 +77,7 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/epi/modular/' + id,
+      url: '/epi/modular-manage/' + id,
       method: 'delete'
     });
   }

@@ -1,30 +1,20 @@
 <template>
   <global-data-page :mode="mode">
-    <a-form :label-col="{ flex: '100px' }" :wrapper-col="{ flex: 'auto' }">
+    <a-form :label-col="{ flex: '100px' }">
       <!-- 基本信息 -->
       <global-card title="基本信息">
-        <a-row>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="标题" v-bind="validateInfos.title">
-              <input-wrap v-model:value="dataItem.title" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="状态" v-bind="validateInfos.state">
-              <select-wrap v-model:value="dataItem.state" :options="selectOption" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="排序值" v-bind="validateInfos.sortValue">
-              <input-number-wrap v-model:value="dataItem.sortValue" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="图标" v-bind="validateInfos.icon">
-              <input-wrap v-model:value="dataItem.icon" />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        <a-form-item label="标题" v-bind="validateInfos.title">
+          <input-wrap v-model:value="dataItem.title" />
+        </a-form-item>
+        <a-form-item label="状态" v-bind="validateInfos.state">
+          <select-wrap v-model:value="dataItem.state" :options="selectOption" />
+        </a-form-item>
+        <a-form-item label="排序值" v-bind="validateInfos.sortValue">
+          <input-number-wrap v-model:value="dataItem.sortValue" />
+        </a-form-item>
+        <a-form-item label="图标" v-bind="validateInfos.icon">
+          <input-wrap v-model:value="dataItem.icon" />
+        </a-form-item>
       </global-card>
 
       <global-card title="问题描述">

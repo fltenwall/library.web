@@ -1,5 +1,5 @@
 import type { Result, PagerQueryData, PagerResponseData } from '/@/lib/http/axios/types';
-import type { RoleManage } from './role-mange';
+import type { RoleManage } from './role-manage';
 import request from '/@/lib/http/axios/';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 
@@ -59,7 +59,7 @@ export default class Service {
   // 向服务查询数据并分页返回结果
   static fecthList(query?: Partial<PagerQueryData>): Promise<DataPager> {
     return request<DataPager>({
-      url: '/epi/user',
+      url: '/epi/user-manage',
       method: 'get',
       params: query
     });
@@ -68,7 +68,7 @@ export default class Service {
   // 保存数据到远程服务器
   static saveNewItem(item: UserManage): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: '/epi/user',
+      url: '/epi/user-manage',
       method: 'post',
       data: item
     });
@@ -77,7 +77,7 @@ export default class Service {
   // 通过ID取得数据
   static getItemById(id: number): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: '/epi/user/' + id,
+      url: '/epi/user-manage/' + id,
       method: 'get'
     });
   }
@@ -85,7 +85,7 @@ export default class Service {
   // 更新数据到远程服务器
   static updateItem(id: number, item: UserManage): Promise<Result<UserManage>> {
     return request<Result<UserManage>>({
-      url: '/epi/user/' + id,
+      url: '/epi/user-manage/' + id,
       method: 'put',
       data: item
     });
@@ -106,7 +106,7 @@ export default class Service {
   // 删除指定ID的数据
   static deleteItemById(id: number): Promise<Result<null>> {
     return request<Result<null>>({
-      url: '/epi/user/' + id,
+      url: '/epi/user-manage/' + id,
       method: 'delete'
     });
   }

@@ -19,5 +19,5 @@ export const formRules: FromRules = {
 export interface DataItem {
   name?: string;
 
-  authorities?: string[];
+  authorities?: number[];
 }

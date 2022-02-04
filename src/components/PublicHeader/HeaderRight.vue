@@ -11,7 +11,7 @@
               </template>
             </a-avatar>
             <div class="ml3">
-              {{ userInfo.nickname }}
+              {{ userInfo.nickname || userInfo.username }}
             </div>
           </router-link>
         </drop-menu>

@@ -20,7 +20,7 @@ import type { PagerQueryData } from '/@/lib/http/axios/types';
 import { message } from 'ant-design-vue';
 import { assign } from 'lodash-es';
 import { defineComponent, ref, watch } from 'vue';
-import service, { RoleManage } from '/@/api/system-manage/role-mange';
+import service, { RoleManage } from '../../api/system-manage/role-manage';
 import SelectSearch from './SelectSearch.vue';
 
 export default defineComponent({
