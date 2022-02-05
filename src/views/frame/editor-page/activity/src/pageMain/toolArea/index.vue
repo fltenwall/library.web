@@ -46,7 +46,7 @@ onMounted(() => {
   height: 100%;
 
   &-panel {
-    width: 280px;
+    width: 260px;
     background: #fff;
     border-left: 1px solid #f0f0f0;
     box-shadow: 0 2px 8px 0 #dbdbdb99;

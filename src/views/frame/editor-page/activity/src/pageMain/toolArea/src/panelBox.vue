@@ -1,13 +1,11 @@
 <template>
   <div class="panel-box" :draggable="draggable ? 'true' : 'false'" @dragstart="handleDragstart($event)">
-    <div class="panel-box-content index-center-middle flex-item">
+    <div class="panel-box-content">
       <slot name="content" />
     </div>
+
     <div class="panel-box-title index-hidden-newline">
       <slot name="title" />
-    </div>
-    <div v-if="!!$slots.tag" class="panel-box-tag">
-      <slot name="tag" />
     </div>
   </div>
 </template>
@@ -52,14 +50,13 @@ function handleDragstart(event: DragEvent) {
 
 <style lang="less" scoped>
 .panel-box {
-  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 115px;
-  height: 115px;
-  border: 1px solid hsla(0, 0%, 62%, 0.24);
-  transition: all 0.3s;
+  width: 80px;
+  height: 80px;
+  transition: background-color 0.3s;
 
   &[draggable='true'] {
     cursor: move;
@@ -69,54 +66,18 @@ function handleDragstart(event: DragEvent) {
     cursor: pointer;
   }
 
-  &.select {
-    color: @primary-color;
-    border-color: #91d5ff;
-  }
-
   &:hover {
-    color: @primary-color;
-    border-color: @primary-color;
-
-    .panel-box-title {
-      color: @primary-color;
-    }
-  }
-
-  &:nth-of-type(2n + 1) {
-    margin: 10px 7.5px 0 7.5px;
-  }
-
-  &:nth-of-type(2n + 2) {
-    margin: 10px 7.5px 0 7.5px;
+    color: #fff;
+    background-color: @primary-color;
+    border-radius: 2px;
   }
 
   &-title {
-    position: absolute;
-    bottom: 0;
+    flex-shrink: 0;
     width: 100%;
     padding: 3px 5px;
     font-size: 12px;
-    color: #767676;
     text-align: center;
-    background: #f5f5f5;
-  }
-
-  &-tag {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 5px;
-    font-size: 12px;
-    color: #1890ff;
-    background: #e6f7ff;
-    border-bottom: 1px solid #91d5ff;
-    border-left: 1px solid #91d5ff;
-  }
-
-  &-content {
-    width: 100%;
-    height: 100%;
   }
 }
 </style>

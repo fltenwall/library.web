@@ -30,9 +30,6 @@
         </template>
       </a-tab-pane>
     </a-tabs>
-    <div class="folding">
-      <icon icon="ant-design:double-left-outlined" size="20" />
-    </div>
   </div>
 </template>
 
@@ -63,25 +60,19 @@ function labelShowParse(name: string, key = 'template') {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 64px;
-  padding: 30px 0 0;
+  width: 50px;
   background: #fff;
 
-  ::v-deep(.ant-tabs-left-bar) {
-    width: calc(100% - 2px);
-    border-right-width: 0;
+  ::v-deep(.ant-tabs-nav) {
+    padding-top: 35px;
+  }
 
-    .ant-tabs-tab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-    }
+  ::v-deep(.ant-tabs-tab) {
+    padding: 8px 15px;
+  }
 
-    .ant-tabs-ink-bar {
-      left: 0;
-      width: 3px;
-    }
+  ::v-deep(.ant-tabs-content-holder) {
+    border-width: 0;
   }
 }
 

@@ -63,7 +63,7 @@ function labelShowParse(name: string, key = 'template') {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 72px;
+  height: 60px;
   padding: 8px 12px 8px 8px;
   margin: 0 8px 12px 8px;
   cursor: pointer;
@@ -73,8 +73,8 @@ function labelShowParse(name: string, key = 'template') {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     background-image: linear-gradient(45deg, #eee 25%, transparent 0, transparent 75%, #eee 0, #eee),
       linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
     background-position: 0 0, 10px 10px;

@@ -17,7 +17,7 @@
           :draggable="baseConfigs.trigger[name] === 'drag'"
         >
           <template #content>
-            <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
+            <icon :icon="baseConfigs.icon[name]" size="20" />
           </template>
           <template #title>{{ labelShowParse(name) }}</template>
         </panel-box>
@@ -35,7 +35,7 @@
                 :draggable="baseConfigs.trigger[name] === 'drag'"
               >
                 <template #content>
-                  <icon :icon="baseConfigs.icon[name]" size="20" color="#666" class="mb4" />
+                  <icon :icon="baseConfigs.icon[name]" size="20" />
                 </template>
                 <template #title>{{ labelShowParse(name) }}</template>
               </panel-box>
@@ -110,7 +110,7 @@ watch(
   for (let i = 0; i < list.length; i++) {
     // 获取展示模块高度
     const module = moduleMuster[list[i]].filter((name) => baseConfigs.visible[name]);
-    const distance = Math.ceil(module.length / 2) * 125 + (i ? 42 : 22);
+    const distance = Math.ceil(module.length / 3) * 80 + (i ? 57 : 37);
 
     if (list.length - 1 === i) {
       placeholderStyle.value = { height: `calc(100% - ${distance}px)` };
@@ -180,6 +180,7 @@ onMounted(() => {
   &-title {
     height: 22px;
     margin-right: 10px;
+    margin-bottom: 15px;
     margin-left: 10px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 700;

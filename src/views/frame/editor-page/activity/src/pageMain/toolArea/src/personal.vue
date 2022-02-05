@@ -71,7 +71,7 @@ const isEmpty = computed(() => !dataSource.value.length && !loading.value);
 // 背景
 const backgroundImage = computed(() => pointStore.getPageOptionsState.backgroundImage);
 // 分页
-const { current, pageSize, getPagination } = usePagination(1, 20);
+const { current, pageSize, getPagination } = usePagination(1, 30);
 // 总数
 const totalElements = ref<number>(0);
 
@@ -158,18 +158,10 @@ fetchDataFromServer();
 }
 
 .preview-image {
-  height: 103px;
-  max-width: 100%;
+  width: 70px;
+  height: 40px;
+  object-fit: contain;
   pointer-events: none;
-
-  &__wrap {
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(45deg, #eee 25%, transparent 0, transparent 75%, #eee 0, #eee),
-      linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
-    background-position: 0 0, 10px 10px;
-    background-size: 20px 20px;
-  }
 }
 
 .loading__wrap {

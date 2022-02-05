@@ -1,5 +1,5 @@
 <template>
-  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="310">
+  <global-drawer v-model:value="visible" placement="right" class="action-area" :width="300">
     <div class="action-area-header index-middle index-space-between">
       <div>{{ labelShowParse(pointName) }}</div>
       <div>
@@ -45,6 +45,16 @@ const modules = computed(() => {
 
   return [{ template: defaultPoint, name: 'attr' }];
 });
+
+watch(
+  () => pointName.value,
+  () => {
+    const result = modules.value.find((el) => el.name === activeKey.value);
+
+    !result && (activeKey.value = modules.value[modules.value.length - 1].name);
+  }
+);
+
 // 折叠面板
 const visible = ref<boolean>(true);
 
@@ -125,6 +135,13 @@ function labelShowParse(name = 'form', key = 'template') {
 
     .ant-tabs-tab {
       padding: 8px 0;
+    }
+  }
+
+  ::v-deep(.ant) {
+    &-radio-button-wrapper {
+      height: 28.85px;
+      line-height: 28.85px;
     }
   }
 }
