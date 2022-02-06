@@ -9,7 +9,9 @@
   <a-form-item label="一行展示个数">
     <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" />
   </a-form-item>
-  <a-divider />
+  <a-divider orientation="left">素材</a-divider>
+  <image-upload v-model:value="dataItem.list" prop="list" />
+  <a-divider orientation="left">选择项</a-divider>
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.cardBgColor" prop="cardBgColor" />
   </a-form-item>
@@ -25,7 +27,8 @@
   <a-form-item label="间隔">
     <slider-input v-model:value="dataItem.interval" prop="interval" />
   </a-form-item>
-  <a-divider />
+  <a-divider orientation="left">标签栏</a-divider>
+  <!-- 背景 -->
   <a-form-item label="字体颜色">
     <ui-color-picker v-model:value="dataItem.fontColor" prop="fontColor" />
   </a-form-item>
@@ -52,7 +55,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
+import { ColorPicker as uiColorPicker, ImageUpload } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import { Select as UiSelect } from '/@/lib/UI/';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';

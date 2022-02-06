@@ -193,7 +193,6 @@ fetchDataFromServer();
 
 .menu-item {
   height: 32px;
-  padding-left: 10px;
   margin: 0 0 16px 0;
   line-height: 32px;
   color: #0960bd;

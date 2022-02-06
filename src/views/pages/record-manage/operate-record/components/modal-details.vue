@@ -60,7 +60,7 @@
         <div class="row-title">操作环境</div>
         <div class="row-content">
           <span> {{ data.os }}</span>
-          <span> - </span>
+          <span> / </span>
           <span>{{ data.browser }}</span>
         </div>
       </a-col>

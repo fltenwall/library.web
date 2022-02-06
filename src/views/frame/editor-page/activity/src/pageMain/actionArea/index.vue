@@ -76,6 +76,9 @@ function labelShowParse(name = 'form', key = 'template') {
 </script>
 
 <style lang="less" scoped>
+@size: 12px;
+@height: 28.85px;
+
 .action-area {
   &-header {
     padding: 10px 16px 0;
@@ -116,16 +119,16 @@ function labelShowParse(name = 'form', key = 'template') {
   }
 
   ::v-deep(.ant-input-affix-wrapper) {
-    height: 28.85px;
+    height: @height;
   }
 
   ::v-deep(.ant-input) {
-    height: 28.85px;
+    height: @height;
     font-size: 12px;
   }
 
   ::v-deep(label) {
-    font-size: 12px;
+    font-size: @size;
   }
 
   ::v-deep(.ant-tabs) {
@@ -140,8 +143,21 @@ function labelShowParse(name = 'form', key = 'template') {
 
   ::v-deep(.ant) {
     &-radio-button-wrapper {
-      height: 28.85px;
-      line-height: 28.85px;
+      height: @height;
+      line-height: 27.85px;
+    }
+
+    &-divider-inner-text {
+      font-size: @size;
+    }
+
+    &-select-selector {
+      height: @height;
+      font-size: @size;
+    }
+
+    &-select-item {
+      font-size: @size;
     }
   }
 }

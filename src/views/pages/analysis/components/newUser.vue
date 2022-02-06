@@ -30,7 +30,6 @@ export default defineComponent({
     const dataItem = ref<NewUser>({});
 
     // 加载数据
-
     async function loadData() {
       try {
         const startTime = dayjs().format('YYYY-MM-01');
@@ -38,7 +37,7 @@ export default defineComponent({
         const { data } = await service.fetchUserCount({ startTime, endTime });
         dataItem.value = data;
       } catch (err) {
-        message.error(`数据获取失败: ${err.msg}`);
+        message.error(`数据获取失败: ${(err as { msg: string }).msg}`);
       }
     }
 

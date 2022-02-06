@@ -19,12 +19,13 @@
 <script setup lang="ts">
 import { computed, ref, unref, reactive } from 'vue';
 import propsOptions from './props';
+import { useTrim } from '/@/hooks/web/useTrim';
 
 const props = defineProps(propsOptions);
 
 const emit = defineEmits(['on-instance', 'on-search']);
 
-const queryData = reactive<Indexable>({ sort: 'createTime,desc' });
+const queryData = reactive<Indexable<string>>({ sort: 'createTime,desc' });
 // 搜索是否展开
 const isOpen = ref<boolean>(false);
 // 偏移高度
@@ -53,7 +54,7 @@ const onResetData = () => {
 
 const onSearchData = () => emit('on-search');
 
-emit('on-instance', { getSearchData: () => queryData });
+emit('on-instance', { getSearchData: () => useTrim(queryData) });
 </script>
 
 <style lang="less" scoped>

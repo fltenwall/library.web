@@ -1,7 +1,7 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 
 export interface Schema extends PointInfo {
-  list: Array<{ link: string; image: string; label: string }>;
+  list: Array<{ link: string; image: string; label: string; target: string }>;
 
   type: 'image' | 'text' | 'image-text';
 
@@ -69,7 +69,7 @@ export const schema: Schema = {
 
   fixed: 0,
 
-  list: [{ link: '', image: '', label: '' }]
+  list: [{ link: '', image: '', label: '', target: '_self' }]
 };
 
 export const label = { template: '图文导航', material: '素材', setting: '高级' };

@@ -3,40 +3,26 @@
     <a-form :label-col="{ flex: '110px' }">
       <!-- 基本信息 -->
       <global-card title="基本信息">
-        <a-row>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="名称" v-bind="validateInfos.name">
-              <input-wrap v-model:value="dataItem.name" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="状态" v-bind="validateInfos.state">
-              <select-wrap v-model:value="dataItem.state" :options="stateSelectOption" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="模式" v-bind="validateInfos.mode">
-              <select-wrap v-model:value="dataItem.mode" :options="modeSelectOption" />
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :lg="9" class="pl4 pr4">
-            <a-form-item label="页面布局" v-bind="validateInfos.layoutType">
-              <select-wrap v-model:value="dataItem.layoutType" :options="layoutSelectOption" />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-col :xs="24" :lg="18" class="pl4 pr4">
-            <a-form-item label="描述">
-              <textarea-wrap
-                v-model:value="dataItem.description"
-                show-count
-                :maxlength="260"
-                :auto-size="{ minRows: 2, maxRows: 5 }"
-              />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        <a-form-item label="名称" v-bind="validateInfos.name">
+          <input-wrap v-model:value="dataItem.name" />
+        </a-form-item>
+        <a-form-item label="状态" v-bind="validateInfos.state">
+          <select-wrap v-model:value="dataItem.state" :options="stateSelectOption" />
+        </a-form-item>
+        <a-form-item label="模式" v-bind="validateInfos.mode">
+          <select-wrap v-model:value="dataItem.mode" :options="modeSelectOption" />
+        </a-form-item>
+        <a-form-item label="页面布局" v-bind="validateInfos.layoutType">
+          <select-wrap v-model:value="dataItem.layoutType" :options="layoutSelectOption" />
+        </a-form-item>
+        <a-form-item label="描述">
+          <textarea-wrap
+            v-model:value="dataItem.description"
+            show-count
+            :maxlength="260"
+            :auto-size="{ minRows: 2, maxRows: 5 }"
+          />
+        </a-form-item>
       </global-card>
     </a-form>
 

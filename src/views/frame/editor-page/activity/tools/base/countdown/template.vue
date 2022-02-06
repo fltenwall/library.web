@@ -24,9 +24,7 @@
   <a-form-item label="字体颜色">
     <ui-color-picker v-model:value="dataItem.fontColor" prop="fontColor" />
   </a-form-item>
-  <a-divider orientation="left">
-    <span class="fs3">倒计时样式</span>
-  </a-divider>
+  <a-divider orientation="left"> 倒计时样式 </a-divider>
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.timeBgColor" prop="timeBgColor" />
   </a-form-item>
@@ -44,21 +42,15 @@
     <radio-group-button v-model:value="dataItem.position" :options="positions" prop="position" />
   </a-form-item>
 
-  <a-divider orientation="left">
-    <span class="fs3">未开始状态设置</span>
-  </a-divider>
+  <a-divider orientation="left"> 未开始状态设置 </a-divider>
   <a-form-item label="标题">
     <ui-input v-model:value="dataItem.waitTitle" prop="waitTitle" />
   </a-form-item>
-  <a-divider orientation="left">
-    <span class="fs3">已开始状态设置</span>
-  </a-divider>
+  <a-divider orientation="left"> 已开始状态设置 </a-divider>
   <a-form-item label="标题">
     <ui-input v-model:value="dataItem.startedTitle" prop="startedTitle" />
   </a-form-item>
-  <a-divider orientation="left">
-    <span class="fs3">已结束状态设置</span>
-  </a-divider>
+  <a-divider orientation="left"> 已结束状态设置 </a-divider>
   <a-form-item label="标题">
     <ui-input v-model:value="dataItem.endedTitle" prop="endedTitle" />
   </a-form-item>

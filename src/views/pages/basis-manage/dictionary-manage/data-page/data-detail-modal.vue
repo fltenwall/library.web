@@ -36,6 +36,7 @@ import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail
 import { isDef } from '/@/utils/is';
 import { message } from 'ant-design-vue';
 import { resetDataItem } from '/@/hooks/web/useForm';
+import { difference } from '/@/utils/difference';
 
 const useForm = Form.useForm;
 
@@ -108,7 +109,7 @@ async function handleNewData() {
 
 // 保存数据
 async function onSaveData(id: number) {
-  const { data } = await service.updateItem(id, dataItem);
+  const { data } = await service.updateItem(id, difference(dataItem, props.dictData));
   assign(dataItem, data);
   changeDataType();
 }

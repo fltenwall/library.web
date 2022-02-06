@@ -38,7 +38,7 @@ const point = reactive<Schema>(attrs as unknown as Schema);
 
 const boxStyle = computed(
   (): CSSProperties => ({
-    width: `calc(100% / ${point.showNum})`,
+    width: ` ${100 / point.showNum}%`,
     backgroundColor: point.cardBgColor,
     borderRadius: `${point.cardBorderRadius}px`
   })

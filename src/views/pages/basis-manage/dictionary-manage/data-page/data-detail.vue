@@ -3,9 +3,9 @@
     <!-- 搜索数据 -->
     <a-form :label-col="{ flex: '100px' }">
       <div class="index-space-between">
-        <form-item-wrap label="数据标签">
+        <a-form-item label="数据标签">
           <input-wrap v-model:value="queryData.label" :is-readonly="false" />
-        </form-item-wrap>
+        </a-form-item>
         <div class="index-button-right mr4">
           <a-button>查询</a-button>
           <a-button v-if="editMode" @click="onNewDataItem">新增</a-button>

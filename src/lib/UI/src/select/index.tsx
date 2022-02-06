@@ -21,7 +21,7 @@ export default defineComponent({
       default: () => []
     }
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'change'],
   setup(props, { emit }) {
     const instance = inject('editor-form', {}) as EditorForm;
 
@@ -31,12 +31,16 @@ export default defineComponent({
       emit('update:value', value);
       // 传递改变数据
       props.prop && instance.changeTrigger?.(props.prop);
+
+      emit('change', value);
     }
 
     return () => (
       <div>
         <Select
           value={props.value}
+          class="w-full"
+          get-popup-container={(triggerNode: Node) => triggerNode.parentNode}
           allowClear={props.allowClear}
           options={props.options}
           onChange={handlChange}

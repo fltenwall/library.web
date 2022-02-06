@@ -1,5 +1,5 @@
 <template>
-  <popup v-model:visible="visible">
+  <a-dropdown v-model:visible="visible" trigger="click">
     <div class="color-picker-trigger">
       <div class="color-picker-color" :style="{ background: currentColor }" />
     </div>
@@ -45,53 +45,63 @@
 
         <!-- 底部 -->
         <div class="color-footer">
-          <div class="flex">
-            <ui-input
-              v-model:value="inputColor.r"
-              class="color-footer-input"
-              :max="255"
-              type="number"
-              placeholder=" "
-              @blur="handleInputBlur"
-            />
-            <ui-input
-              v-model:value="inputColor.g"
-              class="color-footer-input"
-              :max="255"
-              type="number"
-              placeholder=" "
-              @blur="handleInputBlur"
-            />
-            <ui-input
-              v-model:value="inputColor.b"
-              class="color-footer-input"
-              :max="255"
-              type="number"
-              placeholder=" "
-              @blur="handleInputBlur"
-            />
-            <ui-input
-              v-model:value="inputColor.a"
-              class="color-footer-input"
-              :max="1"
-              type="number"
-              placeholder=" "
-              @blur="handleInputBlur"
-            />
+          <div class="flex justify-between">
+            <div class="flex">
+              <ui-input
+                v-model:value="inputColorRgb.r"
+                class="w10 color-footer-input"
+                :max="255"
+                type="number"
+                placeholder=" "
+                @blur="handleInputRgbBlur"
+              />
+              <ui-input
+                v-model:value="inputColorRgb.g"
+                class="w10 color-footer-input"
+                :max="255"
+                type="number"
+                placeholder=" "
+                @blur="handleInputRgbBlur"
+              />
+              <ui-input
+                v-model:value="inputColorRgb.b"
+                class="w10 color-footer-input"
+                :max="255"
+                type="number"
+                placeholder=" "
+                @blur="handleInputRgbBlur"
+              />
+              <ui-input
+                v-model:value="inputColorRgb.a"
+                class="w10 color-footer-input"
+                :max="1"
+                type="number"
+                placeholder=" "
+                @blur="handleInputRgbBlur"
+              />
+            </div>
+            <div>
+              <ui-input
+                v-model:value="inputColorHex"
+                class="w-25 color-footer-input"
+                placeholder=" "
+                @blur="handleInputHexBlur"
+              />
+            </div>
           </div>
-          <div>
-            <a-button class="color-footer-button mr2" @click="handleUnSelectColor">取消</a-button>
+          <div class="mt-3 text-right">
+            <a-button class="color-footer-button mr-3.2" @click="handleUnSelectColor">取消</a-button>
             <a-button class="color-footer-button" @click="handleSelectColor">确定</a-button>
           </div>
         </div>
       </div>
     </template>
-  </popup>
+  </a-dropdown>
 </template>
 
 <script setup lang="ts">
 import { CSSProperties } from 'vue';
-import { DraggablePlace, Popup } from '/@/lib/UI/';
+import { DraggablePlace } from '/@/lib/UI/';
 import { reactive, computed, ref, watch, nextTick } from 'vue';
 import { isUndefined } from '/@/utils/is';
 import { clamp } from 'lodash';
@@ -123,7 +133,9 @@ const emits = defineEmits(['update:value', 'change']);
 
 const props = defineProps(propsOptions);
 
-const inputColor = ref<Rgba>({ r: 255, g: 255, b: 255, a: 1 });
+const inputColorRgb = ref<Rgba>({ r: 255, g: 255, b: 255, a: 1 });
+
+const inputColorHex = ref<string>('#ffffff');
 
 const currentColor = ref<string>('rgba(255, 255, 255, 1)');
 
@@ -169,7 +181,9 @@ watch(
 
     emits('change', color);
 
-    inputColor.value = tinycolor(color).toRgb();
+    inputColorRgb.value = tinycolor(color).toRgb();
+
+    inputColorHex.value = tinycolor(color).toHex8String();
   }
 );
 
@@ -248,10 +262,23 @@ function handleAlphaThumbMove({ x, container: { width } }: Move) {
 }
 
 // 输入失去的值
-function handleInputBlur() {
-  const color = tinycolor(inputColor.value).toHex();
+function handleInputRgbBlur() {
+  const color = tinycolor(inputColorRgb.value);
 
-  updateColor(color);
+  inputColorRgb.value = color.toRgb();
+
+  updateColor(color.toHex());
+
+  updatePosition();
+}
+
+// 输入失去的值
+function handleInputHexBlur() {
+  const color = tinycolor(inputColorHex.value);
+
+  inputColorHex.value = color.toHex8String();
+
+  updateColor(color.toHex());
 
   updatePosition();
 }
@@ -440,13 +467,9 @@ function handleUnSelectColor() {
 }
 
 .color-footer {
-  display: flex;
-  justify-content: space-between;
   margin: 10px 0 0;
 
   &-input {
-    width: 40px;
-
     ::v-deep(input) {
       height: 28px;
       padding: 4px 5px;

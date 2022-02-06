@@ -35,6 +35,7 @@ export function queryModule(path: string): string {
     authority: '权限列表',
     role: '角色管理',
     search: '图书搜索',
+    'user/count': '新增用户统计',
     'user/register': '用户注册',
     'user/password': '用户密码修改',
     user: '用户管理',
