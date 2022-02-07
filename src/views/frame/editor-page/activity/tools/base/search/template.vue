@@ -1,4 +1,8 @@
 <template>
+  <a-form-item label="底纹词">
+    <ui-input v-model:value="dataItem.placeholder" prop="placeholder" />
+  </a-form-item>
+  <a-divider />
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
   </a-form-item>
@@ -9,19 +13,16 @@
     <slider-input v-model:value="dataItem.paddingY" prop="paddingY" />
   </a-form-item>
   <a-divider />
-  <a-form-item label="底纹词">
-    <ui-input v-model:value="dataItem.placeholder" prop="placeholder" />
-  </a-form-item>
-  <a-form-item label="字体颜色">
+  <a-form-item label="文字颜色">
     <ui-color-picker v-model:value="dataItem.placeholderColor" prop="placeholderColor" />
   </a-form-item>
-  <a-form-item label="背景颜色">
+  <a-form-item label="输入框颜色">
     <ui-color-picker v-model:value="dataItem.placeholderBgColor" prop="placeholderBgColor" />
   </a-form-item>
   <a-form-item label="文本位置">
     <radio-group-button v-model:value="dataItem.position" :options="positions" prop="position" />
   </a-form-item>
-  <a-form-item label="字体大小">
+  <a-form-item label="文字大小">
     <slider-input v-model:value="dataItem.placeholderSize" prop="placeholderSize" :min="12" :max="50" />
   </a-form-item>
   <a-form-item label="圆角边距">

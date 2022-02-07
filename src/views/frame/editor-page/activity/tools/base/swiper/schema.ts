@@ -1,7 +1,7 @@
 import type { PointInfo } from '/@/lib/interface/PointInfo';
 
 export interface Schema extends PointInfo {
-  list: Array<{ link: string; image: string }>;
+  list: Array<{ link: string; image: string; label: string; target: string }>;
 
   borderRadius: number;
 
@@ -29,7 +29,7 @@ export const schema: Schema = {
 
   vertical: false,
 
-  list: [{ link: '', image: '' }]
+  list: [{ link: '', image: '', label: '', target: '_self' }]
 };
 
 export const label = '轮播图';

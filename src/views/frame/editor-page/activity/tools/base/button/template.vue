@@ -9,10 +9,10 @@
   <a-form-item label="按钮内容">
     <ui-input v-model:value="dataItem.text" prop="text" />
   </a-form-item>
-  <a-form-item label="字体颜色">
+  <a-form-item label="文字颜色">
     <ui-color-picker v-model:value="dataItem.textColor" prop="textColor" />
   </a-form-item>
-  <a-form-item label="字体大小">
+  <a-form-item label="文字大小">
     <slider-input v-model:value="dataItem.textSize" :min="12" :max="50" prop="textSize" />
   </a-form-item>
   <a-divider />

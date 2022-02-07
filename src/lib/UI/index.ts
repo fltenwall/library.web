@@ -7,4 +7,5 @@ export { default as Popup } from './src/popup/index.vue';
 export { default as ColorPicker } from './src/colorPicker/index';
 export { default as DatePicker } from './src/DatePicker/index';
 export { default as Select } from './src/select/index';
-export { default as ImageUpload } from './src/imageUpload/index.vue';
+export { default as SelectImage } from './src/select/image.vue';
+export { default as SelectImageRows } from './src/select/imageRows.vue';

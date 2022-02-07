@@ -21,14 +21,14 @@
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
   </a-form-item>
-  <a-form-item label="字体颜色">
+  <a-form-item label="文字颜色">
     <ui-color-picker v-model:value="dataItem.fontColor" prop="fontColor" />
   </a-form-item>
   <a-divider orientation="left"> 倒计时样式 </a-divider>
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.timeBgColor" prop="timeBgColor" />
   </a-form-item>
-  <a-form-item label="字体颜色">
+  <a-form-item label="文字颜色">
     <ui-color-picker v-model:value="dataItem.timeFontColor" prop="timeFontColor" />
   </a-form-item>
   <a-form-item label="圆角边距">

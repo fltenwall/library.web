@@ -1,12 +1,12 @@
 <template>
-  <a-form-item label="字段名称">
+  <a-form-item label="文字">
     <ui-input v-model:value="dataItem.title" prop="title" />
   </a-form-item>
   <a-divider />
   <a-form-item label="标题颜色">
     <ui-color-picker v-model:value="dataItem.titleColor" prop="titleColor" />
   </a-form-item>
-  <a-form-item label="背景色">
+  <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
   </a-form-item>
   <a-divider />

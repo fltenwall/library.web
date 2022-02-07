@@ -8,6 +8,7 @@
         :src="`${MixinConfig.preview}${item.image}`"
         :width="point.iconWidth"
       />
+      <icon v-else icon="bi:image" color="#a1a1aa" size="30" />
       <!-- 文字 -->
       <div
         v-if="point.type === 'text' || point.type === 'image-text'"

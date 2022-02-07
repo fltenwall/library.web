@@ -2,13 +2,8 @@
   <div class="swiper-wrap">
     <div class="swiper-container" :style="trackStyle">
       <div v-for="(item, index) in swiper" :key="index" class="preview-image-wrap" :style="imageWrapStyle">
-        <img
-          v-if="item.image"
-          class="preview-image"
-          :src="`${MixinConfig.preview}${item.image}`"
-          :style="imageStyle"
-        />
-        <img v-else class="preview-image preview-image__empty" :src="noImage" :style="imageStyle" />
+        <img v-if="item?.image" :src="`${MixinConfig.preview}${item.image}`" :style="imageStyle" />
+        <a-empty v-else :image="simpleImage" description="" :style="imageStyle" />
       </div>
     </div>
     <div class="swiper-indicators">
@@ -23,8 +18,6 @@
 
 <!-- 默认配置项 -->
 <script lang="ts">
-import noImage from '/@/assets/svg/noImage.svg';
-
 export default defineComponent({
   inheritAttrs: false
 });
@@ -34,9 +27,11 @@ export default defineComponent({
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import type { Schema } from './schema';
-import { reactive, useAttrs, computed } from 'vue';
+import { Empty } from 'ant-design-vue';
 
 const attrs = useAttrs();
+
+const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 
 const state = reactive({ offset: 0, active: 0, swiping: false });
 
@@ -114,10 +109,6 @@ onUnmounted(stopAutoplay);
   &-wrap {
     flex-shrink: 0;
   }
-
-  &__empty {
-    background: #fff;
-  }
 }
 
 .swiper-container {
@@ -148,6 +139,18 @@ onUnmounted(stopAutoplay);
 
   &__select {
     opacity: 1;
+  }
+}
+
+::v-deep(.ant-empty) {
+  position: relative;
+  margin: 0;
+
+  &-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

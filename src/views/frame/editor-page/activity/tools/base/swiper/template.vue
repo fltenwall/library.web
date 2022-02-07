@@ -5,73 +5,18 @@
   <a-form-item label="边距">
     <slider-input v-model:value="dataItem.padding" prop="padding" />
   </a-form-item>
-  <a-divider />
-  <div class="swiper-list">
-    <div v-for="(item, index) in dataItem.list" :key="index" class="swiper-list-box">
-      <a-form-item label="图片地址">
-        <ui-input v-model:value="item.image" readonly allow-clear :prop="`list.${index}.image`" />
-      </a-form-item>
-      <a-form-item label="链接">
-        <ui-input v-model:value="item.link" :prop="`list.${index}.link`" />
-      </a-form-item>
-      <div class="mt2 flex justify-end">
-        <a-button type="link" size="small" class="fs3 mr1" @click="handleOpenMaterial(index)">
-          素材库
-        </a-button>
-        <a-button type="link" size="small" class="fs3 red" @click="handleDeleteBox(index)">删除</a-button>
-      </div>
-    </div>
-    <a-button class="mt3 w-full" @click="handleAddBox"> 新增</a-button>
-  </div>
-  <!-- 素材库 -->
-  <material-modal
-    v-model:value="visible"
-    dict-type="image_manage"
-    dict-value="activity_page"
-    :maxlength="1"
-    @select="handleSelectMaterial"
-  />
+  <a-divider orientation="left">轮播图图片</a-divider>
+  <select-image v-model:value="dataItem.list" prop="list" />
 </template>
 
 <script setup lang="ts">
 import type { Schema } from './schema';
-import { computed, ref } from 'vue';
 import { templateInit } from '../../utils';
-import uiInput from '/@/lib/UI/src/input/index';
-import { pointStore } from '/@/store/modules/point';
-import { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
+import { SelectImage } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 
-const pointid = computed(() => pointStore.getPointidState);
-// 对话框
-const visible = ref<boolean>(false);
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
-// 当前点击下标
-let currentIndex: number;
-
-function handleAddBox() {
-  const key = `list.${dataItem.list?.length}`;
-  const value = { link: '', image: '' } as never;
-  pointStore.commitUpdatePointData({ id: pointid.value, key, value });
-}
-
-function handleOpenMaterial(index: number) {
-  currentIndex = index;
-  visible.value = true;
-}
-
-function handleSelectMaterial([content]: ImageManage[]) {
-  const key = `list.${currentIndex}.image`;
-  const value = content.hash as never;
-  pointStore.commitUpdatePointData({ id: pointid.value, key, value });
-}
-
-function handleDeleteBox(index: number) {
-  const key = `list.${index}`;
-
-  pointStore.commitUpdatePointData({ id: pointid.value, key, type: 'delete' });
-}
 </script>
 
 <style lang="less" scoped>

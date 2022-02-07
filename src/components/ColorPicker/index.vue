@@ -360,7 +360,7 @@ function handleUnSelectColor() {
     height: 24px;
     padding: 5px;
     cursor: pointer;
-    border: 1px solid #d9d9d9;
+    border: 1px solid @border-color-base;
   }
 
   &-color {
@@ -372,7 +372,7 @@ function handleUnSelectColor() {
   &-panel {
     padding: 10px;
     background: #fff;
-    border: 1px solid #d9d9d9;
+    border: 1px solid @border-color-base;
   }
 }
 

@@ -5,15 +5,18 @@
     trigger="click"
     :get-popup-container="(triggerNode: Node) => triggerNode.parentNode"
   >
-    <icon icon="typcn:flash" class="image-flash" />
+    <slot :visible="visible" />
 
     <template #overlay>
-      <div class="image-flash-ul">
+      <div class="setting-button-ul">
         <div class="h-8 pl-4 flex items-center font-bold">设置</div>
         <hr />
-        <div class="pl-4 mt-2 text-gray-500">名称</div>
-        <div class="ml-4 mr-4 mt-2">
-          <ui-input :value="dataItem.label" @change="handleChange($event, 'label')" />
+        <div class="pl-4 mt-2 pr-4 h-7 index-space-between index-middle">
+          <div class="text-gray-500">事件</div>
+          <div>
+            <icon icon="carbon:touch-1" class="mr-1" />
+            点击
+          </div>
         </div>
         <div class="pl-4 mt-2 pr-4 h-7 index-space-between index-middle">
           <div class="text-gray-500">行为</div>
@@ -41,8 +44,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import type { Material } from '../interface';
-import UiInput from '/@/lib/UI/src/input/index';
+import type { Material } from '../interface/image';
 import UiSelect from '/@/lib/UI/src/select/index';
 
 defineProps({
@@ -67,23 +69,11 @@ function handleChange(value: string, key: string) {
 </script>
 
 <style lang="less" scoped>
-.image-flash {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  color: #666;
-  cursor: pointer;
+.setting-button-ul {
+  width: 210px;
+  padding-bottom: 12px;
+  font-size: 12px;
   background: #fff;
-  border-radius: 4px;
-
-  &-ul {
-    width: 210px;
-    padding-bottom: 12px;
-    font-size: 12px;
-    background: #fff;
-    border: 1px solid #d9d9d9;
-  }
+  border: 1px solid @border-color-base;
 }
 </style>

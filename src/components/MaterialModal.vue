@@ -2,7 +2,7 @@
   <a-modal
     v-model:visible="visible"
     title="选择素材"
-    width="895px"
+    width="880px"
     :style="{ top: '50px' }"
     :mask-closable="false"
   >
@@ -56,19 +56,23 @@
             </div>
           </a-popconfirm>
         </div>
-        <!-- 选中图片数据 -->
-        <div v-for="[key, item] in selectImageMap" :key="key" class="relative inline-flex preview-image-row">
+        <scrollbar class="material-modal-right-main">
+          <!-- 选中图片数据 -->
           <div
-            class="index-grid-image w80 h80 border-1 rounded-md inline-flex items-center m2 overflow-hidden"
+            v-for="[key, item] in selectImageMap"
+            :key="key"
+            class="relative inline-flex preview-image-row"
           >
-            <img :src="`${MixinConfig.preview}${item.hash}`" class="preview-image full-height" />
+            <div class="index-grid-image preview-image-content">
+              <img :src="`${MixinConfig.preview}${item.hash}`" class="preview-image full-height" />
+            </div>
+            <icon
+              class="preview-image-close"
+              icon="ant-design:close-circle-filled"
+              @click="handleSelectImage(item)"
+            />
           </div>
-          <icon
-            class="preview-image-close"
-            icon="ant-design:close-circle-filled"
-            @click="handleSelectImage(item)"
-          />
-        </div>
+        </scrollbar>
       </div>
     </div>
     <!-- 底部按钮 -->
@@ -243,10 +247,9 @@ function handleDeleteAllImage() {
 
 // 处理点击确定
 function handleClickConfirm() {
-  emit(
-    'select',
-    [...selectImageMap.value.values()].map((el) => unref(el))
-  );
+  const data = [...selectImageMap.value.values()].map((el) => unref(el));
+
+  emit('select', data);
 
   visible.value = false;
 }
@@ -268,11 +271,15 @@ fetchDataFromServer();
   }
 
   &-right {
-    width: 350px;
+    width: 335px;
     padding: 16px 24px 16px 16px;
     font-family: PingFang SC, Helvetica Neue, Helvetica, Microsoft JhengHei, Microsoft YaHei, Arial,
       'sans-serif';
     background: #f5f6f8;
+
+    &-main {
+      height: 440px;
+    }
   }
 
   &-main {
@@ -302,6 +309,14 @@ fetchDataFromServer();
         opacity: 0;
       }
     }
+  }
+
+  &-content {
+    width: 80px;
+    height: 80px;
+    margin: 8px;
+    border-width: 1px;
+    border-radius: 6px;
   }
 
   &-select {

@@ -5,6 +5,7 @@
     <template #overlay>
       <a-menu theme="dark" @click="handleSelectMenu">
         <a-menu-item key="image" class="fs3">从素材库选择</a-menu-item>
+        <a-menu-item key="empty" class="fs3">清除</a-menu-item>
         <a-menu-item key="delete" class="fs3">删除</a-menu-item>
       </a-menu>
     </template>

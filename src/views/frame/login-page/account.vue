@@ -128,7 +128,7 @@ export default defineComponent({
     text-align: center;
 
     .ant-divider {
-      background: #d9d9d9;
+      background: @border-color-base;
     }
 
     &-button {

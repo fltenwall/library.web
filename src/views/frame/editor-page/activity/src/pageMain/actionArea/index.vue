@@ -10,7 +10,9 @@
       <a-tab-pane v-for="item in modules" :key="item.name" :tab="labelShowParse(pointName, item.name)">
         <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
           <scrollbar height="calc(100vh - 150px)">
-            <component :is="item.template" />
+            <div class="action-area-main-content">
+              <component :is="item.template" />
+            </div>
           </scrollbar>
         </a-form>
       </a-tab-pane>
@@ -89,8 +91,12 @@ function labelShowParse(name = 'form', key = 'template') {
   }
 
   &-main {
-    padding: 0 16px;
+    padding: 0 13px 0 16px;
     font-size: 12px;
+
+    &-content {
+      padding-left: 3px;
+    }
   }
 
   ::v-deep(.ant-row) {
@@ -124,6 +130,7 @@ function labelShowParse(name = 'form', key = 'template') {
 
   ::v-deep(.ant-input) {
     height: @height;
+    padding: 4px 6px;
     font-size: 12px;
   }
 

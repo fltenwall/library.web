@@ -38,7 +38,7 @@ export default defineComponent({
     .divider {
       height: 240px;
       margin: 0 48px;
-      background: #d9d9d9;
+      background: @border-color-base;
     }
 
     &-right,

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue';
-import type { Material } from './interface';
+import type { Material } from '../interface/image';
 
 export default {
   prop: {

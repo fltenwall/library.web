@@ -38,4 +38,4 @@ export const schema: Schema = {
 
 export const label = '按钮';
 
-export const icon = 'carbon:touch-1';
+export const icon = 'teenyicons:button-outline';

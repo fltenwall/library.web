@@ -6,16 +6,19 @@
   <a-form-item label="显示类型">
     <radio-group-button v-model:value="dataItem.type" :options="types" prop="type" />
   </a-form-item>
-  <a-form-item label="一行展示个数">
+  <a-form-item label="每行个数">
     <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" />
   </a-form-item>
-  <a-divider orientation="left">素材</a-divider>
-  <image-upload v-model:value="dataItem.list" prop="list" />
+  <a-form-item label="显示行数">
+    <!-- <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" /> -->
+  </a-form-item>
+  <a-divider orientation="left">选项</a-divider>
+  <select-image-rows v-model:value="dataItem.list" prop="list" />
   <a-divider orientation="left">选择项</a-divider>
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.cardBgColor" prop="cardBgColor" />
   </a-form-item>
-  <a-form-item label="字体大小">
+  <a-form-item label="文字大小">
     <slider-input v-model:value="dataItem.fontSize" :min="12" :max="50" prop="fontSize" />
   </a-form-item>
   <a-form-item label="图片宽度">
@@ -27,9 +30,9 @@
   <a-form-item label="间隔">
     <slider-input v-model:value="dataItem.interval" prop="interval" />
   </a-form-item>
-  <a-divider orientation="left">标签栏</a-divider>
+  <a-divider orientation="left">导航栏</a-divider>
   <!-- 背景 -->
-  <a-form-item label="字体颜色">
+  <a-form-item label="文字颜色">
     <ui-color-picker v-model:value="dataItem.fontColor" prop="fontColor" />
   </a-form-item>
   <a-form-item label="背景颜色">
@@ -55,7 +58,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker, ImageUpload } from '/@/lib/UI/';
+import { ColorPicker as uiColorPicker, SelectImageRows } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import { Select as UiSelect } from '/@/lib/UI/';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';

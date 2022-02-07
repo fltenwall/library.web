@@ -9,6 +9,7 @@ export function generateModifyVars() {
     'drawer-body-padding': '24px 0',
     'table-header-color': '#000000d9',
     'table-border-color': '#e8e8e8',
-    '@menu-dark-bg': '#1c1c1e'
+    'menu-dark-bg': '#1c1c1e',
+    'border-color-base': '#d9d9d9'
   };
 }

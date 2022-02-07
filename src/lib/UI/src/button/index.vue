@@ -29,7 +29,7 @@ export default defineComponent({
 <style lang="less">
 @color: #333;
 @radius: 2px;
-@border-color: #d9d9d9;
+@border-color: @border-color-base;
 @h: 30px;
 @fontSize: 12px;
 

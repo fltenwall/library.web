@@ -10,10 +10,7 @@
   <a-divider />
   <div class="default-point-item">
     <div class="c333">锁定高度</div>
-    <lock
-      :value="pageOptions.heigheLock"
-      @change="(value: string) => handleUpdateData(value, 'heigheLock')"
-    />
+    <lock :value="pageOptions.heigheLock" @change="handleUpdateData($event, 'heigheLock')" />
   </div>
   <a-divider />
   <div class="default-point-item">
