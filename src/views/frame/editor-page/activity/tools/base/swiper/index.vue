@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-wrap">
+  <div class="swiper-wrap" :style="wrapStyle">
     <div class="swiper-container" :style="trackStyle">
       <div v-for="(item, index) in swiper" :key="index" class="preview-image-wrap" :style="imageWrapStyle">
         <img v-if="item?.image" :src="`${MixinConfig.preview}${item.image}`" :style="imageStyle" />
@@ -11,6 +11,7 @@
         v-for="key in count"
         :key="key"
         :class="`swiper-indicator ${state.active % count === key - 1 ? 'swiper-indicator__select' : ''}`"
+        :style="indicatorStyle"
       ></div>
     </div>
   </div>
@@ -44,7 +45,13 @@ const count = computed(() => point.list.length);
 const imageStyle = computed(
   (): CSSProperties => ({
     width: `${(point.width || 0) - point.padding * 2}px`,
-    height: `${(point.height || 0) - point.padding * 2}px`,
+    height: `${(point.height || 0) - point.padding * 2}px`
+  })
+);
+
+const wrapStyle = computed(
+  (): CSSProperties => ({
+    backgroundColor: point.bgColor,
     borderRadius: `${point.borderRadius}px`
   })
 );
@@ -53,6 +60,12 @@ const trackStyle = computed(
   (): CSSProperties => ({
     transitionDuration: `${state.swiping ? 0 : point.duration}ms`,
     transform: `translate${point.vertical ? 'Y' : 'X'}(${state.offset}px)`
+  })
+);
+
+const indicatorStyle = computed(
+  (): CSSProperties => ({
+    backgroundColor: point.indicatorSelectColor
   })
 );
 
@@ -133,7 +146,6 @@ onUnmounted(stopAutoplay);
   width: 5px;
   height: 5px;
   margin: 10px 2px;
-  background: #fff;
   border-radius: 50%;
   opacity: 0.3;
 

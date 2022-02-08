@@ -493,6 +493,7 @@ watch(
         &::after,
         &::before {
           position: absolute;
+          z-index: 9999;
           width: 100%;
           height: 2px;
           content: '';
@@ -513,6 +514,7 @@ watch(
         &::after,
         &::before {
           position: absolute;
+          z-index: 9999;
           width: 2px;
           height: 100%;
           content: '';

@@ -18,14 +18,10 @@
         </template>
       </setting-button>
       <a-divider type="vertical" />
-      <div class="image-row-operation operation-button text-red-400" @click="handleClick('delete', index)">
-        删除
-      </div>
+      <div class="image-row-operation text-red-400" @click="handleClick('delete', index)">删除</div>
     </div>
     <div class="flex justify-end pr-2">
-      <div class="image-row-operation operation-button text-blue-500" @click="handleClick('add', -1)">
-        新增
-      </div>
+      <div class="image-row-operation text-blue-500" @click="handleClick('add', -1)">新增</div>
     </div>
 
     <!-- 素材库 -->
@@ -132,16 +128,22 @@ input {
   }
 
   &-image {
+    padding: 1px 3px;
     cursor: pointer;
-
-    &:active {
-      color: #1890ff;
-    }
+    border-radius: 2px;
 
     img {
       width: 16px;
       height: 16px;
       object-fit: contain;
+    }
+
+    &:hover {
+      background-color: #f2f3f5;
+    }
+
+    &:active {
+      background-color: #e5e6eb;
     }
   }
 

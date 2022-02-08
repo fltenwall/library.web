@@ -18,7 +18,7 @@ export default defineComponent({
       default: undefined
     }
   },
-  setup(props, { attrs }) {
+  setup(props) {
     const elRef = ref<HTMLNULL>(null);
 
     const update = async () => {
@@ -55,8 +55,6 @@ export default defineComponent({
       update();
     });
 
-    return () => (
-      <div ref={elRef} class={[attrs.class, 'app-iconify']} style={unref(wrapStyleRef)} />
-    );
+    return () => <div ref={elRef} class="app-iconify" style={unref(wrapStyleRef)} />;
   }
 });

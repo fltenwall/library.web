@@ -10,7 +10,7 @@
     <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" />
   </a-form-item>
   <a-form-item label="显示行数">
-    <!-- <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" /> -->
+    <ui-select v-model:value="dataItem.showRow" class="w-41" :options="showNums" prop="showRow" />
   </a-form-item>
   <a-divider orientation="left">选项</a-divider>
   <select-image-rows v-model:value="dataItem.list" prop="list" />
@@ -59,8 +59,7 @@
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
 import { ColorPicker as uiColorPicker, SelectImageRows } from '/@/lib/UI/';
-import sliderInput from '/@/lib/UI/src/slider/sliderInput';
-import { Select as UiSelect } from '/@/lib/UI/';
+import { Select as UiSelect, sliderInput } from '/@/lib/UI/';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 
 // 响应式数据

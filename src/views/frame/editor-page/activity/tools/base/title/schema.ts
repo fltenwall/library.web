@@ -7,6 +7,8 @@ export interface Schema extends PointInfo {
 
   titleColor: string;
 
+  titleWeight: number;
+
   textAlign: string;
 
   verticalAlign: string;
@@ -24,6 +26,8 @@ export const schema: Schema = {
   width: 200,
 
   title: '这是一个标题',
+
+  titleWeight: 5,
 
   titleSize: 18,
 

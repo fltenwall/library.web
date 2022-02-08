@@ -3,11 +3,14 @@
     <ui-input v-model:value="dataItem.title" prop="title" />
   </a-form-item>
   <a-divider />
-  <a-form-item label="标题颜色">
-    <ui-color-picker v-model:value="dataItem.titleColor" prop="titleColor" />
-  </a-form-item>
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
+  </a-form-item>
+  <a-form-item label="上边圆角">
+    <slider-input v-model:value="dataItem.upperRadius" prop="upperRadius" />
+  </a-form-item>
+  <a-form-item label="下边圆角">
+    <slider-input v-model:value="dataItem.lowerPadding" prop="lowerPadding" />
   </a-form-item>
   <a-divider />
   <a-form-item label="X 轴布局选择">
@@ -20,15 +23,15 @@
       prop="verticalAlign"
     />
   </a-form-item>
-  <a-divider />
-  <a-form-item label="标题字体">
+  <a-divider orientation="left">标题</a-divider>
+  <a-form-item label="颜色">
+    <ui-color-picker v-model:value="dataItem.titleColor" prop="titleColor" />
+  </a-form-item>
+  <a-form-item label="字体大小">
     <slider-input v-model:value="dataItem.titleSize" :min="12" :max="50" prop="titleSize" />
   </a-form-item>
-  <a-form-item label="上边圆角">
-    <slider-input v-model:value="dataItem.upperRadius" prop="upperRadius" />
-  </a-form-item>
-  <a-form-item label="下边圆角">
-    <slider-input v-model:value="dataItem.lowerPadding" prop="lowerPadding" />
+  <a-form-item label="字体粗细">
+    <slider-input v-model:value="dataItem.titleWeight" :min="0" :max="10" prop="titleWeight" />
   </a-form-item>
 </template>
 

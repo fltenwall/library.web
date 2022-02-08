@@ -25,6 +25,8 @@ export interface Schema extends PointInfo {
 
   showNum: number;
 
+  showRow: number;
+
   radiusTop: number;
 
   radiusBottom: number;
@@ -60,6 +62,8 @@ export const schema: Schema = {
   paddingBottom: 0,
 
   showNum: 4,
+
+  showRow: 4,
 
   radiusTop: 0,
 

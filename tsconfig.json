@@ -27,7 +27,8 @@
       "/@components/*": [
         "src/components/*"
       ],
-    }
+    },
+    "types": ["vite/client"]
   },
   "exclude": [
     "node_modules",

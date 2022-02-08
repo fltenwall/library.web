@@ -21,6 +21,12 @@ module.exports = {
         ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin']
       }
     ],
+    'value-keyword-case': [
+      'lower',
+      {
+        ignoreFunctions: ['v-bind']
+      }
+    ],
     'no-empty-source': null,
     'unicode-bom': 'never',
     'no-descending-specificity': null,

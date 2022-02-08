@@ -42,13 +42,15 @@ export const baseConfigs: PointConfigs = {
     form: '页面配置',
     media: '媒体组件',
     chart: '可视化组件',
+    subsidiary: '辅助组件',
     attr: '属性',
     config: '配置'
   },
   icon: {
     base: 'ant-design:appstore-outlined',
     media: 'cil:media-play',
-    chart: 'ant-design:pie-chart-outlined'
+    chart: 'ant-design:pie-chart-outlined',
+    subsidiary: 'ant-design:tool-outlined'
   },
   pinyin: {},
   visible: {},

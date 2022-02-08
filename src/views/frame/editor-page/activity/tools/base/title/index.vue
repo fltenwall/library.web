@@ -6,8 +6,6 @@
 
 <!-- 默认配置项 -->
 <script lang="ts">
-import { defineComponent } from 'vue';
-
 export default defineComponent({
   inheritAttrs: false
 });
@@ -25,7 +23,8 @@ const point = reactive<Schema>(attrs as unknown as Schema);
 // 标题样式
 const titleStyle = computed(() => ({
   color: point.titleColor,
-  fontSize: `${point.titleSize}px`
+  fontSize: `${point.titleSize}px`,
+  fontWeight: point.titleWeight * 100
 }));
 
 // 最外层样式

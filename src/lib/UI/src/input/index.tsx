@@ -44,7 +44,7 @@ export default defineComponent({
       defalut: false
     }
   },
-  emits: ['update:value', 'change', 'blur'],
+  emits: ['update:value', 'change', 'blur', 'focus'],
   setup(props, { emit }) {
     const instance = inject('editor-form', {}) as EditorForm;
 
@@ -95,6 +95,11 @@ export default defineComponent({
       emit('blur', input.value);
     }
 
+    // 输入框获取焦点
+    function handleFocus() {
+      emit('focus', input.value);
+    }
+
     watch(
       () => props.value,
       (val) => {
@@ -121,6 +126,7 @@ export default defineComponent({
           readonly={props.readonly}
           onChange={handlChange}
           onBlur={handleBlur}
+          onFocus={handleFocus}
         />
         {!!input.value && props.allowClear && closeButton}
       </div>

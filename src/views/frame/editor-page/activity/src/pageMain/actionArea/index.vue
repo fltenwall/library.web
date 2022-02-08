@@ -95,7 +95,7 @@ function labelShowParse(name = 'form', key = 'template') {
     font-size: 12px;
 
     &-content {
-      padding-left: 3px;
+      padding-right: 3px;
     }
   }
 
@@ -130,7 +130,6 @@ function labelShowParse(name = 'form', key = 'template') {
 
   ::v-deep(.ant-input) {
     height: @height;
-    padding: 4px 6px;
     font-size: 12px;
   }
 

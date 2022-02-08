@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { PointInfo } from '/@/lib/interface/PointInfo';
-import { computed, unref, provide, ref, watch, reactive } from 'vue';
 import { pointStore } from '/@/store/modules/point';
 import { cloneDeep } from 'lodash-es';
 
@@ -41,15 +40,15 @@ export function templateInit<T extends PointInfo>(customState: CustomState = {})
 
   const pointid = computed(() => pointStore.getPointidState);
   // 内部更新不触发
-  const isValueUpdateFromInner = ref<boolean>(false);
+  let isValueUpdateFromInner = false;
 
   // 数据变化触发
   watch(
     () => pointInfo.value,
     (val) => {
-      if (isValueUpdateFromInner.value) {
+      if (isValueUpdateFromInner) {
         // changeTrigger 函数触发不更新
-        isValueUpdateFromInner.value = false;
+        isValueUpdateFromInner = false;
       } else {
         initData(val);
       }
@@ -62,7 +61,7 @@ export function templateInit<T extends PointInfo>(customState: CustomState = {})
     const { height: CH, width: CW } = canvasSize.value;
     const value = parsePath(key)(dataItem) as never;
 
-    isValueUpdateFromInner.value = true;
+    isValueUpdateFromInner = true;
 
     // 修改默认视图数据
     const stateMap = {
