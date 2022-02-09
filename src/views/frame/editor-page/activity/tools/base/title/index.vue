@@ -30,7 +30,7 @@ const titleStyle = computed(() => ({
 // 最外层样式
 const wrapStyle = computed(() => ({
   backgroundColor: point.bgColor,
-  borderRadius: `${point.upperRadius}px ${point.upperRadius}px ${point.lowerPadding}px ${point.lowerPadding}px`
+  borderRadius: point.borderRadius
 }));
 </script>
 

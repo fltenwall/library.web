@@ -62,7 +62,7 @@ import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 import { DatePicker as uiDatePicker } from '/@/lib/UI/';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
-import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
+import { UiColorPicker } from '/@/lib/UI/';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 
 // 响应式数据

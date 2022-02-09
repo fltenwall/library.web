@@ -22,6 +22,8 @@ export interface Schema extends PointInfo {
   contentPaddingX: number;
 
   contentPaddingY: number;
+
+  contentBorderRadius: string;
 }
 
 export const schema: Schema = {
@@ -49,7 +51,9 @@ export const schema: Schema = {
 
   contentPaddingX: 8,
 
-  contentPaddingY: 12
+  contentPaddingY: 12,
+
+  contentBorderRadius: '0'
 };
 
 export const label = '搜索';

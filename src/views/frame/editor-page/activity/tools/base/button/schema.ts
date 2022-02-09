@@ -11,7 +11,7 @@ export interface Schema extends PointInfo {
 
   bgColor: string;
 
-  borderRadius: number;
+  borderRadius: string;
 
   pointId: string;
 }
@@ -31,7 +31,7 @@ export const schema: Schema = {
 
   bgColor: '#1628D4',
 
-  borderRadius: 16,
+  borderRadius: '0',
 
   pointId: ''
 };

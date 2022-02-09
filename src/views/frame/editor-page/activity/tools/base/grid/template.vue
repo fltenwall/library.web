@@ -24,12 +24,10 @@
   <a-form-item label="图片宽度">
     <slider-input v-model:value="dataItem.iconWidth" prop="iconWidth" />
   </a-form-item>
-  <a-form-item label="圆角边距">
-    <slider-input v-model:value="dataItem.cardBorderRadius" prop="cardBorderRadius" />
-  </a-form-item>
-  <a-form-item label="间隔">
+  <a-form-item label="间隔时间">
     <slider-input v-model:value="dataItem.interval" prop="interval" />
   </a-form-item>
+  <input-radius v-model:value="dataItem.cardBorderRadius" prop="cardBorderRadius" />
   <a-divider orientation="left">导航栏</a-divider>
   <!-- 背景 -->
   <a-form-item label="文字颜色">
@@ -47,12 +45,7 @@
   <a-form-item label="下边距">
     <slider-input v-model:value="dataItem.paddingBottom" prop="paddingBottom" />
   </a-form-item>
-  <a-form-item label="上圆角">
-    <slider-input v-model:value="dataItem.radiusTop" prop="radiusTop" />
-  </a-form-item>
-  <a-form-item label="下圆角">
-    <slider-input v-model:value="dataItem.radiusBottom" prop="radiusBottom" />
-  </a-form-item>
+  <input-radius v-model:value="dataItem.borderRadius" prop="borderRadius" />
   <!-- 指示器 -->
   <a-divider orientation="left">指示器</a-divider>
   <a-form-item label="背景颜色">
@@ -66,8 +59,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker, SelectImageRows } from '/@/lib/UI/';
-import { Select as UiSelect, sliderInput } from '/@/lib/UI/';
+import { UiColorPicker, SelectImageRows, InputRadius, UiSelect, SliderInput } from '/@/lib/UI/';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 
 // 响应式数据

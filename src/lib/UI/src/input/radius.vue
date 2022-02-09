@@ -1,100 +1,109 @@
 <template>
-  <div class="index-middle justify-between">
-    <div class="radius-separately">
-      <icon icon="tabler:radius-top-left" class="top-left" :color="inputState.topLeft" />
-      <icon icon="tabler:radius-top-right" class="top-right" :color="inputState.topRight" />
-
-      <icon icon="tabler:radius-bottom-right" class="bottom-right" :color="inputState.bottomRight" />
-      <icon icon="tabler:radius-bottom-left" class="bottom-left" :color="inputState.bottomLeft" />
+  <div>
+    <div class="flex mb-4">
+      <div class="index-middle mr-2">
+        <div class="flex-shrink-0 w-13 radius-label">左上角</div>
+        <ui-input v-model:value="inputState.topLeft" type="number" @change="handleInputChange" />
+      </div>
+      <div class="index-middle">
+        <div class="flex-shrink-0 w-13 radius-label">右上角</div>
+        <ui-input v-model:value="inputState.topRight" type="number" @change="handleInputChange" />
+      </div>
     </div>
-    <div class="flex">
-      <ui-input
-        class="radius-input"
-        placeholder=" "
-        @focus="handleInputState('focus', 'topLeft')"
-        @blur="handleInputState('blur', 'topLeft')"
-      />
-      <ui-input
-        class="radius-input"
-        placeholder=" "
-        @focus="handleInputState('focus', 'topRight')"
-        @blur="handleInputState('blur', 'topRight')"
-      />
-      <ui-input
-        class="radius-input"
-        placeholder=" "
-        @focus="handleInputState('focus', 'bottomRight')"
-        @blur="handleInputState('blur', 'bottomRight')"
-      />
-      <ui-input
-        class="radius-input"
-        placeholder=" "
-        @focus="handleInputState('focus', 'bottomLeft')"
-        @blur="handleInputState('blur', 'bottomLeft')"
-      />
+    <div class="flex mb-4">
+      <div class="index-middle mr-2">
+        <div class="flex-shrink-0 w-13 radius-label">右下角</div>
+        <ui-input v-model:value="inputState.bottomLeft" type="number" @change="handleInputChange" />
+      </div>
+      <div class="index-middle">
+        <div class="flex-shrink-0 w-13 radius-label">右下角</div>
+        <ui-input v-model:value="inputState.bottomRight" type="number" @change="handleInputChange" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import uiInput from '/@/lib/UI/src/input/index';
+import type { EditorForm } from '/@/lib/interface/EditorForm';
 
 interface InputState {
-  bottomLeft: string;
+  bottomLeft: number;
 
-  bottomRight: string;
+  bottomRight: number;
 
-  topLeft: string;
+  topLeft: number;
 
-  topRight: string;
+  topRight: number;
 }
+
+const props = defineProps({
+  prop: {
+    type: String,
+    default: ''
+  },
+  value: {
+    type: [String, Number],
+    default: ''
+  }
+});
+
+const emit = defineEmits(['update:value']);
+
+const instance = inject('editor-form', {}) as EditorForm;
+
+let isValueUpdateFromInner = false;
 
 const inputState = ref<Partial<InputState>>({});
 
-function handleInputState(state: 'focus' | 'blur', key: keyof InputState) {
-  inputState.value[key] = state === 'focus' ? '#3730a3' : '';
+function handleInputChange() {
+  const input = unref(inputState);
+  const ruslut = `${input.topLeft}px ${input.topRight}px ${input.bottomRight}px ${input.bottomLeft}px`;
+
+  handlChange(ruslut);
 }
+
+// 	输入框内容变化时的回调
+function handlChange(value: string) {
+  isValueUpdateFromInner = true;
+  // 父组件更新
+  emit('update:value', value);
+  // 传递改变数据
+  props.prop && instance.changeTrigger?.(props.prop);
+}
+
+// 设置输入的值
+function setInputState(key: keyof InputState, value: string) {
+  inputState.value[key] = parseInt(value || '0');
+}
+
+watch(
+  () => props.value,
+  (value) => {
+    const result = String(value).split(' ');
+    if (isValueUpdateFromInner) {
+      isValueUpdateFromInner = false;
+    } else if (result.length === 1) {
+      setInputState('topLeft', result[0]);
+      setInputState('topRight', result[0]);
+      setInputState('bottomRight', result[0]);
+      setInputState('bottomLeft', result[0]);
+    } else if (result.length === 4) {
+      setInputState('topLeft', result[0]);
+      setInputState('topRight', result[1]);
+      setInputState('bottomRight', result[2]);
+      setInputState('bottomLeft', result[3]);
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="less" scoped>
-.radius-separately {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
-  font-weight: bold;
-  color: @border-color-base;
-
-  .top-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .top-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  .bottom-right {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-
-  .bottom-left {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-}
-
-.radius-input {
-  width: 50px;
-
-  &:not(:last-of-type) {
-    margin-right: 5px;
+.radius-label {
+  &::after {
+    margin-left: 2px;
+    content: ':';
   }
 }
 </style>

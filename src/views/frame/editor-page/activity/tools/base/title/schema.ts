@@ -15,9 +15,7 @@ export interface Schema extends PointInfo {
 
   bgColor: string;
 
-  upperRadius: number;
-
-  lowerPadding: number;
+  borderRadius: string;
 }
 
 export const schema: Schema = {
@@ -39,9 +37,7 @@ export const schema: Schema = {
 
   bgColor: '#fff',
 
-  upperRadius: 0,
-
-  lowerPadding: 0
+  borderRadius: '0'
 };
 
 export const label = '标题';

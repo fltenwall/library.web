@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
+import { UiColorPicker } from '/@/lib/UI/';
 import uiInput from '/@/lib/UI/src/input/index';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';

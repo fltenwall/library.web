@@ -52,7 +52,7 @@ const imageStyle = computed(
 const wrapStyle = computed(
   (): CSSProperties => ({
     backgroundColor: point.bgColor,
-    borderRadius: `${point.borderRadius}px`
+    borderRadius: point.borderRadius
   })
 );
 

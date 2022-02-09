@@ -6,12 +6,8 @@
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
   </a-form-item>
-  <a-form-item label="上边圆角">
-    <slider-input v-model:value="dataItem.upperRadius" prop="upperRadius" />
-  </a-form-item>
-  <a-form-item label="下边圆角">
-    <slider-input v-model:value="dataItem.lowerPadding" prop="lowerPadding" />
-  </a-form-item>
+  <input-radius v-model:value="dataItem.borderRadius" prop="borderRadius" />
+
   <a-divider />
   <a-form-item label="X 轴布局选择">
     <radio-group-button v-model:value="dataItem.textAlign" :options="textAligns" prop="textAlign" />
@@ -38,7 +34,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
+import { UiColorPicker, InputRadius } from '/@/lib/UI/';
 import uiInput from '/@/lib/UI/src/input/index';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';

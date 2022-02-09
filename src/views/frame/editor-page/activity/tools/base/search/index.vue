@@ -42,7 +42,7 @@ const contentStyle = computed(
     paddingRight: `${point.contentPaddingX}px`,
     color: point.placeholderColor,
     fontSize: `${point.placeholderSize}px`,
-    borderRadius: `${point.borderRadius}px`,
+    borderRadius: point.contentBorderRadius,
     backgroundColor: point.placeholderBgColor
   })
 );

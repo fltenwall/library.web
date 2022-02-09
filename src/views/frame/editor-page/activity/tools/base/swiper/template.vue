@@ -2,13 +2,10 @@
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
   </a-form-item>
-  <a-form-item label="圆角边距">
-    <slider-input v-model:value="dataItem.borderRadius" prop="borderRadius" />
-  </a-form-item>
   <a-form-item label="边距">
     <slider-input v-model:value="dataItem.padding" prop="padding" />
   </a-form-item>
-
+  <input-radius v-model:value="dataItem.borderRadius" prop="borderRadius" />
   <a-divider orientation="left">轮播图图片</a-divider>
   <select-image v-model:value="dataItem.list" prop="list" />
   <a-divider orientation="left">指示器</a-divider>
@@ -30,7 +27,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { SelectImage, ColorPicker as uiColorPicker, sliderInput, radioGroupButton } from '/@/lib/UI/';
+import { SelectImage, UiColorPicker, SliderInput, RadioGroupButton, InputRadius } from '/@/lib/UI/';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();

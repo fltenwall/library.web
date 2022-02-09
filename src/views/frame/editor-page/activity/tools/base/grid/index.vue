@@ -54,7 +54,7 @@ const boxStyle = computed(
     width: ` ${100 / point.showCol}%`,
     height: ` ${100 / point.showRow}%`,
     backgroundColor: point.cardBgColor,
-    borderRadius: `${point.cardBorderRadius}px`
+    borderRadius: point.cardBorderRadius
   })
 );
 
@@ -79,7 +79,7 @@ const wrapStyle = computed(
     color: point.fontColor,
     fontSize: `${point.fontSize}px`,
     backgroundColor: point.bgColor,
-    borderRadius: `${point.radiusTop}px ${point.radiusTop}px ${point.radiusBottom}px ${point.radiusBottom}px`
+    borderRadius: point.borderRadius
   })
 );
 
@@ -105,6 +105,7 @@ const swiperSize = computed(() => swipers.value.length);
     flex-direction: column;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   &-content {

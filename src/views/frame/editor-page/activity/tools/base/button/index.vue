@@ -24,7 +24,7 @@ const wrapStyle = computed(
     color: point.textColor,
     fontSize: `${point.textSize}px`,
     backgroundColor: point.bgColor,
-    borderRadius: `${point.borderRadius}px`
+    borderRadius: point.borderRadius
   })
 );
 </script>

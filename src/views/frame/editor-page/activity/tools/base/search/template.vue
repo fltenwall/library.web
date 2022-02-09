@@ -2,6 +2,13 @@
   <a-form-item label="底纹词">
     <ui-input v-model:value="dataItem.placeholder" prop="placeholder" />
   </a-form-item>
+  <a-form-item label="底纹词颜色">
+    <ui-color-picker v-model:value="dataItem.placeholderColor" prop="placeholderColor" />
+  </a-form-item>
+  <a-form-item label="输入框颜色">
+    <ui-color-picker v-model:value="dataItem.placeholderBgColor" prop="placeholderBgColor" />
+  </a-form-item>
+  <input-radius v-model:value="dataItem.contentBorderRadius" prop="contentBorderRadius" />
   <a-divider />
   <a-form-item label="背景颜色">
     <ui-color-picker v-model:value="dataItem.bgColor" prop="bgColor" />
@@ -12,21 +19,13 @@
   <a-form-item label="上下边距">
     <slider-input v-model:value="dataItem.paddingY" prop="paddingY" />
   </a-form-item>
+  <input-radius v-model:value="dataItem.borderRadius" prop="borderRadius" />
   <a-divider />
-  <a-form-item label="文字颜色">
-    <ui-color-picker v-model:value="dataItem.placeholderColor" prop="placeholderColor" />
-  </a-form-item>
-  <a-form-item label="输入框颜色">
-    <ui-color-picker v-model:value="dataItem.placeholderBgColor" prop="placeholderBgColor" />
-  </a-form-item>
   <a-form-item label="文本位置">
     <radio-group-button v-model:value="dataItem.position" :options="positions" prop="position" />
   </a-form-item>
   <a-form-item label="文字大小">
     <slider-input v-model:value="dataItem.placeholderSize" prop="placeholderSize" :min="12" :max="50" />
-  </a-form-item>
-  <a-form-item label="圆角边距">
-    <slider-input v-model:value="dataItem.borderRadius" prop="borderRadius" />
   </a-form-item>
   <a-form-item label="左右边距">
     <slider-input v-model:value="dataItem.contentPaddingX" prop="contentPaddingX" />
@@ -39,7 +38,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker } from '/@/lib/UI/';
+import { UiColorPicker, InputRadius } from '/@/lib/UI/';
 import uiInput from '/@/lib/UI/src/input/index';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';

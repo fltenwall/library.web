@@ -13,7 +13,7 @@ export interface Schema extends PointInfo {
 
   cardBgColor: string;
 
-  cardBorderRadius: number;
+  cardBorderRadius: string;
 
   iconWidth: number;
 
@@ -27,9 +27,7 @@ export interface Schema extends PointInfo {
 
   showRow: number;
 
-  radiusTop: number;
-
-  radiusBottom: number;
+  borderRadius: string;
 
   interval: number;
 
@@ -57,7 +55,7 @@ export const schema: Schema = {
 
   cardBgColor: 'transparent',
 
-  cardBorderRadius: 0,
+  cardBorderRadius: '0',
 
   paddingY: 0,
 
@@ -69,9 +67,7 @@ export const schema: Schema = {
 
   showRow: 4,
 
-  radiusTop: 0,
-
-  radiusBottom: 0,
+  borderRadius: '',
 
   interval: 10,
 

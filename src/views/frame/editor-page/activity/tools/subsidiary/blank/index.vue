@@ -22,7 +22,7 @@ const point = reactive<Schema>(attrs as unknown as Schema);
 const wrapStyle = computed(
   (): CSSProperties => ({
     backgroundColor: point.bgColor,
-    borderRadius: `${point.borderRadius}px`
+    borderRadius: point.borderRadius
   })
 );
 </script>

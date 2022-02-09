@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { ColorPicker as uiColorPicker, radioGroupButton, sliderInput, Select as UiSelect } from '/@/lib/UI/';
+import { UiColorPicker, RadioGroupButton, SliderInput, UiSelect } from '/@/lib/UI/';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
