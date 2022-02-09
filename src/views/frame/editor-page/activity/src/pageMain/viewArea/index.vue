@@ -423,7 +423,10 @@ watch(
 // 页面模式发生变化
 watch(
   () => pageMode.value,
-  () => updataCanvasSize()
+  () => {
+    setPanelHeight();
+    updataCanvasSize();
+  }
 );
 </script>
 
