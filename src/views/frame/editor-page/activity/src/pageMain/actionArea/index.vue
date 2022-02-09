@@ -42,7 +42,7 @@ const modules = computed(() => {
     // 配置
     const config = { template: moduleAction[pointName.value], name: 'config' };
 
-    return [attr, config, ...(moduleExtend?.[pointName.value] || [])];
+    return [attr, config, ...(moduleExtend?.[pointName.value] || [])].filter((el) => el.template);
   }
 
   return [{ template: defaultPoint, name: 'attr' }];
@@ -130,11 +130,15 @@ function labelShowParse(name = 'form', key = 'template') {
 
   ::v-deep(.ant-input) {
     height: @height;
-    font-size: 12px;
+    font-size: @size;
   }
 
   ::v-deep(label) {
     font-size: @size;
+  }
+
+  ::v-deep(img) {
+    pointer-events: none;
   }
 
   ::v-deep(.ant-tabs) {

@@ -7,10 +7,10 @@
     <radio-group-button v-model:value="dataItem.type" :options="types" prop="type" />
   </a-form-item>
   <a-form-item label="每行个数">
-    <ui-select v-model:value="dataItem.showNum" class="w-41" :options="showNums" prop="showNum" />
+    <ui-select v-model:value="dataItem.showCol" class="w-41" :options="showCols" prop="showCol" />
   </a-form-item>
   <a-form-item label="显示行数">
-    <ui-select v-model:value="dataItem.showRow" class="w-41" :options="showNums" prop="showRow" />
+    <ui-select v-model:value="dataItem.showRow" class="w-41" :options="showCols" prop="showRow" />
   </a-form-item>
   <a-divider orientation="left">选项</a-divider>
   <select-image-rows v-model:value="dataItem.list" prop="list" />
@@ -53,6 +53,14 @@
   <a-form-item label="下圆角">
     <slider-input v-model:value="dataItem.radiusBottom" prop="radiusBottom" />
   </a-form-item>
+  <!-- 指示器 -->
+  <a-divider orientation="left">指示器</a-divider>
+  <a-form-item label="背景颜色">
+    <ui-color-picker v-model:value="dataItem.scrollbarColor" prop="scrollbarColor" />
+  </a-form-item>
+  <a-form-item label="滑块颜色">
+    <ui-color-picker v-model:value="dataItem.scrollbarThumbColor" prop="scrollbarThumbColor" />
+  </a-form-item>
 </template>
 
 <script setup lang="ts">
@@ -76,7 +84,7 @@ const fixeds = [
   { label: '否', value: 0 }
 ];
 
-const showNums = [
+const showCols = [
   { label: '1', value: 1 },
   { label: '2', value: 2 },
   { label: '3', value: 3 },

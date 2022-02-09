@@ -23,7 +23,7 @@ export interface Schema extends PointInfo {
 
   paddingY: number;
 
-  showNum: number;
+  showCol: number;
 
   showRow: number;
 
@@ -34,6 +34,10 @@ export interface Schema extends PointInfo {
   interval: number;
 
   fixed: number;
+
+  scrollbarColor: string;
+
+  scrollbarThumbColor: string;
 }
 
 export const schema: Schema = {
@@ -61,7 +65,7 @@ export const schema: Schema = {
 
   paddingBottom: 0,
 
-  showNum: 4,
+  showCol: 4,
 
   showRow: 4,
 
@@ -73,7 +77,11 @@ export const schema: Schema = {
 
   fixed: 0,
 
-  list: [{ link: '', image: '', label: '', target: '_self' }]
+  list: [{ link: '', image: '', label: '', target: '_self' }],
+
+  scrollbarColor: '#d4d8de',
+
+  scrollbarThumbColor: 'ff6d2a'
 };
 
 export const label = { template: '图文导航', material: '素材', setting: '高级' };

@@ -15,15 +15,30 @@
   <a-form-item label="选中颜色">
     <ui-color-picker v-model:value="dataItem.indicatorSelectColor" prop="indicatorSelectColor" />
   </a-form-item>
+  <a-form-item label="未选中颜色">
+    <ui-color-picker v-model:value="dataItem.indicatorUnselectColor" prop="indicatorUnselectColor" />
+  </a-form-item>
+  <a-form-item label="类型">
+    <radio-group-button
+      v-model:value="dataItem.indicatorType"
+      :options="indicatorTypes"
+      prop="indicatorType"
+    />
+  </a-form-item>
 </template>
 
 <script setup lang="ts">
 import type { Schema } from './schema';
 import { templateInit } from '../../utils';
-import { SelectImage, ColorPicker as uiColorPicker, sliderInput } from '/@/lib/UI/';
+import { SelectImage, ColorPicker as uiColorPicker, sliderInput, radioGroupButton } from '/@/lib/UI/';
 
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
+
+const indicatorTypes = [
+  { label: '圆点', value: 'dot' },
+  { label: '线条', value: 'line' }
+];
 </script>
 
 <style lang="less" scoped>

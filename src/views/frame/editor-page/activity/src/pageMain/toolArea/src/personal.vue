@@ -3,7 +3,7 @@
     <div class="personal__actions">
       <div class="personal__header">我的素材</div>
       <upload :data="{ value: DICT_VALUE, type: DICT_TYPE }" @upload-success="handleUploadSuccess">
-        <div class="personal__actions-upload">上 传</div>
+        <div class="personal__actions-upload text-blue-500">上 传</div>
       </upload>
     </div>
     <scrollbar @on-reach-bottom="handleScrollBottom">
@@ -140,10 +140,19 @@ fetchDataFromServer();
   padding: 10px 10px 20px;
 
   &-upload {
-    padding-right: 10px;
+    padding: 1px 6px;
+    margin-right: 10px;
     font-size: 12px;
-    color: @primary-color;
     cursor: pointer;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: #f2f3f5;
+    }
+
+    &:active {
+      background-color: #e5e6eb;
+    }
   }
 }
 

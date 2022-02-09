@@ -16,6 +16,10 @@ export interface Schema extends PointInfo {
   bgColor: string;
 
   indicatorSelectColor: string;
+
+  indicatorUnselectColor: string;
+
+  indicatorType: string;
 }
 
 export const schema: Schema = {
@@ -36,6 +40,10 @@ export const schema: Schema = {
   bgColor: '#ffffff',
 
   indicatorSelectColor: '#ffffff',
+
+  indicatorUnselectColor: '#ffffff',
+
+  indicatorType: 'dot',
 
   list: [{ link: '', image: '', label: '', target: '_self' }]
 };

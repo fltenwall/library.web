@@ -6,12 +6,12 @@
         <a-empty v-else :image="simpleImage" description="" :style="imageStyle" />
       </div>
     </div>
-    <div class="swiper-indicators">
+    <div :class="['swiper-indicator', `swiper-indicator__${point.indicatorType}`]">
       <div
         v-for="key in count"
         :key="key"
-        :class="`swiper-indicator ${state.active % count === key - 1 ? 'swiper-indicator__select' : ''}`"
-        :style="indicatorStyle"
+        class="swiper-indicator-item"
+        :style="{ backgroundColor: state.active % count === key - 1 ? selectColor : unselectColor }"
       ></div>
     </div>
   </div>
@@ -63,11 +63,9 @@ const trackStyle = computed(
   })
 );
 
-const indicatorStyle = computed(
-  (): CSSProperties => ({
-    backgroundColor: point.indicatorSelectColor
-  })
-);
+const selectColor = computed(() => point.indicatorSelectColor);
+
+const unselectColor = computed(() => point.indicatorUnselectColor);
 
 const imageWrapStyle = computed(
   (): CSSProperties => ({
@@ -133,21 +131,31 @@ onUnmounted(stopAutoplay);
   }
 }
 
-.swiper-indicators {
+.swiper-indicator {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   display: flex;
   justify-content: center;
-}
 
-.swiper-indicator {
-  width: 5px;
-  height: 5px;
-  margin: 10px 2px;
-  border-radius: 50%;
-  opacity: 0.3;
+  &__dot {
+    .swiper-indicator-item {
+      width: 5px;
+      height: 5px;
+      margin: 10px 2px;
+      border-radius: 50%;
+    }
+  }
+
+  &__line {
+    .swiper-indicator-item {
+      width: 12px;
+      height: 4px;
+      margin: 10px 2px;
+      border-radius: 2px;
+    }
+  }
 
   &__select {
     opacity: 1;
