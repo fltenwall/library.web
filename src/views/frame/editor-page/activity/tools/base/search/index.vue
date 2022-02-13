@@ -30,7 +30,7 @@ const wrapStyle = computed(
     paddingBottom: `${point.paddingY}px`,
     paddingRight: `${point.paddingX}px`,
     backgroundColor: point.bgColor,
-    borderRadius: point.borderRadius
+    borderRadius: point.borderRadius.replace(/(\d+)/g, '$1px')
   })
 );
 
@@ -42,7 +42,7 @@ const contentStyle = computed(
     paddingRight: `${point.contentPaddingX}px`,
     color: point.placeholderColor,
     fontSize: `${point.placeholderSize}px`,
-    borderRadius: point.contentBorderRadius,
+    borderRadius: point.contentBorderRadius.replace(/(\d+)/g, '$1px'),
     backgroundColor: point.placeholderBgColor
   })
 );

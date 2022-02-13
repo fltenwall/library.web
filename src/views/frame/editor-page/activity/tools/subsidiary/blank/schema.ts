@@ -3,7 +3,7 @@ import type { PointInfo } from '/@/lib/interface/PointInfo';
 export interface Schema extends PointInfo {
   bgColor: string;
 
-  borderRadius: number;
+  borderRadius: string;
 }
 
 export const schema: Schema = {
@@ -13,7 +13,7 @@ export const schema: Schema = {
 
   bgColor: '#ffffff',
 
-  borderRadius: 0
+  borderRadius: '0'
 };
 
 export const label = '辅助空白';

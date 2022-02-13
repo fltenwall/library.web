@@ -9,7 +9,7 @@ export interface Schema extends PointInfo {
 
   placeholderBgColor: string;
 
-  borderRadius: number;
+  borderRadius: string;
 
   bgColor: string;
 
@@ -39,7 +39,7 @@ export const schema: Schema = {
 
   placeholderBgColor: '#ffffff',
 
-  borderRadius: 0,
+  borderRadius: '0',
 
   bgColor: '#ffffff',
 

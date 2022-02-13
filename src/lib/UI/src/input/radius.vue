@@ -58,7 +58,7 @@ const inputState = ref<Partial<InputState>>({});
 
 function handleInputChange() {
   const input = unref(inputState);
-  const ruslut = `${input.topLeft}px ${input.topRight}px ${input.bottomRight}px ${input.bottomLeft}px`;
+  const ruslut = `${input.topLeft} ${input.topRight} ${input.bottomRight} ${input.bottomLeft}`;
 
   handlChange(ruslut);
 }

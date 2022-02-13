@@ -1,6 +1,5 @@
 <template>
   <div class="form-wrap" :style="wrapStyle">
-    <div :style="titleStyle">{{ point.title }}</div>
     <!-- 表单 -->
     <div
       v-for="(item, index) in point.list"
@@ -11,9 +10,6 @@
       <div v-if="item.label" :style="labelStyle">{{ item.label }}</div>
       <input v-if="item.type === 'input'" :style="entryStyle" :placeholder="item.placeholder" />
     </div>
-
-    <!-- 按钮 -->
-    <div class="index-center-middle" :style="buttonStyle">{{ point.buttonText }}</div>
   </div>
 </template>
 
@@ -39,30 +35,7 @@ const wrapStyle = computed(
     paddingLeft: `${point.paddingLeft}px`,
     paddingRight: `${point.paddingRight}px`,
     backgroundColor: point.bgColor,
-    borderRadius: point.borderRadius
-  })
-);
-const titleStyle = computed(
-  (): CSSProperties => ({
-    color: point.titleColor,
-    fontSize: `${point.titleSize}px`,
-    fontWeight: point.titleWeight * 100,
-    textAlign: point.titleAlign,
-    paddingBottom: `${point.titlePaddingBottom}px`
-  })
-);
-
-const buttonStyle = computed(
-  (): CSSProperties => ({
-    height: `${point.buttonHeight}px`,
-    marginTop: `${point.buttonMarginTop}px`,
-    marginRight: `${point.buttonMarginRight}px`,
-    marginLeft: `${point.buttonMarginLeft}px`,
-    color: point.buttonColor,
-    fontSize: `${point.buttonSize}px`,
-    fontWeight: point.buttonWeight * 100,
-    borderRadius: point.buttonRadius,
-    backgroundColor: point.buttonBgColor
+    borderRadius: point.borderRadius.replace(/(\d+)/g, '$1px')
   })
 );
 
@@ -70,10 +43,10 @@ const widgetStyle = computed(
   (): CSSProperties => ({
     height: `${point.widgetHeight}px`,
     marginTop: `${point.widgetMarginTop}px`,
-    borderRadius: point.widgetRadius,
+    borderRadius: point.widgetRadius.replace(/(\d+)/g, '$1px'),
     backgroundColor: point.widgetbgColor,
     borderColor: point.widgetBorderColor,
-    borderWidth: `${point.widgetBorderWidth}px`
+    borderWidth: point.widgetBorderWidth.replace(/(\d+)/g, '$1px')
   })
 );
 
@@ -81,6 +54,7 @@ const labelStyle = computed(
   (): CSSProperties => ({
     width: `${point.labelWidth}px`,
     marginRight: `${point.labelMarginRight}px`,
+    marginLeft: `${point.labelMarginLeft}px`,
     color: point.labelColor,
     fontSize: `${point.labelSize}px`,
     fontWeight: point.labelWeight * 100,
@@ -91,11 +65,17 @@ const labelStyle = computed(
 
 const entryStyle = computed(
   (): CSSProperties => ({
+    height: `${point.widgetHeight}px`,
+    paddingRight: `${point.entryPaddingRight}px`,
+    paddingLeft: `${point.entryPaddingLeft}px`,
     marginRight: `${point.entryMarginRight}px`,
     marginLeft: `${point.entryMarginLeft}px`,
     color: point.entryColor,
     fontSize: `${point.entrySize}px`,
-    backgroundColor: point.widgetbgColor
+    backgroundColor: point.widgetbgColor,
+    borderRadius: point.entryRadius.replace(/(\d+)/g, '$1px'),
+    borderColor: point.entryBorderColor,
+    borderWidth: point.entryBorderWidth.replace(/(\d+)/g, '$1px')
   })
 );
 </script>

@@ -54,7 +54,7 @@ const boxStyle = computed(
     width: ` ${100 / point.showCol}%`,
     height: ` ${100 / point.showRow}%`,
     backgroundColor: point.cardBgColor,
-    borderRadius: point.cardBorderRadius
+    borderRadius: point.cardBorderRadius.replace(/(\d+)/g, '$1px')
   })
 );
 
@@ -79,7 +79,7 @@ const wrapStyle = computed(
     color: point.fontColor,
     fontSize: `${point.fontSize}px`,
     backgroundColor: point.bgColor,
-    borderRadius: point.borderRadius
+    borderRadius: point.borderRadius.replace(/(\d+)/g, '$1px')
   })
 );
 
