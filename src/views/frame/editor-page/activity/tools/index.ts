@@ -38,11 +38,12 @@ export const moduleActionExtend: Recordable<{ template: Component; name: string 
 // 分类 中文 和 图标
 export const baseConfigs: PointConfigs = {
   label: {
-    base: '基础组件',
+    base: '基础控件',
     form: '页面配置',
-    media: '媒体组件',
-    chart: '可视化组件',
-    subsidiary: '辅助组件',
+    media: '媒体控件',
+    chart: '图表控件',
+    subsidiary: '辅助控件',
+    entry: '输入控件',
     attr: '属性',
     config: '配置'
   },
@@ -50,7 +51,8 @@ export const baseConfigs: PointConfigs = {
     base: 'ant-design:appstore-outlined',
     media: 'cil:media-play',
     chart: 'ant-design:pie-chart-outlined',
-    subsidiary: 'ant-design:tool-outlined'
+    subsidiary: 'ant-design:tool-outlined',
+    entry: 'ant-design:form-outlined'
   },
   pinyin: {},
   visible: {},

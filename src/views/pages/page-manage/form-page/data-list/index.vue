@@ -34,7 +34,7 @@ const modeMap = new Map().set(1, '移动端').set(2, 'PC端');
 const actions = [
   { label: '新增', value: 'new' },
   { label: '查看', value: 'view' },
-  { label: '排版', value: 'compose' },
+  // { label: '排版', value: 'compose' },
   { label: '编辑', value: 'edit' },
   { label: '删除', value: 'delete' }
 ];

@@ -75,8 +75,8 @@
         </scrollbar>
       </div>
     </div>
-    <!-- 底部按钮 -->
 
+    <!-- 底部按钮 -->
     <template #footer>
       <div class="index-center">
         <a-button @click="visible = false">取消</a-button>

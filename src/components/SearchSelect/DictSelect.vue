@@ -32,7 +32,7 @@ export default defineComponent({
   emits: ['update:value'],
   setup(props, { emit }) {
     // 选中的数据
-    const selectData = ref<string | undefined>(undefined);
+    const selectData = ref<string | undefined | number>(undefined);
 
     // 数据集合
     const options = ref<DictionaryDetail[]>([]);

@@ -16,6 +16,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    placeholder: {
+      type: String,
+      default: '请选择'
+    },
     options: {
       type: Array as PropType<{ value: string | number; label: string }[]>,
       default: () => []
@@ -40,6 +44,7 @@ export default defineComponent({
         <Select
           value={props.value}
           class="w-full"
+          placeholder={props.placeholder}
           get-popup-container={(triggerNode: Node) => triggerNode.parentNode}
           allowClear={props.allowClear}
           options={props.options}

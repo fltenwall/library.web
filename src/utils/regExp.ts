@@ -4,6 +4,8 @@ import { isString } from './is';
 export const rules = {
   digital: /^\d*$/,
 
+  strNum: /^\d+$/,
+
   telephone: /^1\d{10}$/,
 
   dataPage: /data-page$/,
@@ -15,13 +17,8 @@ export const rules = {
   username: /^[A-Za-z0-9]+([-]?[A-Za-z0-9]+)*$/
 };
 
-interface Parameter {
-  data: string;
-  rule: 'telephone' | 'dataPage' | 'digital';
-}
-
 // 检查数据
-export function validData({ data, rule }: Parameter): boolean {
+export function validData(rule: 'telephone' | 'dataPage' | 'digital' | 'strNum', data: string): boolean {
   return rules[rule].test(data);
 }
 

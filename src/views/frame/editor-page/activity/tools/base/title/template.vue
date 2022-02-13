@@ -26,7 +26,7 @@
   <a-form-item label="字体大小">
     <slider-input v-model:value="dataItem.titleSize" :min="12" :max="50" prop="titleSize" />
   </a-form-item>
-  <a-form-item label="字体粗细">
+  <a-form-item label="字重">
     <slider-input v-model:value="dataItem.titleWeight" :min="0" :max="10" prop="titleWeight" />
   </a-form-item>
 </template>

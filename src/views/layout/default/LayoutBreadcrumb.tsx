@@ -80,7 +80,7 @@ export default defineComponent({
 
                 let mode = '';
 
-                if (validData({ data: el.path, rule: 'dataPage' })) {
+                if (validData('dataPage', el.path)) {
                   const pageMode = parsePageModeFromString(queryMode);
                   mode = `- ${pageMode.modeName}`;
                 }

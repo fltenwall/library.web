@@ -1,8 +1,5 @@
-import type { PropType } from 'vue';
-import { defineComponent, inject } from 'vue';
-import { Radio } from 'ant-design-vue';
+import { Input } from 'ant-design-vue';
 import { EditorForm } from '/@/lib/interface/EditorForm';
-import { isEmpty } from 'lodash-es';
 
 export default defineComponent({
   props: {
@@ -14,18 +11,18 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    options: {
-      type: Array as PropType<{ label: string | number; value: string | number }[]>,
-      default: () => []
+    placeholder: {
+      type: String,
+      default: '请输入'
+    },
+    autosize: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ['update:value'],
-  setup(props, { emit, slots }) {
+  setup(props, { emit }) {
     const instance = inject('editor-form', {}) as EditorForm;
-
-    function renderRadioButton() {
-      return props.options.map((el) => <Radio.Button value={el.value}>{() => el.label}</Radio.Button>);
-    }
 
     // 	输入框内容变化时的回调
     function handlChange(e: { target: { value: string } }) {
@@ -36,10 +33,12 @@ export default defineComponent({
     }
 
     return () => (
-      <Radio.Group value={props.value} onChange={handlChange}>
-        {!isEmpty(props.options) && renderRadioButton()}
-        {slots.default?.()}
-      </Radio.Group>
+      <Input.TextArea
+        value={props.value}
+        placeholder={props.placeholder}
+        autoSize={{ minRows: 3, maxRows: 3 }}
+        onChange={handlChange}
+      />
     );
   }
 });

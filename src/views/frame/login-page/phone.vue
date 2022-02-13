@@ -22,7 +22,7 @@
       class="login-phone-code"
       type="code"
       placeholder="短信验证码"
-      :code-disabled="!validData({ data: formData.phone, rule: 'telephone' })"
+      :code-disabled="!validData('telephone', formData.phone)"
       :maxlength="8"
       @on-enter="onEnter"
     />
@@ -58,7 +58,7 @@ export default defineComponent({
 
     // 输入电话失去焦点
     const onPhoneBlur = () => {
-      if (!formData.phone || validData({ data: formData.phone, rule: 'telephone' })) {
+      if (!formData.phone || validData('telephone', formData.phone)) {
         error.phone = false;
       } else {
         error.phone = true;

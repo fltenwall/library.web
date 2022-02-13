@@ -12,3 +12,4 @@ export { default as SelectImage } from './src/select/image.vue';
 export { default as SelectImageRows } from './src/select/imageRows.vue';
 export { default as SliderInput } from './src/slider/sliderInput';
 export { default as RadioGroupButton } from './src/radio/radioGroupButton';
+export { default as UiTextarea } from './src/input/textarea';
