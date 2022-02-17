@@ -1,41 +1,12 @@
 <template>
-  <div>
-    <div class="flex mb-4">
-      <div class="index-middle mr-2">
-        <div class="flex-shrink-0 w-13 radius-label">左上角</div>
-        <ui-input v-model:value="inputState.topLeft" type="number" @change="handleInputChange" />
-      </div>
-      <div class="index-middle">
-        <div class="flex-shrink-0 w-13 radius-label">右上角</div>
-        <ui-input v-model:value="inputState.topRight" type="number" @change="handleInputChange" />
-      </div>
-    </div>
-    <div class="flex mb-4">
-      <div class="index-middle mr-2">
-        <div class="flex-shrink-0 w-13 radius-label">右下角</div>
-        <ui-input v-model:value="inputState.bottomLeft" type="number" @change="handleInputChange" />
-      </div>
-      <div class="index-middle">
-        <div class="flex-shrink-0 w-13 radius-label">右下角</div>
-        <ui-input v-model:value="inputState.bottomRight" type="number" @change="handleInputChange" />
-      </div>
-    </div>
-  </div>
+  <a-form-item label="圆角">
+    <ui-input v-model:value="inputState" @change="handleInputChange" />
+  </a-form-item>
 </template>
 
 <script lang="ts" setup>
 import uiInput from '/@/lib/UI/src/input/index';
 import type { EditorForm } from '/@/lib/interface/EditorForm';
-
-interface InputState {
-  bottomLeft: number;
-
-  bottomRight: number;
-
-  topLeft: number;
-
-  topRight: number;
-}
 
 const props = defineProps({
   prop: {
@@ -43,7 +14,7 @@ const props = defineProps({
     default: ''
   },
   value: {
-    type: [String, Number],
+    type: String,
     default: ''
   }
 });
@@ -54,13 +25,10 @@ const instance = inject('editor-form', {}) as EditorForm;
 
 let isValueUpdateFromInner = false;
 
-const inputState = ref<Partial<InputState>>({});
+const inputState = ref<string>('');
 
 function handleInputChange() {
-  const input = unref(inputState);
-  const ruslut = `${input.topLeft} ${input.topRight} ${input.bottomRight} ${input.bottomLeft}`;
-
-  handlChange(ruslut);
+  handlChange(inputState.value);
 }
 
 // 	输入框内容变化时的回调
@@ -72,27 +40,13 @@ function handlChange(value: string) {
   props.prop && instance.changeTrigger?.(props.prop);
 }
 
-// 设置输入的值
-function setInputState(key: keyof InputState, value: string) {
-  inputState.value[key] = parseInt(value || '0');
-}
-
 watch(
   () => props.value,
   (value) => {
-    const result = String(value).split(' ');
     if (isValueUpdateFromInner) {
       isValueUpdateFromInner = false;
-    } else if (result.length === 1) {
-      setInputState('topLeft', result[0]);
-      setInputState('topRight', result[0]);
-      setInputState('bottomRight', result[0]);
-      setInputState('bottomLeft', result[0]);
-    } else if (result.length === 4) {
-      setInputState('topLeft', result[0]);
-      setInputState('topRight', result[1]);
-      setInputState('bottomRight', result[2]);
-      setInputState('bottomLeft', result[3]);
+    } else {
+      inputState.value = value;
     }
   },
   { immediate: true }
