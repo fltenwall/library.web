@@ -12,6 +12,9 @@
     <slider-input v-model:value="dataItem.paddingRight" prop="paddingRight" />
   </a-form-item>
   <input-radius v-model:value="dataItem.borderRadius" prop="borderRadius" />
+  <a-form-item label="每行个数">
+    <ui-select v-model:value="dataItem.showCol" class="w-0 flex-1" :options="showCols" prop="showCol" />
+  </a-form-item>
   <a-divider />
   <a-form-item label="布局">
     <radio-group-button v-model:value="dataItem.layout" prop="layout">
@@ -33,6 +36,9 @@
   </a-form-item>
   <a-form-item label="上边距">
     <slider-input v-model:value="dataItem.widgetMarginTop" prop="widgetMarginTop" />
+  </a-form-item>
+  <a-form-item label="左边距">
+    <slider-input v-model:value="dataItem.widgetMarginLeft" prop="widgetMarginLeft" />
   </a-form-item>
   <input-radius v-model:value="dataItem.widgetRadius" prop="widgetRadius" />
   <widget v-model:value="dataItem.list" prop="list" />
@@ -97,7 +103,7 @@ import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import radioGroupButton from '/@/lib/UI/src/radio/radioGroupButton';
-import { UiColorPicker, InputRadius } from '/@/lib/UI/';
+import { UiColorPicker, InputRadius, UiSelect } from '/@/lib/UI/';
 import widget from './components/widget.vue';
 // 响应式数据
 const dataItem = templateInit<Partial<Schema>>();
@@ -106,6 +112,12 @@ const textAligns = [
   { value: 'left', label: '左' },
   { value: 'center', label: '中' },
   { value: 'right', label: '右' }
+];
+
+const showCols = [
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' }
 ];
 </script>
 

@@ -31,7 +31,7 @@
 
     <!-- 操作 -->
     <template #footer-block>
-      <a-button @click="onComposePage">排版</a-button>
+      <a-button v-if="mode !== MixinPageMode.new" @click="onComposePage">排版</a-button>
       <a-button v-if="!readonly" @click="onRestPage">重置</a-button>
       <a-button v-if="readonly" type="primary" @click="onEditPage">编辑</a-button>
       <a-button v-if="!readonly" type="primary" :loading="loading" @click="onSavePage">保存</a-button>

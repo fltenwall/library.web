@@ -43,8 +43,10 @@ const wrapStyle = computed(
 
 const widgetStyle = computed(
   (): CSSProperties => ({
+    width: `calc(${100 / point.showCol}% - ${point.widgetMarginLeft}px)`,
     height: `${point.widgetHeight}px`,
     marginTop: `${point.widgetMarginTop}px`,
+    marginLeft: `${point.widgetMarginLeft}px`,
     borderRadius: point.widgetRadius.replace(/(\d+)/g, '$1px'),
     backgroundColor: point.widgetbgColor,
     borderColor: point.widgetBorderColor,
@@ -98,7 +100,7 @@ const entryStyle = computed(
 
 .widget {
   &-row {
-    display: flex;
+    display: inline-flex;
     overflow: hidden;
 
     &-content {

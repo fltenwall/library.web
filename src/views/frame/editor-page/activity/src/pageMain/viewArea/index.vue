@@ -275,7 +275,7 @@ const dragEvent = {
   // 在一个拖动过程中，释放鼠标键时触发此事件
   handleDrag(event: DragEvent) {
     // 清除透明样式
-    panelStyle.opacity = 1;
+    dragEvent.handleDragleave();
     // 获取传来的数据
     const { name, offset, data } = JSON.parse(event.dataTransfer?.getData('tool') || '');
     // 空数据则不添加

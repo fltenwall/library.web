@@ -3,6 +3,8 @@ import type { PointInfo } from '/@/lib/interface/PointInfo';
 export interface Schema extends PointInfo {
   layout: string;
 
+  showCol: number;
+
   bgColor: string;
 
   paddingTop: number;
@@ -14,6 +16,8 @@ export interface Schema extends PointInfo {
   borderRadius: string;
 
   widgetMarginTop: number;
+
+  widgetMarginLeft: number;
 
   widgetRadius: string;
 
@@ -69,6 +73,8 @@ export const schema: Schema = {
 
   layout: 'horizontal',
 
+  showCol: 1,
+
   bgColor: '#fff',
 
   paddingTop: 0,
@@ -80,6 +86,8 @@ export const schema: Schema = {
   borderRadius: '0',
 
   widgetMarginTop: 0,
+
+  widgetMarginLeft: 0,
 
   widgetRadius: '0',
 
