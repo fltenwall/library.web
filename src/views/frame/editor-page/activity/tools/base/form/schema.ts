@@ -31,6 +31,8 @@ export interface Schema extends PointInfo {
 
   labelMarginLeft: number;
 
+  labelMarginBottom: number;
+
   labelSize: number;
 
   labelWeight: number;
@@ -94,6 +96,8 @@ export const schema: Schema = {
   labelMarginRight: 0,
 
   labelMarginLeft: 0,
+
+  labelMarginBottom: 0,
 
   labelSize: 12,
 

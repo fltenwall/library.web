@@ -7,8 +7,10 @@
       :style="widgetStyle"
       :class="`widget-row widget-${point.layout}`"
     >
-      <div v-if="item.label" :style="labelStyle">{{ item.label }}</div>
-      <input v-if="item.type === 'input'" :style="entryStyle" :placeholder="item.placeholder" />
+      <div v-if="item.label" class="widget-row-label" :style="labelStyle">{{ item.label }}</div>
+      <div class="widget-row-content" :style="entryStyle">
+        <input v-if="item.type === 'input'" :placeholder="item.placeholder" />
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +56,7 @@ const labelStyle = computed(
   (): CSSProperties => ({
     width: `${point.labelWidth}px`,
     marginRight: `${point.labelMarginRight}px`,
+    marginBottom: `${point.labelMarginBottom}px`,
     marginLeft: `${point.labelMarginLeft}px`,
     color: point.labelColor,
     fontSize: `${point.labelSize}px`,
@@ -65,7 +68,6 @@ const labelStyle = computed(
 
 const entryStyle = computed(
   (): CSSProperties => ({
-    height: `${point.widgetHeight}px`,
     paddingRight: `${point.entryPaddingRight}px`,
     paddingLeft: `${point.entryPaddingLeft}px`,
     marginRight: `${point.entryMarginRight}px`,
@@ -87,8 +89,8 @@ const entryStyle = computed(
     height: 100%;
 
     input {
-      flex: 1;
-      width: 0;
+      width: 100%;
+      height: 100%;
       outline: none;
     }
   }
@@ -97,12 +99,21 @@ const entryStyle = computed(
 .widget {
   &-row {
     display: flex;
-    align-items: center;
     overflow: hidden;
+
+    &-content {
+      flex: 1;
+      overflow: hidden;
+    }
   }
 
   &-horizontal {
     flex-direction: row;
+    align-items: center;
+
+    .widget-row-content {
+      height: 100%;
+    }
   }
 
   &-vertical {

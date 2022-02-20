@@ -53,6 +53,9 @@
   <a-form-item label="右边距">
     <slider-input v-model:value="dataItem.labelMarginRight" prop="labelMarginRight" />
   </a-form-item>
+  <a-form-item label="下边距">
+    <slider-input v-model:value="dataItem.labelMarginBottom" prop="labelMarginBottom" />
+  </a-form-item>
   <a-form-item label="字重">
     <slider-input v-model:value="dataItem.labelWeight" :min="0" :max="10" prop="labelWeight" />
   </a-form-item>

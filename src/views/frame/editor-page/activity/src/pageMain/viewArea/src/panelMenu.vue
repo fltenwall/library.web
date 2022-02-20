@@ -51,16 +51,10 @@ function handleCopyPoint() {
 
 <style lang="less" scoped>
 .panel-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  display: none;
   width: 150px;
   padding: 0 16px;
   background: #fff;
   border-radius: 4px;
-  opacity: 0.94;
   box-shadow: 0 2px 8px #00000026;
   user-select: none;
 

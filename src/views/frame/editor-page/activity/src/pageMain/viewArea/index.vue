@@ -1,64 +1,65 @@
 <template>
   <scrollbar class="flex-item">
     <div class="view-area" @mousedown.self="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
-      <div
-        ref="panelRef"
-        :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
-        :style="panelStyle"
-        @drop="dragEvent.handleDrag"
-        @dragover.prevent
-        @dragenter="dragEvent.handleDragenter"
-        @dragleave="dragEvent.handleDragleave"
-        @contextmenu.prevent.stop="handleCancelSelect"
-      >
-        <!-- 拖拽组件 -->
-        <draggable-offset
-          v-for="item in pointData"
-          :key="item.id"
-          class="view-item"
-          :record="item"
-          :is-size="!item.sizeLock"
-          :is-position="!item.positionLock"
-          :class="panelStyle.opacity !== 1 && 'stop-events'"
-          :style="pointStyle[item.id]"
-          :move="!!dataItem.isMove"
-          :hover="dataItem.hover === item.id"
-          :select="pointid === item.id"
-          @on-end="handleModuleMoveEnd"
-          @on-move="handleModuleMove"
-          @on-start="handleModuleMoveStart"
-          @on-click="handleModuleClick"
-          @mouseenter="mouseEvent.mouseenter(item.id)"
-          @mouseleave="mouseEvent.mouseleave"
-        >
-          <view-content
-            v-click-away="hanldeClickDragAway"
-            :record="item"
-            @on-contextmenu="handleContextmenu"
-            @on-right-select="setSelectPoint"
-          />
-
-          <!-- 边框 -->
-          <div class="view-item-border__x"></div>
-          <div class="view-item-border__y"></div>
-        </draggable-offset>
-
-        <!-- 拖拽中才显示, 松开鼠标实际位置 -->
+      <a-dropdown :visible="menuVisible" trigger="contextmenu" @visibleChange="handleVisibleChange">
         <div
-          v-show="dataItem.state === 'move'"
-          class="resize-item"
-          :style="{
-            width: `${dataItem.pos.layout?.width}px`,
-            height: `${dataItem.pos.layout?.height}px`,
-            transform: `translate(${dataItem.pos.layout?.x}px,${dataItem.pos.layout?.y}px)`
-          }"
-        />
+          ref="panelRef"
+          :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
+          :style="panelStyle"
+          @drop="dragEvent.handleDrag"
+          @dragover.prevent
+          @dragenter="dragEvent.handleDragenter"
+          @dragleave="dragEvent.handleDragleave"
+          @contextmenu.prevent.stop="handleCancelSelect"
+        >
+          <!-- 拖拽组件 -->
+          <draggable-offset
+            v-for="item in pointData"
+            :key="item.id"
+            class="view-item"
+            :record="item"
+            :is-size="!item.sizeLock"
+            :is-position="!item.positionLock"
+            :class="isInArea && 'stop-events'"
+            :style="pointStyle[item.id]"
+            :move="!!dataItem.isMove"
+            :hover="dataItem.hover === item.id"
+            :select="pointid === item.id"
+            @on-end="handleModuleMoveEnd"
+            @on-move="handleModuleMove"
+            @on-start="handleModuleMoveStart"
+            @on-click="handleModuleClick"
+            @mouseenter="mouseEvent.mouseenter(item.id)"
+            @mouseleave="mouseEvent.mouseleave"
+          >
+            <view-content
+              :record="item"
+              @on-contextmenu="handleContextmenu"
+              @on-right-select="setSelectPoint"
+            />
+
+            <!-- 边框 -->
+            <div class="view-item-border__x"></div>
+            <div class="view-item-border__y"></div>
+          </draggable-offset>
+
+          <!-- 拖拽中才显示, 松开鼠标实际位置 -->
+          <div
+            v-show="dataItem.state === 'move'"
+            class="resize-item"
+            :style="{
+              width: `${dataItem.pos.layout?.width}px`,
+              height: `${dataItem.pos.layout?.height}px`,
+              transform: `translate(${dataItem.pos.layout?.x}px,${dataItem.pos.layout?.y}px)`
+            }"
+          />
+        </div>
 
         <!-- 右键菜单 -->
-        <teleport to="body">
-          <panel-menu :style="menuStyle" @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
-        </teleport>
-      </div>
+        <template #overlay>
+          <panel-menu @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
+        </template>
+      </a-dropdown>
     </div>
   </scrollbar>
 </template>
@@ -107,8 +108,10 @@ const dataItem = reactive<DataItem>({ pos: {} });
 const panelRef = ref<HTMLNULL>(null);
 // 限制
 const limit = limitRules();
-// 菜单样式变化
-const menuStyle = ref<CSSProperties>({});
+// 菜单状态发生变化
+const menuVisible = ref(false);
+//
+const isInArea = ref(false);
 // 更新画布大小
 const updataCanvasSize = initUpdataCanvasSize(panelRef);
 
@@ -289,11 +292,15 @@ const dragEvent = {
 
   // 当被鼠标拖动的对象进入其容器范围内时触发此事件
   handleDragenter() {
+    isInArea.value = true;
+
     panelStyle.opacity = 0.7;
   },
 
   // 当被鼠标拖动的对象离开其容器范围内时触发此事件
   handleDragleave() {
+    isInArea.value = false;
+
     panelStyle.opacity = 1;
   }
 };
@@ -343,13 +350,13 @@ function handleCancelSelect(e?: MouseEvent) {
 }
 
 // 处理右键点击
-function handleContextmenu({ x, y }: { x: number; y: number }) {
-  menuStyle.value = { display: 'block', transform: `translate(${x}px,${y}px)` };
+function handleContextmenu() {
+  menuVisible.value = true;
 }
 
 // 处理点击拖拽区域以外的地方
 function hanldeClickDragAway() {
-  menuStyle.value = { display: 'none' };
+  menuVisible.value = false;
 }
 
 // 设置面板高度
@@ -390,6 +397,11 @@ function handleModuleClick({ record }: Move) {
   setSelectPoint(record.id);
   // 隐藏菜单
   hanldeClickDragAway();
+}
+
+// 处理右键点击
+function handleVisibleChange() {
+  menuVisible.value = false;
 }
 
 // 设置背景图
