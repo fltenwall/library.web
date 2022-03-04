@@ -27,12 +27,7 @@
         </tooltip-button>
       </div>
     </div>
-    <global-table
-      :loading="loading"
-      :columns="getTableColumns"
-      :data-source="dataSource"
-      :scroll="scroll"
-    >
+    <global-table :loading="loading" :columns="getTableColumns" :data-source="dataSource" :scroll="scroll">
       <template v-for="item in Object.keys($slots)" #[item]="data">
         <slot :name="item" v-bind="data" />
       </template>

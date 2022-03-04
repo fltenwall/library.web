@@ -1,69 +1,66 @@
 <template>
   <scrollbar class="flex-item">
     <div class="view-area" @mousedown.self="handleClickOtherArea" @contextmenu.prevent="handleClickOtherArea">
-      <a-dropdown :visible="menuVisible" trigger="contextmenu" @visibleChange="handleVisibleChange">
-        <div
-          ref="panelRef"
-          :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
-          :style="panelStyle"
-          @drop="dragEvent.handleDrag"
-          @dragover.prevent
-          @dragenter="dragEvent.handleDragenter"
-          @dragleave="dragEvent.handleDragleave"
-          @contextmenu.prevent.stop="handleCancelSelect"
+      <div
+        ref="panelRef"
+        :class="['view-area-panel relative', pageMode === 1 && 'mobile-mode ']"
+        :style="panelStyle"
+        @drop="dragEvent.handleDrag"
+        @dragover.prevent
+        @dragenter="dragEvent.handleDragenter"
+        @dragleave="dragEvent.handleDragleave"
+        @contextmenu.prevent.stop="handleCancelSelect"
+      >
+        <!-- 拖拽组件 -->
+        <draggable-offset
+          v-for="item in pointData"
+          :key="item.id"
+          class="view-item"
+          :record="item"
+          :is-size="!item.sizeLock"
+          :is-position="!item.positionLock"
+          :class="isInArea && 'stop-events'"
+          :style="pointStyle[item.id]"
+          :move="!!dataItem.isMove"
+          :hover="dataItem.hover === item.id"
+          :select="pointid === item.id"
+          @on-end="handleModuleMoveEnd"
+          @on-move="handleModuleMove"
+          @on-start="handleModuleMoveStart"
+          @on-click="handleModuleClick"
+          @mouseenter="mouseEvent.mouseenter(item.id)"
+          @mouseleave="mouseEvent.mouseleave"
         >
-          <!-- 拖拽组件 -->
-          <draggable-offset
-            v-for="item in pointData"
-            :key="item.id"
-            class="view-item"
+          <view-content
+            v-click-away="hanldeClickDragAway"
             :record="item"
-            :is-size="!item.sizeLock"
-            :is-position="!item.positionLock"
-            :class="isInArea && 'stop-events'"
-            :style="pointStyle[item.id]"
-            :move="!!dataItem.isMove"
-            :hover="dataItem.hover === item.id"
-            :select="pointid === item.id"
-            @on-end="handleModuleMoveEnd"
-            @on-move="handleModuleMove"
-            @on-start="handleModuleMoveStart"
-            @on-click="handleModuleClick"
-            @mouseenter="mouseEvent.mouseenter(item.id)"
-            @mouseleave="mouseEvent.mouseleave"
-          >
-            <view-content
-              :record="item"
-              @on-contextmenu="handleContextmenu"
-              @on-right-select="setSelectPoint"
-            />
-
-            <!-- 边框 -->
-            <div class="view-item-border__x"></div>
-            <div class="view-item-border__y"></div>
-          </draggable-offset>
-
-          <!-- 拖拽中才显示, 松开鼠标实际位置 -->
-          <div
-            v-show="dataItem.state === 'move'"
-            class="resize-item"
-            :style="{
-              width: `${dataItem.pos.layout?.width}px`,
-              height: `${dataItem.pos.layout?.height}px`,
-              transform: `translate(${dataItem.pos.layout?.x}px,${dataItem.pos.layout?.y}px)`
-            }"
+            @on-contextmenu="handleContextmenu"
+            @on-right-select="setSelectPoint"
           />
-        </div>
 
+          <!-- 边框 -->
+          <div class="view-item-border__x"></div>
+          <div class="view-item-border__y"></div>
+        </draggable-offset>
+
+        <!-- 拖拽中才显示, 松开鼠标实际位置 -->
+        <div
+          v-show="dataItem.state === 'move'"
+          class="resize-item"
+          :style="{
+            width: `${dataItem.pos.layout?.width}px`,
+            height: `${dataItem.pos.layout?.height}px`,
+            transform: `translate(${dataItem.pos.layout?.x}px,${dataItem.pos.layout?.y}px)`
+          }"
+        />
         <!-- 右键菜单 -->
-        <template #overlay>
-          <panel-menu @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
-        </template>
-      </a-dropdown>
+        <teleport to="body">
+          <panel-menu :style="menuStyle" @on-delete="handleDeletePoint" @on-copy="handleCopyPoint" />
+        </teleport>
+      </div>
     </div>
   </scrollbar>
 </template>
-
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import type { PointInfo } from '/@/lib/interface/PointInfo';
@@ -74,7 +71,7 @@ import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
 import { pointStore } from '/@/store/modules/point';
 import { moduleSchema } from '../../../tools/index';
-import { assign, cloneDeep } from 'lodash-es';
+import { assign, cloneDeep, throttle } from 'lodash-es';
 import { handleStore, limitRules, pointDataModify, rangeHighest, initUpdataCanvasSize } from './utils/index';
 import panelMenu from './src/panelMenu.vue';
 import usePointPos from '../../../utils/usePointPos';
@@ -82,7 +79,6 @@ import viewContent from './src/viewContent.vue';
 import { isUndefined } from '/@/utils/is';
 import config from '/@/config';
 import { loadImageSize } from '/@/utils';
-
 // 面板样式
 const panelStyle = reactive<CSSProperties>({ opacity: 1 });
 // 页面数据
@@ -108,13 +104,12 @@ const dataItem = reactive<DataItem>({ pos: {} });
 const panelRef = ref<HTMLNULL>(null);
 // 限制
 const limit = limitRules();
-// 菜单状态发生变化
-const menuVisible = ref(false);
-//
-const isInArea = ref(false);
+// 菜单样式变化
+const menuStyle = ref<CSSProperties>({});
 // 更新画布大小
 const updataCanvasSize = initUpdataCanvasSize(panelRef);
-
+//
+const isInArea = ref(false);
 // 计算组件大小
 function usePointSize({ x, y, width: w, height: h }: Required<PointInfo>) {
   const { clientHeight: cH, clientWidth: cW } = panelRef.value!;
@@ -122,14 +117,12 @@ function usePointSize({ x, y, width: w, height: h }: Required<PointInfo>) {
   const height = y + h > cH ? cH - y : h;
   return { width, height };
 }
-
 //  初始化样式
 function initPointStyle(id: string, { x, y, width, height }: PointInfo) {
   setPointStyle({ id, key: 'transform', value: `translate(${x}px,${y}px)` });
   setPointStyle({ id, key: 'width', value: `${width}px` });
   setPointStyle({ id, key: 'height', value: `${height}px` });
 }
-
 // 处理移动
 function handleModuleMove({ record, x, y, type }: Move) {
   const mapState = {
@@ -175,24 +168,19 @@ function handleModuleMove({ record, x, y, type }: Move) {
     }
   };
   mapState[type]();
-
   setPanelHeight({ [dataItem.id!]: dataItem.pos!.layout! });
   // 设置状态
   dataItem.state = 'move';
 }
-
 // 处理移动结束
 function handleModuleMoveEnd({ record, x, y, type }: Move) {
   // 设置鼠标弹起
   dataItem.state = 'end';
   dataItem.isMove = false;
   dataItem.id = '';
-
   // 没有变化不更新数据
   if (x === 0 && y === 0) return;
-
   const id = record.id;
-
   const mapState = {
     mouse: () => {
       // 更新数据
@@ -230,10 +218,8 @@ function handleModuleMoveEnd({ record, x, y, type }: Move) {
     }
   }
   mapState[type]();
-
   setPanelHeight();
 }
-
 // 处理移动开始
 function handleModuleMoveStart({ record }: Move) {
   // 设置鼠标按下
@@ -245,19 +231,16 @@ function handleModuleMoveStart({ record }: Move) {
   // 隐藏菜单
   hanldeClickDragAway();
 }
-
 // 设置样式
 function setPointStyle(options: { id: string; key: string; value: string }) {
   pointStore.commitUpdatePointStyle(options);
 }
-
 // 设置 transform
 function setPointTransform({ id, x, y }: { id: string; x: number; y: number }) {
   const key = 'transform';
   const value = `translate(${x}px,${y}px)`;
   setPointStyle({ id, key, value });
 }
-
 const mouseEvent = {
   // 处理鼠标进入
   mouseenter(id: string) {
@@ -269,7 +252,6 @@ const mouseEvent = {
     dataItem.hover = '';
   }
 };
-
 // 拖拽事件
 const dragEvent = {
   // 在一个拖动过程中，释放鼠标键时触发此事件
@@ -289,14 +271,12 @@ const dragEvent = {
     // 创建 point
     createPoint(schema);
   },
-
   // 当被鼠标拖动的对象进入其容器范围内时触发此事件
   handleDragenter() {
     isInArea.value = true;
 
     panelStyle.opacity = 0.7;
   },
-
   // 当被鼠标拖动的对象离开其容器范围内时触发此事件
   handleDragleave() {
     isInArea.value = false;
@@ -304,7 +284,6 @@ const dragEvent = {
     panelStyle.opacity = 1;
   }
 };
-
 // 创建 Point
 function createPoint(data: Required<PointInfo>) {
   const schema = data;
@@ -331,13 +310,11 @@ function createPoint(data: Required<PointInfo>) {
   // 隐藏菜单
   hanldeClickDragAway();
 }
-
 // 设置数据
 function setSelectPoint(id: string) {
   // 设置选中
   pointid.value = id;
 }
-
 // 右键
 function handleCancelSelect(e?: MouseEvent) {
   // 点击空白区域隐藏
@@ -348,62 +325,47 @@ function handleCancelSelect(e?: MouseEvent) {
     hanldeClickDragAway();
   }
 }
-
 // 处理右键点击
-function handleContextmenu() {
-  menuVisible.value = true;
+function handleContextmenu({ x, y }: { x: number; y: number }) {
+  setMenuStyle({ display: 'block', transform: `translate(${x}px,${y}px)` });
 }
-
 // 处理点击拖拽区域以外的地方
 function hanldeClickDragAway() {
-  menuVisible.value = false;
+  setMenuStyle({ display: 'none' });
 }
+// 设置 右键 数据
+const setMenuStyle = throttle((style) => (menuStyle.value = style), 300, { trailing: false });
 
 // 设置面板高度
 function setPanelHeight(cover?: Cover) {
   // 高度锁定 禁止高度增加
   if (pageOptions.value.heigheLock) return;
-
   panelStyle.height = `${rangeHighest(cover) + 100}px`;
-
   updataCanvasSize();
 }
-
 // 处理删除 point
 function handleDeletePoint() {
   handleCancelSelect();
-
   pointDataModify();
 }
-
 // 处理复制 point
 function handleCopyPoint(data: Required<PointInfo>) {
   const schema = cloneDeep(data);
-
   schema.x += 10;
   schema.y += 10;
-
   createPoint(schema);
 }
-
 // 处理点击空白区域
 function handleClickOtherArea() {
   // 设置为空
   setSelectPoint('');
 }
-
 // 处理模块点击
 function handleModuleClick({ record }: Move) {
   setSelectPoint(record.id);
   // 隐藏菜单
   hanldeClickDragAway();
 }
-
-// 处理右键点击
-function handleVisibleChange() {
-  menuVisible.value = false;
-}
-
 // 设置背景图
 watch(
   () => backgroundImage.value,
@@ -419,19 +381,16 @@ watch(
       panelStyle.backgroundImage = `url(${src})`;
       panelStyle.minHeight = `${height / (width / clientWidth)}px`;
     }
-
     updataCanvasSize();
   },
   { immediate: true }
 );
-
 // 设置背景颜色
 watch(
   () => backgroundColor.value,
   (val) => (panelStyle.backgroundColor = val),
   { immediate: true }
 );
-
 // 页面模式发生变化
 watch(
   () => pageMode.value,
@@ -441,7 +400,6 @@ watch(
   }
 );
 </script>
-
 <style lang="less" scoped>
 .border-light {
   .view-item-border {

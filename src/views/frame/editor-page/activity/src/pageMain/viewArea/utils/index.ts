@@ -58,7 +58,7 @@ export function limitRules(): LimitRules {
   const isElasticLayout = computed(() => unref(pageOptions).layoutType === 2);
 
   // 处理限制 宽高
-  function limitSize(pos: { y?: number; x?: number }, record: BaseSchema): BaseSchema {
+  function limitSize(pos: { y?: number; x?: number } = {}, record: BaseSchema): BaseSchema {
     const { height: CH, width: CW } = canvasSize.value;
     const x = record.x;
     const y = record.y;
