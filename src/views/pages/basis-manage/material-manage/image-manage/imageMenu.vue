@@ -16,7 +16,7 @@
       >
         <div class="index-hidden-newline image-menu-item-title">{{ item.label }}</div>
         <div class="fs3 mt8 flex flex-space-between index-middle">
-          <div>创建于：{{ useFromatlll(item.createTime) }}</div>
+          <div>{{ useFromatlll(item.createTime) }}</div>
           <div class="index-operation item-operation">
             <span @click.stop="handleEditItem(item)">编辑</span>
             <span @click.stop="handleDeleleItem(item)">删除</span>
@@ -51,9 +51,10 @@ import { Scrollbar } from '/@/components/Scrollbar';
 import { useDeleteModal } from '/@/hooks/web/useDeleteModal';
 import service, { DictionaryDetail } from '/@/api/basis-manage/dictionary-detail';
 import { message, Form } from 'ant-design-vue';
-import { assign } from 'lodash';
+import { assign, cloneDeep } from 'lodash';
 import { isNumber } from '/@/utils/is';
 import { useFromatlll } from '/@/utils/dateFormat';
+import { difference } from '/@/utils/difference';
 
 const DICT_TYPE = 'image_manage';
 
@@ -74,6 +75,7 @@ const rules = reactive({
 });
 // 数据内容
 const dataItem = reactive<DictionaryDetail>({ type: DICT_TYPE, state: 1 });
+const dataCache = reactive<DictionaryDetail>({});
 // 对话框是否显示
 const visible = ref<boolean>(false);
 // 获取表单规则
@@ -98,6 +100,7 @@ function handleNewItem() {
 // 编辑
 function handleEditItem(record: Required<DictionaryDetail>) {
   assign(dataItem, record);
+  assign(dataCache, cloneDeep(record));
   visible.value = true;
 }
 // 保存数据
@@ -106,7 +109,7 @@ async function handleSaveItem() {
   try {
     saveLoading.value = true;
     if (isNumber(dataItem.id)) {
-      await service.updateItem(dataItem.id, dataItem);
+      await service.updateItem(dataItem.id, difference(dataItem, dataCache));
     } else {
       await service.saveNewItem(dataItem);
     }
