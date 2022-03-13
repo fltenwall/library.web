@@ -1,6 +1,6 @@
 import { isBoolean, isFunction } from 'lodash';
-import { pointStore } from '/@/store/modules/point';
-import { BaseSchema } from '/@/lib/interface/PointInfo';
+import { pointStore } from '../../../../../store/modules/activity';
+import { BaseSchema } from '../../../../../lib/interface/Activity';
 import { cloneDeep } from 'lodash-es';
 
 export type Cover = Indexable<BaseSchema>;

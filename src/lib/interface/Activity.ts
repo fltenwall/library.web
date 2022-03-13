@@ -21,10 +21,10 @@ export interface Schema {
   sizeLock?: boolean;
 
   // 位置禁用
-  positionDisabled: boolean;
+  positionDisabled?: boolean;
 
   // 尺寸禁用
-  sizeDisabled: boolean;
+  sizeDisabled?: boolean;
 }
 
 // 尺寸

@@ -53,7 +53,7 @@ import { usePagination } from '/@/hooks/web/usePagination';
 import { message } from 'ant-design-vue';
 import { Upload } from '/@/lib/UI/index';
 import { Scrollbar } from '/@/components/Scrollbar';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import panelBox from './panelBox.vue';
 import { concat } from 'lodash';
 

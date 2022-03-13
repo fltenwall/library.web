@@ -11,6 +11,7 @@
           <span v-if="record.ipRecord.nation">{{ record.ipRecord.nation }}</span>
           <span v-if="record.ipRecord.province">{{ record.ipRecord.province }}</span>
           <span v-if="record.ipRecord.city">{{ record.ipRecord.city }}</span>
+          <span v-if="record.ipRecord.district">{{ record.ipRecord.district }}</span>
         </div>
       </template>
       <template v-else-if="column.dataIndex === 'createTime'">

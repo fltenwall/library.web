@@ -63,13 +63,13 @@
 </template>
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '/@/lib/interface/Activity';
 import type { Cover } from '../../../utils/usePointPos';
 import type { DataItem, Move } from './utils/interface';
 import { Scrollbar } from '/@/components/Scrollbar';
 import { buildShortUUID } from '/@/utils/uuid';
 import { DraggableOffset } from '/@/lib/UI/';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { moduleSchema } from '../../../tools/index';
 import { assign, cloneDeep, throttle } from 'lodash-es';
 import { handleStore, limitRules, pointDataModify, rangeHighest, initUpdataCanvasSize } from './utils/index';

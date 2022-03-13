@@ -1,4 +1,4 @@
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '../../../../../../../lib/interface/Activity';
 
 export interface Schema extends PointInfo {
   title: string;

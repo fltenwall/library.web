@@ -1,4 +1,4 @@
-import type { BaseSchema } from '/@/lib/interface/PointInfo';
+import type { BaseSchema } from '/@/lib/interface/Activity';
 
 export interface DataItem {
   // 选择鼠标指针浮动在其上的元素

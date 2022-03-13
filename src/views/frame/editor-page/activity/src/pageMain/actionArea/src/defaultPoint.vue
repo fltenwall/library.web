@@ -70,7 +70,7 @@ import type { ActivityManage } from '/@/api/page-manage/activity-page';
 import { computed, ref } from 'vue';
 import uiInput from '/@/lib/UI/src/input/index';
 import lock from './lock.vue';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { ImageManage } from '/@/api/basis-manage/material-manage/image-manage';
 
 // 数据

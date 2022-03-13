@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '/@/lib/interface/Activity';
 import { onBeforeUnmount, unref } from 'vue';
 import { useRouter } from 'vue-router';
 import actionArea from './src/pageMain/actionArea/index.vue';
@@ -20,7 +20,7 @@ import toolArea from './src/pageMain/toolArea/index.vue';
 import viewArea from './src/pageMain/viewArea/index.vue';
 import pageHeader from './src/pageHeader/index.vue';
 import service from '/@/api/page-manage/activity-page';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 
 const { currentRoute } = useRouter();
 

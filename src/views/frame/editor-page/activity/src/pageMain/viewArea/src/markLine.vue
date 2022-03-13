@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import type { PropType, CSSProperties } from 'vue';
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '../../../../../../../../lib/interface/Activity';
 import { ref, computed, watch } from 'vue';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { throttle } from 'lodash-es';
 
 const props = defineProps({

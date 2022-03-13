@@ -1,8 +1,8 @@
 // 链表
 
 import { watch, computed, reactive, ref, unref } from 'vue';
-import type { PointInfo } from '/@/lib/interface/PointInfo';
-import { pointStore } from '/@/store/modules/point';
+import type { PointInfo } from '../../../../../lib/interface/Activity';
+import { pointStore } from '../../../../../store/modules/activity';
 import Linked from '/@/utils/linked';
 import { cloneDeep, throttle } from 'lodash-es';
 

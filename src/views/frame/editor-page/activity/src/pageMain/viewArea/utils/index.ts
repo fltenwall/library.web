@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Ref } from 'vue';
 import type { Cover } from '../../../../utils/usePointPos';
-import type { PointInfo, BaseSchema } from '/@/lib/interface/PointInfo';
+import type { PointInfo, BaseSchema } from '/@/lib/interface/Activity';
 import { computed, unref } from 'vue';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { isNumber, isObject } from '/@/utils/is';
 import usePointPos from '../../../../utils/usePointPos';
 import { debounce } from 'lodash-es';

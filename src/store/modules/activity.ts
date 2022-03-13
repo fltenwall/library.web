@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CSSProperties } from 'vue';
-import type { PointInfo, Size } from '/@/lib/interface/PointInfo';
+import type { PointInfo, Size } from '../../lib/interface/Activity';
 import store from '/@/store/index';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 import { isArray, isObject } from '/@/utils/is';
 import { ActivityManage } from '/@/api/page-manage/activity-page';
 import { cloneDeep } from 'lodash-es';
 
-const NAME = 'point';
+const NAME = 'activity';
 
 interface UpdatePointState {
   // 唯一值

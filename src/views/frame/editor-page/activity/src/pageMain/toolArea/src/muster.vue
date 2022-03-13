@@ -19,14 +19,14 @@
           <template #content>
             <icon :icon="baseConfigs.icon[name]" size="20" />
           </template>
-          <template #title>{{ labelShowParse(name) }}</template>
+          <template #title>{{ labelParse(name) }}</template>
         </panel-box>
       </div>
 
       <!-- 默认工具列表 -->
       <template v-else>
         <div v-for="(names, key) in tools" :key="key" class="muster-box">
-          <div class="muster-title" @dragstart.prevent>{{ labelShowParse(key) }}</div>
+          <div class="muster-title" @dragstart.prevent>{{ labelParse(key) }}</div>
           <div class="muster-content">
             <template v-for="name in names" :key="name">
               <panel-box
@@ -37,7 +37,7 @@
                 <template #content>
                   <icon :icon="baseConfigs.icon[name]" size="20" />
                 </template>
-                <template #title>{{ labelShowParse(name) }}</template>
+                <template #title>{{ labelParse(name) }}</template>
               </panel-box>
             </template>
           </div>
@@ -52,10 +52,10 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import { computed, ref, unref, watch, onMounted } from 'vue';
-import { moduleMuster, baseConfigs } from '../../../../tools/index';
+import { moduleMuster, baseConfigs } from '/@editorPage/activity/tools/index';
 import { isEmpty, isArray, isNull, isObject } from '/@/utils/is';
 import { Scrollbar } from '/@/components/Scrollbar';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { usePinYin } from '/@/hooks/web/usePinYin';
 import panelBox from './panelBox.vue';
 import { debounce } from 'lodash-es';
@@ -148,7 +148,7 @@ const delayReset = debounce(() => {
   isValueUpdateFromInner.value = false;
 }, 300);
 
-function labelShowParse(name: string, key = 'template') {
+function labelParse(name: string, key = 'template') {
   const result = baseConfigs.label[name];
 
   return isObject(result) ? result[key] : result;

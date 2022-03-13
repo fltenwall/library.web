@@ -19,7 +19,7 @@ import sidebarArea from './src/sidebar.vue';
 import musterArea from './src/muster.vue';
 import personalArea from './src/personal.vue';
 import structureArea from './src/structure.vue';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 
 const instance = ref<HTMLNULL>(null);
 

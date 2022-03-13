@@ -5,7 +5,7 @@
         <template #tab>
           <a-tooltip placement="right">
             <template #title>
-              {{ labelShowParse(menu) }}
+              {{ labelParse(menu) }}
             </template>
             <icon :icon="baseConfigs.icon[menu]" size="20" />
           </a-tooltip>
@@ -25,7 +25,7 @@
         <template #tab>
           <a-tooltip placement="right">
             <template #title> 大纲树 </template>
-            <icon icon="ant-design:gold-outlined" size="20" />
+            <icon icon="ant-design:partition-outlined" size="20" />
           </a-tooltip>
         </template>
       </a-tab-pane>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { moduleMuster, baseConfigs } from '../../../../tools/index';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { isObject } from '/@/utils/is';
 
 const activeKey = computed({
@@ -46,7 +46,7 @@ const activeKey = computed({
 
 const sidebarMenus = computed(() => Object.keys(moduleMuster));
 
-function labelShowParse(name: string, key = 'template') {
+function labelParse(name: string, key = 'template') {
   const result = baseConfigs.label[name];
 
   return isObject(result) ? result[key] : result;

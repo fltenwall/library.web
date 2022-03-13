@@ -31,7 +31,11 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
         },
         {
           find: /^\/@components\//,
-          replacement: pathResolve('src/components/') + '/'
+          replacement: pathResolve('src/components') + '/'
+        },
+        {
+          find: /^\/@editorPage\//,
+          replacement: pathResolve('src/views/frame/editor-page') + '/'
         }
       ]
     },

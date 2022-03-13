@@ -59,7 +59,7 @@ function handleDragstart(event: DragEvent) {
   transition: background-color 0.3s;
 
   &[draggable='true'] {
-    cursor: move;
+    cursor: grab;
   }
 
   &[draggable='false'] {

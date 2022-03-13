@@ -29,7 +29,7 @@ import { templateInit } from '../../utils';
 import uiInput from '/@/lib/UI/src/input/index';
 import sliderInput from '/@/lib/UI/src/slider/sliderInput';
 import { UiColorPicker, InputRadius, UiSelect } from '/@/lib/UI/';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { baseConfigs } from '../..';
 import { isObject } from '/@/utils/is';
 
@@ -39,10 +39,10 @@ const dataItem = templateInit<Partial<Schema>>();
 const pointData = computed(() => pointStore.getPointDataState.filter(({ id }) => id !== dataItem.id));
 
 const pointOptions = computed(() =>
-  unref(pointData).map(({ id: value, name }) => ({ value, label: `${labelShowParse(name)} (${value})` }))
+  unref(pointData).map(({ id: value, name }) => ({ value, label: `${labelParse(name)} (${value})` }))
 );
 
-function labelShowParse(name: string, key = 'template') {
+function labelParse(name: string, key = 'template') {
   const result = baseConfigs.label[name];
 
   return isObject(result) ? result[key] : result;

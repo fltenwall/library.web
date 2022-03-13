@@ -14,25 +14,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "incremental": true,
     "skipLibCheck": true,
     "paths": {
-      "/@/*": [
-        "src/*"
-      ],
-      "/@components/*": [
-        "src/components/*"
-      ],
+      "/@/*": ["src/*"],
+      "/@components/*": ["src/components/*"],
+      "/@editorPage/*": ["src/views/frame/editor-page/*"]
     },
     "types": ["vite/client"]
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

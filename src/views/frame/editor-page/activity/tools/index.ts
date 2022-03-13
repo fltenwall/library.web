@@ -1,5 +1,5 @@
 import type { Component } from 'vue';
-import type { PointInfo } from '/@/lib/interface/PointInfo';
+import type { PointInfo } from '../../../../../lib/interface/Activity';
 import { usePinYin } from '/@/hooks/web/usePinYin';
 import { isArray, isUndefined } from '/@/utils/is';
 

@@ -1,13 +1,13 @@
 <template>
   <global-drawer v-model:value="visible" placement="right" class="action-area" :width="300">
     <div class="action-area-header index-middle index-space-between">
-      <div>{{ labelShowParse(pointName) }}</div>
+      <div>{{ labelParse(pointName) }}</div>
       <div>
         <question-circle-outlined />
       </div>
     </div>
     <a-tabs v-model:activeKey="activeKey" size="small">
-      <a-tab-pane v-for="item in modules" :key="item.name" :tab="labelShowParse(pointName, item.name)">
+      <a-tab-pane v-for="item in modules" :key="item.name" :tab="labelParse(pointName, item.name)">
         <a-form class="action-area-main" label-align="left" :label-col="{ flex: '80px' }">
           <scrollbar height="calc(100vh - 150px)">
             <div class="action-area-main-content">
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { moduleAction, baseConfigs, moduleActionExtend as moduleExtend } from '../../../tools/index';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import toolAttribute from './src/toolAttribute.vue';
 import defaultPoint from './src/defaultPoint.vue';
@@ -65,7 +65,7 @@ watch(
   (val) => val && (visible.value = true)
 );
 
-function labelShowParse(name = 'form', key = 'template') {
+function labelParse(name = 'form', key = 'template') {
   if (baseConfigs.label[key]) {
     // 存在内容名称无需查找
     return baseConfigs.label[key];

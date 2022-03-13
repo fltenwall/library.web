@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { PointInfo } from '/@/lib/interface/PointInfo';
-import { pointStore } from '/@/store/modules/point';
+import type { PointInfo } from '../../../../../lib/interface/Activity';
+import { pointStore } from '../../../../../store/modules/activity';
 import { cloneDeep } from 'lodash-es';
 
 type Trigger = 'width' | 'height' | 'x' | 'y' | 'style_zIndex';

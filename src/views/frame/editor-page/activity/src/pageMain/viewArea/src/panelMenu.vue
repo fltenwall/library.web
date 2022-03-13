@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, unref } from 'vue';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { handleStore } from '../utils/index';
 import { isDef } from '/@/utils/is';
 

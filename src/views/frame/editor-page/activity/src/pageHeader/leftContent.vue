@@ -1,7 +1,7 @@
 <template>
   <div class="header-left index-middle index-hidden-newline">
     <router-link class="index-theme header-left-title index-middle" :to="{ name: PageEnum.BASE_HOME }">
-      <span>{{ MixinConfig.shortTitle }}搭建</span>
+      <span>{{ MixinConfig.shortTitle }}协作</span>
     </router-link>
     <div :class="['index-center-middle simulator-item ml10', canvasMode === 1 && 'actived']">
       <icon icon="clarity:mobile-line" />
@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import pointLinked from '../../utils/pointLinked';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { isEmptyArray } from '/@/utils/is';
 import { PageEnum } from '/@/enums/pageEnum';
 

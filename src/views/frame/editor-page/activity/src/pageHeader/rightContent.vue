@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 import { difference } from '/@/utils/difference';
 import service from '/@/api/page-manage/activity-page';
 import { message } from 'ant-design-vue';

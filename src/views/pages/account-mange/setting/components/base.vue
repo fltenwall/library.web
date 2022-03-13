@@ -14,7 +14,7 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary"> 保存 </a-button>
+        <a-button type="primary" :loading="loading" @click="handleSaveInfo"> 保存 </a-button>
       </a-form-item>
     </a-form>
 
@@ -45,17 +45,20 @@ import { reactive, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { userStore } from '/@/store/modules/user';
 import service, { UserInfo } from '/@/api/security';
+import { difference } from '/@/utils/difference';
 
 const DICT_TYPE = 'image_manage';
 const DICT_VALUE = 'user_portrait';
 
-const userInfo = reactive<UserInfo>({ ...userStore.getUserInfoState });
+const userInfo = reactive<Required<UserInfo>>({ ...userStore.getUserInfoState! });
 // 对话框
 const visible = ref<boolean>(false);
+// 加载中
+const loading = ref<boolean>(false);
 
 // 处理上传成功 更新图片
 
-function handleSelectMaterial([content]: ImageManage[]) {
+function handleSelectMaterial([content]: Required<ImageManage>[]) {
   updateUserAccount({ portrait: content.hash });
 
   userInfo.portrait = content.hash;
@@ -64,12 +67,23 @@ function handleSelectMaterial([content]: ImageManage[]) {
 // 更新数据
 async function updateUserAccount(params: UserInfo) {
   try {
+    loading.value = true;
+
     const { data } = await service.updateAccountInfo(params);
 
     userStore.commitUserInfoState(data);
   } catch (err) {
     message.error((err as { msg: string }).msg);
+  } finally {
+    loading.value = false;
   }
+}
+
+// 处理保存数据
+async function handleSaveInfo() {
+  const data = difference(userInfo, userStore.getUserInfoState);
+
+  data && (await updateUserAccount(data));
 }
 </script>
 

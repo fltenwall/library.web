@@ -6,10 +6,10 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import type { BaseSchema } from '/@/lib/interface/PointInfo';
+import type { BaseSchema } from '/@/lib/interface/Activity';
 import { defineComponent } from 'vue';
 import { moduleView } from '../../../../tools/index';
-import { pointStore } from '/@/store/modules/point';
+import { pointStore } from '/@/store/modules/activity';
 
 export default defineComponent({
   props: {
